@@ -21,6 +21,21 @@ const App = () => {
         <Stack.Screen name="Restaurant" component={Restaurant} />
         <Stack.Screen name="OrderDelivery" component={OrderDelivery} />
       </Stack.Navigator>
+        ) : (
+
+        // AuthStack
+        <Stack.Navigator        
+          screenOptions={{
+            headerShown: false
+          }}
+          initialRouteName={"SignIn"}
+        >
+          <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+        </Stack.Navigator>
+        )}
+
+      </AuthContext.Provider>
     </NavigationContainer>
   );
 };
