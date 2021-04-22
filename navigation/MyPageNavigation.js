@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { MyPage } from '../screens/Index';
+import { MyPage } from '../screens/index';
 
 
 
