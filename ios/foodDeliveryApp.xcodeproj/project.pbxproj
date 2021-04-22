@@ -16,6 +16,11 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* foodDeliveryAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* foodDeliveryAppTests.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		710B4852D6AF46F8A03882CB /* BMDOHYEON.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6B79937A13746198E1E1ADA /* BMDOHYEON.ttf */; };
+		6BC8F4D0DBBD405E800D1095 /* BMEuljiro10yearslater.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA39B767075C4A168A26B311 /* BMEuljiro10yearslater.ttf */; };
+		2929B6228ADA40DEB6CD1E93 /* BMHANNAAir_ttf.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 240F9D3F9D5D44AAA9578025 /* BMHANNAAir_ttf.ttf */; };
+		3E277F6886704E848FCBB7BF /* BMHANNAPro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 342315AEB1E24054A50679C4 /* BMHANNAPro.ttf */; };
+		A1B15A15A9F64F40BBF0FA1C /* BMJUA_ttf.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2AA45A8AE48C457289821273 /* BMJUA_ttf.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,11 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = foodDeliveryApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F6B79937A13746198E1E1ADA /* BMDOHYEON.ttf */ = {isa = PBXFileReference; name = "BMDOHYEON.ttf"; path = "../assets/fonts/BMDOHYEON.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DA39B767075C4A168A26B311 /* BMEuljiro10yearslater.ttf */ = {isa = PBXFileReference; name = "BMEuljiro10yearslater.ttf"; path = "../assets/fonts/BMEuljiro10yearslater.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		240F9D3F9D5D44AAA9578025 /* BMHANNAAir_ttf.ttf */ = {isa = PBXFileReference; name = "BMHANNAAir_ttf.ttf"; path = "../assets/fonts/BMHANNAAir_ttf.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		342315AEB1E24054A50679C4 /* BMHANNAPro.ttf */ = {isa = PBXFileReference; name = "BMHANNAPro.ttf"; path = "../assets/fonts/BMHANNAPro.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2AA45A8AE48C457289821273 /* BMJUA_ttf.ttf */ = {isa = PBXFileReference; name = "BMJUA_ttf.ttf"; path = "../assets/fonts/BMJUA_ttf.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +150,7 @@
 				00E356EF1AD99517003FC87E /* foodDeliveryAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				6E8AE1CD33AF4CC783300E6C /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -156,6 +167,19 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		6E8AE1CD33AF4CC783300E6C /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				F6B79937A13746198E1E1ADA /* BMDOHYEON.ttf */,
+				DA39B767075C4A168A26B311 /* BMEuljiro10yearslater.ttf */,
+				240F9D3F9D5D44AAA9578025 /* BMHANNAAir_ttf.ttf */,
+				342315AEB1E24054A50679C4 /* BMHANNAPro.ttf */,
+				2AA45A8AE48C457289821273 /* BMJUA_ttf.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -295,6 +319,11 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				710B4852D6AF46F8A03882CB /* BMDOHYEON.ttf in Resources */,
+				6BC8F4D0DBBD405E800D1095 /* BMEuljiro10yearslater.ttf in Resources */,
+				2929B6228ADA40DEB6CD1E93 /* BMHANNAAir_ttf.ttf in Resources */,
+				3E277F6886704E848FCBB7BF /* BMHANNAPro.ttf in Resources */,
+				A1B15A15A9F64F40BBF0FA1C /* BMJUA_ttf.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

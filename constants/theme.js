@@ -38,6 +38,7 @@ export const SIZES = {
     body3: 16,
     body4: 14,
     body5: 12,
+    body6: 11,
 
     // app dimensions
     width: width,
@@ -45,17 +46,18 @@ export const SIZES = {
 };
 
 export const FONTS = {
-    largeTitle: { fontFamily: "Roboto-regular", fontSize: SIZES.largeTitle, lineHeight: 55 },
-    h1: { fontFamily: "Roboto-Black", fontSize: SIZES.h1, lineHeight: 36 },
-    h2: { fontFamily: "Roboto-Bold", fontSize: SIZES.h2, lineHeight: 30 },
-    h3: { fontFamily: "Roboto-Bold", fontSize: SIZES.h3, lineHeight: 22 },
-    h4: { fontFamily: "Roboto-Bold", fontSize: SIZES.h4, lineHeight: 22 },
-    h5: { fontFamily: "Roboto-Bold", fontSize: SIZES.h5, lineHeight: 22 },
-    body1: { fontFamily: "Roboto-Regular", fontSize: SIZES.body1, lineHeight: 36 },
-    body2: { fontFamily: "Roboto-Regular", fontSize: SIZES.body2, lineHeight: 30 },
-    body3: { fontFamily: "Roboto-Regular", fontSize: SIZES.body3, lineHeight: 22 },
-    body4: { fontFamily: "Roboto-Regular", fontSize: SIZES.body4, lineHeight: 22 },
-    body5: { fontFamily: "Roboto-Regular", fontSize: SIZES.body5, lineHeight: 22 },
+    largeTitle: { fontFamily: "BMDOHYEON", fontSize: SIZES.largeTitle, lineHeight: 55 },
+    h1: { fontFamily: "BMDOHYEON", fontSize: SIZES.h1, lineHeight: 36 },
+    h2: { fontFamily: "BMDOHYEON", fontSize: SIZES.h2, lineHeight: 30 },
+    h3: { fontFamily: "BMDOHYEON", fontSize: SIZES.h3, lineHeight: 22 },
+    h4: { fontFamily: "BMDOHYEON", fontSize: SIZES.h4, lineHeight: 22 },
+    h5: { fontFamily: "BMDOHYEON", fontSize: SIZES.h5, lineHeight: 22 },
+    body1: { fontFamily: "BMDOHYEON", fontSize: SIZES.body1, lineHeight: 36 },
+    body2: { fontFamily: "AirbnbCereal-Black", fontSize: SIZES.body2, lineHeight: 30 },
+    body3: { fontFamily: "AirbnbCereal-Light", fontSize: SIZES.body3, lineHeight: 22 },
+    body4: { fontFamily: "AirbnbCereal-Black.ttf", fontSize: SIZES.body4, lineHeight: 22 },
+    body5: { fontFamily: "AirbnbCereal-Bold.ttfs", fontSize: SIZES.body5, lineHeight: 22 },
+    body6: { fontFamily: "AirbnbCereal-Light.ttf", fontSize: SIZES.body6, lineHeight: 22 },
 };
 
 const appTheme = { COLORS, SIZES, FONTS };

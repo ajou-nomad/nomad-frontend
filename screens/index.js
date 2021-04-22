@@ -1,10 +1,21 @@
+import Main from './Main';
 import Home from './Home';
-import Restaurant from './Restaurant';
-import OrderDelivery from './OrderDelivery';
+import WeeklyDelivery from './WeeklyDelivery';
+import OrderDetails from './OrderDetails';
+import MyPage from './MyPage';
+
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+
+
 
 
 export {
+    Main,
     Home,
-    Restaurant,
-    OrderDelivery
+    WeeklyDelivery,
+    OrderDetails,
+    MyPage,
+    SignIn,
+    SignUp,
 };

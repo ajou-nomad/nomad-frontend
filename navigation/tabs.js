@@ -1,59 +1,59 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
-    View,
     Image,
     TouchableOpacity,
-    Touchable
+    Keyboard,
 } from 'react-native';
+import { COLORS, FONTS, icons } from '../constants';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Home, WeeklyDelivery, OrderDetails } from '../screens';
+import MyPageNavigation from './MyPageNavigation';
 
-import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 
-import Svg, { Path } from 'react-native-svg';
-
-import {Home} from '../screens';
-
-import { COLORS, icons } from '../constants';
 
 const Tab = createBottomTabNavigator();
 
 //하단 tabBar customalize
 const TabBarCustomButton = ({ accessibilityState, children, onPress }) => {
-    let isSelected = accessibilityState.selected;
 
-    if (isSelected) {
-        return (
-            <View style={{ flex:1, alignItems: 'center'}}>
-                <View style={{ flexDirection: 'row', position: 'absolute', top: 0}}>
-                    <View style={{ flex:1, backgroundColor: COLORS.white}}></View>
-                    <Svg
-                        width={70}
-                        height={60}
-                        viewBox="0 0 75 61"
-                    >
-                        <Path
-                            d="M75.2 0v61H0V0c4.1 0 7.4 3.1 7.9 7.1C10 21.7 22.5 33 37.7 33c15.2 0 27.7-11.3 29.7-25.9.5-4 3.9-7.1 7.9-7.1h-.1z"
-                            fill={COLORS.white}
-                        />
-                    </Svg>
-                    <View style={{ flex: 1, backgroundColor: COLORS.white}}></View>
-                </View>
+    const [visible, setVisible] = useState(true);
+    const isSelected = accessibilityState.selected;
 
-                <TouchableOpacity
-                    style= {{
-                        top: -20,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        width: 50,
-                        height: 50,
-                        borderRadius: 25,
-                        backgroundColor: COLORS.white,
-            
-                    }}
-                    onPress={onPress}
-                >
-                {children}
-                </TouchableOpacity>
-            </View>
+    //키보드에 따라 tab hide/show
+    useEffect(()=> {
+        let keyboardEventListeners;
+        if (Platform.OS === 'android') {
+            keyboardEventListeners = [
+                Keyboard.addListener('keyboardDidShow', () => setVisible(false)),
+                Keyboard.addListener('keyboardDidHide', () => setVisible(true)),
+            ];
+        }
+
+        return () => {
+            if (Platform.OS === 'android') {
+                keyboardEventListeners &&
+                keyboardEventListeners.forEach(eventListener => eventListener.remove());
+            }
+        };
+    }, []);
+
+    if (!visible) {
+        return null;
+    } 
+    else if (isSelected) {
+        return ( 
+            <TouchableOpacity
+                style= {{
+                    flex: 1,
+                    height: 50,
+                    backgroundColor: COLORS.white,
+        
+                }}
+                activeOpacity={1}
+                onPress={onPress}
+            >
+            {children}
+            </TouchableOpacity>
 
         )
     } else {
@@ -61,7 +61,7 @@ const TabBarCustomButton = ({ accessibilityState, children, onPress }) => {
             <TouchableOpacity
                 style= {{
                     flex: 1,
-                    height: 60,
+                    height: 50,
                     backgroundColor: COLORS.white,
         
                 }}
@@ -75,11 +75,21 @@ const TabBarCustomButton = ({ accessibilityState, children, onPress }) => {
     }
 }
 
-const Tabs = () => {
+const Tabs = ({route}) => {
+
+    const { routeName } = route.params;
+
     return (
         <Tab.Navigator
+            initialRouteName={routeName}
             tabBarOptions={{
-                showLabel: false,
+                showLabel: true,
+                labelPosition: 'below-icon',
+                labelStyle: {
+                    color: 'black',
+                    ...FONTS.body6
+
+                },
                 style: {
                     borderTopWidth: 0,
                     backgroundColor: 'transparent',
@@ -88,17 +98,18 @@ const Tabs = () => {
             }}
         >
             <Tab.Screen 
-                name="home"
+                name="당일 모집"
                 component={Home}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image 
-                            source={icons.cutlery}
+                            source={icons.home}
                             resizeMode="contain"
                             style={{
+                                top: 2,
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? COLORS.primary : COLORS.secondary,
+                                tintColor: focused ? COLORS.black : COLORS.secondary,
                             }}
                         />
                     ),
@@ -108,17 +119,18 @@ const Tabs = () => {
                 }}
             />
             <Tab.Screen 
-                name="Search"
-                component={Home}
+                name="주간 모집"
+                component={WeeklyDelivery}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image 
-                            source={icons.search}
+                            source={icons.cart}
                             resizeMode="contain"
                             style={{
+                                top: 2,
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? COLORS.primary : COLORS.secondary,
+                                tintColor: focused ? COLORS.black : COLORS.secondary,
                             }}
                         />
                     ),
@@ -128,17 +140,18 @@ const Tabs = () => {
                 }}
             />
             <Tab.Screen 
-                name="Like"
-                component={Home}
+                name="주문 내역"
+                component={OrderDetails}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image 
-                            source={icons.like}
+                            source={icons.recipe}
                             resizeMode="contain"
                             style={{
+                                top: 2,
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? COLORS.primary : COLORS.secondary,
+                                tintColor: focused ? COLORS.black : COLORS.secondary,
                             }}
                         />
                     ),
@@ -148,17 +161,18 @@ const Tabs = () => {
                 }}
             />
             <Tab.Screen 
-                name="User"
-                component={Home}
+                name="마이페이지"
+                component={MyPageNavigation}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image 
                             source={icons.user}
                             resizeMode="contain"
                             style={{
+                                top: 2,
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? COLORS.primary : COLORS.secondary,
+                                tintColor: focused ? COLORS.black : COLORS.secondary,
                             }}
                         />
                     ),
@@ -174,4 +188,3 @@ const Tabs = () => {
 
 
 export default Tabs;
-

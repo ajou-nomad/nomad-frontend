@@ -1,634 +1,429 @@
-import { NavigationContainer } from '@react-navigation/native';
-import React, {useState}from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 
 import {
-    SafeAreaView,
     View,
     Text,
-    StyleSheet,
-    TouchableOpacity,
     Image,
-    FlatList,
-    TouchableOpacityBase,
+    TouchableOpacity,
+    StyleSheet,
+    Platform, 
+    PermissionsAndroid,
+    ActivityIndicator,
+    Alert
 } from 'react-native';
 
-import {COLORS, icons, images, SIZES, FONTS} from '../constants';
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import Geolocation from 'react-native-geolocation-service';
+import Geocoder from 'react-native-geocoding';
+import {icons, COLORS, SIZES, FONTS, keys} from "../constants";
+
+
+Geocoder.init(keys.GOOGLE_API_KEY, {language : "ko"})
 
 const Home = ({navigation}) => {
 
-    // Dummy Datas
+    //임시 location-----------------
+    const [location, setLocation] = useState({latitude: 37.4978145, longitude: 127.0036984});
 
-    const initialCurrentLocation = {
-        streetName: "streetName",
-        gps: {
-            latitude: 1.5496614931250685,
-            longitude: 110.36381866919922
+    const tempLocation = [
+        {
+            coordinate: {latitude: 37.4978145, longitude: 127.0036984},
+            address: "팔달관"
+        },
+        {
+            coordinate: {latitude: 37.4973145, longitude: 127.0046984},
+            address: "에너지센터"
+        },
+        {
+            coordinate: {latitude: 37.4958145, longitude: 127.0016984},
+            address: "긴경우생략으로보여집니다"
         }
-    }
-
-    const categoryData = [
-        {
-            id: 1,
-            name: "Rice",
-            icon: icons.rice_bowl,
-        },
-        {
-            id: 2,
-            name: "Noodles",
-            icon: icons.noodle,
-        },
-        {
-            id: 3,
-            name: "Hot Dogs",
-            icon: icons.hotdog,
-        },
-        {
-            id: 4,
-            name: "Salads",
-            icon: icons.salad,
-        },
-        {
-            id: 5,
-            name: "Burgers",
-            icon: icons.hamburger,
-        },
-        {
-            id: 6,
-            name: "Pizza",
-            icon: icons.pizza,
-        },
-        {
-            id: 7,
-            name: "Snacks",
-            icon: icons.fries,
-        },
-        {
-            id: 8,
-            name: "Sushi",
-            icon: icons.sushi,
-        },
-        {
-            id: 9,
-            name: "Desserts",
-            icon: icons.donut,
-        },
-        {
-            id: 10,
-            name: "Drinks",
-            icon: icons.drink,
-        },
-
     ]
+    //------------------------------
 
-    // price rating
-    const affordable = 1
-    const fairPrice = 2
-    const expensive = 3
 
-    const restaurantData = [
-        {
-            id: 1,
-            name: "ByProgrammers Burger",
-            rating: 4.8,
-            categories: [5, 7],
-            priceRating: affordable,
-            photo: images.burger_restaurant_1,
-            duration: "30 - 45 min",
-            location: {
-                latitude: 1.5347282806345879,
-                longitude: 110.35632207358996,
-            },
-            courier: {
-                avatar: images.avatar_1,
-                name: "Amy"
-            },
-            menu: [
-                {
-                    menuId: 1,
-                    name: "Crispy Chicken Burger",
-                    photo: images.crispy_chicken_burger,
-                    description: "Burger with crispy chicken, cheese and lettuce",
-                    calories: 200,
-                    price: 10
-                },
-                {
-                    menuId: 2,
-                    name: "Crispy Chicken Burger with Honey Mustard",
-                    photo: images.honey_mustard_chicken_burger,
-                    description: "Crispy Chicken Burger with Honey Mustard Coleslaw",
-                    calories: 250,
-                    price: 15
-                },
-                {
-                    menuId: 3,
-                    name: "Crispy Baked French Fries",
-                    photo: images.baked_fries,
-                    description: "Crispy Baked French Fries",
-                    calories: 194,
-                    price: 8
-                }
-            ]
-        },
-        {
-            id: 2,
-            name: "ByProgrammers Pizza",
-            rating: 4.8,
-            categories: [2, 4, 6],
-            priceRating: expensive,
-            photo: images.pizza_restaurant,
-            duration: "15 - 20 min",
-            location: {
-                latitude: 1.556306570595712,
-                longitude: 110.35504616746915,
-            },
-            courier: {
-                avatar: images.avatar_2,
-                name: "Jackson"
-            },
-            menu: [
-                {
-                    menuId: 4,
-                    name: "Hawaiian Pizza",
-                    photo: images.hawaiian_pizza,
-                    description: "Canadian bacon, homemade pizza crust, pizza sauce",
-                    calories: 250,
-                    price: 15
-                },
-                {
-                    menuId: 5,
-                    name: "Tomato & Basil Pizza",
-                    photo: images.pizza,
-                    description: "Fresh tomatoes, aromatic basil pesto and melted bocconcini",
-                    calories: 250,
-                    price: 20
-                },
-                {
-                    menuId: 6,
-                    name: "Tomato Pasta",
-                    photo: images.tomato_pasta,
-                    description: "Pasta with fresh tomatoes",
-                    calories: 100,
-                    price: 10
-                },
-                {
-                    menuId: 7,
-                    name: "Mediterranean Chopped Salad ",
-                    photo: images.tomato_pasta,
-                    // photo: images.salad,
-                    description: "Finely chopped lettuce, tomatoes, cucumbers",
-                    calories: 100,
-                    price: 10
-                }
-            ]
-        },
-        {
-            id: 3,
-            name: "ByProgrammers Hotdogs",
-            rating: 4.8,
-            categories: [3],
-            priceRating: expensive,
-            photo: images.hot_dog_restaurant,
-            duration: "20 - 25 min",
-            location: {
-                latitude: 1.5238753474714375,
-                longitude: 110.34261833833622,
-            },
-            courier: {
-                avatar: images.avatar_3,
-                name: "James"
-            },
-            menu: [
-                {
-                    menuId: 8,
-                    name: "Chicago Style Hot Dog",
-                    photo: images.chicago_hot_dog,
-                    description: "Fresh tomatoes, all beef hot dogs",
-                    calories: 100,
-                    price: 20
-                }
-            ]
-        },
-        {
-            id: 4,
-            name: "ByProgrammers Sushi",
-            rating: 4.8,
-            categories: [8],
-            priceRating: expensive,
-            photo: images.japanese_restaurant,
-            duration: "10 - 15 min",
-            location: {
-                latitude: 1.5578068150528928,
-                longitude: 110.35482523764315,
-            },
-            courier: {
-                avatar: images.avatar_4,
-                name: "Ahmad"
-            },
-            menu: [
-                {
-                    menuId: 9,
-                    name: "Sushi sets",
-                    photo: images.sushi,
-                    description: "Fresh salmon, sushi rice, fresh juicy avocado",
-                    calories: 100,
-                    price: 50
-                }
-            ]
-        },
-        {
-            id: 5,
-            name: "ByProgrammers Cuisine",
-            rating: 4.8,
-            categories: [1, 2],
-            priceRating: affordable,
-            photo: images.noodle_shop,
-            duration: "15 - 20 min",
-            location: {
-                latitude: 1.558050496260768,
-                longitude: 110.34743759630511,
-            },
-            courier: {
-                avatar: images.avatar_4,
-                name: "Muthu"
-            },
-            menu: [
-                {
-                    menuId: 10,
-                    name: "Kolo Mee",
-                    photo: images.kolo_mee,
-                    description: "Noodles with char siu",
-                    calories: 200,
-                    price: 5
-                },
-                {
-                    menuId: 11,
-                    name: "Sarawak Laksa",
-                    photo: images.sarawak_laksa,
-                    description: "Vermicelli noodles, cooked prawns",
-                    calories: 300,
-                    price: 8
-                },
-                {
-                    menuId: 12,
-                    name: "Nasi Lemak",
-                    photo: images.nasi_lemak,
-                    description: "A traditional Malay rice dish",
-                    calories: 300,
-                    price: 8
-                },
-                {
-                    menuId: 13,
-                    name: "Nasi Briyani with Mutton",
-                    photo: images.nasi_briyani_mutton,
-                    description: "A traditional Indian rice dish with mutton",
-                    calories: 300,
-                    price: 8
-                },
+    const mapView = useRef();
+    // const [location, setLocation] = useState(null);
 
-            ]
-        },
-        {
+    // platform에 따른 위치 동의요청
+    async function requestPermission() { 
+        try { 
+            if (Platform.OS === "ios") { 
+                return await Geolocation.requestAuthorization("always"); 
+            } 
 
-            id: 6,
-            name: "ByProgrammers Dessets",
-            rating: 4.9,
-            categories: [9, 10],
-            priceRating: affordable,
-            photo: images.kek_lapis_shop,
-            duration: "35 - 40 min",
-            location: {
-                latitude: 1.5573478487252896,
-                longitude: 110.35568783282145,
-            },
-            courier: {
-                avatar: images.avatar_1,
-                name: "Jessie"
-            },
-            menu: [
+            if (Platform.OS === "android") {
+                return await PermissionsAndroid.request( PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
                 {
-                    menuId: 12,
-                    name: "Teh C Peng",
-                    photo: images.teh_c_peng,
-                    description: "Three Layer Teh C Peng",
-                    calories: 100,
-                    price: 2
-                },
-                {
-                    menuId: 13,
-                    name: "ABC Ice Kacang",
-                    photo: images.ice_kacang,
-                    description: "Shaved Ice with red beans",
-                    calories: 100,
-                    price: 3
-                },
-                {
-                    menuId: 14,
-                    name: "Kek Lapis",
-                    photo: images.kek_lapis,
-                    description: "Layer cakes",
-                    calories: 300,
-                    price: 20
-                }
-            ]
-
+                    'title': 'Dutch Delivery App required Location permission',
+                    'message': 'Dutch Delivery App access to your location ',
+                    'buttonPositive': 'ok'
+                }); 
+            } 
+        } catch (e) { 
+            console.log(e); 
         }
-
-
-    ]
-
-    const [categories, setCategories] = useState(categoryData);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [restaurants, setRestaurants] = useState(restaurantData);
-    const [currentLocation, setCurrentLocation] = useState(initialCurrentLocation);
-
-    function onSelectCategory(category) {
-        let restaurantList = restaurantData.filter( restaurant => restaurant.categories.includes(category.id));
-        setRestaurants(restaurantList);
-        setSelectedCategory(category);
     }
 
-    function getCategoryNameById(id) {
-        let category = categories.filter ( category => category.id === id)
 
-        if(category.length > 0){
-            return category[0].name
-        }
 
-        return ""
+    // useEffect(() => {
+    //     requestPermission().then( result => {
+    //         if (result === 'granted') {
+    //             console.log( "You can use the ACCESS_FINE_LOCATION" );
+    //             Geolocation.getCurrentPosition( 
+    //                 position => { 
+    //                     setLocation(position.coords);
+                        
+    //                 }, 
+    //                 error => { 
+    //                     console.log(error); 
+    //                 }, 
+    //                 { 
+    //                     enableHighAccuracy: true, 
+    //                     timeout: 30000,
+    //                     maximumAge: 10000
+    //             });
+    //         }
+    //         else {
+    //             console.log( "ACCESS_FINE_LOCATION permission denied" );
+    //         };
+    //     });
+        
+    // }, [])
+
+
+    // 주소 검색시 사용할 예정
+    const fetchAddress = () => {
+        console.log("fetch start")
+
+        // fetch('"https://api.mapbox.com/directions/v5/mapbox/driving/' + location.latitude + ',' + location.longitude + ";"
+        // + "37.494371" + ',' + "127.010282"
+        //     + '?access_token=' + 'pk.eyJ1IjoiamlzZW9uZy0iLCJhIjoiY2ttcHg3c2VzMGdmcTJ1bnNxbnhmbzdyZSJ9.JkWVnm71CZRX_eaN_SehwQ')
+
+        // fetch("https://api.mapbox.com/directions/v5/mapbox/driving/127.044398,37.284547;127.043885,37.275343?annotations=maxspeed&overview=full&geometries=geojson&access_token=pk.eyJ1IjoiamlzZW9uZy0iLCJhIjoiY2ttcHg3c2VzMGdmcTJ1bnNxbnhmbzdyZSJ9.JkWVnm71CZRX_eaN_SehwQ")
+
+        // .then((response) => response.json())
+        // .then((responseJson) => {   
+        //     console.log(responseJson);
+        // }).catch((err) => console.log( err));
+        
+        // Geocoder.from(location.latitude, location.longitude)
+		// .then(json => {
+        // 		var addressComponent = json.results[0].formatted_address;
+		// 	console.log(addressComponent);
+		// })
+		// .catch(error => console.warn(error));
+
+        //     fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.latitude + ',' + location.longitude
+        //     + '&key=' + GOOGLE_API_KEY + '&language=ko')
+        // .then((response) => response.json())
+        // .then((responseJson) => {   
+        //     console.log('udonPeople ' + responseJson.results[0].formatted_address);
+        // }).catch((err) => console.log("udonPeople error : " + err));
+
+
+                // Search by address
+        // Geocoder.from("아주대학교 팔달관")
+        // .then(json => {
+        //     var location = json.results[0];
+        //     console.log(location);
+        // })
+        // .catch(error => console.warn(error));
+
+        // // Search by address, with a biased geo-bounds
+        // Geocoder.from("Pyramid", {
+        // southwest: {lat: 36.05, lng: -115.25},
+        // northeast: {lat: 36.16, lng: -115.10}})
+        // .then(json => {
+        //     var location = json.results[0].geometry.location;
+        //     console.log(location);
+        // })
+        // .catch(error => console.warn(error));
     }
 
-    function renderHeader() {
-        return (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: 50}}>
-                <TouchableOpacity
-                    style={{
-                        width: 50,                                   
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
+
+
+
+    const renderMap = () => {
+
+        const destinationMarker = () => (
+
+            tempLocation.map((item, idx) => (
+                <Marker
+                    key={idx}
+                    coordinate={item.coordinate}
                 >
-                    <Image
-                        source={icons.nearby}
-                        resizeMode='contain'
-                        style= {{
-                            width: 30,
-                            height: 30
-                        }}
-                    />
-                </TouchableOpacity>
-
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    {/* custom marker */}
                     <View
-                        style={{
-                            width: 200,  
-                            height: '100%',
-                            backgroundColor: COLORS.lightGray3,
+                        style={{                      
+                            height: 70,
+                            width: 90,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            borderRadius: SIZES.radius
                         }}
                     >
-                        <Text style={{...FONTS.h3}}>{currentLocation.streetName}</Text>
-                    </View>
-                </View>
-                <TouchableOpacity
-                    style={{
-                        width: 50,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <Image
-                        source={icons.basket}
-                        resizeMode='contain'
-                        style= {{
-                            width: 30,
-                            height: 30
-                        }}
-                    />
-                </TouchableOpacity>
-            </View>
-        )
-    }
-
-    function renderMainCategories() {
-        const renderItem = ({item}) => {
-            return (
-                <TouchableOpacity
-                    style={{
-                        padding: SIZES.padding,
-                        paddingBottom: SIZES.padding * 2,
-                        backgroundColor: (selectedCategory?.id === item.id) ? COLORS.primary : COLORS.white,
-                        borderRadius: SIZES.radius,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginRight: SIZES.padding,
-                        ...style.shadow
-                    }}
-                    onPress={ () => onSelectCategory(item)}
-                >
-                    <View
-                        style={{
-                            width: 20,
-                            height: 15,
-                            borderRadius: 20,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: (selectedCategory?.id === item.id) ? COLORS.white : COLORS.lightGray,
-                        }}
-                    >
-                        <Image
-                            source={item.icon}
-                            resizeMode= 'contain'
-                            style= {{
-                                width: 20,
-                                height: 20
+                        {/* marker 매장명 */}
+                        <View
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                height: 25,
+                                width: 90,
+                                borderTopRightRadius: 5,
+                                borderTopLeftRadius: 5,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: '#1c7ed6',
+                                padding: 10,
                             }}
-                        />
-
+                        >
+                            <Text
+                                numberOfLines={1}
+                                style={{
+                                    ...FONTS.body4,
+                                    color: 'white'
+                                }}
+                            >{item.address}</Text>
+                        </View>
+                        {/* marker 배달그룹 상위 목록 */}
+                        <View
+                            style={{
+                                position: 'absolute',
+                                top: 25,
+                                height: 45,
+                                width: 90,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: 'white',
+                                borderBottomRightRadius: 5,
+                                borderBottomLeftRadius: 5,
+                            }}
+                        >
+                            <View
+                                style={{ flex: 1, paddingHorizontal: 5}}
+                            >
+                                <Text
+                                    numberOfLines={1}
+                                    style={{fontFamily: "AirbnbCereal-Bold.ttfs", fontSize: SIZES.body5}}
+                                >9:00 스타벅스</Text>
+                                <Text
+                                    numberOfLines={1}
+                                    style={{fontFamily: "AirbnbCereal-Bold.ttfs", fontSize: SIZES.body5}}
+                                >9:00 할리스커피</Text>
+                                <Text
+                                    numberOfLines={1}
+                                    style={{fontFamily: "AirbnbCereal-Bold.ttfs", fontSize: SIZES.body5}}
+                                >9:00 파리바게트</Text>
+                            </View>
+                        </View>
                     </View>
-                    <Text
+                    {/* <View
                         style={{
-                            marginTop: SIZES.padding,
-                            color: (selectedCategory?.id === item.id) ? COLORS.white : COLORS.black,
-                            ...FONTS.body5
+                            flexDirection: 'row',
+                            height: 30,
+                            width: 90,
+                            borderRadius: SIZES.radius,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: '#3897f1',
+                            padding: 10,
                         }}
                     >
-                        {item.name}
-                    </Text>
+                        <View>
+                            <Text
+                                numberOfLines={1}
+                                style={{
+                                    // marginLeft: 5,
+                                    ...FONTS.body4,
+                                    color: 'white'
+                                }}
+                            >{item.address}</Text>
 
-                </TouchableOpacity>
-            )
-        }
+                        </View>
+                    </View>
+
+                    // custom marker 클릭 시
+                    <Callout>
+                        <View
+                            style={{
+                                flex: 1,
+
+                            }}
+                        >
+                            <Image
+                                source={icons.building}
+                                style={{
+                                    width: 11,
+                                    height: 11,
+                                    tintColor: COLORS.primary
+                                }}
+                            />
+                            <Text>매장 1111111111111111111111</Text>
+                            <Image
+                                source={icons.building}
+                                style={{
+                                    width: 11,
+                                    height: 11,
+                                    tintColor: COLORS.primary
+                                }}
+                            />
+                            <Text>매장 22222222222222</Text>
+                        </View>
+                    </Callout> */}
+                </Marker >
+            ))
+        )
+
 
         return (
-            <View style={{ padding: SIZES.padding * 2}}>
-                <FlatList
-                    data={categories}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={ item => `${item.id}`}
-                    renderItem={renderItem}
-                    contentContainerStyle={{ paddingTop: SIZES.padding}}
-                />
-
-                
-
+            <View style={{flex: 1}}>
+                {location ? 
+                    <MapView
+                        ref = {mapView}
+                        style={{flex: 1}}
+                        provider={PROVIDER_GOOGLE}
+                        initialRegion={{ 
+                            latitude: location.latitude, 
+                            longitude: location.longitude, 
+                            latitudeDelta: 0.0075, 
+                            longitudeDelta: 0.0075
+                    }}
+                    >
+                        {/* 생성된 그룹 장소 마커 표시 */}
+                        {destinationMarker()}
+                        
+                        {/* 검색 기능으로 사용할 예정 */}
+                        {fetchAddress()}        
+                    </MapView>
+                    :
+                    <View style={{flex:1 ,justifyContent: 'center'}}>
+                        <ActivityIndicator size="large" color={COLORS.primary} />
+                    </View>
+                }
             </View>
-        )
+        ); 
     }
 
 
 
-    function renderRestaurantList() {
-
-        const renderItem = ({item}) => (
+    // 검색 창 헤더
+    const renderDestinationHeader = () => {
+        return (
             <TouchableOpacity
                 style={{
-                    marginBottom: SIZES.padding *2,
+                    position: 'absolute',
+                    top: 20,
+                    left: 0,
+                    right: 0,
+                    height: 50,
+                    alignItems: 'center',
+                    flex: 1,
                 }}
-                // 해당 item 클릭시 Restaurant.js로 넘어간다.
-                onPress={ () => navigation.navigate("Restaurant", {
-                    item,
-                    currentLocation
-                })}
             >
                 <View
                     style={{
-                        marginBottom: SIZES.padding
-                    }}
-                >
-                    <Image
-                        source={item.photo}
-                        resizeMode='cover'
-                        style={{
-                            width: '100%',
-                            height: 150,
-                            borderRadius: SIZES.radius
-                        }}
-                    />
-                    <View
-                        style={{
-                            position: 'absolute',
-                            bottom: 0,
-                            height: 30,
-                            width: SIZES.width * 0.3,
-                            backgroundColor: COLORS.white,
-                            borderTopRightRadius: SIZES.radius,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            ...style.shadow
-                        }}
-                    >
-                        <Text style={{...FONTS.h4}}>{item.duration}</Text>
-                    </View>
-                </View>
-
-
-
-                {/* Restaurant Info */}
-                <Text style={{...FONTS.body2}}>{item.name}</Text>
-
-                <View
-                    style={{
-                        marginTop: SIZES.padding,
                         flexDirection: 'row',
-                        alignItems: 'center'
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: SIZES.width * 0.8,
+                        paddingVertical: SIZES.padding,
+                        paddingHorizontal: SIZES.padding * 2,
+                        borderRadius: SIZES.radius,
+                        backgroundColor: COLORS.white,
+                        elevation: 5,
                     }}
                 >
-                    {/* star icon */}
-                    <Image
-                        source={icons.star}
+                    <Image 
+                        source={icons.search}
                         style={{
-                            height: 25,
-                            width: 25,
-                            tintColor: COLORS.primary,
-                            marginRight: 10
+                            width: 20,
+                            height: 20,
+                            marginRight: SIZES.padding
                         }}
                     />
-                    <Text style={{...FONTS.body3}}>{item.rating}</Text>
-
-                   
                     <View
                         style={{
-                            flexDirection: 'row',
-                            marginLeft: 10
+                            flex: 1,
+                            alignItems: 'center',                     
+                            
                         }}
                     >
-                            {/* category TextList  */}
-                            {item.categories.map((categoryId)=>{
-
-                                return (
-                                    <View
-                                        style={{flexDirection: 'row'}}
-                                        key={categoryId}
-                                    >
-                                        <Text style={{...FONTS.body3}}>{getCategoryNameById(categoryId)}</Text>
-                                        <Text style={{...FONTS.h3, color: COLORS.darkgray}}> . </Text>
-                                        
-                                    </View>
-
-                                )
-
-
-                            })}
-
-                            {
-                                [1, 2, 3].map( price => {
-
-                                    return (            
-                                        <Text
-                                            key={price}
-                                            style={{
-                                                ...FONTS.body3,
-                                                color: (price <= item.priceRating) ? COLORS.black : COLORS.darkgray
-                                            }}
-                                        >$</Text>
-                                    )
-                                    
-
-                                })
-                            }
-
-                            
+                        <Text style={{...FONTS.body3}}>아주대학교 에너지센터</Text>
 
                     </View>
+
                 </View>
             </TouchableOpacity>
         )
+    }
 
+    const renderGpsButton = () => {
         return (
-            <FlatList
-                data={restaurants}
-                keyExtractor={item => `${item.id}`}
-                renderItem={renderItem}
-                contentContainerStyle={{
-                    paddingHorizontal: SIZES.padding *2,
-                    paddingBottom: 30
+            <TouchableOpacity
+                style={{
+                    position: 'absolute',
+                    bottom: 20,
+                    right: 5,
+                    alignItems: 'center',
+                    flex: 1,
                 }}
-            />
+
+                onPress={ () => 
+                    Alert.alert(
+                        "실시간위치 받아올 때 사용",
+                        "My Alert Msg",
+                        [
+                          {
+                            text: "Cancel",
+                            onPress: () => console.log("Cancel Pressed"),
+                            style: "cancel"
+                          },
+                          { text: "OK", onPress: () => console.log("OK Pressed") }
+                        ]
+                      )}
+            >
+                <View
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingVertical: SIZES.padding * 2,
+                        paddingHorizontal: SIZES.padding * 2,
+                        borderRadius: SIZES.radius,
+                        backgroundColor: COLORS.white,
+                        elevation: 5,
+                    }}
+                >
+                    <Image 
+                        source={icons.gps}
+                        style={{
+                            width: 20,
+                            height: 20,
+                        }}
+                    />
+                </View>
+            </TouchableOpacity>
         )
     }
 
 
-
     return (
-        <SafeAreaView style={style.container}>
-            {renderHeader()}
-            {renderMainCategories()}
-            {renderRestaurantList()}
-        </SafeAreaView>
+        <View style= {{flex: 1}}>          
+            {renderMap()}
+            {renderDestinationHeader()}
+            {renderGpsButton()}
+        </View>
     );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.lightGray4, 
     },
     shadow: {
         shadowColor: "#000",
-        shadowOffset: {
+        shadowOffset: { 
             width: 0,
             height: 3,
         },
