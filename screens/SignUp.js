@@ -17,11 +17,11 @@ import {
   ScrollView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import TextInputs from '../components/text_input';
+import TextInputs from '../components/TextInput';
 
-import PhoneNumber from '../components/phone_number';
-import PhoneValid from '../components/phone_valid';
-import UserInfo from '../components/user_info';
+import PhoneNumber from '../components/login/PhoneNumber';
+import PhoneValid from '../components/login/PhoneValid';
+import UserInfo from '../components/login/UserInfo';
 
 export default function SignUpScreen(props) {
   const [userType, setUserType] = useState('User');

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import {Image, TouchableOpacity, Keyboard} from 'react-native';

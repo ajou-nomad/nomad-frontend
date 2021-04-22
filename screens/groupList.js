@@ -18,7 +18,7 @@ import {
   Image,
 } from 'react-native';
 
-import GroupInfo from '../components/groupInfo';
+import GroupInfo from '../components/GroupInfo';
 
 
 export default function GroupList(props) {
