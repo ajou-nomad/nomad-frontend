@@ -21,8 +21,8 @@ export default function UserInfo(props) {
     const user = require('../assets/icons/user.png');
     let logo;
     switch (props.logo){
-        case 'minus': logo = require('../assets/icons/fries.png'); break;
-        case 'home': logo = require('../assets/icons/pizza.png'); break;
+        case 'minus': logo = require('../assets/icons/pizza.png'); break;
+        case 'home': logo = require('../assets/icons/fries.png'); break;
         case 'gps': logo = require('../assets/icons/noodle.png'); break;
 
     }

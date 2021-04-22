@@ -29,11 +29,11 @@ export default function GroupList(props) {
   };
 
   const sortPeople = () => {
-    alert('인원순 정렬');
+    alert('인원 정렬');
   };
 
   const sortTime = () => {
-    alert('시간순 정렬');
+    alert('시간 정렬');
   };
 
   const logo_image = require('../assets/icons/search.png');

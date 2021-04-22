@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {Image, TouchableOpacity, Keyboard} from 'react-native';
 import {COLORS, FONTS, icons} from '../constants';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Home, WeeklyDelivery, OrderDetails} from '../screens';
+import {Home, WeeklyDelivery, OrderDetails} from '../screens/Index';
 import MyPageNavigation from './MyPageNavigation';
 
 const Tab = createBottomTabNavigator();
