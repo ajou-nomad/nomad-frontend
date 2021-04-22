@@ -43,7 +43,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      {null !== null ? (
+      {true !== null ? (
         // MainStack
         <Stack.Navigator
           screenOptions={{

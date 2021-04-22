@@ -5,6 +5,7 @@ import {Image, TouchableOpacity, Keyboard} from 'react-native';
 import {COLORS, FONTS, icons} from '../constants';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home, WeeklyDelivery, OrderDetails} from '../screens/index';
+import HomeNavigation from './HomeNavigation';
 import MyPageNavigation from './MyPageNavigation';
 
 const Tab = createBottomTabNavigator();
@@ -86,7 +87,7 @@ const Tabs = ({route}) => {
       }}>
       <Tab.Screen
         name="당일 모집"
-        component={Home}
+        component={HomeNavigation}
         options={{
           tabBarIcon: ({focused}) => (
             <Image
