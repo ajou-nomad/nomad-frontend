@@ -4,7 +4,7 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {WeeklyDelivery, SignIn, SignUp, Main} from './screens';
+import {WeeklyDelivery, SignIn, SignUp, Main} from './screens/Index';
 import Tabs from './navigation/Tabs';
 import MyPageNavigation from './navigation/MyPageNavigation';
 import {AuthContext} from './context/AuthContextProvider';

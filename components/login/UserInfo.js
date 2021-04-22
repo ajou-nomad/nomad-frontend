@@ -13,7 +13,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 
-import TextInputs from './text_input';
+import TextInputs from '../TextInput';
 
 export default function UserInfo(props) {
         return (
