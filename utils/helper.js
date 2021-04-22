@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
