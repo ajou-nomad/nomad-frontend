@@ -25,21 +25,22 @@ import UserInfo from '../components/login/UserInfo';
 
 export default function SignUpScreen(props) {
   const [userType, setUserType] = useState('User');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [phoneUnique, setPhoneUnique] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState(props.route.params.phoneNumber);
+  const [phoneUnique, setPhoneUnique] = useState(props.route.params.phoneNumber !== '');
   const [validCode, setValidCode] = useState('');
-  const [phoneValid, setPhoneValid] = useState(false);
-  const [email, setEmail] = useState('');
-  const [emailValid, setEmailValid] = useState(false);
+  const [phoneValid, setPhoneValid] = useState(props.route.params.phoneNumber !== '');
+  const [email, setEmail] = useState(props.route.params.email);
+  const [emailValid, setEmailValid] = useState(props.route.params.email !== '');
   const [password, setPassword] = useState('');
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState(props.route.params.nickname);
   const [isUser, setIsUser] = useState(true);
   const [isShop, setIsShop] = useState(false);
   const [isDeli, setIsDeli] = useState(false);
   const [term1, setTerm1] = useState(false);
   const [term2, setTerm2] = useState(false);
   const [confirm, setConfirm] = useState(null);
-  const [isGoogle, setIsGoogle] = useState(true);
+
+  const IsGoogle = props.route.params.IsGoogle;
 
   const onChangePhoneNumber = event => {
     setPhoneNumber(event.nativeEvent.text);
@@ -198,26 +199,30 @@ export default function SignUpScreen(props) {
         <Text style={styles.headerText}>회원가입</Text>
       </View>
       <ScrollView style={styles.mainView}>
-        <PhoneNumber
-          phoneNumber={phoneNumber}
-          inputStyle={styles.input}
-          mainTxtStyle={styles.mainText}
-          userBtnSyle={styles.userTypeButton}
-          userTxtStyle={styles.userTypeText}
-          changePhoneNumber={onChangePhoneNumber}
-          duplicated={signInWithPhoneNumber}
-        />
-        <PhoneValid
-          validCode={validCode}
-          inputStyle={styles.input}
-          phoneUnique={phoneUnique}
-          mainTxtStyle={styles.mainText}
-          changeValidCode={onChangeValidCode}
-          validation={confirmCode}
-        />
+        {phoneUnique||
+        <>
+          <PhoneNumber
+            phoneNumber={phoneNumber}
+            inputStyle={styles.input}
+            mainTxtStyle={styles.mainText}
+            userBtnSyle={styles.userTypeButton}
+            userTxtStyle={styles.userTypeText}
+            changePhoneNumber={onChangePhoneNumber}
+            duplicated={signInWithPhoneNumber}
+          />
+          <PhoneValid
+            validCode={validCode}
+            inputStyle={styles.input}
+            phoneUnique={phoneUnique}
+            mainTxtStyle={styles.mainText}
+            changeValidCode={onChangeValidCode}
+            validation={confirmCode}
+          />
+        </>
+        }
         <UserInfo
           phoneValid={phoneValid}
-          isGoogle={isGoogle}
+          IsGoogle={IsGoogle}
           email={email}
           password={password}
           nickname={nickname}

@@ -19,7 +19,7 @@ export default function UserInfo(props) {
         return (
         props.phoneValid &&
         <>
-            {props.isGoogle ||
+            {props.IsGoogle ||
             <>
             <Text style={props.mainTxtStyle}>이메일</Text>
             <View style={{flexDirection:'row'}}>

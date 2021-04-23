@@ -16,7 +16,7 @@ import {icons} from '../constants';
 
 
 
-export default function GroupInfo(props) {
+export default function ShopInfo(props) {
     // const star = require('../assets/icons/star.png');
     // const time = require('../assets/icons/pin.png');
     // const user = require('../assets/icons/user.png');
@@ -40,15 +40,10 @@ export default function GroupInfo(props) {
                                 <Image style={props.styleStarImage} source={icons.star}/>
                                 <Text style={props.styleRateText}>{props.rate}/5.0</Text>
                             </View>
-                            <View style={props.styleDeliveryTime}>
-                                <Image style={props.styleTimeImage} source={icons.pin}/>
-                                <Text style={props.styleDeliveryTimeText}> {props.time}</Text>
-                            </View>
                         </View>
-                        <View style={props.styleGroupNumber}>
-                            <Image style={props.styleUserImage} source={icons.user} />
-                            <Text style={props.groupNumberText}>{props.current}/{props.max}</Text>
-                        </View>
+                        <TouchableOpacity style={props.styleGroupNumber}>
+                            <Text>그룹 생성</Text>
+                        </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
             </>
