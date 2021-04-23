@@ -7,6 +7,10 @@ import { emailPasswordLogin, googleLogin } from '../utils/helper';
 import messaging from '@react-native-firebase/messaging';
 import { AuthContext } from '../context/AuthContextProvider';
 
+// test ----
+import auth from '@react-native-firebase/auth';
+// test====
+
 
 const SignIn = ({router, navigation}) => {
 
@@ -18,7 +22,7 @@ const SignIn = ({router, navigation}) => {
         GoogleSignin.configure({
             webClientId: keys.FIREBASE_WEBCLIENTID,
             offlineAccess: true, //if you want to access Google API on behalf of the user FROM YOUR SERVER
-        });        
+        });    
     }, []);
 
 
@@ -31,10 +35,55 @@ const SignIn = ({router, navigation}) => {
             };
 
             emailPasswordLogin(data, dispatch);
+
+            setEmail("");
+            setPassword("");
         } else {
             Alert.alert("이메일과 비밀번호를 적어주세요.")
         }
     }
+
+
+
+
+    // ------------test----------
+    const testButton = async () => {
+        
+        const user = auth().currentUser;
+
+        if( user ){
+            const idToken = await user.getIdToken();
+            console.log("user의 정보는\n"+JSON.stringify(user,null, 4));
+            console.log("토큰은\n"+JSON.stringify(idToken,null, 4));
+        } else {
+            console.log("로그인을 해야 볼 수 있습니다.");
+        }
+    }
+
+    const signOutButton = async () => {
+
+        const user = auth().currentUser;
+
+        if( user && user.providerData[0].providerId === 'google.com' ) {
+            try {
+                await GoogleSignin.revokeAccess();
+                await GoogleSignin.signOut();
+                console.log("구글 로그아웃성공");
+                await auth()
+                        .signOut()
+                        .then(() => console.log('파이어베이스 로그아웃성공'));
+            } catch (error) {
+                console.error(error);
+            }
+        } else if (user) {
+            await auth()
+                .signOut()
+                .then(() => console.log('파이어베이스 로그아웃성공'));
+        } else {
+            console.log("로그인 상태가 아닙니다.");
+        }
+    }
+    // ------------test----------
 
 
 
@@ -49,6 +98,13 @@ const SignIn = ({router, navigation}) => {
                 idToken: idToken,
                 fcmToken: fcmToken,
             }
+
+            // test
+            const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+            console.log(googleCredential);
+            await auth().signInWithCredential(googleCredential);
+            console.log("로그인성공");
+            // test
 
 
 
@@ -90,8 +146,8 @@ const SignIn = ({router, navigation}) => {
                     </View>
                     <ScrollView style={styles.loginFormView}>
 
-                        <TextInput onChangeText={setEmail} keyboardType="email-address" placeholder="이메일" placeholderColor="#c4c3cb" style={styles.loginFormTextInput}/>
-                        <TextInput onChangeText={setPassword} placeholder="비밀번호" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true}/>
+                        <TextInput value={email} onChangeText={setEmail} keyboardType="email-address" placeholder="이메일" placeholderColor="#c4c3cb" style={styles.loginFormTextInput}/>
+                        <TextInput value={password} onChangeText={setPassword} placeholder="비밀번호" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true}/>
 
 
                         {/* 일반 로그인 */}
@@ -135,9 +191,21 @@ const SignIn = ({router, navigation}) => {
                                     />
                                 </View>
  
-                                <Text style={{...FONTS.body3, color: COLORS.white}}>Google 계정으로 로그인</Text>
+                                <Text style={{...FONTS.body4, color: COLORS.black}}>Google 계정으로 로그인</Text>
                             </View>
-                        </TouchableOpacity>                        
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.googleButton}
+                            onPress={ testButton }
+                        >
+                            <Text style={{...FONTS.body4, color: COLORS.black}}>임시유저정보출력</Text>    
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.googleButton}
+                            onPress={ signOutButton }
+                        >
+                            <Text style={{...FONTS.body4, color: COLORS.black}}>임시로그아웃</Text>    
+                        </TouchableOpacity>                   
                     </ScrollView>                    
                 </View>
             </TouchableWithoutFeedback>
@@ -189,11 +257,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#4285F4',
+        backgroundColor: 'white',
         marginTop: 15,
         marginHorizontal: 50,
         borderRadius: 5,
-        width: 200,
+        width: SIZES.width * 0.55,
         height: 50,
     },
     signUpButton: {

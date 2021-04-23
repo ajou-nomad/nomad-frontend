@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {WeeklyDelivery, SignIn, SignUp, Main} from './screens/index';
 import Tabs from './navigation/Tabs';
+import { idTokenChangedListeners } from './utils/helper';
 import MyPageNavigation from './navigation/MyPageNavigation';
 import {AuthContext} from './context/AuthContextProvider';
 import messaging from '@react-native-firebase/messaging';
@@ -22,6 +23,9 @@ const App = () => {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
+
+    // idToken이 바뀌었을 때 실행하는 listener
+    // idTokenChangedListeners(state, dispatch); 
 
     // local store에서 token을 가져와 세션유지 ( 지금은 deviceToken으로 하였음)
     const bootstrapAsync = async () => {
@@ -43,7 +47,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      {true !== null ? (
+      { null !== null ? (
         // MainStack
         <Stack.Navigator
           screenOptions={{
