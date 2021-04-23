@@ -60,6 +60,14 @@
 		<string>BMHANNAAir_ttf.ttf</string>
 		<string>BMHANNAPro.ttf</string>
 		<string>BMJUA_ttf.ttf</string>
+		<string>AirbnbCereal-Black.ttf</string>
+		<string>AirbnbCereal-Bold.ttf</string>
+		<string>AirbnbCereal-Book.ttf</string>
+		<string>AirbnbCereal-ExtraBold.ttf</string>
+		<string>AirbnbCereal-Light.ttf</string>
+		<string>AirbnbCereal-Medium.ttf</string>
+		<string>AppleSDGothicNeoB.ttf</string>
+		<string>AppleSDGothicNeoL.ttf</string>
 	</array>
 </dict>
 </plist>
