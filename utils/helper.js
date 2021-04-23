@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
+import {getDistance, getPreciseDistance} from 'geolib';
 
 
 // When a user signs in
@@ -111,4 +112,14 @@ export const emailPasswordLogin = (data, dispatch) => {
 
             console.error(error);
         });
+};
+
+// 두 좌표간에 거리
+export const calculateDistance = (origLat, origLon, markerLat, markerLon) => {
+    const distance = getDistance(
+        {latitude: origLat, longitude: origLon},
+        {latitude: markerLat, longitude: markerLon}
+    );
+    console.log(`Distance= ${distance} Meter OR ${distance / 1000} KM`);
+    return distance;
 };

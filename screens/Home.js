@@ -19,6 +19,8 @@ import MapView, {Callout, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import {icons, COLORS, SIZES, FONTS, keys} from '../constants';
+import { calculateDistance } from '../utils/helper'
+
 
 Geocoder.init(keys.GOOGLE_API_KEY, {language: 'ko'});
 
@@ -41,6 +43,10 @@ const Home = ({navigation}) => {
     {
       coordinate: {latitude: 37.4958145, longitude: 127.0016984},
       address: '긴경우생략으로보여집니다',
+    },
+    {
+      coordinate: {latitude: 37.5000145, longitude: 127.0090984},
+      address: '먼 곳',
     },
   ];
   //------------------------------
@@ -144,83 +150,89 @@ const Home = ({navigation}) => {
   };
 
   const renderMap = () => {
-    const destinationMarker = () =>
-      tempLocation.map((item, idx) => (
-        <Marker key={idx} coordinate={item.coordinate} onPress={()=>navigation.navigate("GroupList",{back:'Home',address:item.address})}>
-          {/* custom marker */}
-          <View
-            style={{
-              height: 70,
-              width: 90,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            {/* marker 매장명 */}
+    const destinationMarker = () => {
+
+      const markers = tempLocation.filter( (marker) => {
+        return calculateDistance(location.latitude, location.longitude, marker.coordinate.latitude, marker.coordinate.longitude) <= 500;
+      })
+      return (
+        markers.map((item, idx) => (
+          <Marker key={idx} coordinate={item.coordinate} onPress={()=>navigation.navigate("GroupList",{back:'Home',address:item.address})}>
+            {/* custom marker */}
             <View
               style={{
-                position: 'absolute',
-                top: 0,
-                height: 25,
+                height: 70,
                 width: 90,
-                borderTopRightRadius: 5,
-                borderTopLeftRadius: 5,
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#1c7ed6',
-                padding: 10,
               }}>
-              <Text
-                numberOfLines={1}
+              {/* marker 매장명 */}
+              <View
                 style={{
-                  ...FONTS.body4,
-                  color: 'white',
+                  position: 'absolute',
+                  top: 0,
+                  height: 25,
+                  width: 90,
+                  borderTopRightRadius: 5,
+                  borderTopLeftRadius: 5,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#1c7ed6',
+                  padding: 10,
                 }}>
-                {item.address}
-              </Text>
-            </View>
-            {/* marker 배달그룹 상위 목록 */}
-            <View
-              style={{
-                position: 'absolute',
-                top: 25,
-                height: 45,
-                width: 90,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'white',
-                borderBottomRightRadius: 5,
-                borderBottomLeftRadius: 5,
-              }}>
-              <View style={{flex: 1, paddingHorizontal: 5}}>
                 <Text
                   numberOfLines={1}
                   style={{
-                    fontFamily: 'AirbnbCereal-Bold.ttfs',
-                    fontSize: SIZES.body5,
+                    ...FONTS.body4,
+                    color: 'white',
                   }}>
-                  9:00 스타벅스
-                </Text>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontFamily: 'AirbnbCereal-Bold.ttfs',
-                    fontSize: SIZES.body5,
-                  }}>
-                  9:00 할리스커피
-                </Text>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontFamily: 'AirbnbCereal-Bold.ttfs',
-                    fontSize: SIZES.body5,
-                  }}>
-                  9:00 파리바게트
+                  {item.address}
                 </Text>
               </View>
+              {/* marker 배달그룹 상위 목록 */}
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 25,
+                  height: 45,
+                  width: 90,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'white',
+                  borderBottomRightRadius: 5,
+                  borderBottomLeftRadius: 5,
+                }}>
+                <View style={{flex: 1, paddingHorizontal: 5}}>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontFamily: 'AirbnbCereal-Bold.ttfs',
+                      fontSize: SIZES.body5,
+                    }}>
+                    9:00 스타벅스
+                  </Text>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontFamily: 'AirbnbCereal-Bold.ttfs',
+                      fontSize: SIZES.body5,
+                    }}>
+                    9:00 할리스커피
+                  </Text>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontFamily: 'AirbnbCereal-Bold.ttfs',
+                      fontSize: SIZES.body5,
+                    }}>
+                    9:00 파리바게트
+                  </Text>
+                </View>
+              </View>
             </View>
-          </View>
-        </Marker>
-      ));
+          </Marker>
+        )))
+    };
 
     return (
       <View style={{flex: 1}}>
