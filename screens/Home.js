@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect, useRef} from 'react';
 
@@ -144,7 +146,7 @@ const Home = ({navigation}) => {
   const renderMap = () => {
     const destinationMarker = () =>
       tempLocation.map((item, idx) => (
-        <Marker key={idx} coordinate={item.coordinate}>
+        <Marker key={idx} coordinate={item.coordinate} onPress={()=>navigation.navigate("GroupList",{back:'Home',address:item.address})}>
           {/* custom marker */}
           <View
             style={{
@@ -302,23 +304,18 @@ const Home = ({navigation}) => {
 
   const createNewGroup = () => {
       return (
-        <TouchableOpacity style={styles.newGroup}>
+        <TouchableOpacity
+          style={styles.newGroup}
+          onPress={()=>navigation.navigate("NewGroup",{back:'Home',address:'아직 안정해쪄'})}
+        >
             <View style={styles.newGroupView}>
                 <Image
                     source={icons.search}
-                    style={{
-                    width: 15,
-                    height: 15,
-                    tintColor: COLORS.white,
-                    marginRight: SIZES.padding,
-                    }}
+                    style={styles.logoStyle}
                 />
                 <View
-                    style={{
-                    flex: 1,
-                    alignItems: 'center',
-                }}>
-                    <Text style={{...FONTS.body4, color: COLORS.white}}>원하는 조건이 없나요?</Text>
+                    style={styles.newGroupTextView}>
+                    <Text style={styles.newGroupText}>원하는 조건이 없나요?</Text>
                 </View>
             </View>
       </TouchableOpacity>
@@ -406,11 +403,19 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   logoStyle:{
-    width: 20,
-    height: 20,
-    alignSelf: 'center',
-    marginHorizontal: 5,
-  }
+    width: 15,
+    height: 15,
+    tintColor: COLORS.white,
+    marginRight: SIZES.padding,
+  },
+  newGroupTextView:{
+    flex: 1,
+    alignItems: 'center',
+  },
+  newGroupText:{
+    ...FONTS.body4,
+    color: COLORS.white
+  },
 });
 
 export default Home;

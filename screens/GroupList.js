@@ -10,6 +10,8 @@
 import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import {
+  SafeAreaView,
+  FlatList,
   View,
   Text,
   StyleSheet,
@@ -17,15 +19,16 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
+import {icons, COLORS, SIZES, FONTS, keys} from '../constants';
 
 import GroupInfo from '../components/GroupInfo';
 
 
 export default function GroupList(props) {
-
-
+  const address = props.route.params.address;
+  const back = props.route.params.back;
   const goBack = () => {
-    alert('뒤로가기');
+    props.navigation.navigate(back);
   };
 
   const sortPeople = () => {
@@ -36,18 +39,105 @@ export default function GroupList(props) {
     alert('시간 정렬');
   };
 
-  const logo_image = require('../assets/icons/search.png');
-  return (
-    <>
+  const groupList = [
+    {
+      id: 'shop1',
+      logo:icons.donut,
+      shopName:'TempName1',
+      rate:3.5,
+      time:'9:00',
+      current:9,
+      max:10,
+    },
+    {
+      id: 'shop2',
+      logo:icons.pizza,
+      shopName:'TempName2',
+      rate:4.5,
+      time:'9:10',
+      current:5,
+      max:10,
+    },
+    {
+      id: 'shop3',
+      logo:icons.noodle,
+      shopName:'TempName3',
+      rate:4.0,
+      time:'9:20',
+      current:7,
+      max:10,
+    },
+    {
+      id: 'shop4',
+      logo:icons.rice_bowl,
+      shopName:'TempName4',
+      rate:3.5,
+      time:'9:30',
+      current:9,
+      max:10,
+    },
+    {
+      id: 'shop5',
+      logo:icons.salad,
+      shopName:'TempName5',
+      rate:4.5,
+      time:'9:40',
+      current:5,
+      max:10,
+    },
+    {
+      id: 'shop6',
+      logo:icons.sushi,
+      shopName:'TempName6',
+      rate:4.0,
+      time:'9:50',
+      current:7,
+      max:10,
+    },
+    {
+      id: 'shop7',
+      logo:icons.drink,
+      shopName:'TempName7',
+      rate:3.5,
+      time:'10:00',
+      current:9,
+      max:10,
+    },
+    {
+      id: 'shop8',
+      logo:icons.fries,
+      shopName:'TempName8',
+      rate:4.5,
+      time:'10:10',
+      current:5,
+      max:10,
+    },
+    {
+      id: 'shop9',
+      logo:icons.hamburger,
+      shopName:'TempName9',
+      rate:4.0,
+      time:'10:20',
+      current:7,
+      max:10,
+    },
+  ];
+  const Header = () =>{
+    return (
       <View style={styles.headerText}>
         <TouchableOpacity
           onPress={() => {goBack();}}
           >
           <Text style={styles.backButton}>&lt;</Text>
         </TouchableOpacity>
-        <Text style={styles.headerLocationText}>{/*props.location*/{location:'아주대학교 팔달관'}.location}</Text>
-        <Text style={styles.headerDateText}>{/*props.date*/{date:'2021.04.21'}.date}</Text>
+        <Text numberOfLines={1} style={styles.headerLocationText}>{address}</Text>
+        <Text style={styles.headerDateText}>{/*props.date*/{date:'2021.04.23'}.date}</Text>
       </View>
+    );
+  };
+
+  const SortButtons = () =>{
+    return (
       <View style={styles.headerButtons}>
         <TouchableOpacity
           onPress={() => {sortPeople();}}
@@ -61,17 +151,18 @@ export default function GroupList(props) {
         >
           <Text style={styles.headerButtonText}>시간순</Text>
         </TouchableOpacity>
+      </View>
+    );
+  };
 
-      </View>
-      <ScrollView style={styles.mainView}>
-        <View>
+  const InfoOfGroup = ({item}) =>(
           <GroupInfo
-            logo={'gps'}
-            shopName={'GranPa\'s Stakehouse'}
-            rate={4.5}
-            time={'9:00'}
-            current={6}
-            max={10}
+            logo={item.logo}
+            shopName={item.shopName}
+            rate={item.rate}
+            time={item.time}
+            current={item.current}
+            max={item.max}
             styleGroupInfo={styles.groupInfo}
             styleLogoImage={styles.logoImage}
             styleShopText={styles.shopText}
@@ -85,240 +176,44 @@ export default function GroupList(props) {
             styleUserImage={styles.userImage}
             groupNumberText={styles.groupNumberText}
           />
-          <GroupInfo
-            logo={'minus'}
-            shopName={'Min&Us'}
-            rate={3.0}
-            time={'9:00'}
-            current={2}
-            max={5}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-          <GroupInfo
-            logo={'home'}
-            shopName={'HomeSweetHome'}
-            rate={4.0}
-            time={'9:00'}
-            current={2}
-            max={10}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-          <GroupInfo
-            logo={'gps'}
-            shopName={'GranPa\'s Stakehouse'}
-            rate={4.5}
-            time={'9:00'}
-            current={6}
-            max={10}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-          <GroupInfo
-            logo={'minus'}
-            shopName={'Min&Us'}
-            rate={3.0}
-            time={'9:00'}
-            current={2}
-            max={5}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-          <GroupInfo
-            logo={'home'}
-            shopName={'HomeSweetHome'}
-            rate={4.0}
-            time={'9:00'}
-            current={2}
-            max={10}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-          <GroupInfo
-            logo={'gps'}
-            shopName={'GranPa\'s Stakehouse'}
-            rate={4.5}
-            time={'9:00'}
-            current={6}
-            max={10}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-          <GroupInfo
-            logo={'minus'}
-            shopName={'Min&Us'}
-            rate={3.0}
-            time={'9:00'}
-            current={2}
-            max={5}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-          <GroupInfo
-            logo={'home'}
-            shopName={'HomeSweetHome'}
-            rate={4.0}
-            time={'9:00'}
-            current={2}
-            max={10}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-          <GroupInfo
-            logo={'gps'}
-            shopName={'GranPa\'s Stakehouse'}
-            rate={4.5}
-            time={'9:00'}
-            current={6}
-            max={10}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-          <GroupInfo
-            logo={'minus'}
-            shopName={'Min&Us'}
-            rate={3.0}
-            time={'9:00'}
-            current={2}
-            max={5}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-          <GroupInfo
-            logo={'home'}
-            shopName={'HomeSweetHome'}
-            rate={4.0}
-            time={'9:00'}
-            current={2}
-            max={10}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-        </View>
-      </ScrollView>
-      <View style={styles.newGroupView}>
-        <TouchableOpacity
-          style={styles.newGroup}
-          onPress={() => {
-            alert('새로운 그룹');
-          }}>
-          <Text style={styles.newGroupText}>
-            <Image style={styles.logoStyle} source={logo_image} />
-            원하는 조건이 없나요?
-          </Text>
-        </TouchableOpacity>
-      </View>
+    );
+
+    const ListOfGroup = () => (
+      <SafeAreaView style={{marginBottom: 100}}>
+        <FlatList
+          data={groupList}
+          renderItem={InfoOfGroup}
+          keyExtractor={item => item.id}
+        />
+      </SafeAreaView>
+    );
+
+  const createNewGroup = () => {
+    return (
+      <TouchableOpacity
+        style={styles.newGroup}
+        onPress={()=>props.navigation.navigate('NewGroup',{back:'GroupList',address:address})}
+      >
+          <View style={styles.newGroupView}>
+              <Image
+                  source={icons.search}
+                  style={styles.logoStyle}
+              />
+              <View
+                  style={styles.newGroupTextView}>
+                  <Text style={styles.newGroupText}>원하는 조건이 없나요?</Text>
+              </View>
+          </View>
+    </TouchableOpacity>
+    );
+  };
+
+  return (
+    <>
+      {Header()}
+      {SortButtons()}
+      {ListOfGroup()}
+      {createNewGroup()}
     </>
   );
 }
@@ -339,13 +234,14 @@ const styles = StyleSheet.create({
   },
   headerLocationText: {
     fontSize: 24,
-    fontWeight: 'bold',
     marginLeft: 50,
+    width: '50%',
   },
   headerDateText: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginLeft: 25,
+    position: 'absolute',
+    right: 10,
   },
   headerButtons: {
     flexDirection: 'row',
@@ -430,28 +326,37 @@ const styles = StyleSheet.create({
     fontSize:16,
     fontWeight: 'bold',
   },
-  newGroupView:{
-    alignItems:'center',
-    justifyContent:'center',
-    position: 'absolute',
-    bottom: 5,
-    left: 5,
-    right: 5,
-  },
   newGroup: {
+    flex: 1,
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
     alignItems: 'center',
+  },
+  newGroupView:{
+    flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
+    width: SIZES.width * 0.5,
+    paddingVertical: SIZES.padding,
+    paddingHorizontal: SIZES.padding * 2,
+    borderRadius: SIZES.radius * 0.5,
     backgroundColor: '#364FC7',
-    borderRadius: 10,
-    width: 220,
-    height: 40,
+    elevation: 5,
   },
   logoStyle:{
-    width: 25,
-    height: 25,
+    width: 15,
+    height: 15,
+    tintColor: COLORS.white,
+    marginRight: SIZES.padding,
   },
-  newGroupText: {
-    color:'#fff',
-    fontSize: 18,
+  newGroupTextView:{
+    flex: 1,
+    alignItems: 'center',
+  },
+  newGroupText:{
+    ...FONTS.body4,
+    color: COLORS.white,
   },
 });
