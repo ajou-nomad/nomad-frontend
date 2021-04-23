@@ -95,7 +95,7 @@ const Home = ({navigation}) => {
 
   // 주소 검색시 사용할 예정
   const fetchAddress = () => {
-    console.log('fetch start');
+    console.log('fetch 할 예정');
 
     // fetch('"https://api.mapbox.com/directions/v5/mapbox/driving/' + location.latitude + ',' + location.longitude + ";"
     // + "37.494371" + ',' + "127.010282"
@@ -217,59 +217,6 @@ const Home = ({navigation}) => {
               </View>
             </View>
           </View>
-          {/* <View
-                        style={{
-                            flexDirection: 'row',
-                            height: 30,
-                            width: 90,
-                            borderRadius: SIZES.radius,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: '#3897f1',
-                            padding: 10,
-                        }}
-                    >
-                        <View>
-                            <Text
-                                numberOfLines={1}
-                                style={{
-                                    // marginLeft: 5,
-                                    ...FONTS.body4,
-                                    color: 'white'
-                                }}
-                            >{item.address}</Text>
-
-                        </View>
-                    </View>
-
-                    // custom marker 클릭 시
-                    <Callout>
-                        <View
-                            style={{
-                                flex: 1,
-
-                            }}
-                        >
-                            <Image
-                                source={icons.building}
-                                style={{
-                                    width: 11,
-                                    height: 11,
-                                    tintColor: COLORS.primary
-                                }}
-                            />
-                            <Text>매장 1111111111111111111111</Text>
-                            <Image
-                                source={icons.building}
-                                style={{
-                                    width: 11,
-                                    height: 11,
-                                    tintColor: COLORS.primary
-                                }}
-                            />
-                            <Text>매장 22222222222222</Text>
-                        </View>
-                    </Callout> */}
         </Marker>
       ));
 
@@ -304,28 +251,8 @@ const Home = ({navigation}) => {
   // 검색 창 헤더
   const renderDestinationHeader = () => {
     return (
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          top: 20,
-          left: 0,
-          right: 0,
-          height: 50,
-          alignItems: 'center',
-          flex: 1,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: SIZES.width * 0.8,
-            paddingVertical: SIZES.padding,
-            paddingHorizontal: SIZES.padding * 2,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.white,
-            elevation: 5,
-          }}>
+      <TouchableOpacity style={styles.destinationHeader}>
+        <View style={styles.destinationHeaderView}>
           <Image
             source={icons.search}
             style={{
@@ -348,14 +275,8 @@ const Home = ({navigation}) => {
 
   const renderGpsButton = () => {
     return (
-      <TouchableOpacity
-        style={{
-          position: 'absolute',
-          bottom: 20,
-          right: 5,
-          alignItems: 'center',
-          flex: 1,
-        }}
+      <TouchableOpacity 
+        style={styles.gpsButton}
         onPress={() =>
           Alert.alert('실시간위치 받아올 때 사용', 'My Alert Msg', [
             {
@@ -366,16 +287,7 @@ const Home = ({navigation}) => {
             {text: 'OK', onPress: () => console.log('OK Pressed')},
           ])
         }>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingVertical: SIZES.padding * 2,
-            paddingHorizontal: SIZES.padding * 2,
-            borderRadius: SIZES.radius,
-            backgroundColor: COLORS.white,
-            elevation: 5,
-          }}>
+        <View style={styles.gpsButtonView}>
           <Image
             source={icons.gps}
             style={{
@@ -387,21 +299,29 @@ const Home = ({navigation}) => {
       </TouchableOpacity>
     );
   };
-  const searchIcon = require('../assets/icons/search.png');
+
   const createNewGroup = () => {
-      return(
-        <View style={styles.newGroupView}>
-          <TouchableOpacity
-            style={styles.newGroup}
-            onPress={() => {
-              alert('새로운 그룹');
-            }}>
-            <Text style={styles.newGroupText}>
-              <Image style={styles.logoStyle} source={searchIcon} />
-              원하는 조건이 없나요?
-            </Text>
-          </TouchableOpacity>
-        </View>
+      return (
+        <TouchableOpacity style={styles.newGroup}>
+            <View style={styles.newGroupView}>
+                <Image
+                    source={icons.search}
+                    style={{
+                    width: 15,
+                    height: 15,
+                    tintColor: COLORS.white,
+                    marginRight: SIZES.padding,
+                    }}
+                />
+                <View
+                    style={{
+                    flex: 1,
+                    alignItems: 'center',
+                }}>
+                    <Text style={{...FONTS.body4, color: COLORS.white}}>원하는 조건이 없나요?</Text>
+                </View>
+            </View>
+      </TouchableOpacity>
       )
   }
 
@@ -430,34 +350,67 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 1,
   },
-  newGroupView:{
-    alignItems:'center',
-    justifyContent:'center',
+  destinationHeader: {
     position: 'absolute',
-    bottom: 5,
-    left: 5,
+    top: 20,
+    left: 0,
+    right: 0,
+    height: 50,
+    alignItems: 'center',
+    flex: 1,
+  },
+  destinationHeaderView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: SIZES.width * 0.8,
+    paddingVertical: SIZES.padding,
+    paddingHorizontal: SIZES.padding * 2,
+    borderRadius: SIZES.radius,
+    backgroundColor: COLORS.white,
+    elevation: 5,
+  },
+  gpsButton: {
+    position: 'absolute',
+    bottom: 20,
     right: 5,
+    alignItems: 'center',
+    flex: 1,
+  },
+  gpsButtonView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: SIZES.padding * 2,
+    paddingHorizontal: SIZES.padding * 2,
+    borderRadius: SIZES.radius,
+    backgroundColor: COLORS.white,
+    elevation: 5,
   },
   newGroup: {
+    flex: 1,
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
     alignItems: 'center',
+  },
+  newGroupView:{
+    flexDirection: 'row',
     justifyContent: 'center',
-    backgroundColor: '#1c7ed6',
-    borderRadius: 10,
-    width: 220,
-    height: 40,
+    alignItems: 'center',
+    width: SIZES.width * 0.5,
+    paddingVertical: SIZES.padding,
+    paddingHorizontal: SIZES.padding * 2,
+    borderRadius: SIZES.radius * 0.5,
+    backgroundColor: '#364FC7',
+    elevation: 5,
   },
   logoStyle:{
     width: 20,
     height: 20,
     alignSelf: 'center',
     marginHorizontal: 5,
-  },
-  newGroupText: {
-    color:'#fff',
-    fontSize: 18,
-    alignSelf: 'center',
-    marginHorizontal: 5,
-  },
+  }
 });
 
 export default Home;
