@@ -11,6 +11,8 @@ import MyPageNavigation from './navigation/MyPageNavigation';
 import {AuthContext} from './context/AuthContextProvider';
 import messaging from '@react-native-firebase/messaging';
 
+import CreateGroupDetail from './screens/group/CreateGroupDetail';
+
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -58,6 +60,7 @@ const App = () => {
           <Stack.Screen name="Home" component={Tabs} />
           <Stack.Screen name="WeeklyDelivery" component={WeeklyDelivery} />
           <Stack.Screen name="MyPageNavigation" component={MyPageNavigation} />
+          <Stack.Screen name="CreateGroupDetail" component={CreateGroupDetail} />
         </Stack.Navigator>
       ) : (
         // AuthStack

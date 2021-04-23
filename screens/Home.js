@@ -320,7 +320,9 @@ const Home = ({navigation}) => {
             </View>
       </TouchableOpacity>
       )
+
   }
+
 
   return (
     <View style={{flex: 1}}>

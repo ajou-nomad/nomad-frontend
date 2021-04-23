@@ -56,10 +56,24 @@ export const FONTS = {
     body2: { fontFamily: "AirbnbCereal-Black", fontSize: SIZES.body2, lineHeight: 30 },
     body3: { fontFamily: "AirbnbCereal-Light", fontSize: SIZES.body3, lineHeight: 22 },
     body4: { fontFamily: "AirbnbCereal-Black.ttf", fontSize: SIZES.body4, lineHeight: 22 },
-    body5: { fontFamily: "AirbnbCereal-Bold.ttfs", fontSize: SIZES.body5, lineHeight: 22 },
+    body5: { fontFamily: "AirbnbCereal-Bold.ttf", fontSize: SIZES.body5, lineHeight: 22 },
     body6: { fontFamily: "AirbnbCereal-Light.ttf", fontSize: SIZES.body6, lineHeight: 22 },
 };
 
-const appTheme = { COLORS, SIZES, FONTS };
+export const FONTS2 = {
+    h1: { fontFamily: "AppleSDGothicNeoB", fontSize: SIZES.h1, lineHeight: 32 },
+    h2: { fontFamily: "AppleSDGothicNeoB", fontSize: SIZES.h2, lineHeight: 30 },
+    h3: { fontFamily: "AppleSDGothicNeoB", fontSize: SIZES.h3, lineHeight: 22 },
+    h4: { fontFamily: "AppleSDGothicNeoB", fontSize: SIZES.h4, lineHeight: 22 },
+    h5: { fontFamily: "AppleSDGothicNeoB", fontSize: SIZES.h5, lineHeight: 22 },
+    body1: { fontFamily: "AppleSDGothicNeoL", fontSize: SIZES.body1, lineHeight: 33 },
+    body2: { fontFamily: "AppleSDGothicNeoL", fontSize: SIZES.body2, lineHeight: 30 },
+    body3: { fontFamily: "AppleSDGothicNeoL", fontSize: SIZES.body3, lineHeight: 22 },
+    body4: { fontFamily: "AppleSDGothicNeoL", fontSize: SIZES.body4, lineHeight: 22 },
+    body5: { fontFamily: "AppleSDGothicNeoL", fontSize: SIZES.body5, lineHeight: 22 },
+    body6: { fontFamily: "AppleSDGothicNeoL", fontSize: SIZES.body6, lineHeight: 22 },
+};
+
+const appTheme = { COLORS, SIZES, FONTS, FONTS2 };
 
 export default appTheme;
