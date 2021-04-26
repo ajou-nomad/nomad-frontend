@@ -22,6 +22,7 @@ import {
 import {icons, COLORS, SIZES, FONTS, keys} from '../constants';
 
 import GroupInfo from '../components/GroupInfo';
+import NewGroupButton from '../components/map/NewGroupButton';
 
 
 export default function GroupList(props) {
@@ -192,7 +193,7 @@ export default function GroupList(props) {
     return (
       <TouchableOpacity
         style={styles.newGroup}
-        onPress={()=>props.navigation.navigate('NewGroup',{back:'GroupList',address:address})}
+        onPress={()=>props.navigation.navigate('CreateGroupList',{back:'GroupList',address:address})}
       >
           <View style={styles.newGroupView}>
               <Image
@@ -213,7 +214,7 @@ export default function GroupList(props) {
       {Header()}
       {SortButtons()}
       {ListOfGroup()}
-      {createNewGroup()}
+      <NewGroupButton item={{back:'GroupList'}} />
     </>
   );
 }

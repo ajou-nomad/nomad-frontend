@@ -120,7 +120,7 @@ const Home = ({navigation}) => {
           <GoogleMap location={location} />
           { renderDestinationHeader() }
           <GpsButton />
-          <NewGroupButton NewGroup="CreateGroupList" navigation={navigation}/>
+          <NewGroupButton item={{back:'home'}}/>
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

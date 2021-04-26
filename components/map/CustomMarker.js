@@ -12,7 +12,7 @@ const CustomMarker = ({item}) => {
     return (
         <Marker 
             coordinate={item.coordinate} 
-            onPress={() => navigation.navigate("NewGroup",{back:'Home',address: item.address})}
+            onPress={() => navigation.navigate("GroupList",{back:'Home',address: item.address})}
         >
             <View style={styles.markerView}>
                 {/* marker 매장명 */}
