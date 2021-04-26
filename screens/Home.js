@@ -19,9 +19,10 @@ import { currentLocation } from '../utils/helper';
 
 
 
-const Home = ({navigation}) => {
+const Home = (props,{navigation}) => {
 
   const [location, setLocation] = useState();
+  const IsWeekly = props.route.params.IsWeekly;
 
   useEffect( () => {
 
@@ -117,7 +118,7 @@ const Home = ({navigation}) => {
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap location={location} />
+          <GoogleMap IsWeekly={IsWeekly} location={location} />
           { renderDestinationHeader() }
           <GpsButton />
           <NewGroupButton item={{back:'home'}}/>

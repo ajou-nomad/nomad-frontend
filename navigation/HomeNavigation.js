@@ -25,7 +25,7 @@ const HomeNavigation = ({route, navigation}) => {
             }}
             initialRouteName={'Home'}
         >
-            <HomeStack.Screen name="Home" component={Home} />
+            <HomeStack.Screen name="Home" component={Home} initialParams={{IsWeekly:false}} />
             <HomeStack.Screen name="GroupList" component={GroupList} />
             {/* 채팅방, 뭐 등등 추가시 작성  */}
             <HomeStack.Screen name="CreateGroupList" component={CreateGroupList} />

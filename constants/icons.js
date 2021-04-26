@@ -32,8 +32,10 @@ const logo_white = require("../assets/icons/logo_white.png");
 const gps = require("../assets/icons/gps.png");
 const recipe = require("../assets/icons/recipe.png");
 const google = require("../assets/icons/google.png");
+const group = require("../assets/icons/group.png");
 
 export default {
+    group,
     google,
     recipe,
     gps,
