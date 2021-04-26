@@ -306,7 +306,7 @@ const Home = ({navigation}) => {
       return (
         <TouchableOpacity
           style={styles.newGroup}
-          onPress={()=>navigation.navigate("NewGroup",{back:'Home',address:'아직 안정해쪄'})}
+          onPress={()=>navigation.navigate("CreateGroupList")}
         >
             <View style={styles.newGroupView}>
                 <Image
