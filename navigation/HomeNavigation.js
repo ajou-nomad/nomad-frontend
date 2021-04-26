@@ -27,7 +27,6 @@ const HomeNavigation = ({route, navigation}) => {
         >
             <HomeStack.Screen name="Home" component={Home} />
             <HomeStack.Screen name="GroupList" component={GroupList} />
-            <HomeStack.Screen name="NewGroup" component={NewGroup} />
             {/* 채팅방, 뭐 등등 추가시 작성  */}
             <HomeStack.Screen name="CreateGroupList" component={CreateGroupList} />
             <HomeStack.Screen name="SelectStore" component={SelectStore} />
