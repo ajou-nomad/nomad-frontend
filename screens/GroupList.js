@@ -192,7 +192,7 @@ export default function GroupList(props) {
     return (
       <TouchableOpacity
         style={styles.newGroup}
-        onPress={()=>props.navigation.navigate('NewGroup',{back:'GroupList',address:address})}
+        onPress={()=>props.navigation.navigate('CreateGroupList')}
       >
           <View style={styles.newGroupView}>
               <Image

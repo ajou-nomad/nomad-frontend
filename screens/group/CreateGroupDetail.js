@@ -11,14 +11,13 @@ import {
     TextInput,
 } from 'react-native';
 
-import Counter from "react-native-counters";
+import Counter from 'react-native-counters';
 import DatePicker from 'react-native-date-picker';
 
 import { FONTS2 } from '../../constants';
 
 function CreateGroupDetail({ navigation }) {
     const [date, setDate] = useState(new Date());
-
     return (
         <View style={styles.container}>
             {/* Header */}
@@ -58,11 +57,11 @@ function CreateGroupDetail({ navigation }) {
                         fontWeight: 'bold',
                     }}>인원</Text>
                     <Counter
-                        start={1}
-                        min={1}
-                        buttonTextStyle={{ color: 'black', ...FONTS2.h1 }}
-                        buttonStyle={{ borderColor: 'black' }}
-                        countTextStyle={{ color: 'black', ...FONTS2.h1 }}
+                            start={1}
+                            min={1}
+                            buttonTextStyle={{ color: 'black', ...FONTS2.h1 }}
+                            buttonStyle={{ borderColor: 'black' }}
+                            countTextStyle={{ color: 'black', ...FONTS2.h1 }}
                         />
                     </View>
                     <View style={{

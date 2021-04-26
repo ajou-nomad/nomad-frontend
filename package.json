@@ -30,9 +30,12 @@
     "react-native-loading-spinner-overlay": "2.0.0",
     "react-native-maps": "0.27.1",
     "react-native-maps-directions": "1.8.0",
+    "react-native-pager-view": "5.1.5",
     "react-native-reanimated": "1.13.2",
     "react-native-safe-area-context": "3.1.9",
-    "react-native-screens": "2.15.0"
+    "react-native-screens": "2.15.0",
+    "react-native-tab-view": "3.0.1",
+    "react-native-tab-view-viewpager-adapter": "1.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.13.10",

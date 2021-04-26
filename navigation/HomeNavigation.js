@@ -7,6 +7,7 @@ import GroupList from '../screens/GroupList';
 import NewGroup from '../screens/NewGroup';
 import CreateGroupList from '../screens/group/CreateGroupList';
 import StoreDetail from '../screens/store/StoreDetail';
+import MenuDetail from '../screens/store/MenuDetail';
 
 
 const HomeStack = createStackNavigator();
@@ -31,6 +32,7 @@ const HomeNavigation = ({route, navigation}) => {
             {/* 채팅방, 뭐 등등 추가시 작성  */}
             <HomeStack.Screen name="CreateGroupList" component={CreateGroupList} />
             <HomeStack.Screen name="StoreDetail" component={StoreDetail} />
+            <HomeStack.Screen name="MenuDetail" component={MenuDetail} />
         </HomeStack.Navigator>
     );
 };
