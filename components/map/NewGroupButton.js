@@ -1,12 +1,13 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { icons, COLORS, SIZES, FONTS } from '../../constants';
 
-const NewGroupButton = () => {
+const NewGroupButton = (props) => {
     return (
         <TouchableOpacity
           style={styles.newGroup}
-          onPress={()=> console.log("이동할 예정")}
+          onPress={()=> props.navigation.navigate(props.NewGroup)}
         >
             <View style={styles.newGroupView}>
                 <Image
