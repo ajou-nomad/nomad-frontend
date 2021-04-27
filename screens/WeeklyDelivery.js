@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect, useRef} from 'react';
 
@@ -6,30 +8,109 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  TouchableOpacityBase,
+  StyleSheet,
+  ActivityIndicator
 } from 'react-native';
+import {icons, COLORS, SIZES, FONTS} from '../constants';
+import GoogleMap from '../components/map/GoogleMap';
+import NewGroupButton from '../components/map/NewGroupButton';
+import GpsButton from '../components/map/GpsButton';
 
-import {
-    icons,
-    COLORS,
-    SIZES,
-    FONTS,
-    GOOGLE_API_KEY
-} from '../constants';
 
-const WeeklyDelivery = ({route, navigation}) => {
-  /*
-    스케쥴러 먼저
-    해당 요일 ~ 다음주 요일-1, 주말 제외 (수,목,금,월,화) 위에는 작게 날짜 표시
-    1시간 텀으로 오전 6시 ~ 오후 10시까지 나눠서 칸 만들기
-    해당 칸을 클릭하여 이동, 안에는 배달 시간순으로 정렬
-    해당 날짜의 지도 + 그룹
-  */
+const WeeklyDelivery = ({ route, navigation }) => {
+
+  const [location, setLocation] = useState();
+  const IsWeekly = true;
+
+  useEffect( () => {
+    //임시 셋팅
+    setLocation({            
+      latitude: 37.284696906069975,
+      longitude: 127.04438918710983,
+      address: '아주대학교 팔달관'
+    })
+  }, [] )
+  // 검색 창 헤더
+  const renderDestinationHeader = () => {
+    return (
+      <TouchableOpacity 
+        style={styles.destinationHeader}
+        onPress={() => navigation.navigate("SearchPlace")}
+      >
+        <View style={styles.destinationHeaderView}>
+          <Image
+            source={icons.search}
+            style={{
+              width: 20,
+              height: 20,
+              marginRight: SIZES.padding,
+            }}
+          />
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+            }}>
+            <Text style={{...FONTS.body3}}>{location.address}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={{flex: 1}}>
-      <Text>WeeklyDelivery</Text>
+      { location ? (
+        <View style={{flex: 1}}>
+          <GoogleMap IsWeekly={IsWeekly} location={location} />
+          { renderDestinationHeader() }
+          <GpsButton />
+          <NewGroupButton item={{back:'home'}}/>
+        </View>
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+            <ActivityIndicator size="large" color={COLORS.primary} />
+        </View>
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.lightGray4,
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 1,
+  },
+  destinationHeader: {
+    position: 'absolute',
+    top: 20,
+    left: 0,
+    right: 0,
+    height: 50,
+    alignItems: 'center',
+    flex: 1,
+  },
+  destinationHeaderView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: SIZES.width * 0.8,
+    paddingVertical: SIZES.padding,
+    paddingHorizontal: SIZES.padding * 2,
+    borderRadius: SIZES.radius,
+    backgroundColor: COLORS.white,
+    elevation: 5,
+  }
+});
 
 export default WeeklyDelivery;

@@ -5,7 +5,7 @@ import {Image, TouchableOpacity, Keyboard} from 'react-native';
 import {COLORS, FONTS, icons} from '../constants';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home, WeeklyDelivery, OrderDetails} from '../screens/index';
-import HomeNavigation from './HomeNavigation';
+import DayNavigation from './DayNavigation';
 import WeeklyNavigation from './WeeklyNavigation';
 import MyPageNavigation from './MyPageNavigation';
 
@@ -88,7 +88,7 @@ const Tabs = ({route}) => {
       }}>
       <Tab.Screen
         name="당일 모집"
-        component={HomeNavigation}
+        component={DayNavigation}
         options={{
           tabBarIcon: ({focused}) => (
             <Image
