@@ -6,7 +6,7 @@ import { View, ActivityIndicator } from 'react-native';
 import CustomMarker from './CustomMarker';
 
 
-const GoogleMap = ({location}) => {
+const GoogleMap = ({IsWeekly, location}) => {
 
     console.log(location);
 
@@ -53,7 +53,7 @@ const GoogleMap = ({location}) => {
             }}
         >
             { filteredMarkers.map((item, idx) => (
-                <CustomMarker key={idx} item={item} />
+                <CustomMarker key={idx} item={item} IsWeekly={IsWeekly} />
             ))}
         </MapView>
     );

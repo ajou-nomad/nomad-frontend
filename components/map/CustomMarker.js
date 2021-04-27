@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SIZES, FONTS } from '../../constants';
@@ -5,11 +6,12 @@ import { Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 
 
-const CustomMarker = ({item}) => {
+const CustomMarker = ({IsWeekly, item}) => {
 
     const navigation = useNavigation();
 
     return (
+        !IsWeekly ?
         <Marker 
             coordinate={item.coordinate} 
             onPress={() => navigation.navigate("GroupList",{back:'Home',address: item.address})}
@@ -61,6 +63,27 @@ const CustomMarker = ({item}) => {
                 </View>
             </View>
         </Marker>
+        :
+        <Marker 
+            coordinate={item.coordinate} 
+            onPress={() => navigation.navigate("TimeTable",{back:'Home',address: item.address})}
+        >
+            <View style={styles.markerView}>
+                {/* marker 매장명 */}
+                <View style={styles.buildingNameWeek}>
+                    <Text
+                        numberOfLines={1}
+                        style={{
+                        ...FONTS.body3,
+                        color: 'white',
+                        }}
+                    >
+                        {item.address}
+                    </Text>
+                </View>
+            </View>
+        </Marker>
+        
     );
 };
 
@@ -81,6 +104,17 @@ const styles = StyleSheet.create({
         width: 90,
         borderTopRightRadius: 5,
         borderTopLeftRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#1c7ed6',
+        padding: 10,
+    },
+    buildingNameWeek:{
+        position: 'absolute',
+        top: 0,
+        height: 50,
+        width: 90,
+        borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#1c7ed6',
