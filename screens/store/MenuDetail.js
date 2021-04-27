@@ -13,18 +13,47 @@ import {
     SafeAreaView,
 } from 'react-native';
 
-import { FONTS2, icons, images } from '../../constants';
+import { COLORS, FONTS2, icons, images } from '../../constants';
 
 import Counter from 'react-native-counters';
 import { ScrollView } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import { DefaultTheme, Checkbox } from 'react-native-paper';
 
 // 옵션 선택 컴포넌트
-const Option = ({ item }) => {
-    const [isSelected, setSelected] = useState(false);
+const Option = ({ item, userOption, setUserOption }) => {
+    // 유저가 선택한 옵션 항목들 => 전역 상태?
+    const [selectOption, setSelectOption] = useState([]);
+    const [isSelect, setIsselect] = useState(false);
+
+    console.log('here');
+    console.log(userOption);
+
+    const theme = {
+        ...DefaultTheme,
+        colors: {
+            ...DefaultTheme.colors,
+            primary: 'tomato',
+            accent: 'red',
+        },
+    };
+
+
+
     return (
-        <View style={{ flexDirection: 'row', marginBottom: 20, }}>
-            <TouchableOpacity>
+        <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+            {/* <TouchableOpacity
+                onPress={() => {
+                    setIsselect(!isSelect);
+                    if (isSelect === false) {
+                        console.log('here:------- ', isSelect);
+                        // 선택 취소한 경우 삭제
+                        setUserOption(userOption.filter(user => user !== item.id));
+                    } else {
+                        // 선택한 경우 배열에 추가
+                        setUserOption([...userOption, item.id ]);
+                    }
+                }}
+            >
                 <Image
                     source={icons.checkbox}
                     resizeMode='contain'
@@ -32,10 +61,18 @@ const Option = ({ item }) => {
                         width: 23,
                         height: 23,
                         marginRight: 10,
+                        tintColor: isSelect ? 'red' : COLORS.secondary,
                     }}
                 />
-            </TouchableOpacity>
-            <Text style={{ ...FONTS2.body2, }}>{item.flavor}</Text>
+            </TouchableOpacity> */}
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Checkbox
+                    status={isSelect ? 'checked' : 'unchecked'}
+                    onPress={() => { setIsselect(!isSelect); }}
+                    theme={theme}
+                />
+                <Text style={{ ...FONTS2.body2, }}>{item.flavor}</Text>
+            </View>
         </View>
     );
 }
@@ -122,8 +159,9 @@ function MenuDetail({ navigation }) {
 
     // 최종 금액
     const [totalPrice, setTotalPrice] = useState(menuDetail.price);
-    // 유저가 선택한 옵션 항목들 => 전역 상태?
-    const [selectOption, setSelectOption] = useState([]);
+
+    // 유저가 선택한 옵션 정보
+    const [userOption, setUserOption] = useState([]);
 
     // 총 가격 계산
     const handleTotalPrice = (number, type) => {
@@ -187,6 +225,8 @@ function MenuDetail({ navigation }) {
                                 return (
                                     <Option
                                         item={item}
+                                        userOption={userOption}
+                                        setUserOption={setUserOption}
                                     />
                                 );
                             }}

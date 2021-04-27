@@ -8,46 +8,54 @@ import {
     View,
     Text,
     Image,
-    TouchableOpacity,
     useWindowDimensions,
     ScrollView,
+    SafeAreaView,
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import { FONTS2, icons, COLORS } from '../../constants';
 
+
 import Menu from '../../components/Menu';
+import Review from '../../screens/review/Review';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import StoreInfo from './StoreInfo';
 
 // 메뉴 (flatlist로 바꾸기)
-const FirstRoute = () => (
-    <ScrollView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        <Menu />
-        <Menu />
-        <Menu />
-        <Menu />
-        <Menu />
-        <Menu />
-    </ScrollView>
+const MenuRoute = () => (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+        <ScrollView>
+            <Menu />
+            <Menu />
+            <Menu />
+            <Menu />
+            <Menu />
+            <Menu />
+        </ScrollView>
+    </SafeAreaView>
 );
 
 // 매장 정보
-const SecondRoute = () => (
-    <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        
-    </View>
+const StoreInfoRoute = () => (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff', padding: 15 }}>
+        <ScrollView>
+            <StoreInfo />
+        </ScrollView>
+    </SafeAreaView>
 );
 
 // 리뷰
-const ThirdRoute = () => (
-    <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        
-    </View>
+const ReviewRoute = () => (
+    <ScrollView style={{ flex: 1, backgroundColor: '#ffffff', padding: 15, }}>
+        <Review />
+    </ScrollView>
 );
 
 const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-    third: ThirdRoute,
+    first: MenuRoute,
+    second: StoreInfoRoute,
+    third: ReviewRoute,
 });
 
 function StoreDetail() {
@@ -75,8 +83,8 @@ function StoreDetail() {
         />
     );
 
-    return (
-        <View style={styles.container}>
+    const renderHeader = () => {
+        return (
             <View
                 style={{
                     flex: 1,
@@ -114,14 +122,22 @@ function StoreDetail() {
                         <Text style={{ ...FONTS2.body2 }}>최소주문금액</Text>
                         <Text style={{ ...FONTS2.body2 }}>13,500원</Text>
                     </View>
-                
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ ...FONTS2.body2 }}>배달팁</Text>
                         <Text style={{ ...FONTS2.body2 }}>2,000원</Text>
                     </View>
+                    
+                    <TouchableOpacity>
+                        <Text style={{ ...FONTS2.body2, color: 'blue' }}>매장 생성 그룹 보기</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
+        );
+    }
 
+    return (
+        <View style={styles.container}>
+            {renderHeader()}
             {/* 탭(메뉴, 매장 정보, 리뷰) */}
             <View
                 style={{

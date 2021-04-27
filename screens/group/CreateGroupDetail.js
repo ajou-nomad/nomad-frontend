@@ -69,11 +69,6 @@ function CreateGroupDetail({ navigation }) {
                         width: 300,
                         paddingBottom: 10,}}/>
                 </View>
-
-                <Text style={{ ...FONTS2.body2 }}>
-                    그룹 생성하면 주문 확인 내용 페이지로
-                </Text>
-
             </View>
 
             {/* Footer */}
