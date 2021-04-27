@@ -21,7 +21,7 @@ const Main = ({navigation}) => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    navigation.navigate('Home', {
+                    navigation.navigate('Tabs', {
                         routeName: '당일 모집'
                     });       
                 }}
@@ -32,7 +32,7 @@ const Main = ({navigation}) => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    navigation.navigate('Home', {
+                    navigation.navigate('Tabs', {
                         routeName: '주간 모집'
                     });               
                 }}
