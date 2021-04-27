@@ -22,6 +22,7 @@ import {
 import {icons, COLORS, SIZES, FONTS, keys} from '../constants';
 
 import GroupInfo from '../components/GroupInfo';
+import NewGroupButton from '../components/map/NewGroupButton';
 
 
 export default function GroupList(props) {
@@ -54,7 +55,7 @@ export default function GroupList(props) {
       logo:icons.pizza,
       shopName:'TempName2',
       rate:4.5,
-      time:'9:10',
+      time:'9:05',
       current:5,
       max:10,
     },
@@ -63,7 +64,7 @@ export default function GroupList(props) {
       logo:icons.noodle,
       shopName:'TempName3',
       rate:4.0,
-      time:'9:20',
+      time:'9:10',
       current:7,
       max:10,
     },
@@ -72,7 +73,7 @@ export default function GroupList(props) {
       logo:icons.rice_bowl,
       shopName:'TempName4',
       rate:3.5,
-      time:'9:30',
+      time:'9:15',
       current:9,
       max:10,
     },
@@ -81,7 +82,7 @@ export default function GroupList(props) {
       logo:icons.salad,
       shopName:'TempName5',
       rate:4.5,
-      time:'9:40',
+      time:'9:20',
       current:5,
       max:10,
     },
@@ -90,7 +91,7 @@ export default function GroupList(props) {
       logo:icons.sushi,
       shopName:'TempName6',
       rate:4.0,
-      time:'9:50',
+      time:'9:25',
       current:7,
       max:10,
     },
@@ -99,7 +100,7 @@ export default function GroupList(props) {
       logo:icons.drink,
       shopName:'TempName7',
       rate:3.5,
-      time:'10:00',
+      time:'09:30',
       current:9,
       max:10,
     },
@@ -108,7 +109,7 @@ export default function GroupList(props) {
       logo:icons.fries,
       shopName:'TempName8',
       rate:4.5,
-      time:'10:10',
+      time:'09:45',
       current:5,
       max:10,
     },
@@ -117,11 +118,12 @@ export default function GroupList(props) {
       logo:icons.hamburger,
       shopName:'TempName9',
       rate:4.0,
-      time:'10:20',
+      time:'09:50',
       current:7,
       max:10,
     },
   ];
+  
   const Header = () =>{
     return (
       <View style={styles.headerText}>
@@ -192,8 +194,7 @@ export default function GroupList(props) {
     return (
       <TouchableOpacity
         style={styles.newGroup}
-        onPress={()=>props.navigation.navigate('CreateGroupList')}
-      >
+        onPress={()=>props.navigation.navigate('CreateGroupList')}>
           <View style={styles.newGroupView}>
               <Image
                   source={icons.search}
@@ -213,7 +214,7 @@ export default function GroupList(props) {
       {Header()}
       {SortButtons()}
       {ListOfGroup()}
-      {createNewGroup()}
+      <NewGroupButton item={{back:'GroupList'}} />
     </>
   );
 }

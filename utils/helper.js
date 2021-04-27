@@ -1,8 +1,14 @@
 /* eslint-disable prettier/prettier */
-import { Alert } from 'react-native';
+import { Alert, PermissionsAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
+import {getDistance, getPreciseDistance} from 'geolib';
+import Geolocation from 'react-native-geolocation-service';
+import Geocoder from 'react-native-geocoding';
+import { keys } from '../constants'
+
+Geocoder.init(keys.GOOGLE_API_KEY, {language: 'ko'});
 
 
 // When a user signs in
@@ -112,3 +118,77 @@ export const emailPasswordLogin = (data, dispatch) => {
             console.error(error);
         });
 };
+
+// 두 좌표간에 거리
+export const calculateDistance = (origLat, origLon, markerLat, markerLon) => {
+    const distance = getDistance(
+        {latitude: origLat, longitude: origLon},
+        {latitude: markerLat, longitude: markerLon}
+    );
+    // console.log(`Distance= ${distance} Meter OR ${distance / 1000} KM`);
+    return distance;
+};
+
+
+// useState를 넘겨 현재 위치정보 저장
+export const currentLocation = async (setLocation) => {
+
+    const result = await requestPermission();
+
+    if (result === 'granted') {
+        console.log( "You can use the ACCESS_FINE_LOCATION" );
+        Geolocation.getCurrentPosition(
+            position => {
+                console.log(position);
+                
+                Geocoder.from(position.coords.latitude, position.coords.longitude)
+                .then(json => {
+                    		let addressComponent = json.results[0];
+                    	console.log(addressComponent);
+                  });
+                
+                // console.log("현재위치저장완료")
+                // setLocation(position.coords);
+            },
+            error => {
+                console.log(error);
+            },
+            {
+                enableHighAccuracy: false,
+                timeout: 30000,
+                maximumAge: 10000
+        });
+    }
+    else {
+        Alert.alert('설정에서 DutchDelivery가 내 기기 위치에 액세스하도록 허용해주세요.');
+
+        // access location이 불가능할 경우 default 팔달관
+        const coords ={
+            latitude: 37.284696906069975,
+            longitude: 127.04438918710983
+        };
+        setLocation(coords);
+    };
+};
+
+// platform에 따른 위치 동의요청
+export const requestPermission = async () => {
+    try {
+      if (Platform.OS === 'ios') {
+        return await Geolocation.requestAuthorization('always');
+      }
+
+      if (Platform.OS === 'android') {
+        return await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        //   {
+        //     title: 'Dutch Delivery App required Location permission',
+        //     message: 'Dutch Delivery App access to your location ',
+        //     buttonPositive: 'ok',
+        //   },
+        );
+      }
+    } catch (e) {
+        console.log(e);
+    }
+}

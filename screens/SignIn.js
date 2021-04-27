@@ -101,9 +101,17 @@ const SignIn = ({router, navigation}) => {
 
             // test
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-            console.log(googleCredential);
             await auth().signInWithCredential(googleCredential);
-            console.log("로그인성공");
+            const user = auth().currentUser;
+            navigation.navigate("SignUp", {
+                            idToken: idToken,
+                            fcmToken: fcmToken,
+                            phoneNumber: user.phoneNumber,
+                            email: user.email,
+                            nickname: user.displayName,
+                            IsGoogle: true,
+                        });
+            
             // test
 
 
@@ -120,7 +128,10 @@ const SignIn = ({router, navigation}) => {
             //         navigation.navigate("SignUp", {
             //             idToken: idToken,
             //             fcmToken: fcmToken,
-            //             provider: 'GOOGLE',
+            //             phoneNumber: googleCredential.phoneNumber,
+            //             email: googleCredential.email,
+            //             nickname: googleCredential.displayName,
+            //             IsGoogle: true,
             //         });
             //     });
             
@@ -161,7 +172,11 @@ const SignIn = ({router, navigation}) => {
                         {/* 회원가입 이동 */}
                         <TouchableOpacity 
                             style={styles.signUpButton}
-                            onPress={()=> navigation.navigate("SignUp")}
+                            onPress={()=> navigation.navigate("SignUp",{
+                                phoneNumber: '',
+                                email: '',
+                                nickname: '',
+                                IsGoogle: false,})}
                         >
                             <View style={{ flexDirection: 'row' }}>
                                 <Text

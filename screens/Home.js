@@ -9,91 +9,36 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  Platform,
-  PermissionsAndroid,
-  ActivityIndicator,
-  Alert,
+  ActivityIndicator
 } from 'react-native';
-
-import MapView, {Callout, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import Geolocation from 'react-native-geolocation-service';
-import Geocoder from 'react-native-geocoding';
 import {icons, COLORS, SIZES, FONTS, keys} from '../constants';
+import GoogleMap from '../components/map/GoogleMap';
+import NewGroupButton from '../components/map/NewGroupButton';
+import GpsButton from '../components/map/GpsButton';
+import { currentLocation } from '../utils/helper';
 
-Geocoder.init(keys.GOOGLE_API_KEY, {language: 'ko'});
 
-const Home = ({navigation}) => {
-  //임시 location-----------------
-  const [location, setLocation] = useState({
-    latitude: 37.4978145,
-    longitude: 127.0036984,
-  });
 
-  const tempLocation = [
-    {
-      coordinate: {latitude: 37.4978145, longitude: 127.0036984},
-      address: '팔달관',
-    },
-    {
-      coordinate: {latitude: 37.4973145, longitude: 127.0046984},
-      address: '에너지센터',
-    },
-    {
-      coordinate: {latitude: 37.4958145, longitude: 127.0016984},
-      address: '긴경우생략으로보여집니다',
-    },
-  ];
-  //------------------------------
+const Home = (props,{navigation}) => {
 
-  const mapView = useRef();
-  // const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState();
+  const IsWeekly = props.route.params.IsWeekly;
 
-  // platform에 따른 위치 동의요청
-  async function requestPermission() {
-    try {
-      if (Platform.OS === 'ios') {
-        return await Geolocation.requestAuthorization('always');
-      }
+  useEffect( () => {
 
-      if (Platform.OS === 'android') {
-        return await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Dutch Delivery App required Location permission',
-            message: 'Dutch Delivery App access to your location ',
-            buttonPositive: 'ok',
-          },
-        );
-      }
-    } catch (e) {
-      console.log(e);
+    //현재 위치동의 및 받아오기
+    async function fetchLocation() {
+      await currentLocation(setLocation);
     }
-  }
 
-  // useEffect(() => {
-  //     requestPermission().then( result => {
-  //         if (result === 'granted') {
-  //             console.log( "You can use the ACCESS_FINE_LOCATION" );
-  //             Geolocation.getCurrentPosition(
-  //                 position => {
-  //                     setLocation(position.coords);
+    // fetchLocation();
 
-  //                 },
-  //                 error => {
-  //                     console.log(error);
-  //                 },
-  //                 {
-  //                     enableHighAccuracy: true,
-  //                     timeout: 30000,
-  //                     maximumAge: 10000
-  //             });
-  //         }
-  //         else {
-  //             console.log( "ACCESS_FINE_LOCATION permission denied" );
-  //         };
-  //     });
-
-  // }, [])
+    //임시
+    setLocation({            
+      latitude: 37.284696906069975,
+      longitude: 127.04438918710983
+    })
+  }, [])
 
   // 주소 검색시 사용할 예정
   const fetchAddress = () => {
@@ -143,113 +88,7 @@ const Home = ({navigation}) => {
     // .catch(error => console.warn(error));
   };
 
-  const renderMap = () => {
-    const destinationMarker = () =>
-      tempLocation.map((item, idx) => (
-        <Marker key={idx} coordinate={item.coordinate} onPress={()=>navigation.navigate("GroupList",{back:'Home',address:item.address})}>
-          {/* custom marker */}
-          <View
-            style={{
-              height: 70,
-              width: 90,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            {/* marker 매장명 */}
-            <View
-              style={{
-                position: 'absolute',
-                top: 0,
-                height: 25,
-                width: 90,
-                borderTopRightRadius: 5,
-                borderTopLeftRadius: 5,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#1c7ed6',
-                padding: 10,
-              }}>
-              <Text
-                numberOfLines={1}
-                style={{
-                  ...FONTS.body4,
-                  color: 'white',
-                }}>
-                {item.address}
-              </Text>
-            </View>
-            {/* marker 배달그룹 상위 목록 */}
-            <View
-              style={{
-                position: 'absolute',
-                top: 25,
-                height: 45,
-                width: 90,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'white',
-                borderBottomRightRadius: 5,
-                borderBottomLeftRadius: 5,
-              }}>
-              <View style={{flex: 1, paddingHorizontal: 5}}>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontFamily: 'AirbnbCereal-Bold.ttfs',
-                    fontSize: SIZES.body5,
-                  }}>
-                  9:00 스타벅스
-                </Text>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontFamily: 'AirbnbCereal-Bold.ttfs',
-                    fontSize: SIZES.body5,
-                  }}>
-                  9:00 할리스커피
-                </Text>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontFamily: 'AirbnbCereal-Bold.ttfs',
-                    fontSize: SIZES.body5,
-                  }}>
-                  9:00 파리바게트
-                </Text>
-              </View>
-            </View>
-          </View>
-        </Marker>
-      ));
-
-    return (
-      <View style={{flex: 1}}>
-        {location ? (
-          <MapView
-            ref={mapView}
-            style={{flex: 1}}
-            provider={PROVIDER_GOOGLE}
-            initialRegion={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-              latitudeDelta: 0.0075,
-              longitudeDelta: 0.0075,
-            }}>
-            {/* 생성된 그룹 장소 마커 표시 */}
-            {destinationMarker()}
-
-            {/* 검색 기능으로 사용할 예정 */}
-            {fetchAddress()}
-          </MapView>
-        ) : (
-          <View style={{flex: 1, justifyContent: 'center'}}>
-            <ActivityIndicator size="large" color={COLORS.primary} />
-          </View>
-        )}
-      </View>
-    );
-  };
-
+  
   // 검색 창 헤더
   const renderDestinationHeader = () => {
     return (
@@ -268,7 +107,7 @@ const Home = ({navigation}) => {
               flex: 1,
               alignItems: 'center',
             }}>
-            <Text style={{...FONTS.body3}}>아주대학교 에너지센터</Text>
+            <Text style={{...FONTS.body3}}>아주대학교 팔달관</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -322,14 +161,21 @@ const Home = ({navigation}) => {
       )
 
   }
-
-
+  
   return (
     <View style={{flex: 1}}>
-      {renderMap()}
-      {renderDestinationHeader()}
-      {renderGpsButton()}
-      {createNewGroup()}
+      { location ? (
+        <View style={{flex: 1}}>
+          <GoogleMap IsWeekly={IsWeekly} location={location} />
+          { renderDestinationHeader() }
+          <GpsButton />
+          <NewGroupButton item={{back:'home'}}/>
+        </View>
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+            <ActivityIndicator size="large" color={COLORS.primary} />
+        </View>
+      )}
     </View>
   );
 };
@@ -368,56 +214,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius,
     backgroundColor: COLORS.white,
     elevation: 5,
-  },
-  gpsButton: {
-    position: 'absolute',
-    bottom: 20,
-    right: 5,
-    alignItems: 'center',
-    flex: 1,
-  },
-  gpsButtonView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: SIZES.padding * 2,
-    paddingHorizontal: SIZES.padding * 2,
-    borderRadius: SIZES.radius,
-    backgroundColor: COLORS.white,
-    elevation: 5,
-  },
-  newGroup: {
-    flex: 1,
-    position: 'absolute',
-    bottom: 10,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-  },
-  newGroupView:{
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: SIZES.width * 0.5,
-    paddingVertical: SIZES.padding,
-    paddingHorizontal: SIZES.padding * 2,
-    borderRadius: SIZES.radius * 0.5,
-    backgroundColor: '#364FC7',
-    elevation: 5,
-  },
-  logoStyle:{
-    width: 15,
-    height: 15,
-    tintColor: COLORS.white,
-    marginRight: SIZES.padding,
-  },
-  newGroupTextView:{
-    flex: 1,
-    alignItems: 'center',
-  },
-  newGroupText:{
-    ...FONTS.body4,
-    color: COLORS.white
-  },
+  }
 });
 
 export default Home;
