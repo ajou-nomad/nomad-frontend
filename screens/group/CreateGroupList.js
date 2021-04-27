@@ -117,7 +117,7 @@ function CreateGroupList({ navigation }) {
                     alignSelf: 'center',
                     width: 20,
                     }}
-                    onPress={() => navigation.navigate('SelectStore')}
+                    onPress={() => navigation.navigate('StoreDetail')}
                 >
                     <Text style={{...FONTS2.h3 }}>선택</Text>
                 </TouchableOpacity>

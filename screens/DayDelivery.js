@@ -122,6 +122,54 @@ const DayDelivery = ({ route, navigation }) => {
     );
   };
 
+  const renderGpsButton = () => {
+    return (
+      <TouchableOpacity 
+        style={styles.gpsButton}
+        onPress={() =>
+          Alert.alert('실시간위치 받아올 때 사용', 'My Alert Msg', [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ])
+        }>
+        <View style={styles.gpsButtonView}>
+          <Image
+            source={icons.gps}
+            style={{
+              width: 20,
+              height: 20,
+            }}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const createNewGroup = () => {
+      return (
+        <TouchableOpacity
+          style={styles.newGroup}
+          onPress={()=>navigation.navigate("CreateGroupList")}
+        >
+            <View style={styles.newGroupView}>
+                <Image
+                    source={icons.search}
+                    style={styles.logoStyle}
+                />
+                <View
+                    style={styles.newGroupTextView}>
+                    <Text style={styles.newGroupText}>원하는 조건이 없나요?</Text>
+                </View>
+            </View>
+      </TouchableOpacity>
+      )
+
+  }
+  
   return (
     <View style={{flex: 1}}>
       { location ? (

@@ -32,6 +32,7 @@ const logo_white = require("../assets/icons/logo_white.png");
 const gps = require("../assets/icons/gps.png");
 const recipe = require("../assets/icons/recipe.png");
 const google = require("../assets/icons/google.png");
+const checkbox = require("../assets/icons/checkbox.png");
 const group = require("../assets/icons/group.png");
 
 export default {
@@ -69,5 +70,6 @@ export default {
     sushi,
     user,
     home,
-    cart
+    cart,
+    checkbox,
 }
