@@ -25,8 +25,6 @@ const Option = ({ item, userOption, setUserOption }) => {
     const [selectOption, setSelectOption] = useState([]);
     const [isSelect, setIsselect] = useState(false);
 
-    console.log('here');
-    console.log(userOption);
 
     const theme = {
         ...DefaultTheme,

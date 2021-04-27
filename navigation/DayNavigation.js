@@ -8,6 +8,8 @@ import NewGroup from '../screens/NewGroup';
 import CreateGroupList from '../screens/group/CreateGroupList';
 import SelectStore from '../screens/group/SelectStore';
 import SearchPlace from '../screens/search/SearchPlace';
+import StoreDetail from '../screens/store/StoreDetail';
+import MenuDetail from '../screens/store/MenuDetail';
 
 
 const DayStack = createStackNavigator();
@@ -31,6 +33,8 @@ const DayNavigation = ({route, navigation}) => {
             <DayStack.Screen name="CreateGroupList" component={CreateGroupList} />
             <DayStack.Screen name="SelectStore" component={SelectStore} />
             <DayStack.Screen name="SearchPlace" component={SearchPlace} />
+            <DayStack.Screen name="StoreDetail" component={StoreDetail} />
+            <DayStack.Screen name="MenuDetail" component={MenuDetail} />
         </DayStack.Navigator>
     );
 };
