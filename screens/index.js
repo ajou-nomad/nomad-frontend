@@ -1,5 +1,5 @@
 import Main from './Main';
-import Home from './Home';
+import DayDelivery from './DayDelivery';
 import WeeklyDelivery from './WeeklyDelivery';
 import OrderDetails from './OrderDetails';
 import MyPage from './MyPage';
@@ -12,7 +12,7 @@ import SignUp from './SignUp';
 
 export {
     Main,
-    Home,
+    DayDelivery,
     WeeklyDelivery,
     OrderDetails,
     MyPage,

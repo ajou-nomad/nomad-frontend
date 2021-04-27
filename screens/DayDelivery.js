@@ -11,7 +11,7 @@ import {
   StyleSheet,
   ActivityIndicator
 } from 'react-native';
-import {icons, COLORS, SIZES, FONTS, keys} from '../constants';
+import {icons, COLORS, SIZES, FONTS} from '../constants';
 import GoogleMap from '../components/map/GoogleMap';
 import NewGroupButton from '../components/map/NewGroupButton';
 import GpsButton from '../components/map/GpsButton';
@@ -19,28 +19,33 @@ import { currentLocation } from '../utils/helper';
 
 
 
-const Home = (props,{navigation}) => {
+const DayDelivery = ({ route, navigation }) => {
 
   const [location, setLocation] = useState();
-  const IsWeekly = props.route.params.IsWeekly;
+  const IsWeekly = false;
 
   useEffect( () => {
 
-    //현재 위치동의 및 받아오기
-    async function fetchLocation() {
-      await currentLocation(setLocation);
-    }
-
-    // fetchLocation();
+    // navigation에서 올때마다 호출( 리렌더링은 제외 )
+    navigation.addListener('focus', async() => {
+      console.log("Home일떄");
+      console.log(route.params);
+      if ( route.params?.post ) {
+        console.log("in here?")
+        setLocation(route.params.post);
+      }
+    })
+    // 현재 위치동의 및 받아오기
+    currentLocation(setLocation);
 
     //임시
-    setLocation({            
-      latitude: 37.284696906069975,
-      longitude: 127.04438918710983
-    })
-  }, [])
+    // setLocation({            
+    //   latitude: 37.284696906069975,
+    //   longitude: 127.04438918710983
+    // })
+  }, [] )
 
-  // 주소 검색시 사용할 예정
+  // 배달원 할 때 참조할 내용
   const fetchAddress = () => {
     console.log('fetch 할 예정');
 
@@ -50,7 +55,7 @@ const Home = (props,{navigation}) => {
 
     // fetch("https://api.mapbox.com/directions/v5/mapbox/driving/127.044398,37.284547;127.043885,37.275343?annotations=maxspeed&overview=full&geometries=geojson&access_token=pk.eyJ1IjoiamlzZW9uZy0iLCJhIjoiY2ttcHg3c2VzMGdmcTJ1bnNxbnhmbzdyZSJ9.JkWVnm71CZRX_eaN_SehwQ")
 
-    // .then((response) => response.json())
+    // .then((response) => response.json())ㄴ
     // .then((responseJson) => {
     //     console.log(responseJson);
     // }).catch((err) => console.log( err));
@@ -92,7 +97,10 @@ const Home = (props,{navigation}) => {
   // 검색 창 헤더
   const renderDestinationHeader = () => {
     return (
-      <TouchableOpacity style={styles.destinationHeader}>
+      <TouchableOpacity 
+        style={styles.destinationHeader}
+        onPress={() => navigation.navigate("SearchPlace")}
+      >
         <View style={styles.destinationHeaderView}>
           <Image
             source={icons.search}
@@ -107,7 +115,7 @@ const Home = (props,{navigation}) => {
               flex: 1,
               alignItems: 'center',
             }}>
-            <Text style={{...FONTS.body3}}>아주대학교 팔달관</Text>
+            <Text style={{...FONTS.body3}}>{location.address}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -169,4 +177,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+export default DayDelivery;

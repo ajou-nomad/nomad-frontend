@@ -4,21 +4,24 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {WeeklyDelivery, SignIn, SignUp, Main} from './screens/index';
+import {SignIn, SignUp, Main} from './screens/index';
 import Tabs from './navigation/Tabs';
 import { idTokenChangedListeners } from './utils/helper';
-import MyPageNavigation from './navigation/MyPageNavigation';
 import {AuthContext} from './context/AuthContextProvider';
 import messaging from '@react-native-firebase/messaging';
 
 import CreateGroupDetail from './screens/group/CreateGroupDetail';
+
+import WeeklyNavigation from './navigation/WeeklyNavigation';
+import DayNavigation from './navigation/DayNavigation';
+import MyPageNavigation from './navigation/MyPageNavigation';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   // 전역적으로 관리하는 context 및 reducer 사용
   const {state, dispatch} = useContext(AuthContext);
-  console.log(state);
+  // console.log(state);
 
   useEffect(() => {
     // Foreground state messages
@@ -57,8 +60,9 @@ const App = () => {
           }}
           initialRouteName={'Main'}>
           <Stack.Screen name="Main" component={Main} />
-          <Stack.Screen name="Home" component={Tabs} />
-          <Stack.Screen name="WeeklyDelivery" component={WeeklyDelivery} />
+          <Stack.Screen name="Tabs" component={Tabs} />
+          <Stack.Screen name="DayDelivery" component={DayNavigation} />
+          <Stack.Screen name="WeeklyDelivery" component={WeeklyNavigation} />
           <Stack.Screen name="MyPageNavigation" component={MyPageNavigation} />
           <Stack.Screen name="CreateGroupDetail" component={CreateGroupDetail} />
         </Stack.Navigator>

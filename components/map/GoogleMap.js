@@ -8,8 +8,6 @@ import CustomMarker from './CustomMarker';
 
 const GoogleMap = ({IsWeekly, location}) => {
 
-    console.log(location);
-
     const mapView = useRef();
     
     const tempLocation = [

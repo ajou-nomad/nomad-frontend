@@ -6,7 +6,7 @@ import messaging from '@react-native-firebase/messaging';
 import {getDistance, getPreciseDistance} from 'geolib';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
-import { keys } from '../constants'
+import { keys } from '../constants';
 
 Geocoder.init(keys.GOOGLE_API_KEY, {language: 'ko'});
 
@@ -31,8 +31,8 @@ export const idTokenChangedListeners = (state, dispatch) => {
         } else {
             console.log("유저 정보없음");
         }
-    })
-}
+    });
+};
 
 export const getAccessToken = async () => {
     const user = auth().currentUser;
@@ -47,8 +47,8 @@ export const getAccessToken = async () => {
     } else {
         console.log("현재 로그인한 유저가 없음.");
         return null;
-    }
-}
+    };
+};
 
 export const googleLogin = async (response, dispatch) => {
     // firebase에 login
@@ -119,39 +119,49 @@ export const emailPasswordLogin = (data, dispatch) => {
         });
 };
 
-// 두 좌표간에 거리
-export const calculateDistance = (origLat, origLon, markerLat, markerLon) => {
-    const distance = getDistance(
-        {latitude: origLat, longitude: origLon},
-        {latitude: markerLat, longitude: markerLon}
-    );
-    // console.log(`Distance= ${distance} Meter OR ${distance / 1000} KM`);
-    return distance;
+export const searchAddress = async (address) => {
+    //Search by address
+    try {
+        const json = await Geocoder.from(address);
+        const location = json.results[0].geometry.location;
+        location.address = address.replace("대한민국 ","");
+        return location;
+
+    } catch (e) {
+        console.log(e);
+    }
 };
 
 
 // useState를 넘겨 현재 위치정보 저장
 export const currentLocation = async (setLocation) => {
 
+    //권한 요청
     const result = await requestPermission();
+
+    // error시 팔달관 좌표 반환
+    const initCoords = {
+        latitude: 37.284696906069975,
+        longitude: 127.04438918710983,
+        address: "아주대학교 팔달관"
+    };
 
     if (result === 'granted') {
         console.log( "You can use the ACCESS_FINE_LOCATION" );
         Geolocation.getCurrentPosition(
             position => {
-                console.log(position);
-                
                 Geocoder.from(position.coords.latitude, position.coords.longitude)
                 .then(json => {
-                    		let addressComponent = json.results[0];
-                    	console.log(addressComponent);
-                  });
-                
-                // console.log("현재위치저장완료")
-                // setLocation(position.coords);
+
+                    let addressComponent = json.results[0].formatted_address.replace("대한민국 서울특별시 ","");
+                    position.coords.address = addressComponent;
+                    console.log("현재위치저장완료")
+                    setLocation(position.coords);
+                });
             },
             error => {
                 console.log(error);
+                setLocation(initCoords);
             },
             {
                 enableHighAccuracy: false,
@@ -160,16 +170,11 @@ export const currentLocation = async (setLocation) => {
         });
     }
     else {
-        Alert.alert('설정에서 DutchDelivery가 내 기기 위치에 액세스하도록 허용해주세요.');
-
-        // access location이 불가능할 경우 default 팔달관
-        const coords ={
-            latitude: 37.284696906069975,
-            longitude: 127.04438918710983
-        };
-        setLocation(coords);
+        Alert.alert('설정에서 DutchDelivery가 기기 위치에 액세스하도록 허용해주세요.');
+        setLocation(initCoords);
     };
 };
+
 
 // platform에 따른 위치 동의요청
 export const requestPermission = async () => {
@@ -190,5 +195,16 @@ export const requestPermission = async () => {
       }
     } catch (e) {
         console.log(e);
-    }
-}
+    };
+};
+
+
+// 두 좌표간에 거리
+export const calculateDistance = (origLat, origLon, markerLat, markerLon) => {
+    const distance = getDistance(
+        {latitude: origLat, longitude: origLon},
+        {latitude: markerLat, longitude: markerLon}
+    );
+    // console.log(`Distance= ${distance} Meter OR ${distance / 1000} KM`);
+    return distance;
+};
