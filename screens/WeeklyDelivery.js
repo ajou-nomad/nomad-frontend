@@ -1,7 +1,6 @@
-/* eslint-disable no-alert */
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect, useRef} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, { useState, useEffect } from 'react';
 
 import {
   View,
@@ -9,7 +8,7 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import {icons, COLORS, SIZES, FONTS} from '../constants';
 import GoogleMap from '../components/map/GoogleMap';
@@ -27,25 +26,25 @@ const WeeklyDelivery = ({ route, navigation }) => {
   useEffect( () => {
 
     // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
-    if(route.params?.post) {
+    if (route.params?.post) {
       setLocation(route.params.post);
     } else {
       //임시 셋팅
-      setLocation({            
+      setLocation({
         latitude: 37.284696906069975,
         longitude: 127.04438918710983,
-        address: '아주대학교 팔달관'
-      })
+        address: '아주대학교 팔달관',
+      });
     }
 
-  }, [route.params?.post] )
+  }, [route.params?.post]);
 
   // 검색 창 헤더
   const renderDestinationHeader = () => {
     return (
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.destinationHeader}
-        onPress={() => navigation.navigate("SearchPlace",{screen: "WeeklyDelivery"})}
+        onPress={() => navigation.navigate('SearchPlace', {screen: 'WeeklyDelivery'})}
       >
         <View style={styles.destinationHeaderView}>
           <Image
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius,
     backgroundColor: COLORS.white,
     elevation: 5,
-  }
+  },
 });
 
 export default WeeklyDelivery;

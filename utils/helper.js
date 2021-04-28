@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Alert, PermissionsAndroid } from 'react-native';
+import { Alert, PermissionsAndroid, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
-import {getDistance, getPreciseDistance} from 'geolib';
+import { getDistance } from 'geolib';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import { keys } from '../constants';
@@ -21,15 +21,15 @@ export const idTokenChangedListeners = (state, dispatch) => {
             const prevIdToken = state.idToken;
             const nextIdToken = await user.getIdToken();
             if (prevIdToken !== nextIdToken) {
-                console.log("아이디토큰이 바뀌었다.")
+                console.log('아이디토큰이 바뀌었다.');
                 // 여기서 바뀐 토큰을 asyncstore에 재저장 및 reducer에 재저장
                 await AsyncStorage.setItem('userToken', nextIdToken);
                 await dispatch({ type: 'RESTORE_TOKEN', token: nextIdToken });
             } else {
-                console.log("불필요한 중복 호출");
+                console.log('불필요한 중복 호출');
             }
         } else {
-            console.log("유저 정보없음");
+            console.log('유저 정보없음');
         }
     });
 };
@@ -45,9 +45,9 @@ export const getAccessToken = async () => {
         // const token = await user.getIdToken(true);
         return token;
     } else {
-        console.log("현재 로그인한 유저가 없음.");
-        return null;
-    };
+        console.log('현재 로그인한 유저가 없음.');
+        return Promise.reject('Not found user');
+    }
 };
 
 export const googleLogin = async (response, dispatch) => {
@@ -70,7 +70,7 @@ export const emailPasswordLogin = (data, dispatch) => {
         .signInWithEmailAndPassword(data.email, data.pw)
         .then( async () => {
             const user = auth().currentUser;
-            alert(user.displayName + '님 반갑습니다.');
+            Alert.alert(user.displayName + '님 반갑습니다.');
 
             const idToken = await user.getIdToken();
             const fcmToken = await messaging().getToken();
@@ -78,8 +78,7 @@ export const emailPasswordLogin = (data, dispatch) => {
             const payload = {
                 idToken: idToken,
                 fcmToken: fcmToken,
-            }
-            
+            };
             // // update fcmToken in DB
             // axios
             //     .post('/auth/user/:id', payload)
@@ -96,23 +95,23 @@ export const emailPasswordLogin = (data, dispatch) => {
         })
         .catch(error => {
             if (error.code === 'auth/email-already-in-use') {
-                Alert.alert("이미 사용중인 이메일입니다.");
+                Alert.alert('이미 사용중인 이메일입니다.');
             }
 
             if (error.code === 'auth/invalid-email') {
-                Alert.alert("유효한 이메일을 적어주세요.");
+                Alert.alert('유효한 이메일을 적어주세요.');
             }
 
-            if (error.code ==='auth/weak-password') {
-                Alert.alert("비밀번호는 최소 6글자가 필요합니다.");
+            if (error.code === 'auth/weak-password') {
+                Alert.alert('비밀번호는 최소 6글자가 필요합니다.');
             }
 
             if (error.code === 'auth/wrong-password') {
-                Alert.alert("비밀번호가 틀립니다.");
+                Alert.alert('비밀번호가 틀립니다.');
             }
 
             if (error.code === 'auth/user-not-found') {
-                Alert.alert("이메일이 틀립니다.");
+                Alert.alert('이메일이 틀립니다.');
             }
 
             console.error(error);
@@ -126,14 +125,14 @@ export const searchAddress = async (address) => {
         const location = json.results[0].geometry.location;
 
         if (location.hasOwnProperty('lat','lng')) {
-            location.latitude= location.lat;
-            location.longitude= location.lng;
+            location.latitude = location.lat;
+            location.longitude = location.lng;
             delete location.lat;
             delete location.lng;
         }
 
 
-        location.address = address.replace("대한민국 ","").replace("서울특별시 ","");
+        location.address = address.replace('대한민국 ','').replace('서울특별시 ','');
         return location;
 
     } catch (e) {
@@ -152,19 +151,19 @@ export const currentLocation = async (setLocation) => {
     const initCoords = {
         latitude: 37.284696906069975,
         longitude: 127.04438918710983,
-        address: "아주대학교 팔달관"
+        address: '아주대학교 팔달관',
     };
 
     if (result === 'granted') {
-        console.log( "You can use the ACCESS_FINE_LOCATION" );
+        console.log( 'You can use the ACCESS_FINE_LOCATION' );
         Geolocation.getCurrentPosition(
             position => {
                 Geocoder.from(position.coords.latitude, position.coords.longitude)
                 .then(json => {
 
-                    let addressComponent = json.results[0].formatted_address.replace("대한민국 서울특별시 ","");
+                    let addressComponent = json.results[0].formatted_address.replace('대한민국 서울특별시 ','');
                     position.coords.address = addressComponent;
-                    console.log("현재위치저장완료")
+                    console.log('현재위치저장완료');
                     setLocation(position.coords);
                 });
             },
@@ -175,13 +174,13 @@ export const currentLocation = async (setLocation) => {
             {
                 enableHighAccuracy: false,
                 timeout: 30000,
-                maximumAge: 10000
+                maximumAge: 10000,
         });
     }
     else {
         Alert.alert('설정에서 DutchDelivery가 기기 위치에 액세스하도록 허용해주세요.');
         setLocation(initCoords);
-    };
+    }
 };
 
 
@@ -204,7 +203,7 @@ export const requestPermission = async () => {
       }
     } catch (e) {
         console.log(e);
-    };
+    }
 };
 
 

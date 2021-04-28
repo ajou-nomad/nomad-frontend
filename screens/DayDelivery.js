@@ -1,7 +1,6 @@
-/* eslint-disable no-alert */
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, {useState, useEffect, useRef} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, { useState, useEffect } from 'react';
 
 import {
   View,
@@ -9,7 +8,7 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import {icons, COLORS, SIZES, FONTS} from '../constants';
 import GoogleMap from '../components/map/GoogleMap';
@@ -29,70 +28,70 @@ const DayDelivery = ({ route, navigation }) => {
   useEffect( () => {
 
     // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
-    if(route.params?.post) {
+    if (route.params?.post) {
       setLocation(route.params.post);
     } else {
       // 현재 위치동의 및 받아오기
       currentLocation(setLocation);
     }
 
-  }, [route.params?.post] )
+  }, [route.params?.post] );
 
   // 배달원 할 때 참조할 내용
-  const fetchAddress = () => {
-    console.log('fetch 할 예정');
+  // const fetchAddress = () => {
+  //   console.log('fetch 할 예정');
 
-    // fetch('"https://api.mapbox.com/directions/v5/mapbox/driving/' + location.latitude + ',' + location.longitude + ";"
-    // + "37.494371" + ',' + "127.010282"
-    //     + '?access_token=' + 'pk.eyJ1IjoiamlzZW9uZy0iLCJhIjoiY2ttcHg3c2VzMGdmcTJ1bnNxbnhmbzdyZSJ9.JkWVnm71CZRX_eaN_SehwQ')
+  //   // fetch('"https://api.mapbox.com/directions/v5/mapbox/driving/' + location.latitude + ',' + location.longitude + ";"
+  //   // + "37.494371" + ',' + "127.010282"
+  //   //     + '?access_token=' + 'pk.eyJ1IjoiamlzZW9uZy0iLCJhIjoiY2ttcHg3c2VzMGdmcTJ1bnNxbnhmbzdyZSJ9.JkWVnm71CZRX_eaN_SehwQ')
 
-    // fetch("https://api.mapbox.com/directions/v5/mapbox/driving/127.044398,37.284547;127.043885,37.275343?annotations=maxspeed&overview=full&geometries=geojson&access_token=pk.eyJ1IjoiamlzZW9uZy0iLCJhIjoiY2ttcHg3c2VzMGdmcTJ1bnNxbnhmbzdyZSJ9.JkWVnm71CZRX_eaN_SehwQ")
+  //   // fetch("https://api.mapbox.com/directions/v5/mapbox/driving/127.044398,37.284547;127.043885,37.275343?annotations=maxspeed&overview=full&geometries=geojson&access_token=pk.eyJ1IjoiamlzZW9uZy0iLCJhIjoiY2ttcHg3c2VzMGdmcTJ1bnNxbnhmbzdyZSJ9.JkWVnm71CZRX_eaN_SehwQ")
 
-    // .then((response) => response.json())ㄴ
-    // .then((responseJson) => {
-    //     console.log(responseJson);
-    // }).catch((err) => console.log( err));
+  //   // .then((response) => response.json())ㄴ
+  //   // .then((responseJson) => {
+  //   //     console.log(responseJson);
+  //   // }).catch((err) => console.log( err));
 
-    // Geocoder.from(location.latitude, location.longitude)
-    // .then(json => {
-    // 		var addressComponent = json.results[0].formatted_address;
-    // 	console.log(addressComponent);
-    // })
-    // .catch(error => console.warn(error));
+  //   // Geocoder.from(location.latitude, location.longitude)
+  //   // .then(json => {
+  //   // 		var addressComponent = json.results[0].formatted_address;
+  //   // 	console.log(addressComponent);
+  //   // })
+  //   // .catch(error => console.warn(error));
 
-    //     fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.latitude + ',' + location.longitude
-    //     + '&key=' + GOOGLE_API_KEY + '&language=ko')
-    // .then((response) => response.json())
-    // .then((responseJson) => {
-    //     console.log('udonPeople ' + responseJson.results[0].formatted_address);
-    // }).catch((err) => console.log("udonPeople error : " + err));
+  //   //     fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.latitude + ',' + location.longitude
+  //   //     + '&key=' + GOOGLE_API_KEY + '&language=ko')
+  //   // .then((response) => response.json())
+  //   // .then((responseJson) => {
+  //   //     console.log('udonPeople ' + responseJson.results[0].formatted_address);
+  //   // }).catch((err) => console.log("udonPeople error : " + err));
 
-    // Search by address
-    // Geocoder.from("아주대학교 팔달관")
-    // .then(json => {
-    //     var location = json.results[0];
-    //     console.log(location);
-    // })
-    // .catch(error => console.warn(error));
+  //   // Search by address
+  //   // Geocoder.from("아주대학교 팔달관")
+  //   // .then(json => {
+  //   //     var location = json.results[0];
+  //   //     console.log(location);
+  //   // })
+  //   // .catch(error => console.warn(error));
 
-    // // Search by address, with a biased geo-bounds
-    // Geocoder.from("Pyramid", {
-    // southwest: {lat: 36.05, lng: -115.25},
-    // northeast: {lat: 36.16, lng: -115.10}})
-    // .then(json => {
-    //     var location = json.results[0].geometry.location;
-    //     console.log(location);
-    // })
-    // .catch(error => console.warn(error));
-  };
+  //   // // Search by address, with a biased geo-bounds
+  //   // Geocoder.from("Pyramid", {
+  //   // southwest: {lat: 36.05, lng: -115.25},
+  //   // northeast: {lat: 36.16, lng: -115.10}})
+  //   // .then(json => {
+  //   //     var location = json.results[0].geometry.location;
+  //   //     console.log(location);
+  //   // })
+  //   // .catch(error => console.warn(error));
+  // };
 
-  
+
   // 검색 창 헤더
   const renderDestinationHeader = () => {
     return (
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.destinationHeader}
-        onPress={() => navigation.navigate("SearchPlace",{screen: "DayDelivery"})}
+        onPress={() => navigation.navigate('SearchPlace', {screen: 'DayDelivery'})}
       >
         <View style={styles.destinationHeaderView}>
           <Image
@@ -115,54 +114,7 @@ const DayDelivery = ({ route, navigation }) => {
     );
   };
 
-  const renderGpsButton = () => {
-    return (
-      <TouchableOpacity 
-        style={styles.gpsButton}
-        onPress={() =>
-          Alert.alert('실시간위치 받아올 때 사용', 'My Alert Msg', [
-            {
-              text: 'Cancel',
-              onPress: () => console.log('Cancel Pressed'),
-              style: 'cancel',
-            },
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ])
-        }>
-        <View style={styles.gpsButtonView}>
-          <Image
-            source={icons.gps}
-            style={{
-              width: 20,
-              height: 20,
-            }}
-          />
-        </View>
-      </TouchableOpacity>
-    );
-  };
 
-  const createNewGroup = () => {
-      return (
-        <TouchableOpacity
-          style={styles.newGroup}
-          onPress={()=>navigation.navigate("CreateGroupList")}
-        >
-            <View style={styles.newGroupView}>
-                <Image
-                    source={icons.search}
-                    style={styles.logoStyle}
-                />
-                <View
-                    style={styles.newGroupTextView}>
-                    <Text style={styles.newGroupText}>원하는 조건이 없나요?</Text>
-                </View>
-            </View>
-      </TouchableOpacity>
-      )
-
-  }
-  
   return (
     <View style={{flex: 1}}>
       { location ? (
@@ -215,7 +167,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius,
     backgroundColor: COLORS.white,
     elevation: 5,
-  }
+  },
 });
 
 export default DayDelivery;

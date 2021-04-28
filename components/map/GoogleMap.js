@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { calculateDistance } from '../../utils/helper';
 import React, { useRef } from 'react';
@@ -7,14 +9,14 @@ import CustomMarker from './CustomMarker';
 const GoogleMap = ({IsWeekly, location}) => {
 
     const mapView = useRef();
-    
+
     const tempLocation = [
     {
         coordinate: { latitude: 37.284528586547374, longitude: 127.04435940777411},
         address: '팔달관',
     },
     {
-        coordinate: {latitude: 37.283726853365536, longitude: 127.0438289689633 },       
+      coordinate: {latitude: 37.283726853365536, longitude: 127.0438289689633},
         address: '동관',
     },
     {
@@ -39,7 +41,7 @@ const GoogleMap = ({IsWeekly, location}) => {
     return (
         <MapView
             ref={mapView}
-            style={{flex: 1}}
+            style={{ flex: 1 }}
             provider={PROVIDER_GOOGLE}
             region={{
                 latitude: location.latitude,
