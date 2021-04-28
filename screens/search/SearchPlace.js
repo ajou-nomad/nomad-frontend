@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { TouchableOpacity, Image } from 'react-native';
+import { TouchableOpacity, Image, Alert } from 'react-native';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {icons, SIZES, keys} from '../../constants';
@@ -19,14 +20,14 @@ const SearchPlace = ({route, navigation}) => {
                     paddingHorizontal: SIZES.padding,
                     justifyContent: 'center',
                 }}
-                onPress={() => navigation.goBack()}                
+                onPress={() => navigation.goBack()}
             >
                 <Image
                     source={icons.back}
-                    resizeMode='contain'
+                    resizeMode = "contain"
                     style= {{
                         width: 20,
-                        height: 20
+                        height: 20,
                     }}
                 />
             </TouchableOpacity>
@@ -40,20 +41,34 @@ const SearchPlace = ({route, navigation}) => {
                     paddingHorizontal: SIZES.padding,
                     justifyContent: 'center',
                 }}
-                onPress={ () => {
-                    searchAddress(place).then( (position) =>{
+                onPress={() => {
 
-                        navigation.goBack();
-                        // navigation.navigate("Home", {post: position});
-                    });
-                }}                
+                    if ( place ) {
+                        searchAddress(place).then( (position) => {
+
+
+
+
+                            // Pass and merge params back to DayDelivery screen
+                            navigation.navigate({
+                                name: route.params.screen,
+                                params: { post: position },
+                                merge: true,
+                            });
+                        });
+                    } else {
+
+                        Alert.alert('장소나 주소를 선택해주세요.');
+                    }
+
+                }}
             >
                 <Image
                     source={icons.search}
-                    resizeMode='contain'
+                    resizeMode="contain"
                     style= {{
                         width: 20,
-                        height: 20
+                        height: 20,
                     }}
                 />
             </TouchableOpacity>
@@ -63,9 +78,9 @@ const SearchPlace = ({route, navigation}) => {
 
     return (
         <GooglePlacesAutocomplete
-            placeholder='주소를 입력하세요'
+            placeholder="주소를 입력하세요"
             minLength={2} // minimum length of text to search
-            debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+            debounce={100} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
             onPress={(data, details = null) => {
 
                 //클릭 시 place 저장
@@ -74,7 +89,7 @@ const SearchPlace = ({route, navigation}) => {
             query={{
                 key: keys.GOOGLE_API_KEY,
                 language: 'ko',
-                components: 'country:KR'
+                components: 'country:KR',
             }}
             renderLeftButton={reftButton}
             renderRightButton={rightButton}
@@ -84,13 +99,11 @@ const SearchPlace = ({route, navigation}) => {
                     alignSelf: 'center',
                     width: '100%',
                 },
-                description: {
-                    fontWeight: 'bold'
-                },
                 predefinedPlacesDescription: {
-                    color: '#1faadb'
+                    color: '#1faadb',
                 },
             }}
+            enablePoweredByContainer={false}
         />
       );
 };
