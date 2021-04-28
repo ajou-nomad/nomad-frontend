@@ -24,26 +24,19 @@ const DayDelivery = ({ route, navigation }) => {
   const [location, setLocation] = useState();
   const IsWeekly = false;
 
+
+
   useEffect( () => {
 
-    // navigation에서 올때마다 호출( 리렌더링은 제외 )
-    navigation.addListener('focus', async() => {
-      console.log("Home일떄");
-      console.log(route.params);
-      if ( route.params?.post ) {
-        console.log("in here?")
-        setLocation(route.params.post);
-      }
-    })
-    // 현재 위치동의 및 받아오기
-    currentLocation(setLocation);
+    // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
+    if(route.params?.post) {
+      setLocation(route.params.post);
+    } else {
+      // 현재 위치동의 및 받아오기
+      currentLocation(setLocation);
+    }
 
-    //임시
-    // setLocation({            
-    //   latitude: 37.284696906069975,
-    //   longitude: 127.04438918710983
-    // })
-  }, [] )
+  }, [route.params?.post] )
 
   // 배달원 할 때 참조할 내용
   const fetchAddress = () => {
@@ -99,7 +92,7 @@ const DayDelivery = ({ route, navigation }) => {
     return (
       <TouchableOpacity 
         style={styles.destinationHeader}
-        onPress={() => navigation.navigate("SearchPlace")}
+        onPress={() => navigation.navigate("SearchPlace",{screen: "DayDelivery"})}
       >
         <View style={styles.destinationHeaderView}>
           <Image

@@ -124,7 +124,16 @@ export const searchAddress = async (address) => {
     try {
         const json = await Geocoder.from(address);
         const location = json.results[0].geometry.location;
-        location.address = address.replace("대한민국 ","");
+
+        if (location.hasOwnProperty('lat','lng')) {
+            location.latitude= location.lat;
+            location.longitude= location.lng;
+            delete location.lat;
+            delete location.lng;
+        }
+
+
+        location.address = address.replace("대한민국 ","").replace("서울특별시 ","");
         return location;
 
     } catch (e) {

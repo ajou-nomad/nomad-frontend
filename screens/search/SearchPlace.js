@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { TouchableOpacity, Image } from 'react-native';
+import { TouchableOpacity, Image, Alert } from 'react-native';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {icons, SIZES, keys} from '../../constants';
@@ -40,13 +40,27 @@ const SearchPlace = ({route, navigation}) => {
                     paddingHorizontal: SIZES.padding,
                     justifyContent: 'center',
                 }}
-                onPress={ () => {
-                    searchAddress(place).then( (position) =>{
+                onPress={() => {
 
-                        navigation.goBack();
-                        // navigation.navigate("Home", {post: position});
-                    });
-                }}                
+                    if ( place ) {
+                        searchAddress(place).then( (position) => {
+
+
+
+
+                            // Pass and merge params back to DayDelivery screen
+                            navigation.navigate({
+                                name: route.params.screen,
+                                params: { post: position },
+                                merge: true,
+                            });
+                        });
+                    } else {
+
+                        Alert.alert("장소나 주소를 선택해주세요.");
+                    }
+
+                }}             
             >
                 <Image
                     source={icons.search}
@@ -65,7 +79,7 @@ const SearchPlace = ({route, navigation}) => {
         <GooglePlacesAutocomplete
             placeholder='주소를 입력하세요'
             minLength={2} // minimum length of text to search
-            debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+            debounce={100} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
             onPress={(data, details = null) => {
 
                 //클릭 시 place 저장

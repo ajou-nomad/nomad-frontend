@@ -1,8 +1,6 @@
-import { COLORS } from '../../constants';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { calculateDistance } from '../../utils/helper';
-import React, { useState, useRef } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import React, { useRef } from 'react';
 import CustomMarker from './CustomMarker';
 
 
@@ -43,7 +41,7 @@ const GoogleMap = ({IsWeekly, location}) => {
             ref={mapView}
             style={{flex: 1}}
             provider={PROVIDER_GOOGLE}
-            initialRegion={{
+            region={{
                 latitude: location.latitude,
                 longitude: location.longitude,
                 latitudeDelta: 0.0045,

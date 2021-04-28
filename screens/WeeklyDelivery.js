@@ -22,20 +22,30 @@ const WeeklyDelivery = ({ route, navigation }) => {
   const [location, setLocation] = useState();
   const IsWeekly = true;
 
+
+
   useEffect( () => {
-    //임시 셋팅
-    setLocation({            
-      latitude: 37.284696906069975,
-      longitude: 127.04438918710983,
-      address: '아주대학교 팔달관'
-    })
-  }, [] )
+
+    // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
+    if(route.params?.post) {
+      setLocation(route.params.post);
+    } else {
+      //임시 셋팅
+      setLocation({            
+        latitude: 37.284696906069975,
+        longitude: 127.04438918710983,
+        address: '아주대학교 팔달관'
+      })
+    }
+
+  }, [route.params?.post] )
+
   // 검색 창 헤더
   const renderDestinationHeader = () => {
     return (
       <TouchableOpacity 
         style={styles.destinationHeader}
-        onPress={() => navigation.navigate("SearchPlace")}
+        onPress={() => navigation.navigate("SearchPlace",{screen: "WeeklyDelivery"})}
       >
         <View style={styles.destinationHeaderView}>
           <Image
