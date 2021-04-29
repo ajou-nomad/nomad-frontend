@@ -25,11 +25,12 @@ import GroupInfo from '../components/GroupInfo';
 import NewGroupButton from '../components/map/NewGroupButton';
 
 
-export default function GroupList(props) {
-  const address = props.route.params.address;
-  const back = props.route.params.back;
+export default function GroupList({navigation, route}) {
+  const address = route.params.address;
+  const back = route.params.back;
+
   const goBack = () => {
-    props.navigation.navigate(back);
+    navigation.navigate(back);
   };
 
   const sortPeople = () => {
@@ -133,7 +134,7 @@ export default function GroupList(props) {
           <Text style={styles.backButton}>&lt;</Text>
         </TouchableOpacity>
         <Text numberOfLines={1} style={styles.headerLocationText}>{address}</Text>
-        <Text style={styles.headerDateText}>{/*props.date*/{date:'2021.04.23'}.date}</Text>
+        <Text style={styles.headerDateText}>{{date:'2021.04.23'}.date}</Text>
       </View>
     );
   };
@@ -189,32 +190,14 @@ export default function GroupList(props) {
         />
       </SafeAreaView>
     );
-
-  const createNewGroup = () => {
-    return (
-      <TouchableOpacity
-        style={styles.newGroup}
-        onPress={()=>props.navigation.navigate('CreateGroupList')}>
-          <View style={styles.newGroupView}>
-              <Image
-                  source={icons.search}
-                  style={styles.logoStyle}
-              />
-              <View
-                  style={styles.newGroupTextView}>
-                  <Text style={styles.newGroupText}>원하는 조건이 없나요?</Text>
-              </View>
-          </View>
-    </TouchableOpacity>
-    );
-  };
+    
 
   return (
     <>
       {Header()}
       {SortButtons()}
       {ListOfGroup()}
-      <NewGroupButton item={{back:'GroupList'}} />
+      <NewGroupButton item={{back:'GroupList'}} location = {address} />
     </>
   );
 }
