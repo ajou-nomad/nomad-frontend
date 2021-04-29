@@ -79,6 +79,7 @@ function CreateGroupDetail({ navigation }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}
+                onPress={() => navigation.navigate('CheckOrder')}
             >
                 <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>그룹 생성하기</Text>
             </TouchableOpacity>

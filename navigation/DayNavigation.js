@@ -10,6 +10,7 @@ import SelectStore from '../screens/group/SelectStore';
 import SearchPlace from '../screens/search/SearchPlace';
 import StoreDetail from '../screens/store/StoreDetail';
 import MenuDetail from '../screens/store/MenuDetail';
+import CheckOrder from '../screens/order/CheckOrder';
 
 
 const DayStack = createStackNavigator();
@@ -35,6 +36,7 @@ const DayNavigation = ({route, navigation}) => {
             <DayStack.Screen name="SearchPlace" component={SearchPlace} />
             <DayStack.Screen name="StoreDetail" component={StoreDetail} />
             <DayStack.Screen name="MenuDetail" component={MenuDetail} />
+            <DayStack.Screen name="CheckOrder" component={CheckOrder} />
         </DayStack.Navigator>
     );
 };
