@@ -29,6 +29,7 @@ export default function WeeklyGroupListParent(props) {
 
     // }
     const navigation = useNavigation();
+    
         return (
             <>
                 <TouchableOpacity

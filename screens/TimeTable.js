@@ -34,54 +34,63 @@
  
    const groupList = [
      {
+       id:'time1',
        time:'08~09',
        date:'2021-04-23',
        location: address,
        currentGroup:6,
      },
      {
+       id:'time2',
        time:'09~10',
        date:'2021-04-23',
        location: address,
        currentGroup:4,
      },
      {
+       id:'time3',
        time:'10~11',
        date:'2021-04-23',
        location: address,
        currentGroup:2,
      },
      {
+       id:'time4',
        time:'11~12',
        date:'2021-04-23',
        location: address,
        currentGroup:7,
      },
      {
+       id:'time5',
        time:'12~13',
        date:'2021-04-23',
        location: address,
        currentGroup:8,
      },
      {
+       id:'time6',
        time:'13~14',
        date:'2021-04-23',
        location: address,
        currentGroup:5,
      },
      {
+       id:'time7',
        time:'14~15',
        date:'2021-04-23',
        location: address,
        currentGroup:1,
      },
      {
+       id:'time8',
        time:'15~16',
        date:'2021-04-23',
        location: address,
        currentGroup:9,
      },
      {
+       id:'time9',
        time:'16~17',
        date:'2021-04-23',
        location: address,
@@ -106,31 +115,31 @@
     return (
       <View style={styles.headerButtons}>
         <TouchableOpacity
-          onPress={() => {console.log("Monday");}}
+          onPress={() => {console.log('Monday');}}
           style={styles.headerButton}
           >
           <Text style={styles.headerButtonText}>월</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {console.log("Tuesday");}}
+          onPress={() => {console.log('Tuesday');}}
           style={styles.headerButton}
           >
           <Text style={styles.headerButtonText}>화</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {console.log("Wednesday");}}
+          onPress={() => {console.log('Wednesday');}}
           style={styles.headerButton}
           >
           <Text style={styles.headerButtonText}>수</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {console.log("Thursday");}}
+          onPress={() => {console.log('Thursday');}}
           style={styles.headerButton}
           >
           <Text style={styles.headerButtonText}>목</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {console.log("Friday");}}
+          onPress={() => {console.log('Friday');}}
           style={styles.headerButton}
           >
           <Text style={styles.headerButtonText}>금</Text>

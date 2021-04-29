@@ -16,7 +16,7 @@ import DatePicker from 'react-native-date-picker';
 
 import { FONTS2 } from '../../constants';
 
-function CreateGroupDetail({ navigation }) {
+function CreateGroupDetail({ deliveryLocation,navigation }) {
     const [date, setDate] = useState(new Date());
     return (
         <View style={styles.container}>
@@ -44,6 +44,7 @@ function CreateGroupDetail({ navigation }) {
                             ...FONTS2.h2,
                         }}
                         placeholder='수령 장소'
+                        value = {deliveryLocation}
                         placeholderTextColor='#707070'
                         selectionColor='#000000'
                     />
