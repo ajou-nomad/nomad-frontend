@@ -20,7 +20,7 @@ import { currentLocation } from '../utils/helper';
 
 const DayDelivery = ({ route, navigation }) => {
 
-  const [location, setLocation] = useState();
+  const [location, setLocation] = useState(null);
   const IsWeekly = false;
 
 
@@ -114,15 +114,14 @@ const DayDelivery = ({ route, navigation }) => {
     );
   };
 
-
   return (
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap IsWeekly={IsWeekly} location={location} />
+          <GoogleMap IsWeekly={IsWeekly} location={location} back="DayDelivery" />
           { renderDestinationHeader() }
           <GpsButton />
-          <NewGroupButton item={{back:'home'}}/>
+          <NewGroupButton item={{back:'DayDelivery'}} location = {null}/>
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

@@ -15,10 +15,9 @@ import {
 import { FONTS2, icons, images } from '../../constants';
 
 
-function CreateGroupList({ navigation }) {
+function CreateGroupList({navigation,route}) {
 
-    const [location, setLocation] = useState(null);
-
+    const [location, setLocation] = useState(route.params.CurrentLocation);
     const noLocation = () => {
         return (
             <View style={styles.container}>
@@ -182,7 +181,7 @@ function CreateGroupList({ navigation }) {
                 {/* Footer */}
                 <TouchableOpacity
                     style={{ flex: 0.5 }}
-                    onPress={() => navigation.navigate('CreateGroupDetail')}
+                    onPress={() => navigation.navigate('CreateGroupDetail',{deliveryLocation:location})}
                 >
                     <View style={{
                         flex: 1,

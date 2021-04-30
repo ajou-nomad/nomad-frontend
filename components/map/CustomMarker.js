@@ -6,7 +6,7 @@ import { Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 
 
-const CustomMarker = ({IsWeekly, item}) => {
+const CustomMarker = ({IsWeekly, item, back, location}) => {
 
     const navigation = useNavigation();
 
@@ -14,7 +14,7 @@ const CustomMarker = ({IsWeekly, item}) => {
         !IsWeekly ?
         <Marker 
             coordinate={item.coordinate} 
-            onPress={() => navigation.navigate("GroupList",{back:'Home',address: item.address})}
+            onPress={() => navigation.navigate("GroupList",{back: back ,address: item.address})}
         >
             <View style={styles.markerView}>
                 {/* marker 매장명 */}
@@ -66,7 +66,7 @@ const CustomMarker = ({IsWeekly, item}) => {
         :
         <Marker 
             coordinate={item.coordinate} 
-            onPress={() => navigation.navigate("TimeTable",{back:'Home',address: item.address})}
+            onPress={() => navigation.navigate("TimeTable",{back:back,address: item.address})}
         >
             <View style={styles.markerView}>
                 {/* marker 매장명 */}

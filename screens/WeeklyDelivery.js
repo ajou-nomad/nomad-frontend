@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import {icons, COLORS, SIZES, FONTS} from '../constants';
 import GoogleMap from '../components/map/GoogleMap';
-import NewGroupButton from '../components/map/NewGroupButton';
 import GpsButton from '../components/map/GpsButton';
 
 
@@ -71,10 +70,9 @@ const WeeklyDelivery = ({ route, navigation }) => {
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap IsWeekly={IsWeekly} location={location} />
+          <GoogleMap IsWeekly={IsWeekly} location={location} back="WeeklyDelivery"/>
           { renderDestinationHeader() }
           <GpsButton />
-          <NewGroupButton item={{back:'home'}}/>
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

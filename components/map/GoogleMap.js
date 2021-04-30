@@ -6,7 +6,7 @@ import React, { useRef } from 'react';
 import CustomMarker from './CustomMarker';
 
 
-const GoogleMap = ({IsWeekly, location}) => {
+const GoogleMap = ({IsWeekly, location, back}) => {
 
     const mapView = useRef();
 
@@ -51,7 +51,7 @@ const GoogleMap = ({IsWeekly, location}) => {
             }}
         >
             { filteredMarkers.map((item, idx) => (
-                <CustomMarker key={idx} item={item} IsWeekly={IsWeekly} />
+                <CustomMarker key={idx} item={item} location={location.address} IsWeekly={IsWeekly} back={back} />
             ))}
         </MapView>
     );
