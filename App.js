@@ -16,6 +16,12 @@ import WeeklyNavigation from './navigation/WeeklyNavigation';
 import DayNavigation from './navigation/DayNavigation';
 import MyPageNavigation from './navigation/MyPageNavigation';
 
+import CreateGroupList from './screens/group/CreateGroupList';
+import StoreDetail from './screens/store/StoreDetail';
+import MenuDetail from './screens/store/MenuDetail';
+import CheckOrder from './screens/order/CheckOrder';
+import Cart from './screens/order/Cart';
+
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -65,6 +71,12 @@ const App = () => {
           <Stack.Screen name="WeeklyDelivery" component={WeeklyNavigation} />
           <Stack.Screen name="MyPageNavigation" component={MyPageNavigation} />
           <Stack.Screen name="CreateGroupDetail" component={CreateGroupDetail} />
+          
+          <Stack.Screen name="CreateGroupList" component={CreateGroupList} />
+          <Stack.Screen name="StoreDetail" component={StoreDetail} />
+          <Stack.Screen name="MenuDetail" component={MenuDetail} />
+          <Stack.Screen name="CheckOrder" component={CheckOrder} />
+          <Stack.Screen name="Cart" component={Cart} />
         </Stack.Navigator>
       ) : (
         // AuthStack

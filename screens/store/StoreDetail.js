@@ -11,6 +11,7 @@ import {
     useWindowDimensions,
     ScrollView,
     SafeAreaView,
+    TouchableOpacity
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
@@ -18,8 +19,8 @@ import { FONTS2, icons, COLORS } from '../../constants';
 
 
 import Menu from '../../components/Menu';
+import CartButton from '../../components/CartButton';
 import Review from '../../screens/review/Review';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import StoreInfo from './StoreInfo';
 
 // 메뉴 (flatlist로 바꾸기)
@@ -154,6 +155,7 @@ function StoreDetail() {
                     renderTabBar={renderTabBar}
                 />
             </View>
+            <CartButton />
         </View>
     );
 }
