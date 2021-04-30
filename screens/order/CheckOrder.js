@@ -9,7 +9,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { FONTS2 } from '../../constants';
+import { COLORS, FONTS2 } from '../../constants';
 
 const orderInfo = {
     storeName: '배스킨라빈스 아주대점',
@@ -81,7 +81,7 @@ const CheckOrder = () => {
                 {/* FlatList로 변경하기 */}
                 {renderOrderDetail()}
             </View>
-            <View style={{ flex: 0.6, backgroundColor: '#EDF2FF', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ flex: 0.6, backgroundColor: COLORS.tertiary, justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity
                     onPress={() => alert('결제화면으로')}
                 >

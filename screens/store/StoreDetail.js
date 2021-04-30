@@ -73,7 +73,7 @@ function StoreDetail() {
         <TabBar
             {...props}
             indicatorStyle={{
-                backgroundColor: '#EDF2FF',
+                backgroundColor: COLORS.tertiary,
                 height: '80%',
                 borderRadius: 20,
             }}

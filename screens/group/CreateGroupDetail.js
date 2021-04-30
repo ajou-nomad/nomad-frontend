@@ -14,7 +14,7 @@ import {
 import Counter from 'react-native-counters';
 import DatePicker from 'react-native-date-picker';
 
-import { FONTS2 } from '../../constants';
+import { COLORS, FONTS2 } from '../../constants';
 
 function CreateGroupDetail({ deliveryLocation,navigation }) {
     const [date, setDate] = useState(new Date());
@@ -76,7 +76,7 @@ function CreateGroupDetail({ deliveryLocation,navigation }) {
             <TouchableOpacity
                 style={{
                     flex: 0.5,
-                    backgroundColor: '#EDF2FF',
+                    backgroundColor: COLORS.tertiary,
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}

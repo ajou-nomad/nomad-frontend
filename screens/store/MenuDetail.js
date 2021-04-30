@@ -8,12 +8,12 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Image,
+    ToastAndroid,
     FlatList,
     SafeAreaView,
 } from 'react-native';
 
-import { COLORS, FONTS2, icons, images } from '../../constants';
+import { COLORS, FONTS2, } from '../../constants';
 
 import Counter from 'react-native-counters';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -171,6 +171,11 @@ function MenuDetail({ navigation }) {
         }
     };
 
+    const addCart = () => {
+        ToastAndroid.showWithGravity('카트에 담겼습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+        navigation.navigate('StoreDetail');
+    };
+
     const renderBody = () => {
         return (
             <View>
@@ -244,21 +249,21 @@ function MenuDetail({ navigation }) {
                     style={{
                         flex: 1,
                         // position: 'absolute',
-                        backgroundColor: '#EDF2FF',
+                        backgroundColor: COLORS.tertiary,
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexDirection: 'row',
                     }}
                 >
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('StoreDetail')}
+                        onPress={() => addCart()}
                     >
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>카트에 담기</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         );
-    }
+    };
 
     return (
         <SafeAreaView style={styles.container}>

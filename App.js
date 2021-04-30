@@ -9,6 +9,7 @@ import Tabs from './navigation/Tabs';
 import { idTokenChangedListeners } from './utils/helper';
 import {AuthContext} from './context/AuthContextProvider';
 import messaging from '@react-native-firebase/messaging';
+import Toast from 'react-native-toast-message';
 
 import CreateGroupDetail from './screens/group/CreateGroupDetail';
 
@@ -58,6 +59,8 @@ const App = () => {
 
   return (
     <NavigationContainer>
+      {/* 장바구니 담았을 때 알림(toast message) */}
+      <Toast ref={(ref) => Toast.setRef(ref)} />
       { true !== null ? (
         // MainStack
         <Stack.Navigator

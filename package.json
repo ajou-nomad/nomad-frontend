@@ -40,6 +40,7 @@
     "react-native-screens": "2.15.0",
     "react-native-tab-view": "3.0.1",
     "react-native-tab-view-viewpager-adapter": "1.1.0",
+    "react-native-toast-message": "1.4.9",
     "react-native-vector-icons": "8.1.0"
   },
   "devDependencies": {

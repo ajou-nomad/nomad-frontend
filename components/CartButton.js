@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { icons } from '../constants';
+import { COLORS, icons } from '../constants';
 
 const CartButton = () => {
     
@@ -23,7 +23,7 @@ const CartButton = () => {
                 right: 20,
                 width: 60,
                 height: 60,
-                backgroundColor: '#EDF2FF',
+                backgroundColor: COLORS.tertiary,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 38,

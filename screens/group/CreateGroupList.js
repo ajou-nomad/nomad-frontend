@@ -12,7 +12,7 @@ import {
     SafeAreaView,
     ScrollView,
 } from 'react-native';
-import { FONTS2, icons, images } from '../../constants';
+import { COLORS, FONTS2, icons, images } from '../../constants';
 
 
 function CreateGroupList({navigation,route}) {
@@ -53,7 +53,7 @@ function CreateGroupList({navigation,route}) {
                 >
                     <View style={{
                         flex: 1,
-                        backgroundColor: '#EDF2FF',
+                        backgroundColor: COLORS.tertiary,
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexDirection: 'row',
@@ -185,7 +185,7 @@ function CreateGroupList({navigation,route}) {
                 >
                     <View style={{
                         flex: 1,
-                        backgroundColor: '#EDF2FF',
+                        backgroundColor: COLORS.tertiary,
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexDirection: 'row',
