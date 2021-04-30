@@ -4,12 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import DayDelivery from '../screens/DayDelivery';
 import GroupList from '../screens/GroupList';
-import CreateGroupList from '../screens/group/CreateGroupList';
 import SearchPlace from '../screens/search/SearchPlace';
-import StoreDetail from '../screens/store/StoreDetail';
-import MenuDetail from '../screens/store/MenuDetail';
-import CheckOrder from '../screens/order/CheckOrder';
-import Cart from '../screens/order/Cart';
 
 
 const DayStack = createStackNavigator();
