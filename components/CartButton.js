@@ -19,8 +19,8 @@ const CartButton = () => {
         <TouchableOpacity
             style={{
                 position: 'absolute',
-                bottom: 10,
-                right: 10,
+                bottom: 20,
+                right: 20,
                 width: 60,
                 height: 60,
                 backgroundColor: '#EDF2FF',

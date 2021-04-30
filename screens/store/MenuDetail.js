@@ -251,13 +251,9 @@ function MenuDetail({ navigation }) {
                     }}
                 >
                     <TouchableOpacity
-                        style={{
-                            // flex: 1,
-                            // position: 'absolute',
-                        }}
-                        onPress={() => navigation.navigate('CreateGroupDetail')}
+                        onPress={() => navigation.navigate('StoreDetail')}
                     >
-                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>담기</Text>
+                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>카트에 담기</Text>
                     </TouchableOpacity>
                 </View>
             </View>

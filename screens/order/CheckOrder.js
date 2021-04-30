@@ -85,7 +85,7 @@ const CheckOrder = () => {
                 <TouchableOpacity
                     onPress={() => alert('결제화면으로')}
                 >
-                    <Text style={{ ...FONTS2.h2 }}>{orderInfo.foods[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 주문하기</Text>
+                    <Text style={{ ...FONTS2.h2 }}>{orderInfo.foods[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 결제하기</Text>
                 </TouchableOpacity>
             </View>
         </View>
