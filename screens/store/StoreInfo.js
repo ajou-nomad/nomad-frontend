@@ -2,17 +2,10 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  StyleSheet,
   View,
   Text,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-  Linking,
-  Button
 } from 'react-native';
 
 import { FONTS2, } from '../../constants';
