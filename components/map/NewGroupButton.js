@@ -5,7 +5,7 @@ import { icons, COLORS, SIZES, FONTS } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
 
 const NewGroupButton = ({item, location}) => {
-  
+
   const navigation = useNavigation();
     return (
         <TouchableOpacity
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     },
     newGroupText:{
       ...FONTS.body4,
-      color: COLORS.white
+      color: COLORS.white,
     },
 });
 

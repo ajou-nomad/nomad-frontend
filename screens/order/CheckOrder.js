@@ -36,7 +36,7 @@ const orderInfo = {
     ]
 };
 
-const CheckOrder = () => {
+const CheckOrder = ({navigation}) => {
     const renderOrderDetail = () => {
         return (
             <View style={{ margin: 30, }}>
@@ -83,7 +83,11 @@ const CheckOrder = () => {
             </View>
             <View style={{ flex: 0.6, backgroundColor: '#EDF2FF', justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity
-                    onPress={() => alert('결제화면으로')}
+                    onPress={() => {
+
+                        // 결제 테스트
+                        navigation.navigate('PaymentNavigation');
+                    }}
                 >
                     <Text style={{ ...FONTS2.h2 }}>{orderInfo.foods[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 결제하기</Text>
                 </TouchableOpacity>
