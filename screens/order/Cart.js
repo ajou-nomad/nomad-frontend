@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { COLORS, FONTS2 } from '../../constants';
 
-const Cart = ({ navigation }) => {
+const Cart = ({ navigation, route:{params} }) => {
 
     const renderHeader = () => {
         return (
@@ -36,10 +36,11 @@ const Cart = ({ navigation }) => {
     };
 
     const renderBottom = () => {
+        
         return (
             <TouchableOpacity
                 style={{ flex: 0.5, backgroundColor: '#EDF2FF', justifyContent: 'center', alignItems: 'center' }}
-                onPress={() => navigation.navigate('CreateGroupDetail')}
+                onPress={() => navigation.navigate('CreateGroupDetail',{time:params.time, location: params.location, storeName: params.storeName})}
             >
                 <Text style={{ ...FONTS2.h2, }}>그룹 생성하기</Text>
             </TouchableOpacity>

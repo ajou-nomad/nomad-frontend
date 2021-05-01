@@ -16,8 +16,8 @@ import DatePicker from 'react-native-date-picker';
 
 import { FONTS2 } from '../../constants';
 
-function CreateGroupDetail({ deliveryLocation,navigation }) {
-    const [date, setDate] = useState(new Date());
+function CreateGroupDetail({ navigation, route:{params} }) {
+    const [date, setDate] = useState(undefined);
     return (
         <View style={styles.container}>
             {/* Header */}
@@ -44,14 +44,19 @@ function CreateGroupDetail({ deliveryLocation,navigation }) {
                             ...FONTS2.h2,
                         }}
                         placeholder='수령 장소'
-                        value = {deliveryLocation}
+                        value = {params.location}
                         placeholderTextColor='#707070'
                         selectionColor='#000000'
                     />
 
-                    <Text style={{ ...FONTS2.h1, fontWeight: 'bold', }}>시간</Text>
-                    <DatePicker date={date} onDateChange={setDate} mode='time' />
-
+                    {params.time === null ?
+                        <>
+                            <Text style={{ ...FONTS2.h1, fontWeight: 'bold', }}>시간</Text>
+                            <DatePicker date={date} onDateChange={setDate} mode='time' />
+                        </>
+                        :
+                        <View style={{marginVertical:45,}}/>
+                    }
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={{
                         ...FONTS2.h1,
@@ -80,7 +85,7 @@ function CreateGroupDetail({ deliveryLocation,navigation }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}
-                onPress={() => navigation.navigate('CheckOrder')}
+                onPress={() => navigation.navigate('CheckOrder',{time:params.time, location:params.location, storeName: params.storeName })}
             >
                 <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>그룹 생성하기</Text>
             </TouchableOpacity>

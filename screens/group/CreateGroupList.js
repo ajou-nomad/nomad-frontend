@@ -16,7 +16,7 @@ import { FONTS2, icons, images } from '../../constants';
 
 
 function CreateGroupList({navigation,route}) {
-
+    
     const [location, setLocation] = useState(route.params.CurrentLocation);
     const noLocation = () => {
         return (
@@ -49,7 +49,7 @@ function CreateGroupList({navigation,route}) {
                 <TouchableOpacity
                     style={{ flex: 0.5 }}
                     // onPress={() => navigation.navigate('CreateGroupDetail')}
-                onPress={() => setLocation('로케 얻음')}
+                // onPress={() => setLocation('로케 얻음')}
                 >
                     <View style={{
                         flex: 1,
@@ -116,7 +116,7 @@ function CreateGroupList({navigation,route}) {
                     alignSelf: 'center',
                     width: 20,
                     }}
-                    onPress={() => navigation.navigate('StoreDetail')}
+                    onPress={() => navigation.navigate('StoreDetail',{time:null,storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점',location:route.params.CurrentLocation})}
                 >
                     <Text style={{...FONTS2.h3 }}>선택</Text>
                 </TouchableOpacity>

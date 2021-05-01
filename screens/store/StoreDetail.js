@@ -24,15 +24,15 @@ import Review from '../../screens/review/Review';
 import StoreInfo from './StoreInfo';
 
 // 메뉴 (flatlist로 바꾸기)
-const MenuRoute = () => (
+const MenuRoute = ({route}) => (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
         <ScrollView>
-            <Menu />
-            <Menu />
-            <Menu />
-            <Menu />
-            <Menu />
-            <Menu />
+            <Menu time={route.time} location={route.location} storeName={route.storeName} />
+            <Menu time={route.time} location={route.location} storeName={route.storeName} />
+            <Menu time={route.time} location={route.location} storeName={route.storeName} />
+            <Menu time={route.time} location={route.location} storeName={route.storeName} />
+            <Menu time={route.time} location={route.location} storeName={route.storeName} />
+            <Menu time={route.time} location={route.location} storeName={route.storeName} />
         </ScrollView>
     </SafeAreaView>
 );
@@ -59,12 +59,12 @@ const renderScene = SceneMap({
     third: ReviewRoute,
 });
 
-function StoreDetail() {
+function StoreDetail({route}) {
     const layout = useWindowDimensions();
 
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: 'first', title: '메뉴' },
+        { key: 'first', title: '메뉴', time: route.params.time, location: route.params.location, storeName: route.params.storeName},
         { key: 'second', title: '매장 정보' },
         { key: 'third', title: '리뷰' },
     ]);
@@ -102,7 +102,7 @@ function StoreDetail() {
                         borderBottomRightRadius: 20,
                         marginBottom: 10,
                     }}>
-                    <Text style={{ ...FONTS2.h1, }}>배스킨라빈스 아주대점</Text>
+                    <Text style={{ ...FONTS2.h1, }}>{route.params.storeName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 3, alignSelf: 'center' }}>
                         <Image
                             source={icons.star}
@@ -135,7 +135,7 @@ function StoreDetail() {
             </View>
         );
     }
-
+    
     return (
         <View style={styles.container}>
             {renderHeader()}
@@ -155,7 +155,7 @@ function StoreDetail() {
                     renderTabBar={renderTabBar}
                 />
             </View>
-            <CartButton />
+            <CartButton time={route.params.time} location={route.params.location} storeName={route.params.storeName} />
         </View>
     );
 }
