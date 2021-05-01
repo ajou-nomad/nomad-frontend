@@ -75,7 +75,8 @@ const Option = ({ item, userOption, setUserOption }) => {
     );
 }
 
-function MenuDetail({ navigation }) {
+function MenuDetail({ navigation, route:{params} }) {
+    
     // 메뉴 정보
     const [menuDetail] = useState({
         photo: '사진',
@@ -251,7 +252,7 @@ function MenuDetail({ navigation }) {
                     }}
                 >
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('StoreDetail')}
+                        onPress={() => navigation.navigate('StoreDetail',{storeName:params.storeName,time:params.time,location:params.location})}
                     >
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>카트에 담기</Text>
                     </TouchableOpacity>

@@ -11,9 +11,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import { icons } from '../constants';
 
-const CartButton = () => {
-    
+const CartButton = (props) => {
+
     const navigation = useNavigation();
+    
 
     return (
         <TouchableOpacity
@@ -29,7 +30,7 @@ const CartButton = () => {
                 borderRadius: 38,
                 elevation: 3,
             }}
-            onPress={() => navigation.navigate('Cart')}
+            onPress={() => navigation.navigate('Cart',{time:props.time, location: props.location, storeName:props.storeName})}
         >
             <Image
                 source={icons.cart}

@@ -10,7 +10,7 @@ const NewGroupButton = ({item, location}) => {
     return (
         <TouchableOpacity
           style={styles.newGroup}
-          onPress={()=> navigation.navigate("CreateGroupList",{back:item.back, CurrentLocation: location})}
+          onPress={()=> navigation.navigate("CreateGroupList",{back:item.back,  CurrentLocation: location})}
         >
             <View style={styles.newGroupView}>
                 <Image
