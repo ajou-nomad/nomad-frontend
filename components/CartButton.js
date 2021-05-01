@@ -23,7 +23,7 @@ const CartButton = () => {
                 right: 20,
                 width: 60,
                 height: 60,
-                backgroundColor: COLORS.tertiary,
+                backgroundColor: '#1c7ed6',
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 38,
@@ -37,7 +37,7 @@ const CartButton = () => {
                 style={{
                     width: 30,
                     height: 30,
-                    tintColor: '#343a40',
+                    tintColor: COLORS.white,
                 }}
             />
         </TouchableOpacity>

@@ -11,7 +11,7 @@ import {
 
 import { FONTS2, } from '../../constants';
 
-import ReviewItem from '../../components/ReviewItem';
+import ReviewItem from '../../components/item/ReviewItem';
 
 const Review = () => {
     return (

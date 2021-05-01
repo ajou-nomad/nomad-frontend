@@ -9,6 +9,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import OrderMenuItem from '../../components/item/OrderMenuItem';
 import { COLORS, FONTS2 } from '../../constants';
 
 const orderInfo = {
@@ -37,37 +38,11 @@ const orderInfo = {
 };
 
 const CheckOrder = () => {
-    const renderOrderDetail = () => {
-        return (
-            <View style={{ margin: 30, }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15, }}>
-                    <Text style={{ ...FONTS2.body2, fontSize: 26 }}>{orderInfo.foods[0].name}</Text>
-                    <Text style={{ ...FONTS2.body2, fontSize: 26 }}>{orderInfo.foods[0].total}개</Text>
-                </View>
-
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
-                    {/* 옵션 정보 */}
-                    <View style={{ width: '50%' }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
-                            <Text style={{ ...FONTS2.body2 }}>{orderInfo.foods[0].options[0].name}</Text>
-                            <Text style={{ ...FONTS2.body2 }}>{orderInfo.foods[0].options[0].total} 개</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
-                            <Text style={{ ...FONTS2.body2 }}>{orderInfo.foods[0].options[1].name}</Text>
-                            <Text style={{ ...FONTS2.body2 }}>{orderInfo.foods[0].options[1].total} 개</Text>
-                        </View>
-                    </View>
-
-                    {/* 가격 */}
-                    <Text style={{ ...FONTS2.h2 }}>{orderInfo.foods[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Text>
-                </View>
-            </View>
-        );
-    };
+    
 
     return (
         <View style={styles.container}>
-            <View style={{ flex: 1.8, alignItems: 'center', marginTop: 15, borderBottomWidth: 0.3 }}>
+            <View style={{ flex: 1.8, alignItems: 'center', marginTop: 15, borderBottomWidth: 0.5, }}>
                 <Text style={{ ...FONTS2.h2 }}>주문 내용</Text>
                 <Text style={{ ...FONTS2.h1, marginTop: 20, marginBottom: 10, }}>{orderInfo.storeName}</Text>
 
@@ -77,9 +52,9 @@ const CheckOrder = () => {
                     <Text style={{ ...FONTS2.body2 }}>현재 인원: {orderInfo.peopleNum}/{orderInfo.totalNum}</Text>
                 </View>
             </View>
-            <View style={{ flex: 3, }}>
+            <View style={{ flex: 3, margin: 30, }}>
                 {/* FlatList로 변경하기 */}
-                {renderOrderDetail()}
+                <OrderMenuItem />
             </View>
             <View style={{ flex: 0.6, backgroundColor: COLORS.tertiary, justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity

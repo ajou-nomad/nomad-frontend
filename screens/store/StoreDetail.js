@@ -11,14 +11,14 @@ import {
     useWindowDimensions,
     ScrollView,
     SafeAreaView,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import { FONTS2, icons, COLORS } from '../../constants';
 
 
-import Menu from '../../components/Menu';
+import MenuItem from '../../components/item/MenuItem';
 import CartButton from '../../components/CartButton';
 import Review from '../../screens/review/Review';
 import StoreInfo from './StoreInfo';
@@ -27,12 +27,12 @@ import StoreInfo from './StoreInfo';
 const MenuRoute = () => (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
         <ScrollView>
-            <Menu />
-            <Menu />
-            <Menu />
-            <Menu />
-            <Menu />
-            <Menu />
+            <MenuItem />
+            <MenuItem />
+            <MenuItem />
+            <MenuItem />
+            <MenuItem />
+            <MenuItem />
         </ScrollView>
     </SafeAreaView>
 );

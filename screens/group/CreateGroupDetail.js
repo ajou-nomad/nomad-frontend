@@ -7,30 +7,22 @@ import {
     StyleSheet,
     View,
     Text,
-    TouchableOpacity,
     TextInput,
 } from 'react-native';
 
 import Counter from 'react-native-counters';
 import DatePicker from 'react-native-date-picker';
 
-import { COLORS, FONTS2 } from '../../constants';
+import { FONTS2 } from '../../constants';
+import Header from '../../components/layout/Header';
+import BottomButton from '../../components/layout/BottomButton';
 
 function CreateGroupDetail({ deliveryLocation,navigation }) {
     const [date, setDate] = useState(new Date());
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View style={{
-                flex: 0.5,
-                backgroundColor: 'white',
-                borderBottomWidth: 0.5,
-                borderBottomColor: '#707070',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
-                <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>배달 그룹 생성</Text>
-            </View>
+            <Header title="배달 그룹 생성" small="true" />
 
             {/* Body */}
             <View style={{ flex: 4, marginHorizontal: 30, marginBottom: 20, }}>
@@ -73,21 +65,10 @@ function CreateGroupDetail({ deliveryLocation,navigation }) {
             </View>
 
             {/* Footer */}
-            <TouchableOpacity
-                style={{
-                    flex: 0.5,
-                    backgroundColor: COLORS.tertiary,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-                onPress={() => navigation.navigate('CheckOrder')}
-            >
-                <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>그룹 생성하기</Text>
-            </TouchableOpacity>
+            <BottomButton onPress={() => navigation.navigate('CheckOrder')} title="그룹 생성하기" />
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
