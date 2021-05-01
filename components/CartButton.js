@@ -27,7 +27,7 @@ const CartButton = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 38,
-                elevation: 3,
+                elevation: 5,
             }}
             onPress={() => navigation.navigate('Cart')}
         >

@@ -12,10 +12,12 @@ import {
 
 import { COLORS, FONTS2, icons } from '../../constants';
 
+import { responsiveHeight } from 'react-native-responsive-dimensions';
+
 const BottomButton = ({ onPress, title, isGetLocation }) => {
     return (
         <TouchableOpacity
-            style={{ flex: 0.5 }}
+            style={{ height: responsiveHeight(10) }}
             onPress={onPress}
         >
             <View style={{
@@ -25,6 +27,7 @@ const BottomButton = ({ onPress, title, isGetLocation }) => {
                 justifyContent: 'center',
                 flexDirection: 'row',
             }}>
+                {/* 내위치 버튼일 경우 image 보임. */}
                 {isGetLocation ? (
                     <Image
                     source={icons.gps}
