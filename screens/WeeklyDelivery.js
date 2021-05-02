@@ -66,11 +66,13 @@ const WeeklyDelivery = ({ route, navigation }) => {
     );
   };
 
+  const todayYearMonthDay = JSON.stringify(new Date().toJSON()).substr(1,10);
+
   return (
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap IsWeekly={IsWeekly} location={location} back="WeeklyDelivery"/>
+          <GoogleMap IsWeekly={IsWeekly} location={location} back="WeeklyDelivery" today={todayYearMonthDay}/>
           { renderDestinationHeader() }
           <GpsButton />
         </View>
