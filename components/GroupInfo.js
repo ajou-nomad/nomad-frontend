@@ -13,24 +13,16 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {icons} from '../constants';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 export default function GroupInfo(props) {
-    // const star = require('../assets/icons/star.png');
-    // const time = require('../assets/icons/pin.png');
-    // const user = require('../assets/icons/user.png');
-    // let logo;
-    // switch (props.logo){
-    //     case 'minus': logo = require('../assets/icons/pizza.png'); break;
-    //     case 'home': logo = require('../assets/icons/fries.png'); break;
-    //     case 'gps': logo = require('../assets/icons/noodle.png'); break;
-
-    // }
+        const navigation = useNavigation();
         return (
             <>
                 <TouchableOpacity
-                    onPress={()=>alert(`${props.shopName}`)}
+                    onPress={()=>navigation.navigate("StoreDetail",{storeName:props.shopName,time:props.time,location:props.location})}
                 >
                     <View style={props.styleGroupInfo}>
                         <Image style={props.styleLogoImage} source={props.logo}/>

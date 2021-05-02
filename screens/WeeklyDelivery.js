@@ -13,7 +13,6 @@ import {
 import {icons, COLORS, SIZES, FONTS} from '../constants';
 import GoogleMap from '../components/map/GoogleMap';
 import GpsButton from '../components/map/GpsButton';
-import NewGroupButton from '../components/map/NewGroupButton';
 
 
 const WeeklyDelivery = ({ route, navigation }) => {
@@ -73,8 +72,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
         <View style={{flex: 1}}>
           <GoogleMap IsWeekly={IsWeekly} location={location} back="WeeklyDelivery"/>
           { renderDestinationHeader() }
-          <GpsButton setLocation={setLocation} />
-          <NewGroupButton item={{back:'WeeklyDelivery'}} location = {null}/>
+          <GpsButton />
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

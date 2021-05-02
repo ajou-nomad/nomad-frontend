@@ -16,14 +16,15 @@ const GpsButton = ({setLocation}) => {
         disabled={isExecuting}
         style={styles.gpsButton}
         onPress={ () => {
-          setIsExecuting(true);
-          currentLocation(setLocation);
+          console.log("hello");
+          // setIsExecuting(true);
+          // currentLocation(setLocation);
 
-          // 나중에 수정해줘야 할 부분 위치 지정 후 버튼 활성화.
-          setTimeout(() => setIsExecuting(false), 2000);
+          // // 나중에 수정해줘야 할 부분 위치 지정 후 버튼 활성화.
+          // setTimeout(() => setIsExecuting(false), 2000);
         }}
       >
-        <View style={[styles.gpsButtonView, isExecuting ? {opacity: 0.5, backgroundColor: '#1c7ed6'} : {opacity: 0.85}]}>
+        <View style={[styles.gpsButtonView, isExecuting ? {opacity: 0.5} : {opacity: 0.85}]}>
           <Image
             source={icons.gps}
             style={{

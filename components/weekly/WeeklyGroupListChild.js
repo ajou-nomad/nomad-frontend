@@ -38,98 +38,6 @@
         location: props.location,
     });
    };
-    // const groupList = [
-    //     {
-    //     id: 'shop1',
-    //     logo:icons.donut,
-    //     shopName:'TempName1',
-    //     rate:3.5,
-    //     time: time+':00',
-    //     current:9,
-    //     max:10,
-    //     day:'monday',
-    //     },
-    //     {
-    //     id: 'shop2',
-    //     logo:icons.pizza,
-    //     shopName:'TempName2',
-    //     rate:4.5,
-    //     time: '9:05',
-    //     current:5,
-    //     max:10,
-    //     day:'tuesday',
-    //     },
-    //     {
-    //     id: 'shop3',
-    //     logo:icons.noodle,
-    //     shopName:'TempName3',
-    //     rate:4.0,
-    //     time: time+':10',
-    //     current:7,
-    //     max:10,
-    //     day:'wednesday',
-    //     },
-    //     {
-    //     id: 'shop4',
-    //     logo:icons.rice_bowl,
-    //     shopName:'TempName4',
-    //     rate:3.5,
-    //     time: time+':15',
-    //     current:9,
-    //     max:10,
-    //     day:'thursday',
-    //     },
-    //     {
-    //     id: 'shop5',
-    //     logo:icons.salad,
-    //     shopName:'TempName5',
-    //     rate:4.5,
-    //     time: time+':20',
-    //     current:5,
-    //     max:10,
-    //     day:'friday',
-    //     },
-    //     {
-    //     id: 'shop6',
-    //     logo:icons.sushi,
-    //     shopName:'TempName6',
-    //     rate:4.0,
-    //     time: time+':25',
-    //     current:7,
-    //     max:10,
-    //     day:'monday',
-    //     },
-    //     {
-    //     id: 'shop7',
-    //     logo:icons.drink,
-    //     shopName:'TempName7',
-    //     rate:3.5,
-    //     time: time+'9:30',
-    //     current:9,
-    //     max:10,
-    //     day:'tuesday',
-    //     },
-    //     {
-    //     id: 'shop8',
-    //     logo:icons.fries,
-    //     shopName:'TempName8',
-    //     rate:4.5,
-    //     time: time+'9:45',
-    //     current:5,
-    //     max:10,
-    //     day:'wednesday',
-    //     },
-    //     {
-    //     id: 'shop9',
-    //     logo:icons.hamburger,
-    //     shopName:'TempName9',
-    //     rate:4.0,
-    //     time: time+'9:50',
-    //     current:7,
-    //     max:10,
-    //     day:'thursday',
-    //     },
-    // ].slice(0,currentGroup);
    const Header = () =>{
      return (
        <View style={styles.headerText}>
@@ -152,6 +60,7 @@
              time={item.time}
              current={item.current}
              max={item.max}
+             location={location}
              styleGroupInfo={styles.groupInfo}
              styleLogoImage={styles.logoImage}
              styleShopText={styles.shopText}
