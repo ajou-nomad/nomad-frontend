@@ -1,33 +1,40 @@
-import React from 'react';
-import { TouchableOpacity, View, Image, StyleSheet, Alert } from 'react-native';
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+import React, { useState } from 'react';
+import { TouchableOpacity, View, Image, StyleSheet } from 'react-native';
 import { icons, COLORS, SIZES } from '../../constants';
+import { currentLocation } from '../../utils/helper';
 
-const GpsButton = () => {
-    return (
-        <TouchableOpacity 
-          style={styles.gpsButton}
-          onPress={() =>
-            Alert.alert('실시간위치 받아올 때 사용', 'My Alert Msg', [
-              {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-              },
-              {text: 'OK', onPress: () => console.log('OK Pressed')},
-            ])
-          }
-        >
-          <View style={styles.gpsButtonView}>
-            <Image
-              source={icons.gps}
-              style={{
-                width: 20,
-                height: 20,
-              }}
-            />
-          </View>
-        </TouchableOpacity>
-    );
+const GpsButton = ({setLocation}) => {
+
+  const [isExecuting, setIsExecuting] = useState(false);
+
+
+
+  return (
+      <TouchableOpacity
+        disabled={isExecuting}
+        style={styles.gpsButton}
+        onPress={ () => {
+          console.log("hello");
+          // setIsExecuting(true);
+          // currentLocation(setLocation);
+
+          // // 나중에 수정해줘야 할 부분 위치 지정 후 버튼 활성화.
+          // setTimeout(() => setIsExecuting(false), 2000);
+        }}
+      >
+        <View style={[styles.gpsButtonView, isExecuting ? {opacity: 0.5} : {opacity: 0.85}]}>
+          <Image
+            source={icons.gps}
+            style={{
+              width: 20,
+              height: 20,
+            }}
+          />
+        </View>
+      </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -44,9 +51,8 @@ const styles = StyleSheet.create({
       paddingHorizontal: SIZES.padding * 1.6,
       borderRadius: SIZES.radius,
       backgroundColor: COLORS.white,
-      opacity: 0.85,
       elevation: 5,
-    },  
+    },
 });
 
 export default GpsButton;

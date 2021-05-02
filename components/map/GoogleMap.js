@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { calculateDistance } from '../../utils/helper';
 import React, { useRef } from 'react';
 import CustomMarker from './CustomMarker';
@@ -53,6 +53,10 @@ const GoogleMap = ({IsWeekly, location, back}) => {
             { filteredMarkers.map((item, idx) => (
                 <CustomMarker key={idx} item={item} location={location.address} IsWeekly={IsWeekly} back={back} />
             ))}
+            <Marker
+                coordinate={location}
+                zIndex={-1}
+            />
         </MapView>
     );
 };

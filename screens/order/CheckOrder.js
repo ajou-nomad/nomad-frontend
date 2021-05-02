@@ -11,8 +11,11 @@ import {
 import OrderMenuItem from '../../components/item/OrderMenuItem';
 import BottomButton from '../../components/layout/BottomButton';
 import { FONTS2 } from '../../constants';
+import { useNavigation } from '@react-navigation/native';
 
 const CheckOrder = ({route:{params}}) => {
+
+    const navigation = useNavigation();
     const orderInfo = {
         storeName: params.storeName,
         delPlace: params.location,
