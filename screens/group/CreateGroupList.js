@@ -48,7 +48,7 @@ function CreateGroupList({navigation,route}) {
                 {/* Footer */}
                 <TouchableOpacity
                     style={{ flex: 0.5 }}
-                    // onPress={() => navigation.navigate('CreateGroupDetail')}
+                    onPress={() => navigation.navigate('PaymentNavigation')}
                 // onPress={() => setLocation('로케 얻음')}
                 >
                     <View style={{

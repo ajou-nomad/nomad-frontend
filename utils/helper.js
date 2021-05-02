@@ -154,18 +154,16 @@ export const currentLocation = async (setLocation) => {
         address: '아주대학교 팔달관',
     };
 
+
     if (result === 'granted') {
         console.log( 'You can use the ACCESS_FINE_LOCATION' );
         Geolocation.getCurrentPosition(
-            position => {
-                Geocoder.from(position.coords.latitude, position.coords.longitude)
-                .then(json => {
-
-                    let addressComponent = json.results[0].formatted_address.replace('대한민국 서울특별시 ','');
-                    position.coords.address = addressComponent;
-                    console.log('현재위치저장완료');
-                    setLocation(position.coords);
-                });
+            async (position) => {
+                const json = await Geocoder.from(position.coords.latitude, position.coords.longitude);
+                const addressComponent = json.results[0].formatted_address.replace('대한민국 서울특별시 ','');
+                position.coords.address = addressComponent;
+                console.log('현재위치저장완료');
+                setLocation(position.coords);
             },
             error => {
                 console.log(error);

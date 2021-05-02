@@ -1,39 +1,38 @@
 /* eslint-disable prettier/prettier */
+
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { icons, COLORS, SIZES, FONTS } from '../../constants';
-import { useNavigation } from '@react-navigation/native';
 
-const NewGroupButton = ({item, location}) => {
-
-  const navigation = useNavigation();
+const MyPoint = ({point}) => {
     return (
         <TouchableOpacity
-          style={styles.newGroup}
-          onPress={()=> navigation.navigate("CreateGroupList",{back:item.back,  CurrentLocation: location})}
+            disabled = {true}
+            style={styles.container}
         >
-            <View style={styles.newGroupView}>
+            <View style={styles.pointView}>
                 <Image
-                    source={icons.search}
+                    source={icons.user}
                     style={styles.logoStyle}
                 />
                 <View
-                    style={styles.newGroupTextView}>
-                    <Text style={styles.newGroupText}>원하는 조건이 없나요?</Text>
+                    style={styles.pointTextView}>
+                    <Text style={styles.pointText}>보유 포인트:  {point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
                 </View>
             </View>
       </TouchableOpacity>
     );
 };
 
+
 const styles = StyleSheet.create({
-    newGroup: {
+    container: {
       position: 'absolute',
-      bottom: 10,
-      width: SIZES.width * 0.5,
-      alignSelf: 'center'
+      bottom: 45,
+      width: SIZES.width * 0.7,
+      alignSelf: 'center',
     },
-    newGroupView:{
+    pointView:{
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
@@ -45,19 +44,19 @@ const styles = StyleSheet.create({
       elevation: 5,
     },
     logoStyle:{
-      width: 15,
-      height: 15,
+      width: 25,
+      height: 25,
       tintColor: COLORS.white,
       marginRight: SIZES.padding,
     },
-    newGroupTextView:{
+    pointTextView:{
       flex: 1,
       alignItems: 'center',
     },
-    newGroupText:{
-      ...FONTS.body4,
+    pointText:{
+      ...FONTS.body3,
       color: COLORS.white,
     },
 });
 
-export default NewGroupButton;
+export default MyPoint;

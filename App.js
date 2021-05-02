@@ -11,10 +11,7 @@ import {AuthContext} from './context/AuthContextProvider';
 import messaging from '@react-native-firebase/messaging';
 
 import CreateGroupDetail from './screens/group/CreateGroupDetail';
-
-import WeeklyNavigation from './navigation/WeeklyNavigation';
-import DayNavigation from './navigation/DayNavigation';
-import MyPageNavigation from './navigation/MyPageNavigation';
+import PaymentNavigation from './navigation/PaymentNavigation';
 
 import CreateGroupList from './screens/group/CreateGroupList';
 import StoreDetail from './screens/store/StoreDetail';
@@ -67,16 +64,14 @@ const App = () => {
           initialRouteName={'Main'}>
           <Stack.Screen name="Main" component={Main} />
           <Stack.Screen name="Tabs" component={Tabs} />
-          <Stack.Screen name="DayDelivery" component={DayNavigation} />
-          <Stack.Screen name="WeeklyDelivery" component={WeeklyNavigation} />
-          <Stack.Screen name="MyPageNavigation" component={MyPageNavigation} />
           <Stack.Screen name="CreateGroupDetail" component={CreateGroupDetail} />
-          
+
           <Stack.Screen name="CreateGroupList" component={CreateGroupList} />
           <Stack.Screen name="StoreDetail" component={StoreDetail} />
           <Stack.Screen name="MenuDetail" component={MenuDetail} />
           <Stack.Screen name="CheckOrder" component={CheckOrder} />
           <Stack.Screen name="Cart" component={Cart} />
+          <Stack.Screen name="PaymentNavigation" component={PaymentNavigation} />
         </Stack.Navigator>
       ) : (
         // AuthStack

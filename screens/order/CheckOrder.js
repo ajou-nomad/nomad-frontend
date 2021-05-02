@@ -10,10 +10,13 @@ import {
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FONTS2 } from '../../constants';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 const CheckOrder = ({route:{params}}) => {
+
+    const navigation = useNavigation();
     const orderInfo = {
         storeName: params.storeName,
         delPlace: params.location,
@@ -85,7 +88,11 @@ const CheckOrder = ({route:{params}}) => {
             </View>
             <View style={{ flex: 0.6, backgroundColor: '#EDF2FF', justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity
-                    onPress={() => alert('결제화면으로')}
+                    onPress={() => {
+
+                        // 결제 테스트
+                        navigation.navigate('PaymentNavigation');
+                    }}
                 >
                     <Text style={{ ...FONTS2.h2 }}>{orderInfo.foods[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 결제하기</Text>
                 </TouchableOpacity>

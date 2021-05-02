@@ -34,8 +34,12 @@ const recipe = require("../assets/icons/recipe.png");
 const google = require("../assets/icons/google.png");
 const checkbox = require("../assets/icons/checkbox.png");
 const group = require("../assets/icons/group.png");
+const credit_card = require("../assets/icons/credit_card.png");
+const point = require("../assets/icons/point.png");
 
 export default {
+    point,
+    credit_card,
     group,
     google,
     recipe,
