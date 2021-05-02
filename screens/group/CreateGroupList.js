@@ -15,7 +15,6 @@ import BottomButton from '../../components/layout/BottomButton';
 import Header from '../../components/layout/Header';
 import { FONTS2, } from '../../constants';
 
-
 import { currentLocation } from '../../utils/helper';
 
 
@@ -48,40 +47,39 @@ function CreateGroupList({ navigation, route }) {
     const haveLocation = () => {
         return (
             <View style={{ flex: 4 }}>
-                    <View style={{
-                        flex: 0.8,
-                        backgroundColor: 'white',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexDirection: 'row',
-                    }}
-                    >
-                        <View style={{ marginRight: 15, }}>
-                            <Text style={{ color: 'red', ...FONTS2.h2 }}>내 위치</Text>
-                        </View>
-                        <View>
-                            <Text style={{ ...FONTS2.body2, }}>{location.address}</Text>
-                        </View>
+                <View style={{
+                    flex: 0.8,
+                    backgroundColor: 'white',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                }}
+                >
+                    <View style={{ marginRight: 15, }}>
+                        <Text style={{ color: 'red', ...FONTS2.h2 }}>내 위치</Text>
                     </View>
-
-                    <View style={{ flex: 5, backgroundColor: 'white', }}>
-                        <ScrollView>
-                            {/* FlatList 수정해야함. */}
-                            <StoreItem />
-                            <StoreItem />
-                            <StoreItem />
-                            <StoreItem />
-                            <StoreItem />
-                            <StoreItem />
-                            <StoreItem />
-                            <StoreItem />
-                            <StoreItem />
-                            <StoreItem />
-                            <StoreItem />
-                            <StoreItem />
-                        </ScrollView>
+                    <View>
+                        <Text style={{ ...FONTS2.body2, }}>{location.address}</Text>
                     </View>
                 </View>
+                <View style={{ flex: 5, backgroundColor: 'white', }}>
+                    <ScrollView>
+                        {/* FlatList 수정해야함. */}
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                        <StoreItem location={location} />
+                    </ScrollView>
+                </View>
+            </View>
         );
     };
 

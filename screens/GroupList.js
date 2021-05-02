@@ -38,7 +38,7 @@ export default function GroupList({navigation, route}) {
   };
 
   const sortTime = () => {
-    alert('시간 정렬');
+    alert('10:30'<'10:31');
   };
 
   const groupList = [
@@ -166,6 +166,7 @@ export default function GroupList({navigation, route}) {
             time={item.time}
             current={item.current}
             max={item.max}
+            location={address}
             styleGroupInfo={styles.groupInfo}
             styleLogoImage={styles.logoImage}
             styleShopText={styles.shopText}

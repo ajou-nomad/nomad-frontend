@@ -12,35 +12,34 @@ import OrderMenuItem from '../../components/item/OrderMenuItem';
 import BottomButton from '../../components/layout/BottomButton';
 import { FONTS2 } from '../../constants';
 
-const orderInfo = {
-    storeName: '배스킨라빈스 아주대점',
-    delPlace: '아주대학교 팔달관',
-    delTime: '9:00',
-    peopleNum: 1,
-    totalNum: 4,
-    foods: [
-        {
-            name: '파인트(플레이버 3가지)',
-            total: 1,
-            price: 8200,
-            options: [
-                {
-                    name: '31요거트',
-                    total: 2,
-                },
-                {
-                    name: '엄마는 외계인',
-                    total: 1,
-                },
-            ],
-        }
-    ]
-};
+const CheckOrder = ({route:{params}}) => {
+    const orderInfo = {
+        storeName: params.storeName,
+        delPlace: params.location,
+        delTime: params.time,
+        peopleNum: 1,
+        totalNum: 4,
+        foods: [
+            {
+                name: '파인트(플레이버 3가지)',
+                total: 1,
+                price: 8200,
+                options: [
+                    {
+                        name: '31요거트',
+                        total: 2,
+                    },
+                    {
+                        name: '엄마는 외계인',
+                        total: 1,
+                    },
+                ],
+            }
+        ]
+    };
 
-const CheckOrder = () => {
-    
     const price = orderInfo.foods[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    
+
     return (
         <View style={styles.container}>
             <View style={{ flex: 4.5 }}>

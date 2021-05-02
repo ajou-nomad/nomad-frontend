@@ -19,35 +19,40 @@ import { FONTS2 } from '../../constants';
 import Header from '../../components/layout/Header';
 import BottomButton from '../../components/layout/BottomButton';
 
-function CreateGroupDetail({ deliveryLocation,navigation }) {
+function CreateGroupDetail({ navigation, route: { params } }) {
     const [date, setDate] = useState(new Date());
+
     return (
         <KeyboardAvoidingView style={styles.container}>
             <ScrollView>
                 {/* Header */}
                 <Header title="배달 그룹 생성" small="true" haveInput="true" />
-
+            
                 {/* Body */}
-                <View style={{ flex: 4, marginHorizontal: 30, marginBottom: 135, }}>
+                <View style={{ flex: 4, marginHorizontal: 30, }}>
                     <View style={{ flex: 1, justifyContent: 'center' }}>
-                        <Text style={{ ...FONTS2.h1, fontWeight: 'bold', marginTop: 20 }}>수령장소</Text>
+                        <Text style={{ ...FONTS2.h1, fontWeight: 'bold', marginTop: 30, paddingBottom: 10, }}>수령장소</Text>
                         <TextInput
                             style={{
                                 borderBottomWidth: 1,
                                 width: 300,
-                                marginBottom: 20,
-                                ...FONTS2.body2,
+                                ...FONTS2.h2,
                             }}
                             placeholder='수령 장소'
-                            value={deliveryLocation}
+                            value={params.location}
                             placeholderTextColor='#707070'
                             selectionColor='#000000'
                         />
 
-                        <Text style={{ ...FONTS2.h1, fontWeight: 'bold', }}>시간</Text>
-                        <DatePicker date={date} onDateChange={setDate} mode='time' />
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        {params.time === null ?
+                            <View style={{ marginVertical: 50,}}>
+                                <Text style={{ ...FONTS2.h1, fontWeight: 'bold', }}>시간</Text>
+                                <DatePicker date={date} onDateChange={setDate} mode='time' />
+                            </View>
+                            :
+                            <View style={{ marginVertical: 45, }} />
+                        }
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                             <Text style={{
                                 ...FONTS2.h1,
                                 fontWeight: 'bold',
@@ -64,12 +69,13 @@ function CreateGroupDetail({ deliveryLocation,navigation }) {
                             borderBottomWidth: 1,
                             width: 300,
                             paddingBottom: 10,
+                            marginBottom: 35,
                         }} />
                     </View>
                 </View>
-
+                    
                 {/* Footer */}
-                <BottomButton onPress={() => navigation.navigate('CheckOrder')} title="그룹 생성하기" />
+                <BottomButton onPress={() => navigation.navigate('CheckOrder', { time: params.time, location: params.location.address, storeName: params.storeName })} title="그룹 생성하기" />
             </ScrollView>
         </KeyboardAvoidingView>
     );

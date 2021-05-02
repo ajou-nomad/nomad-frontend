@@ -17,7 +17,7 @@ import OrderMenuItem from '../../components/item/OrderMenuItem';
 
 import { COLORS, FONTS2 } from '../../constants';
 
-const Cart = ({ navigation }) => {
+const Cart = ({ navigation, route:{params} }) => {
 
     const renderBody = () => {
         return (
@@ -64,7 +64,6 @@ const Cart = ({ navigation }) => {
                         <Text style={{ ...FONTS2.body2 }}>배달비</Text>
                         <Text style={{ ...FONTS2.body2 }}>0원</Text>
                     </View>
-
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, paddingTop: 15, borderTopWidth: 0.5 }}>
                         <Text style={{ ...FONTS2.h2 }}>총 결제 금액</Text>
                         <Text style={{ ...FONTS2.h2 }}>8,200원</Text>
@@ -82,7 +81,7 @@ const Cart = ({ navigation }) => {
                 {/* 메뉴, 주문 금액, 요청사항 */}
                 {renderBody()}
                 {/* 그룹 생성하기 버튼 */}
-                <BottomButton onPress={() => navigation.navigate('CreateGroupDetail')} title="그룹 생성하기" />
+                <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', { time: params.time, location: params.location, storeName: params.storeName })} title="그룹 생성하기" />
             </ScrollView>
         </View>
     );
