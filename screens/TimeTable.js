@@ -27,6 +27,7 @@
  
  export default function TimeTable(props) {
    const address = props.route.params.address;
+   const today = props.route.params.today;
    const back = props.route.params.back;
    const goBack = () => {
      props.navigation.navigate(back);
@@ -98,43 +99,55 @@
            <Text style={styles.backButton}>&lt;</Text>
          </TouchableOpacity>
          <Text numberOfLines={1} style={styles.headerLocationText}>{address}</Text>
-         <Text style={styles.headerDateText}>{/*props.date*/{date:'2021.04.23'}.date}</Text>
+         <Text style={styles.headerDateText}>{today}</Text>
        </View>
      );
    };
 
+
+   const todayDate = new Date(today);
+   const todayDay = todayDate.getDay();
+   const dayArrayEng = ['monday','tuesday','wednesday','thursday','friday'];
+   const dayArrayKor = ['월','화','수','목','금'];
+   let todayDayIndex = (todayDay%6)-1;
+   if (todayDayIndex < 0){
+    todayDayIndex = 0;
+   }
+   const dayArrayEngFixed = [...dayArrayEng.slice(todayDayIndex),...dayArrayEng.slice(0,todayDayIndex)]
+   const dayArrayKorFixed = [...dayArrayKor.slice(todayDayIndex),...dayArrayKor.slice(0,todayDayIndex)]
+   
    const DayButtons = () =>{
     return (
       <View style={styles.headerButtons}>
         <TouchableOpacity
-          onPress={() => {setDay('monday');}}
+          onPress={() => {setDay(dayArrayEngFixed[0]);}}
           style={styles.headerButton}
           >
-          <Text style={styles.headerButtonText}>월</Text>
+          <Text style={styles.headerButtonText}>{dayArrayKorFixed[0]}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {setDay('tuesday');}}
+          onPress={() => {setDay(dayArrayEngFixed[1]);}}
           style={styles.headerButton}
           >
-          <Text style={styles.headerButtonText}>화</Text>
+          <Text style={styles.headerButtonText}>{dayArrayKorFixed[1]}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {setDay('wednesday');}}
+          onPress={() => {setDay(dayArrayEngFixed[2]);}}
           style={styles.headerButton}
           >
-          <Text style={styles.headerButtonText}>수</Text>
+          <Text style={styles.headerButtonText}>{dayArrayKorFixed[2]}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {setDay('thursday');}}
+          onPress={() => {setDay(dayArrayEngFixed[3]);}}
           style={styles.headerButton}
           >
-          <Text style={styles.headerButtonText}>목</Text>
+          <Text style={styles.headerButtonText}>{dayArrayKorFixed[3]}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {setDay('friday');}}
+          onPress={() => {setDay(dayArrayEngFixed[4]);}}
           style={styles.headerButton}
           >
-          <Text style={styles.headerButtonText}>금</Text>
+          <Text style={styles.headerButtonText}>{dayArrayKorFixed[4]}</Text>
         </TouchableOpacity>
       </View>
     );
