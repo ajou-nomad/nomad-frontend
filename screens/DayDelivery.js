@@ -24,6 +24,10 @@ const DayDelivery = ({ route, navigation }) => {
   const IsWeekly = false;
 
 
+  const setCurrentLocation = (result) => {
+
+    setLocation(result);
+  };
 
   useEffect( () => {
 
@@ -34,7 +38,7 @@ const DayDelivery = ({ route, navigation }) => {
 
       currentLocation()
       .then((result)=> {
-        setLocation(result);
+        setCurrentLocation(result);
         console.log('현재위치 저장 완료');
       })
       .catch(e => console.log(e));
@@ -128,7 +132,7 @@ const DayDelivery = ({ route, navigation }) => {
         <View style={{flex: 1}}>
           <GoogleMap IsWeekly={IsWeekly} location={location} back="DayDelivery" today={todayYearMonthDay} />
           { renderDestinationHeader() }
-          <GpsButton setLocation={setLocation} />
+          <GpsButton setLocation={setCurrentLocation} />
           <NewGroupButton item={{back:'DayDelivery'}} location = {null} today={todayYearMonthDay} />
         </View>
       ) : (

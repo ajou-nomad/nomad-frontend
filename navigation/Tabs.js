@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import {Image, TouchableOpacity, Keyboard} from 'react-native';
-import {COLORS, FONTS, icons, SIZES} from '../constants';
+import {COLORS, FONTS2, icons, SIZES} from '../constants';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home, WeeklyDelivery, OrderDetails} from '../screens/index';
 import DayNavigation from './DayNavigation';
@@ -80,7 +80,7 @@ const Tabs = ({route}) => {
         labelPosition: 'below-icon',
         labelStyle: {
           color: 'black',
-          ...FONTS.body6,
+          ...FONTS2.body6,
         },
         style: {
           borderTopWidth: 0.3,

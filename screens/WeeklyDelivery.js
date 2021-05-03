@@ -20,7 +20,10 @@ const WeeklyDelivery = ({ route, navigation }) => {
   const [location, setLocation] = useState();
   const IsWeekly = true;
 
+  const setCurrentLocation = (result) => {
 
+    setLocation(result);
+  };
 
   useEffect( () => {
 
@@ -74,7 +77,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
         <View style={{flex: 1}}>
           <GoogleMap IsWeekly={IsWeekly} location={location} back="WeeklyDelivery" today={todayYearMonthDay}/>
           { renderDestinationHeader() }
-          <GpsButton />
+          <GpsButton setLocation={setCurrentLocation} />
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>
