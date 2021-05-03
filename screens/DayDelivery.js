@@ -31,8 +31,14 @@ const DayDelivery = ({ route, navigation }) => {
     if (route.params?.post) {
       setLocation(route.params.post);
     } else {
-      // 현재 위치동의 및 받아오기
-      currentLocation(setLocation);
+
+      currentLocation()
+      .then((result)=> {
+        setLocation(result);
+        console.log('현재위치 저장 완료');
+      })
+      .catch(e => console.log(e));
+
     }
 
   }, [route.params?.post] );
