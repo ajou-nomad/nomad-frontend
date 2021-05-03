@@ -11,20 +11,23 @@ import {
     useWindowDimensions,
     ScrollView,
     SafeAreaView,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import { FONTS2, icons, COLORS } from '../../constants';
 
 
-import Menu from '../../components/Menu';
+import { responsiveWidth } from 'react-native-responsive-dimensions';
+
+
+import Menu from '../../components/item/Menu';
 import CartButton from '../../components/CartButton';
 import Review from '../../screens/review/Review';
 import StoreInfo from './StoreInfo';
 
 // 메뉴 (flatlist로 바꾸기)
-const MenuRoute = ({route}) => (
+const MenuRoute = ({ route }) => (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
         <ScrollView>
             <Menu time={route.time} location={route.location} storeName={route.storeName} />
@@ -73,7 +76,7 @@ function StoreDetail({route}) {
         <TabBar
             {...props}
             indicatorStyle={{
-                backgroundColor: '#EDF2FF',
+                backgroundColor: COLORS.tertiary,
                 height: '80%',
                 borderRadius: 20,
             }}
@@ -101,6 +104,8 @@ function StoreDetail({route}) {
                         borderColor: '#adb5bd',
                         borderBottomRightRadius: 20,
                         marginBottom: 10,
+                        width: responsiveWidth(70),
+                        alignItems: 'center',
                     }}>
                     <Text style={{ ...FONTS2.h1, }}>{route.params.storeName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 3, alignSelf: 'center' }}>

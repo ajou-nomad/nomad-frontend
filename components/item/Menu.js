@@ -2,16 +2,14 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
-    StyleSheet,
     View,
     Text,
     TouchableOpacity,
-    ScrollView,
 } from 'react-native';
 
-import { FONTS2 } from '../constants';
+import { FONTS2 } from '../../constants';
 
 import { useNavigation } from '@react-navigation/native';
 

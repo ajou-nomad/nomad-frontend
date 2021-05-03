@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 
-import { FONTS2, icons } from '../constants';
+import { FONTS2, icons } from '../../constants';
 
 
 const ReviewItem = () => {

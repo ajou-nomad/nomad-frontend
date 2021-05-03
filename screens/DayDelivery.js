@@ -133,7 +133,7 @@ const DayDelivery = ({ route, navigation }) => {
           <GoogleMap IsWeekly={IsWeekly} location={location} back="DayDelivery" today={todayYearMonthDay} />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
-          <NewGroupButton item={{back:'DayDelivery'}} location = {null} today={todayYearMonthDay} />
+          <NewGroupButton item={{back:'DayDelivery'}} location = {location.address} today={todayYearMonthDay} />
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>
