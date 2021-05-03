@@ -17,8 +17,14 @@ const GpsButton = ({setLocation}) => {
         style={styles.gpsButton}
         onPress={ () => {
           console.log("hello");
-          // setIsExecuting(true);
-          // currentLocation(setLocation);
+          setIsExecuting(true);
+          currentLocation()
+          .then((result)=> {
+            console.log("현재위치 불러오기 성공");
+            setIsExecuting(false);
+            setLocation(result);
+          })
+          .catch(e => console.log(e));
 
           // // 나중에 수정해줘야 할 부분 위치 지정 후 버튼 활성화.
           // setTimeout(() => setIsExecuting(false), 2000);

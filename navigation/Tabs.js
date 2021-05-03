@@ -2,12 +2,14 @@
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import {Image, TouchableOpacity, Keyboard} from 'react-native';
-import {COLORS, FONTS, icons} from '../constants';
+import {COLORS, FONTS2, icons, SIZES} from '../constants';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home, WeeklyDelivery, OrderDetails} from '../screens/index';
 import DayNavigation from './DayNavigation';
 import WeeklyNavigation from './WeeklyNavigation';
 import MyPageNavigation from './MyPageNavigation';
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +45,7 @@ const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
       <TouchableOpacity
         style={{
           flex: 1,
-          height: 50,
+          height: SIZES.height * 0.09,
           backgroundColor: COLORS.white,
         }}
         activeOpacity={1}
@@ -56,7 +58,7 @@ const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
       <TouchableOpacity
         style={{
           flex: 1,
-          height: 50,
+          height: SIZES.height * 0.09,
           backgroundColor: COLORS.white,
         }}
         activeOpacity={1}
@@ -78,11 +80,13 @@ const Tabs = ({route}) => {
         labelPosition: 'below-icon',
         labelStyle: {
           color: 'black',
-          ...FONTS.body6,
+          ...FONTS2.body6,
         },
         style: {
-          borderTopWidth: 0,
-          backgroundColor: 'transparent',
+          borderTopWidth: 0.3,
+          height: SIZES.height * 0.1,
+          borderTopColor: 'black',
+          // backgroundColor: 'transparent',
           elevation: 0, //그림자가 깔리는 입체적인 효과
         },
       }}>
@@ -95,7 +99,7 @@ const Tabs = ({route}) => {
               source={icons.home}
               resizeMode="contain"
               style={{
-                top: 2,
+                top: 5,
                 width: 25,
                 height: 25,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
@@ -114,7 +118,7 @@ const Tabs = ({route}) => {
               source={icons.cart}
               resizeMode="contain"
               style={{
-                top: 2,
+                top: 5,
                 width: 25,
                 height: 25,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
@@ -133,7 +137,7 @@ const Tabs = ({route}) => {
               source={icons.recipe}
               resizeMode="contain"
               style={{
-                top: 2,
+                top: 5,
                 width: 25,
                 height: 25,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
@@ -152,7 +156,7 @@ const Tabs = ({route}) => {
               source={icons.user}
               resizeMode="contain"
               style={{
-                top: 2,
+                top: 5,
                 width: 25,
                 height: 25,
                 tintColor: focused ? COLORS.black : COLORS.secondary,

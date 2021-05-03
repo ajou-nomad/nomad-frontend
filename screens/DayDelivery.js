@@ -24,6 +24,10 @@ const DayDelivery = ({ route, navigation }) => {
   const IsWeekly = false;
 
 
+  const setCurrentLocation = (result) => {
+
+    setLocation(result);
+  };
 
   useEffect( () => {
 
@@ -31,8 +35,14 @@ const DayDelivery = ({ route, navigation }) => {
     if (route.params?.post) {
       setLocation(route.params.post);
     } else {
-      // 현재 위치동의 및 받아오기
-      currentLocation(setLocation);
+
+      currentLocation()
+      .then((result)=> {
+        setCurrentLocation(result);
+        console.log('현재위치 저장 완료');
+      })
+      .catch(e => console.log(e));
+
     }
 
   }, [route.params?.post] );
@@ -122,7 +132,7 @@ const DayDelivery = ({ route, navigation }) => {
         <View style={{flex: 1}}>
           <GoogleMap IsWeekly={IsWeekly} location={location} back="DayDelivery" today={todayYearMonthDay} />
           { renderDestinationHeader() }
-          <GpsButton setLocation={setLocation} />
+          <GpsButton setLocation={setCurrentLocation} />
           <NewGroupButton item={{back:'DayDelivery'}} location = {null} today={todayYearMonthDay} />
         </View>
       ) : (
@@ -162,7 +172,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: SIZES.width * 0.8,
+    width: SIZES.width * 0.85,
     paddingVertical: SIZES.padding,
     paddingHorizontal: SIZES.padding * 2,
     borderRadius: SIZES.radius,

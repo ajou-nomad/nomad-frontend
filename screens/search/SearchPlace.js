@@ -5,7 +5,7 @@ import { TouchableOpacity, Image, Alert } from 'react-native';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {icons, SIZES, keys} from '../../constants';
-import { searchAddress } from '../../utils/helper';
+import { geocode } from '../../utils/helper';
 
 
 const SearchPlace = ({route, navigation}) => {
@@ -44,10 +44,7 @@ const SearchPlace = ({route, navigation}) => {
                 onPress={() => {
 
                     if ( place ) {
-                        searchAddress(place).then( (position) => {
-
-
-
+                        geocode(place).then( (position) => {
 
                             // Pass and merge params back to DayDelivery screen
                             navigation.navigate({
