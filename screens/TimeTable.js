@@ -32,61 +32,70 @@
    const goBack = () => {
      props.navigation.navigate(back);
    };
+
+   const [groupDate,setGroupDate] = useState(today);
+
+   const setGroupDateValue = (dateDifference) =>{
+    const d = new Date(today);
+    d.setDate(d.getDate()+dateDifference);
+    return JSON.stringify(d.toJSON()).substr(1,10);
+   };
+
    const [day, setDay] = useState('monday');
    const groupList = [
      {
        id:'time1',
        time:'08~09',
-       date:'2021-04-23',
+       date: groupDate,
        location: address,
       //  currentGroup:6,
      },
      {
        id:'time2',
        time:'09~10',
-       date:'2021-04-23',
+       date: groupDate,
        location: address,
      },
      {
        id:'time3',
        time:'10~11',
-       date:'2021-04-23',
+       date: groupDate,
        location: address,
      },
      {
        id:'time4',
        time:'11~12',
-       date:'2021-04-23',
+       date: groupDate,
        location: address,
      },
      {
        id:'time5',
        time:'12~13',
-       date:'2021-04-23',
+       date: groupDate,
        location: address,
      },
      {
        id:'time6',
        time:'13~14',
-       date:'2021-04-23',
+       date: groupDate,
        location: address,
      },
      {
        id:'time7',
        time:'14~15',
-       date:'2021-04-23',
+       date: groupDate,
        location: address,
      },
      {
        id:'time8',
        time:'15~16',
-       date:'2021-04-23',
+       date: groupDate,
        location: address,
      },
      {
        id:'time9',
        time:'16~17',
-       date:'2021-04-23',
+       date: groupDate,
        location: address,
      },
    ];
@@ -104,14 +113,20 @@
      );
    };
 
+   
 
    const todayDate = new Date(today);
    const todayDay = todayDate.getDay();
    const dayArrayEng = ['monday','tuesday','wednesday','thursday','friday'];
    const dayArrayKor = ['월','화','수','목','금'];
+   const dateDifference = [1,2,3,4];
+   const lastIndex = dateDifference.length - 1;
    let todayDayIndex = (todayDay%6)-1;
    if (todayDayIndex < 0){
     todayDayIndex = 0;
+   }
+   for(let i = 0; i < todayDayIndex; i++){
+    dateDifference[lastIndex-i] += 2;
    }
    const dayArrayEngFixed = [...dayArrayEng.slice(todayDayIndex),...dayArrayEng.slice(0,todayDayIndex)]
    const dayArrayKorFixed = [...dayArrayKor.slice(todayDayIndex),...dayArrayKor.slice(0,todayDayIndex)]
@@ -120,31 +135,46 @@
     return (
       <View style={styles.headerButtons}>
         <TouchableOpacity
-          onPress={() => {setDay(dayArrayEngFixed[0]);}}
+          onPress={() => {
+            setDay(dayArrayEngFixed[0]);
+            setGroupDate(setGroupDateValue(0));
+          }}
           style={styles.headerButton}
           >
           <Text style={styles.headerButtonText}>{dayArrayKorFixed[0]}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {setDay(dayArrayEngFixed[1]);}}
+          onPress={() => {
+            setDay(dayArrayEngFixed[1]);
+            setGroupDate(setGroupDateValue(dateDifference[0]));
+          }}
           style={styles.headerButton}
           >
           <Text style={styles.headerButtonText}>{dayArrayKorFixed[1]}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {setDay(dayArrayEngFixed[2]);}}
+          onPress={() => {
+            setDay(dayArrayEngFixed[2]);
+            setGroupDate(setGroupDateValue(dateDifference[1]));
+          }}
           style={styles.headerButton}
           >
           <Text style={styles.headerButtonText}>{dayArrayKorFixed[2]}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {setDay(dayArrayEngFixed[3]);}}
+          onPress={() => {
+            setDay(dayArrayEngFixed[3]);
+            setGroupDate(setGroupDateValue(dateDifference[2]));
+          }}
           style={styles.headerButton}
           >
           <Text style={styles.headerButtonText}>{dayArrayKorFixed[3]}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {setDay(dayArrayEngFixed[4]);}}
+          onPress={() => {
+            setDay(dayArrayEngFixed[4]);
+            setGroupDate(setGroupDateValue(dateDifference[3]));
+          }}
           style={styles.headerButton}
           >
           <Text style={styles.headerButtonText}>{dayArrayKorFixed[4]}</Text>
