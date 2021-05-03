@@ -27,6 +27,7 @@ import NewGroupButton from '../components/map/NewGroupButton';
 
 export default function GroupList({navigation, route}) {
   const address = route.params.address;
+  const today = route.params.today;
   const back = route.params.back;
 
   const goBack = () => {
@@ -134,7 +135,7 @@ export default function GroupList({navigation, route}) {
           <Text style={styles.backButton}>&lt;</Text>
         </TouchableOpacity>
         <Text numberOfLines={1} style={styles.headerLocationText}>{address}</Text>
-        <Text style={styles.headerDateText}>{{date:'2021.04.23'}.date}</Text>
+        <Text style={styles.headerDateText}>{today}</Text>
       </View>
     );
   };
