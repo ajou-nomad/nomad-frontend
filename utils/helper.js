@@ -118,7 +118,8 @@ export const emailPasswordLogin = (data, dispatch) => {
         });
 };
 
-export const searchAddress = async (address) => {
+// 장소, 명칭 -> 좌표
+export const geocode = async (address) => {
     //Search by address
     try {
         const json = await Geocoder.from(address);
@@ -141,14 +142,25 @@ export const searchAddress = async (address) => {
 };
 
 
-// useState를 넘겨 현재 위치정보 저장
-export const currentLocation = async (setLocation) => {
+// 좌표 -> 장소, 명칭
+export const reverseGeocode = async (location) => {
 
-    //권한 요청
+    const json = await Geocoder.from(location.latitude, location.longitude);
+    const addressComponent = json.results[0].formatted_address.replace('대한민국 서울특별시 ','');
+    location.address = addressComponent;
+
+    return location;
+};
+
+
+// 현재위치 얻기
+export const currentLocation = async () => {
+
+    // 위치권한 요청
     const result = await requestPermission();
 
     // error시 팔달관 좌표 반환
-    const initCoords = {
+    let location = {
         latitude: 37.284696906069975,
         longitude: 127.04438918710983,
         address: '아주대학교 팔달관',
@@ -157,27 +169,34 @@ export const currentLocation = async (setLocation) => {
 
     if (result === 'granted') {
         console.log( 'You can use the ACCESS_FINE_LOCATION' );
-        Geolocation.getCurrentPosition(
-            async (position) => {
-                const json = await Geocoder.from(position.coords.latitude, position.coords.longitude);
-                const addressComponent = json.results[0].formatted_address.replace('대한민국 서울특별시 ','');
-                position.coords.address = addressComponent;
-                console.log('현재위치저장완료');
-                setLocation(position.coords);
-            },
-            error => {
-                console.log(error);
-                setLocation(initCoords);
-            },
-            {
-                enableHighAccuracy: false,
-                timeout: 30000,
-                maximumAge: 10000,
+
+        return new Promise( (resolve, reject) => {
+            Geolocation.getCurrentPosition(
+                async (position) => {
+
+                    const geometry = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                    };
+
+                    location = await reverseGeocode(geometry);
+                    resolve(location);
+                },
+                error => {
+                    // 타임아웃 시, 초기location 반환
+                    console.log(error);
+                    resolve(location);
+                    // reject(error);
+                },
+                {
+                    enableHighAccuracy: false,
+                    timeout: 30000,
+                    maximumAge: 10000,
+            });
         });
-    }
-    else {
+    } else {
         Alert.alert('설정에서 DutchDelivery가 기기 위치에 액세스하도록 허용해주세요.');
-        setLocation(initCoords);
+        return location;
     }
 };
 
@@ -211,6 +230,6 @@ export const calculateDistance = (origLat, origLon, markerLat, markerLon) => {
         {latitude: origLat, longitude: origLon},
         {latitude: markerLat, longitude: markerLon}
     );
-    // console.log(`Distance= ${distance} Meter OR ${distance / 1000} KM`);
+
     return distance;
 };

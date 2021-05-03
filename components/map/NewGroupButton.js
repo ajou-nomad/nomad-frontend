@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     newGroup: {
       position: 'absolute',
       bottom: 10,
-      width: SIZES.width * 0.5,
+      width: SIZES.width * 0.55,
       alignSelf: 'center'
     },
     newGroupView:{

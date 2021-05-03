@@ -61,7 +61,9 @@ const CheckOrder = ({route:{params}}) => {
                     <OrderMenuItem />
                 </View>
             </View>
-            <BottomButton onPress={() => alert('결제화면으로')} title={price + "원 결제하기"} />
+
+
+            <BottomButton onPress={() => navigation.navigate('PaymentNavigation')} title={price + "원 결제하기"} />
         </View>
     );
 };

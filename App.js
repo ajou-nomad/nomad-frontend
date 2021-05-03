@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useContext} from 'react';
-import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -30,11 +29,21 @@ const App = () => {
   useEffect(() => {
     // Foreground state messages
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      console.log(JSON.stringify(remoteMessage));
+      Toast.show({
+        type: 'success',
+        position: 'top',
+        text1: '배달 알림',
+        text2: '배달모집이 완료되었습니다. 👋',
+        visibilityTime: 4000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
     });
 
     // idToken이 바뀌었을 때 실행하는 listener
-    // idTokenChangedListeners(state, dispatch); 
+    // idTokenChangedListeners(state, dispatch);
 
     // local store에서 token을 가져와 세션유지 ( 지금은 deviceToken으로 하였음)
     const bootstrapAsync = async () => {
@@ -55,39 +64,40 @@ const App = () => {
   }, []);
 
   return (
-    <NavigationContainer>
-      {/* 장바구니 담았을 때 알림(toast message) */}
-      <Toast ref={(ref) => Toast.setRef(ref)} />
-      { true !== null ? (
-        // MainStack
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-          initialRouteName={'Main'}>
-          <Stack.Screen name="Main" component={Main} />
-          <Stack.Screen name="Tabs" component={Tabs} />
-          <Stack.Screen name="CreateGroupDetail" component={CreateGroupDetail} />
+    <>
+      <NavigationContainer>
+        { true !== null ? (
+          // MainStack
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            initialRouteName={'Main'}>
+            <Stack.Screen name="Main" component={Main} />
+            <Stack.Screen name="Tabs" component={Tabs} />
+            <Stack.Screen name="CreateGroupDetail" component={CreateGroupDetail} />
 
-          <Stack.Screen name="CreateGroupList" component={CreateGroupList} />
-          <Stack.Screen name="StoreDetail" component={StoreDetail} />
-          <Stack.Screen name="MenuDetail" component={MenuDetail} />
-          <Stack.Screen name="CheckOrder" component={CheckOrder} />
-          <Stack.Screen name="Cart" component={Cart} />
-          <Stack.Screen name="PaymentNavigation" component={PaymentNavigation} />
-        </Stack.Navigator>
-      ) : (
-        // AuthStack
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-          initialRouteName={'SignIn'}>
-          <Stack.Screen name="SignIn" component={SignIn} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-        </Stack.Navigator>
-      )}
-    </NavigationContainer>
+            <Stack.Screen name="CreateGroupList" component={CreateGroupList} />
+            <Stack.Screen name="StoreDetail" component={StoreDetail} />
+            <Stack.Screen name="MenuDetail" component={MenuDetail} />
+            <Stack.Screen name="CheckOrder" component={CheckOrder} />
+            <Stack.Screen name="Cart" component={Cart} />
+            <Stack.Screen name="PaymentNavigation" component={PaymentNavigation} />
+          </Stack.Navigator>
+        ) : (
+          // AuthStack
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            initialRouteName={'SignIn'}>
+            <Stack.Screen name="SignIn" component={SignIn} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+          </Stack.Navigator>
+        )}
+      </NavigationContainer>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
+    </>
   );
 };
 

@@ -36,7 +36,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                             style={{
                                 borderBottomWidth: 1,
                                 width: 300,
-                                ...FONTS2.h2,
+                                ...FONTS2.body2,
                             }}
                             placeholder='수령 장소'
                             value={params.location}
