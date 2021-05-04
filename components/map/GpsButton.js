@@ -24,7 +24,10 @@ const GpsButton = ({setLocation}) => {
             setIsExecuting(false);
             setLocation(result);
           })
-          .catch(e => console.log(e));
+          .catch(e => {
+            console.log(e);
+            setIsExecuting(false);
+          });
 
           // // 나중에 수정해줘야 할 부분 위치 지정 후 버튼 활성화.
           // setTimeout(() => setIsExecuting(false), 2000);

@@ -6,8 +6,6 @@ const Point = ({ route, navigation }) => {
 
     const { paymentInfo } = route.params;
 
-    console.log(paymentInfo);
-
     return (
         <View>
             <Text>포인트로 지불할 예정</Text>

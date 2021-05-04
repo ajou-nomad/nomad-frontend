@@ -16,8 +16,8 @@ import { FONTS2, icons, images } from '../../constants';
 
 
 function CreateGroupList({navigation,route}) {
-    
-    const [location, setLocation] = useState(route.params.CurrentLocation);
+
+    const [location, setLocation] = useState(route.params.location);
     const noLocation = () => {
         return (
             <View style={styles.container}>
