@@ -14,7 +14,6 @@ import { COLORS, icons } from '../constants';
 const CartButton = (props) => {
 
     const navigation = useNavigation();
-    
 
     return (
         <TouchableOpacity
@@ -30,7 +29,7 @@ const CartButton = (props) => {
                 borderRadius: 38,
                 elevation: 5,
             }}
-            onPress={() => navigation.navigate('Cart',{time:props.time, location: props.location, storeName:props.storeName})}
+            onPress={() => navigation.navigate('Cart',{time:props.time, location: props.deliveryPlace, storeName:props.storeName})}
         >
             <Image
                 source={icons.cart}

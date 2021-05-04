@@ -31,14 +31,14 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                 {/* Body */}
                 <View style={{ flex: 4, marginHorizontal: 30, }}>
                     <View style={{ flex: 1, justifyContent: 'center' }}>
-                        <Text style={{ ...FONTS2.h1, fontWeight: 'bold', marginTop: 30, paddingBottom: 10, }}>수령장소</Text>
+                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>건물명</Text>
                         <TextInput
                             style={{
                                 borderBottomWidth: 1,
                                 width: 300,
                                 ...FONTS2.body2,
                             }}
-                            placeholder='수령 장소'
+                            placeholder='건물명'
                             value={params.location}
                             placeholderTextColor='#707070'
                             selectionColor='#000000'
@@ -46,7 +46,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
 
                         {params.time === null ?
                             <View style={{ marginVertical: 50,}}>
-                                <Text style={{ ...FONTS2.h1, fontWeight: 'bold', }}>시간</Text>
+                                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>시간</Text>
                                 <DatePicker date={date} onDateChange={setDate} mode='time' />
                             </View>
                             :
@@ -54,7 +54,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                         }
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                             <Text style={{
-                                ...FONTS2.h1,
+                                ...FONTS2.h2,
                                 fontWeight: 'bold',
                             }}>인원</Text>
                             <Counter
