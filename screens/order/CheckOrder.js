@@ -15,6 +15,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const CheckOrder = ({route:{params}}) => {
 
+    console.log(params);
+
     const navigation = useNavigation();
     const orderInfo = {
         storeName: params.storeName,

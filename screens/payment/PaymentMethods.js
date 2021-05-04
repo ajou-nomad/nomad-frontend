@@ -12,7 +12,7 @@ import { SIZES, icons } from '../../constants';
 const PaymentMethods = ({navigation}) => {
 
     const data = {
-        amount: 10000, // 최종 주문 결제 내역에서 가져올
+        amount: 8200, // 최종 주문 결제 내역에서 가져올
         myPoint: 150000, // axios로 불러야 할 정보들
         buyerName: '테스트용',
         buyerTel: '010-1234-5678',

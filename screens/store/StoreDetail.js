@@ -67,7 +67,7 @@ function StoreDetail({route}) {
 
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: 'first', title: '메뉴', time: route.params.time, location: route.params.location, storeName: route.params.storeName},
+        { key: 'first', title: '메뉴', time: route.params.time, location: route.params.deliveryPlace, storeName: route.params.storeName},
         { key: 'second', title: '매장 정보' },
         { key: 'third', title: '리뷰' },
     ]);
@@ -160,7 +160,7 @@ function StoreDetail({route}) {
                     renderTabBar={renderTabBar}
                 />
             </View>
-            <CartButton time={route.params.time} location={route.params.location} storeName={route.params.storeName} />
+            <CartButton time={route.params.time} deliveryPlace={route.params.deliveryPlace} storeName={route.params.storeName} />
         </View>
     );
 }
