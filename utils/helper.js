@@ -145,11 +145,16 @@ export const geocode = async (address) => {
 // 좌표 -> 장소, 명칭
 export const reverseGeocode = async (location) => {
 
-    const json = await Geocoder.from(location.latitude, location.longitude);
-    const addressComponent = json.results[0].formatted_address.replace('대한민국 서울특별시 ','');
-    location.address = addressComponent;
+    try {
 
-    return location;
+        const json = await Geocoder.from(location.latitude, location.longitude);
+        const addressComponent = json.results[0].formatted_address.replace('대한민국 ','').replace('서울특별시 ','');
+        location.address = addressComponent;
+
+        return location;
+    } catch (e) {
+        console.log(e);
+    }
 };
 
 

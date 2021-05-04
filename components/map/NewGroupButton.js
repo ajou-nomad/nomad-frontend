@@ -4,26 +4,27 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { icons, COLORS, SIZES, FONTS } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
 
-const NewGroupButton = ({item, location}) => {
+const NewGroupButton = ({initLocation}) => {
 
   const navigation = useNavigation();
-    return (
-        <TouchableOpacity
-          style={styles.newGroup}
-          onPress={()=> navigation.navigate("CreateGroupList",{back:item.back,  CurrentLocation: location})}
-        >
-            <View style={styles.newGroupView}>
-                <Image
-                    source={icons.search}
-                    style={styles.logoStyle}
-                />
-                <View
-                    style={styles.newGroupTextView}>
-                    <Text style={styles.newGroupText}>원하는 조건이 없나요?</Text>
-                </View>
-            </View>
-      </TouchableOpacity>
-    );
+
+  return (
+      <TouchableOpacity
+        style={styles.newGroup}
+        onPress={()=> navigation.navigate('CreateGroupList', { initLocation: initLocation })}
+      >
+          <View style={styles.newGroupView}>
+              <Image
+                  source={icons.search}
+                  style={styles.logoStyle}
+              />
+              <View
+                  style={styles.newGroupTextView}>
+                  <Text style={styles.newGroupText}>원하는 조건이 없나요?</Text>
+              </View>
+          </View>
+    </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({

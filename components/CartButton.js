@@ -9,12 +9,11 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { icons } from '../constants';
+import { COLORS, icons } from '../constants';
 
 const CartButton = (props) => {
 
     const navigation = useNavigation();
-    
 
     return (
         <TouchableOpacity
@@ -24,13 +23,13 @@ const CartButton = (props) => {
                 right: 20,
                 width: 60,
                 height: 60,
-                backgroundColor: '#EDF2FF',
+                backgroundColor: '#1c7ed6',
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 38,
-                elevation: 3,
+                elevation: 5,
             }}
-            onPress={() => navigation.navigate('Cart',{time:props.time, location: props.location, storeName:props.storeName})}
+            onPress={() => navigation.navigate('Cart',{time:props.time, location: props.deliveryPlace, storeName:props.storeName})}
         >
             <Image
                 source={icons.cart}
@@ -38,7 +37,7 @@ const CartButton = (props) => {
                 style={{
                     width: 30,
                     height: 30,
-                    tintColor: '#343a40',
+                    tintColor: COLORS.white,
                 }}
             />
         </TouchableOpacity>
