@@ -21,6 +21,7 @@ import BottomButton from '../../components/layout/BottomButton';
 
 function CreateGroupDetail({ navigation, route: { params } }) {
     const [date, setDate] = useState(new Date());
+    const [buildingName, setBuildingName] = useState('');
 
     return (
         <KeyboardAvoidingView style={styles.container}>
@@ -38,16 +39,17 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                                 width: 300,
                                 ...FONTS2.body2,
                             }}
-                            placeholder='건물명'
-                            value={params.location}
-                            placeholderTextColor='#707070'
-                            selectionColor='#000000'
+                            placeholder="건물명"
+                            value={buildingName}
+                            placeholderTextColor="#707070"
+                            selectionColor="#000000"
+                            onChangeText={text => setBuildingName(text)}
                         />
 
                         {params.time === null ?
                             <View style={{ marginVertical: 50,}}>
                                 <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>시간</Text>
-                                <DatePicker date={date} onDateChange={setDate} mode='time' />
+                                <DatePicker date={date} onDateChange={setDate} mode="time" />
                             </View>
                             :
                             <View style={{ marginVertical: 45, }} />
