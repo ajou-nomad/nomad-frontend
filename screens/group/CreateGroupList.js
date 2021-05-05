@@ -21,10 +21,13 @@ import SelectButton from '../../components/layout/SelectButton';
 
 function CreateGroupList({navigation, route}) {
 
-    const [isSelected, setIsSelected] = useState(false);
-    const [deliveryPlace, setDeliveryPlace] = useState(); // 핀으로 이동된 좌표 및 명칭
+    const [isSelected, setIsSelected] = useState(false); // 최종적으로 선택했을 때 위치를 바탕으로 매장을 불러올 예정
+    const [deliveryPlace, setDeliveryPlace] = useState();
 
 
+    const onPlaceChange = (region) => {
+        setDeliveryPlace(region);
+    };
 
     const chooseDeliveryPlace = () => {
         return (
@@ -38,7 +41,7 @@ function CreateGroupList({navigation, route}) {
                         borderWidth: 0.4,
                     }}
                 >
-                    <MiniMap location={route.params.initLocation} setDeliveryPlace={setDeliveryPlace} />
+                    <MiniMap location={route.params.initLocation} onPlaceChange={onPlaceChange} />
                 </View>
                 <SelectButton navigation={navigation} deliveryPlace={deliveryPlace} setDeliveryPlace={setDeliveryPlace} setIsSelected={setIsSelected} />
             </View>
