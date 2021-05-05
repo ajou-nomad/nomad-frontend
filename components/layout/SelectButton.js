@@ -14,7 +14,6 @@ const SelectButton = ({navigation, deliveryPlace, setDeliveryPlace, setIsSelecte
                 <TouchableOpacity
                     style={[styles.button, {backgroundColor: '#1c7ed6'}]}
                     onPress={ () => {
-
                         if (!deliveryPlace) {
                             Alert.alert('핀을 움직여 배달 장소를 선택해주세요.');
                         } else {
@@ -23,7 +22,6 @@ const SelectButton = ({navigation, deliveryPlace, setDeliveryPlace, setIsSelecte
                                 await setIsSelected(true);
                             });
                         }
-
                     }}
                 >
                     <Text style={{...FONTS2.h5, color: COLORS.white}}>선택</Text>
