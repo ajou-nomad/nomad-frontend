@@ -27,7 +27,10 @@ export default function GroupList({navigation, route}) {
 
   const location = route.params.group.location;
   const back = route.params.back;
-  const today = JSON.stringify(new Date().toJSON()).substr(1,10);
+  const today = route.params.today;
+
+  console.log(route.params);
+
 
   const goBack = () => {
     navigation.navigate(back);
@@ -82,6 +85,7 @@ export default function GroupList({navigation, route}) {
             time={item.time}
             current={item.current}
             max={item.max}
+            deliDate={today}
             location={location}
             styleGroupInfo={styles.groupInfo}
             styleLogoImage={styles.logoImage}
@@ -113,7 +117,7 @@ export default function GroupList({navigation, route}) {
       {Header()}
       {SortButtons()}
       {ListOfGroup()}
-      <NewGroupButton initLocation={location} />
+      <NewGroupButton initLocation={location} deliDate={today}/>
     </>
   );
 }

@@ -10,6 +10,8 @@ import {
     TextInput,
     KeyboardAvoidingView,
     ScrollView,
+    ProgressViewIOSComponent,
+    TouchableOpacity,
 } from 'react-native';
 
 import Counter from 'react-native-counters';
@@ -21,14 +23,76 @@ import BottomButton from '../../components/layout/BottomButton';
 
 function CreateGroupDetail({ navigation, route: { params } }) {
     const [date, setDate] = useState(new Date());
-    const [buildingName, setBuildingName] = useState('');
+    const [buildingName, setBuildingName] = useState(params.location.buildingName);
+    
+    const dayArrayKorFixed = params.items === undefined ? [0,0,0,0,0] : params.items.datePicker[0];
+    const dateDifference = params.items === undefined ? [0,0,0,0] : params.items.datePicker[1];
+
+    const today = JSON.stringify(date.toJSON()).substr(1,10);
+
+    const [groupDate,setGroupDate] = useState(today);
+
+    const setGroupDateValue = (dateDifference) =>{
+        const d = new Date(today);
+        d.setDate(d.getDate()+dateDifference);
+        return JSON.stringify(d.toJSON()).substr(1,10);
+   };
+
+    const DayPicking = () =>{
+        return (
+          <View style={styles.headerButtons}>
+            <TouchableOpacity
+              onPress={() => {
+                setGroupDate(setGroupDateValue(0));
+              }}
+              style={styles.headerButton}
+              >
+              <Text style={styles.headerButtonText}>{dayArrayKorFixed[0]}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setGroupDate(setGroupDateValue(dateDifference[0]));
+              }}
+              style={styles.headerButton}
+              >
+              <Text style={styles.headerButtonText}>{dayArrayKorFixed[1]}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setGroupDate(setGroupDateValue(dateDifference[1]));
+              }}
+              style={styles.headerButton}
+              >
+              <Text style={styles.headerButtonText}>{dayArrayKorFixed[2]}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setGroupDate(setGroupDateValue(dateDifference[2]));
+              }}
+              style={styles.headerButton}
+              >
+              <Text style={styles.headerButtonText}>{dayArrayKorFixed[3]}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setGroupDate(setGroupDateValue(dateDifference[3]));
+              }}
+              style={styles.headerButton}
+              >
+              <Text style={styles.headerButtonText}>{dayArrayKorFixed[4]}</Text>
+            </TouchableOpacity>
+          </View>
+        );
+      };
+
+
 
     return (
         <KeyboardAvoidingView style={styles.container}>
             <ScrollView>
                 {/* Header */}
                 <Header title="배달 그룹 생성" small="true" haveInput="true" />
-            
+
                 {/* Body */}
                 <View style={{ flex: 4, marginHorizontal: 30, }}>
                     <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -45,15 +109,28 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                             selectionColor="#000000"
                             onChangeText={text => setBuildingName(text)}
                         />
-
-                        {params.time === null ?
-                            <View style={{ marginVertical: 50,}}>
-                                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>시간</Text>
-                                <DatePicker date={date} onDateChange={setDate} mode="time" />
+                        {
+                            !params.deliDate ?
+                            <View style={{ marginVertical: 15,}}>
+                                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>날짜</Text>
+                                {DayPicking()}
                             </View>
                             :
-                            <View style={{ marginVertical: 45, }} />
+                            <>
+                            </>
                         }
+
+                        {
+                            !params.time ?
+                            <View style={{ marginVertical: 15,}}>
+                                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>시간</Text>
+                                <DatePicker date={date} onDateChange={setDate} mode="time" minuteInterval={5} />
+                            </View>
+                            :
+                            <>
+                            </>
+                        }
+
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                             <Text style={{
                                 ...FONTS2.h2,
@@ -77,7 +154,8 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                 </View>
                     
                 {/* Footer */}
-                <BottomButton onPress={() => navigation.navigate('CheckOrder', { time: params.time, location: params.location.address, storeName: params.storeName })} title="그룹 생성하기" />
+                
+                <BottomButton onPress={() => navigation.navigate('CheckOrder', { time: JSON.stringify(date).slice(12,17), location: {...params.location,buildingName:buildingName}, storeName: params.storeName })} title="그룹 생성하기" />
             </ScrollView>
         </KeyboardAvoidingView>
     );
@@ -87,6 +165,23 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
+    },
+    headerButtons: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent:'center',
+      marginBottom: 5,
+    },
+    headerButton: {
+      marginHorizontal: 10,
+      padding: 5,
+      borderColor: '#e5e5e5',
+      borderWidth: 5,
+      borderRadius: 25,
+    },
+    headerButtonText:{
+      fontSize: 14,
+      fontWeight: 'bold',
     },
 });
 

@@ -7,7 +7,7 @@ import { Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 
 
-const CustomMarker = ({item, back}) => {
+const CustomMarker = ({item, back, today, items}) => {
 
     const navigation = useNavigation();
 
@@ -15,7 +15,7 @@ const CustomMarker = ({item, back}) => {
         back === 'DayDelivery' ? (
             <Marker
                 coordinate={{ latitude : item.location.latitude, longitude : item.location.longitude }}
-                onPress={() => navigation.navigate('GroupList',{back: back, group: item})}
+                onPress={() => navigation.navigate('GroupList',{back: back, group: item, today: today})}
             >
                 <View style={styles.markerView}>
                     {/* marker 매장명 */}
@@ -67,7 +67,7 @@ const CustomMarker = ({item, back}) => {
         ) : (
             <Marker
                 coordinate={{ latitude : item.location.latitude, longitude : item.location.longitude }}
-                onPress={() => navigation.navigate('TimeTable',{back:back, address: item.location.buildingName})}
+                onPress={() => navigation.navigate('TimeTable',{back:back, group: item, items: items})}
             >
                 <View style={styles.markerView}>
                     {/* marker 매장명 */}

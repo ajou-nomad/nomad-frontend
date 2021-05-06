@@ -153,7 +153,7 @@ export default function WeeklyGroupListParent(props) {
                             <Text numberOfLines={1}
                             style={{
                             ...FONTS.body2,
-                            }}>{props.location}</Text>
+                            }}>{props.location.buildingName}</Text>
                             <Text numberOfLines={1}
                             style={{
                             ...FONTS.body3,

@@ -64,7 +64,6 @@ const renderScene = SceneMap({
 
 function StoreDetail({route}) {
     const layout = useWindowDimensions();
-
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         { key: 'first', title: '메뉴', time: route.params.time, location: route.params.deliveryPlace, storeName: route.params.storeName},
@@ -140,7 +139,7 @@ function StoreDetail({route}) {
             </View>
         );
     };
-
+    console.log(route.params)
     return (
         <View style={styles.container}>
             {renderHeader()}
@@ -160,7 +159,7 @@ function StoreDetail({route}) {
                     renderTabBar={renderTabBar}
                 />
             </View>
-            <CartButton time={route.params.time} deliveryPlace={route.params.deliveryPlace} storeName={route.params.storeName} />
+            <CartButton items={route.params.items} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} storeName={route.params.storeName} />
         </View>
     );
 }

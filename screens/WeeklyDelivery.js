@@ -12,7 +12,31 @@ import {
 } from 'react-native';
 import {icons, COLORS, SIZES, FONTS} from '../constants';
 import GoogleMap from '../components/map/GoogleMap';
+import NewGroupButton from '../components/map/NewGroupButton';
 import GpsButton from '../components/map/GpsButton';
+import { currentLocation } from '../utils/helper';
+
+const ItemsForCreateGroupDetailDayPicker = () => {
+  
+  const today = JSON.stringify(new Date().toJSON()).substr(1,10);
+  const todayDate = new Date(today);
+  const todayDay = todayDate.getDay();
+  const dayArrayKor = ['월','화','수','목','금'];
+  const dateDifference = [1,2,3,4];
+  const lastIndex = dateDifference.length - 1;
+  let todayDayIndex = (todayDay%6)-1;
+  if (todayDayIndex < 0){
+   todayDayIndex = 0;
+  }
+  for(let i = 0; i < todayDayIndex; i++){
+   dateDifference[lastIndex-i] += 2;
+  }
+  const dayArrayKorFixed = [...dayArrayKor.slice(todayDayIndex),...dayArrayKor.slice(0,todayDayIndex)]
+
+  return [dayArrayKorFixed,dateDifference]
+
+}
+
 
 
 const WeeklyDelivery = ({ route, navigation }) => {
@@ -20,7 +44,6 @@ const WeeklyDelivery = ({ route, navigation }) => {
   const [location, setLocation] = useState();
 
   const setCurrentLocation = (result) => {
-
     setLocation(result);
   };
 
@@ -30,12 +53,14 @@ const WeeklyDelivery = ({ route, navigation }) => {
     if (route.params?.post) {
       setLocation(route.params.post);
     } else {
-      //임시 셋팅
-      setLocation({
-        latitude: 37.284696906069975,
-        longitude: 127.04438918710983,
-        address: '아주대학교 팔달관',
-      });
+
+      currentLocation()
+      .then((result)=> {
+        setCurrentLocation(result);
+        console.log('현재위치 저장 완료');
+      })
+      .catch(e => console.log(e));
+
     }
 
   }, [route.params?.post]);
@@ -68,6 +93,11 @@ const WeeklyDelivery = ({ route, navigation }) => {
     );
   };
 
+
+  const [dayArrayKorFixed,dateDifference] = ItemsForCreateGroupDetailDayPicker()
+
+
+
   return (
     <View style={{flex: 1}}>
       { location ? (
@@ -75,6 +105,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
           <GoogleMap initLocation={location} back="WeeklyDelivery" />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
+          <NewGroupButton initLocation={location} deliDate={null} items={{datePicker:[dayArrayKorFixed,dateDifference]}} />
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

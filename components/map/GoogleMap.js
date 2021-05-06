@@ -8,7 +8,7 @@ import CustomMarker from './CustomMarker';
 import {icons} from '../../constants';
 
 
-const GoogleMap = ({initLocation, back}) => {
+const GoogleMap = ({initLocation, back, today}) => {
 
     const mapView = useRef();
 
@@ -406,7 +406,7 @@ const GoogleMap = ({initLocation, back}) => {
             }}
         >
             { filteredMarkers.map((item, idx) => (
-                <CustomMarker key={idx} item={item} back={back} />
+                <CustomMarker key={idx} item={item} back={back} today={today} />
             ))}
             <Marker
                 coordinate={initLocation}
