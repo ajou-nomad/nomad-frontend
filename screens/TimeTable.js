@@ -27,7 +27,7 @@
  
  export default function TimeTable(props) {
    const address = props.route.params.address;
-   const today = props.route.params.today;
+   const today = JSON.stringify(new Date().toJSON()).substr(1,10);
    const back = props.route.params.back;
    const goBack = () => {
      props.navigation.navigate(back);

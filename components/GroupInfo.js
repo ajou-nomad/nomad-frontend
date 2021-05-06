@@ -20,29 +20,28 @@ import { useNavigation } from '@react-navigation/native';
 export default function GroupInfo(props) {
         const navigation = useNavigation();
         return (
-            <>
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate("StoreDetail",{storeName:props.shopName,time:props.time,location:props.location})}
-                >
-                    <View style={props.styleGroupInfo}>
-                        <Image style={props.styleLogoImage} source={props.logo}/>
-                        <View>
-                            <Text style={props.styleShopText}>{props.shopName}</Text>
-                            <View style={props.styleRating}>
-                                <Image style={props.styleStarImage} source={icons.star}/>
-                                <Text style={props.styleRateText}>{props.rate}/5.0</Text>
-                            </View>
-                            <View style={props.styleDeliveryTime}>
-                                <Image style={props.styleTimeImage} source={icons.pin}/>
-                                <Text style={props.styleDeliveryTimeText}> {props.time}</Text>
-                            </View>
+            <TouchableOpacity
+                onPress={()=>navigation.navigate('StoreDetail', {storeName:props.shopName, time:props.time, deliveryPlace:props.location})}
+            >
+                <View style={props.styleGroupInfo}>
+                    <Image style={props.styleLogoImage} source={props.logo}/>
+                    <View>
+                        <Text style={props.styleShopText}>{props.shopName}</Text>
+                        <View style={props.styleRating}>
+                            <Image style={props.styleStarImage} source={icons.star}/>
+                            <Text style={props.styleRateText}>{props.rate}/5.0</Text>
                         </View>
-                        <View style={props.styleGroupNumber}>
-                            <Image style={props.styleUserImage} source={icons.user} />
-                            <Text style={props.groupNumberText}>{props.current}/{props.max}</Text>
+                        <View style={props.styleDeliveryTime}>
+                            <Image style={props.styleTimeImage} source={icons.pin}/>
+                            <Text style={props.styleDeliveryTimeText}> {props.time}</Text>
                         </View>
                     </View>
-                </TouchableOpacity>
-            </>
+                    <View style={props.styleGroupNumber}>
+                        <Image style={props.styleUserImage} source={icons.user} />
+                        <Text style={props.groupNumberText}>{props.current}/{props.max}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+
         );
 }

@@ -22,7 +22,11 @@ const MiniMap = ({location, onPlaceChange, prevScreen}) => {
                     latitudeDelta: 0.0033,
                     longitudeDelta: 0.0033,
                 }}
-                onRegionChangeComplete={(region)=> onPlaceChange(region)}
+                onRegionChangeComplete={(region)=> {
+                    delete region.latitudeDelta;
+                    delete region.longitudeDelta;
+                    onPlaceChange(region);
+                }}
             />
             <View style={styles.markerFixed}>
                 <Image style={styles.marker} source={icons.pin} />

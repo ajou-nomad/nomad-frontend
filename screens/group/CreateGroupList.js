@@ -13,7 +13,6 @@ import {
 import StoreItem from '../../components/item/StoreItem';
 import Header from '../../components/layout/Header';
 import { FONTS2, SIZES } from '../../constants';
-import { currentLocation } from '../../utils/helper';
 
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 import MiniMap from '../../components/map/MiniMap';
@@ -21,18 +20,19 @@ import SelectButton from '../../components/layout/SelectButton';
 
 function CreateGroupList({navigation, route}) {
 
-    const [isSelected, setIsSelected] = useState(false); // 최종적으로 선택했을 때 위치를 바탕으로 매장을 불러올 예정
-    const [deliveryPlace, setDeliveryPlace] = useState();
-
+    //route.params.initLocation.buildingName존재 시 배달장소를 선택할 필요x
+    const [isSelected, setIsSelected] = useState(route.params.initLocation.buildingName ? true : false);
+    const [deliveryPlace, setDeliveryPlace] = useState(route.params.initLocation.buildingName ? route.params.initLocation : '');
 
     const onPlaceChange = (region) => {
         setDeliveryPlace(region);
     };
 
+
     const chooseDeliveryPlace = () => {
         return (
             <View style={{ flex: 1, alignItems: 'center' }}>
-                <Text style={{ ...FONTS2.body2, color: '#495057', marginVertical: SIZES.height * 0.02 }}> 배달 장소를 선택해주세요.</Text>
+                <Text style={{ ...FONTS2.body2, color: '#495057', marginVertical: SIZES.height * 0.02 }}>배달 장소를 선택해주세요.</Text>
                 <View
                     style={{
                         width: SIZES.width * 0.9,
