@@ -8,7 +8,7 @@
  */
 
 import 'react-native-gesture-handler';
-import React, {useState} from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   FlatList,
@@ -16,19 +16,18 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
-  Image,
 } from 'react-native';
-import {icons, COLORS, SIZES, FONTS} from '../constants';
+import {COLORS, SIZES, FONTS} from '../constants';
 
 import GroupInfo from '../components/GroupInfo';
 import NewGroupButton from '../components/map/NewGroupButton';
 
 
 export default function GroupList({navigation, route}) {
-  const address = route.params.address;
-  const today = route.params.today;
+
+  const location = route.params.group.location;
   const back = route.params.back;
+  const today = JSON.stringify(new Date().toJSON()).substr(1,10);
 
   const goBack = () => {
     navigation.navigate(back);
@@ -39,93 +38,9 @@ export default function GroupList({navigation, route}) {
   };
 
   const sortTime = () => {
-    alert('10:30'<'10:31');
+    alert('10:30' < '10:31');
   };
 
-  const groupList = [
-    {
-      id: 'shop1',
-      logo:icons.donut,
-      shopName:'TempName1',
-      rate:3.5,
-      time:'9:00',
-      current:9,
-      max:10,
-    },
-    {
-      id: 'shop2',
-      logo:icons.pizza,
-      shopName:'TempName2',
-      rate:4.5,
-      time:'9:05',
-      current:5,
-      max:10,
-    },
-    {
-      id: 'shop3',
-      logo:icons.noodle,
-      shopName:'TempName3',
-      rate:4.0,
-      time:'9:10',
-      current:7,
-      max:10,
-    },
-    {
-      id: 'shop4',
-      logo:icons.rice_bowl,
-      shopName:'TempName4',
-      rate:3.5,
-      time:'9:15',
-      current:9,
-      max:10,
-    },
-    {
-      id: 'shop5',
-      logo:icons.salad,
-      shopName:'TempName5',
-      rate:4.5,
-      time:'9:20',
-      current:5,
-      max:10,
-    },
-    {
-      id: 'shop6',
-      logo:icons.sushi,
-      shopName:'TempName6',
-      rate:4.0,
-      time:'9:25',
-      current:7,
-      max:10,
-    },
-    {
-      id: 'shop7',
-      logo:icons.drink,
-      shopName:'TempName7',
-      rate:3.5,
-      time:'09:30',
-      current:9,
-      max:10,
-    },
-    {
-      id: 'shop8',
-      logo:icons.fries,
-      shopName:'TempName8',
-      rate:4.5,
-      time:'09:45',
-      current:5,
-      max:10,
-    },
-    {
-      id: 'shop9',
-      logo:icons.hamburger,
-      shopName:'TempName9',
-      rate:4.0,
-      time:'09:50',
-      current:7,
-      max:10,
-    },
-  ];
-  
   const Header = () =>{
     return (
       <View style={styles.headerText}>
@@ -134,7 +49,7 @@ export default function GroupList({navigation, route}) {
           >
           <Text style={styles.backButton}>&lt;</Text>
         </TouchableOpacity>
-        <Text numberOfLines={1} style={styles.headerLocationText}>{address}</Text>
+        <Text numberOfLines={1} style={styles.headerLocationText}>{location.buildingName}</Text>
         <Text style={styles.headerDateText}>{today}</Text>
       </View>
     );
@@ -167,7 +82,7 @@ export default function GroupList({navigation, route}) {
             time={item.time}
             current={item.current}
             max={item.max}
-            location={address}
+            location={location}
             styleGroupInfo={styles.groupInfo}
             styleLogoImage={styles.logoImage}
             styleShopText={styles.shopText}
@@ -186,20 +101,19 @@ export default function GroupList({navigation, route}) {
     const ListOfGroup = () => (
       <SafeAreaView style={{marginBottom: 100}}>
         <FlatList
-          data={groupList}
+          data={route.params.group.groupList}
           renderItem={InfoOfGroup}
           keyExtractor={item => item.id}
         />
       </SafeAreaView>
     );
-    
 
   return (
     <>
       {Header()}
       {SortButtons()}
       {ListOfGroup()}
-      <NewGroupButton item={{back:'GroupList'}} location = {address} />
+      <NewGroupButton initLocation={location} />
     </>
   );
 }

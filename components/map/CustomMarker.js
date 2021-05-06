@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SIZES, FONTS } from '../../constants';
@@ -6,84 +7,84 @@ import { Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 
 
-const CustomMarker = ({IsWeekly, item, back, location, today}) => {
+const CustomMarker = ({item, back}) => {
 
     const navigation = useNavigation();
 
     return (
-        !IsWeekly ?
-        <Marker 
-            coordinate={item.coordinate} 
-            onPress={() => navigation.navigate("GroupList",{back: back ,address: location, today: today})}
-        >
-            <View style={styles.markerView}>
-                {/* marker 매장명 */}
-                <View style={styles.buildingName}>
-                    <Text
-                        numberOfLines={1}
-                        style={{
-                        ...FONTS.body4,
-                        color: 'white',
-                        }}
-                    >
-                        {item.address}
-                    </Text>
+        back === 'DayDelivery' ? (
+            <Marker
+                coordinate={{ latitude : item.location.latitude, longitude : item.location.longitude }}
+                onPress={() => navigation.navigate('GroupList',{back: back, group: item})}
+            >
+                <View style={styles.markerView}>
+                    {/* marker 매장명 */}
+                    <View style={styles.buildingName}>
+                        <Text
+                            numberOfLines={1}
+                            style={{
+                            ...FONTS.body4,
+                            color: 'white',
+                            }}
+                        >
+                            {item.location.buildingName}
+                        </Text>
+                    </View>
+                    {/* marker 배달그룹 상위 목록 */}
+                    <View style={styles.groupList}>
+                        <View style={{flex: 1, paddingHorizontal: 5, justifyContent: 'center'}}>
+                            <Text
+                                numberOfLines={1}
+                                style={{
+                                    fontFamily: 'AirbnbCereal-Bold.ttfs',
+                                    fontSize: SIZES.body5,
+                                }}
+                            >
+                            9:00 스타벅스
+                            </Text>
+                            <Text
+                                numberOfLines={1}
+                                style={{
+                                    fontFamily: 'AirbnbCereal-Bold.ttfs',
+                                    fontSize: SIZES.body5,
+                                }}
+                            >
+                            9:00 할리스커피
+                            </Text>
+                            <Text
+                                numberOfLines={1}
+                                style={{
+                                    fontFamily: 'AirbnbCereal-Bold.ttfs',
+                                    fontSize: SIZES.body5,
+                                }}
+                            >
+                            9:00 파리바게트
+                            </Text>
+                        </View>
+                    </View>
                 </View>
-                {/* marker 배달그룹 상위 목록 */}
-                <View style={styles.groupList}>
-                    <View style={{flex: 1, paddingHorizontal: 5, justifyContent: 'center'}}>
+            </Marker>
+        ) : (
+            <Marker
+                coordinate={{ latitude : item.location.latitude, longitude : item.location.longitude }}
+                onPress={() => navigation.navigate('TimeTable',{back:back, address: item.location.buildingName})}
+            >
+                <View style={styles.markerView}>
+                    {/* marker 매장명 */}
+                    <View style={styles.buildingNameWeek}>
                         <Text
                             numberOfLines={1}
                             style={{
-                                fontFamily: 'AirbnbCereal-Bold.ttfs',
-                                fontSize: SIZES.body5,
+                            ...FONTS.body3,
+                            color: 'white',
                             }}
                         >
-                        9:00 스타벅스
-                        </Text>
-                        <Text
-                            numberOfLines={1}
-                            style={{
-                                fontFamily: 'AirbnbCereal-Bold.ttfs',
-                                fontSize: SIZES.body5,
-                            }}
-                        >
-                        9:00 할리스커피
-                        </Text>
-                        <Text
-                            numberOfLines={1}
-                            style={{
-                                fontFamily: 'AirbnbCereal-Bold.ttfs',
-                                fontSize: SIZES.body5,
-                            }}
-                        >
-                        9:00 파리바게트
+                            {item.location.buildingName}
                         </Text>
                     </View>
                 </View>
-            </View>
-        </Marker>
-        :
-        <Marker 
-            coordinate={item.coordinate} 
-            onPress={() => navigation.navigate("TimeTable",{back:back, address: item.address, today: today})}
-        >
-            <View style={styles.markerView}>
-                {/* marker 매장명 */}
-                <View style={styles.buildingNameWeek}>
-                    <Text
-                        numberOfLines={1}
-                        style={{
-                        ...FONTS.body3,
-                        color: 'white',
-                        }}
-                    >
-                        {item.address}
-                    </Text>
-                </View>
-            </View>
-        </Marker>
-        
+            </Marker>
+        )
     );
 };
 
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderBottomRightRadius: 5,
         borderBottomLeftRadius: 5,
-    }
+    },
 });
 
 export default CustomMarker;

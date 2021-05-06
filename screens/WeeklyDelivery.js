@@ -18,7 +18,6 @@ import GpsButton from '../components/map/GpsButton';
 const WeeklyDelivery = ({ route, navigation }) => {
 
   const [location, setLocation] = useState();
-  const IsWeekly = true;
 
   const setCurrentLocation = (result) => {
 
@@ -46,7 +45,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
     return (
       <TouchableOpacity
         style={styles.destinationHeader}
-        onPress={() => navigation.navigate('SearchPlace', {screen: 'WeeklyDelivery'})}
+        onPress={() => navigation.navigate('SearchPlace', {prevScreen: 'WeeklyDelivery'})}
       >
         <View style={styles.destinationHeaderView}>
           <Image
@@ -69,13 +68,11 @@ const WeeklyDelivery = ({ route, navigation }) => {
     );
   };
 
-  const todayYearMonthDay = JSON.stringify(new Date().toJSON()).substr(1,10);
-
   return (
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap IsWeekly={IsWeekly} location={location} back="WeeklyDelivery" today={todayYearMonthDay}/>
+          <GoogleMap initLocation={location} back="WeeklyDelivery" />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
         </View>

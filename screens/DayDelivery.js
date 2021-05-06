@@ -21,7 +21,6 @@ import { currentLocation } from '../utils/helper';
 const DayDelivery = ({ route, navigation }) => {
 
   const [location, setLocation] = useState(null);
-  const IsWeekly = false;
 
 
   const setCurrentLocation = (result) => {
@@ -47,61 +46,12 @@ const DayDelivery = ({ route, navigation }) => {
 
   }, [route.params?.post] );
 
-  // 배달원 할 때 참조할 내용
-  // const fetchAddress = () => {
-  //   console.log('fetch 할 예정');
-
-  //   // fetch('"https://api.mapbox.com/directions/v5/mapbox/driving/' + location.latitude + ',' + location.longitude + ";"
-  //   // + "37.494371" + ',' + "127.010282"
-  //   //     + '?access_token=' + 'pk.eyJ1IjoiamlzZW9uZy0iLCJhIjoiY2ttcHg3c2VzMGdmcTJ1bnNxbnhmbzdyZSJ9.JkWVnm71CZRX_eaN_SehwQ')
-
-  //   // fetch("https://api.mapbox.com/directions/v5/mapbox/driving/127.044398,37.284547;127.043885,37.275343?annotations=maxspeed&overview=full&geometries=geojson&access_token=pk.eyJ1IjoiamlzZW9uZy0iLCJhIjoiY2ttcHg3c2VzMGdmcTJ1bnNxbnhmbzdyZSJ9.JkWVnm71CZRX_eaN_SehwQ")
-
-  //   // .then((response) => response.json())ㄴ
-  //   // .then((responseJson) => {
-  //   //     console.log(responseJson);
-  //   // }).catch((err) => console.log( err));
-
-  //   // Geocoder.from(location.latitude, location.longitude)
-  //   // .then(json => {
-  //   // 		var addressComponent = json.results[0].formatted_address;
-  //   // 	console.log(addressComponent);
-  //   // })
-  //   // .catch(error => console.warn(error));
-
-  //   //     fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.latitude + ',' + location.longitude
-  //   //     + '&key=' + GOOGLE_API_KEY + '&language=ko')
-  //   // .then((response) => response.json())
-  //   // .then((responseJson) => {
-  //   //     console.log('udonPeople ' + responseJson.results[0].formatted_address);
-  //   // }).catch((err) => console.log("udonPeople error : " + err));
-
-  //   // Search by address
-  //   // Geocoder.from("아주대학교 팔달관")
-  //   // .then(json => {
-  //   //     var location = json.results[0];
-  //   //     console.log(location);
-  //   // })
-  //   // .catch(error => console.warn(error));
-
-  //   // // Search by address, with a biased geo-bounds
-  //   // Geocoder.from("Pyramid", {
-  //   // southwest: {lat: 36.05, lng: -115.25},
-  //   // northeast: {lat: 36.16, lng: -115.10}})
-  //   // .then(json => {
-  //   //     var location = json.results[0].geometry.location;
-  //   //     console.log(location);
-  //   // })
-  //   // .catch(error => console.warn(error));
-  // };
-
-
   // 검색 창 헤더
   const renderDestinationHeader = () => {
     return (
       <TouchableOpacity
         style={styles.destinationHeader}
-        onPress={() => navigation.navigate('SearchPlace', {screen: 'DayDelivery'})}
+        onPress={() => navigation.navigate('SearchPlace', {prevScreen: 'DayDelivery'})}
       >
         <View style={styles.destinationHeaderView}>
           <Image
@@ -124,13 +74,11 @@ const DayDelivery = ({ route, navigation }) => {
     );
   };
 
-  const todayYearMonthDay = JSON.stringify(new Date().toJSON()).substr(1,10);
-
   return (
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap IsWeekly={IsWeekly} location={location} back="DayDelivery" today={todayYearMonthDay} />
+          <GoogleMap initLocation={location} back="DayDelivery" />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
           <NewGroupButton initLocation={location} />

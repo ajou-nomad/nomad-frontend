@@ -48,7 +48,7 @@ const SearchPlace = ({route, navigation}) => {
 
                             // Pass and merge params back to DayDelivery screen
                             navigation.navigate({
-                                name: route.params.screen,
+                                name: route.params.prevScreen,
                                 params: { post: position },
                                 merge: true,
                             });
