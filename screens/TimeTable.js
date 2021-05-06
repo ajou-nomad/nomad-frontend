@@ -19,7 +19,7 @@
    ScrollView,
    Image,
  } from 'react-native';
- import {icons, COLORS, SIZES, FONTS, keys} from '../constants';
+ import {icons, COLORS, SIZES, FONTS} from '../constants';
  
  import WeeklyGroupInfo from '../components/weekly/WeeklyGroupListParent';
  import NewGroupButton from '../components/map/NewGroupButton';

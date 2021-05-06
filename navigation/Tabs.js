@@ -84,7 +84,7 @@ const Tabs = ({route}) => {
         },
         style: {
           borderTopWidth: 0.3,
-          height: SIZES.height * 0.1,
+          height: SIZES.height * 0.09,
           borderTopColor: 'black',
           // backgroundColor: 'transparent',
           elevation: 0, //그림자가 깔리는 입체적인 효과
@@ -100,8 +100,8 @@ const Tabs = ({route}) => {
               resizeMode="contain"
               style={{
                 top: 5,
-                width: 25,
-                height: 25,
+                width: 22,
+                height: 22,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
               }}
             />
@@ -119,8 +119,8 @@ const Tabs = ({route}) => {
               resizeMode="contain"
               style={{
                 top: 5,
-                width: 25,
-                height: 25,
+                width: 22,
+                height: 22,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
               }}
             />
@@ -138,8 +138,8 @@ const Tabs = ({route}) => {
               resizeMode="contain"
               style={{
                 top: 5,
-                width: 25,
-                height: 25,
+                width: 22,
+                height: 22,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
               }}
             />
@@ -157,8 +157,8 @@ const Tabs = ({route}) => {
               resizeMode="contain"
               style={{
                 top: 5,
-                width: 25,
-                height: 25,
+                width: 22,
+                height: 22,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
               }}
             />

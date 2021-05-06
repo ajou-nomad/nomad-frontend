@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { TouchableOpacity, Image, Alert } from 'react-native';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import {icons, SIZES, keys} from '../../constants';
+import {icons, SIZES} from '../../constants';
 import { geocode } from '../../utils/helper';
-
+import { GOOGLE_API_KEY } from '@env';
 
 const SearchPlace = ({route, navigation}) => {
 
@@ -84,7 +84,7 @@ const SearchPlace = ({route, navigation}) => {
                 setPlace(data.description);
             }}
             query={{
-                key: keys.GOOGLE_API_KEY,
+                key: GOOGLE_API_KEY,
                 language: 'ko',
                 components: 'country:KR',
             }}
