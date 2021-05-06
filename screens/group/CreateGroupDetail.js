@@ -39,7 +39,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                                 width: 300,
                                 ...FONTS2.body2,
                             }}
-                            placeholder="건물명"
+                            placeholder="상세주소를 입력하세요.(건물명)"
                             value={buildingName}
                             placeholderTextColor="#707070"
                             selectionColor="#000000"

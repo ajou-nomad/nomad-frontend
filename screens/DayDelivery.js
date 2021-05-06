@@ -117,7 +117,7 @@ const DayDelivery = ({ route, navigation }) => {
               flex: 1,
               alignItems: 'center',
             }}>
-            <Text style={{...FONTS.body3}}>{location.address}</Text>
+            <Text numberOfLines={1} style={{...FONTS.body3}}>{location.address}</Text>
           </View>
         </View>
       </TouchableOpacity>
