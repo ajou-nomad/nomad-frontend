@@ -3,9 +3,6 @@ import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MyPage } from '../screens/index';
 
-
-
-
 const MyPageStack = createStackNavigator();
 
 const MyPageNavigation = ({route, navigation}) => {

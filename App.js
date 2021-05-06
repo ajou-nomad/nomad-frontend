@@ -18,6 +18,7 @@ import StoreDetail from './screens/store/StoreDetail';
 import MenuDetail from './screens/store/MenuDetail';
 import CheckOrder from './screens/order/CheckOrder';
 import Cart from './screens/order/Cart';
+import ChatNavigation from './navigation/ChatNavigation';
 
 const Stack = createStackNavigator();
 
@@ -83,6 +84,7 @@ const App = () => {
             <Stack.Screen name="CheckOrder" component={CheckOrder} />
             <Stack.Screen name="Cart" component={Cart} />
             <Stack.Screen name="PaymentNavigation" component={PaymentNavigation} />
+            <Stack.Screen name="ChatNavigation" component={ChatNavigation} />
           </Stack.Navigator>
         ) : (
           // AuthStack

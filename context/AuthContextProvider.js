@@ -1,3 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-alert */
+
 import React, { useReducer, useMemo, createContext } from 'react';
 
 export const AuthContext = createContext();

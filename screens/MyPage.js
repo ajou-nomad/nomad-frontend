@@ -9,7 +9,7 @@ import { GoogleSignin } from '@react-native-community/google-signin';
 
 
 
-const MyPage = ({navigation}) => {
+const MyPage = ({ navigation }) => {
 
     useEffect( () => {
         console.log("Mypage 불릴때");
@@ -35,24 +35,27 @@ const MyPage = ({navigation}) => {
     };
 
     //추가적인 찜한 목록, 채팅방 등을 구현할 예정
-    return (
+  return (
 
-        <View style={{flex: 1}}>
-            <View style={{flex: 1, marginTop: 50}}>
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, marginTop: 50 }}>
 
-            </View>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{...FONTS.body2}}>마이페이지 화면</Text>
-            </View>
-            <Button
-                
-                onPress={signOutGoogle}
-                title="임시로그아웃창"
-                color="red"
-            />
-        </View>
-        
-    );
+      </View>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ ...FONTS.body2 }}>마이페이지 화면</Text>
+      </View>
+      <Button
+        onPress={() => navigation.navigate('ChatNavigation')}
+        title="임시채팅룽"
+        color="skyblue"
+      />
+      <Button
+        onPress={signOutGoogle}
+        title="임시로그아웃창"
+        color="red"
+      />
+    </View>
+  );
 };
 
 

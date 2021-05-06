@@ -196,6 +196,9 @@ dependencies {
     // for goole map
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
+    // Add the SDK for Firestore
+    implementation 'com.google.firebase:firebase-firestore'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }
