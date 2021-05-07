@@ -16,7 +16,6 @@ const GpsButton = ({setLocation}) => {
         disabled={isExecuting}
         style={styles.gpsButton}
         onPress={ () => {
-          console.log("hello");
           setIsExecuting(true);
           currentLocation()
           .then((result)=> {
