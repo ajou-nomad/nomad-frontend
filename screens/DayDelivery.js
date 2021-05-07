@@ -74,14 +74,16 @@ const DayDelivery = ({ route, navigation }) => {
     );
   };
 
+  const today = JSON.stringify(new Date().toJSON()).substr(1,10);
+
   return (
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap initLocation={location} back="DayDelivery" />
+          <GoogleMap initLocation={location} back="DayDelivery" today={today} />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
-          <NewGroupButton initLocation={location} />
+          <NewGroupButton initLocation={location} deliDate={today}/>
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

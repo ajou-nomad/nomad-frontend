@@ -4,14 +4,16 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { icons, COLORS, SIZES, FONTS } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
 
-const NewGroupButton = ({initLocation}) => {
+const NewGroupButton = ({initLocation,deliLocation,deliDate,items}) => {
 
   const navigation = useNavigation();
+
+  
 
   return (
       <TouchableOpacity
         style={styles.newGroup}
-        onPress={()=> navigation.navigate('CreateGroupList', { initLocation: initLocation })}
+        onPress={()=> navigation.navigate('CreateGroupList', { initLocation: initLocation, deliLocation: deliLocation, deliDate: deliDate, items: items })}
       >
           <View style={styles.newGroupView}>
               <Image

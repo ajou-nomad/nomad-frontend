@@ -73,7 +73,7 @@ const Cart = ({ navigation, route:{params} }) => {
         );
     };
 
-    console.log(params.location)
+    console.log(params)
 
     return (
         <View style={styles.container}>
@@ -83,10 +83,10 @@ const Cart = ({ navigation, route:{params} }) => {
                 {/* 메뉴, 주문 금액, 요청사항 */}
                 {renderBody()}
                 {/* 그룹 생성하기 버튼 */}
-                {params.location.buildingName ? (
-                    <BottomButton onPress={() => navigation.navigate('CheckOrder', { time: params.time, location: params.location.address, storeName: params.storeName })} title="결제하기" />
+                {(params.location.buildingName && params.deliDate && params.time) ? (
+                    <BottomButton onPress={() => navigation.navigate('CheckOrder', { time: params.time, location: params.location, storeName: params.storeName })} title="결제하기" />
                 ) : (
-                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', { time: params.time, location: params.location, storeName: params.storeName })} title="그룹 생성하기" />
+                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', {items:params.items, location: params.location, storeName: params.storeName, deliDate: params.deliDate })} title="그룹 생성하기" />
                 )}
             </ScrollView>
         </View>

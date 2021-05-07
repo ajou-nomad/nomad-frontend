@@ -23,7 +23,8 @@ function CreateGroupList({navigation, route}) {
     //route.params.initLocation.buildingName존재 시 배달장소를 선택할 필요x
     const [isSelected, setIsSelected] = useState(route.params.initLocation.buildingName ? true : false);
     const [deliveryPlace, setDeliveryPlace] = useState(route.params.initLocation.buildingName ? route.params.initLocation : '');
-
+    const deliDate = route.params.deliDate;
+    const items = route.params.items;
     const onPlaceChange = (region) => {
         setDeliveryPlace(region);
     };
@@ -70,18 +71,18 @@ function CreateGroupList({navigation, route}) {
                 <View style={{ flex: 5, backgroundColor: 'white' }}>
                     <ScrollView>
                         {/* FlatList 수정해야함. */}
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
-                        <StoreItem deliveryPlace={deliveryPlace} />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items} />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
+                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
                     </ScrollView>
                 </View>
             </View>

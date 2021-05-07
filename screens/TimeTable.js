@@ -26,7 +26,8 @@
  
  
  export default function TimeTable(props) {
-   const address = props.route.params.address;
+  const location = props.route.params.group.location;
+   
    const today = JSON.stringify(new Date().toJSON()).substr(1,10);
    const back = props.route.params.back;
    const goBack = () => {
@@ -47,56 +48,56 @@
        id:'time1',
        time:'08~09',
        date: groupDate,
-       location: address,
+       location: location,
       //  currentGroup:6,
      },
      {
        id:'time2',
        time:'09~10',
        date: groupDate,
-       location: address,
+       location: location,
      },
      {
        id:'time3',
        time:'10~11',
        date: groupDate,
-       location: address,
+       location: location,
      },
      {
        id:'time4',
        time:'11~12',
        date: groupDate,
-       location: address,
+       location: location,
      },
      {
        id:'time5',
        time:'12~13',
        date: groupDate,
-       location: address,
+       location: location,
      },
      {
        id:'time6',
        time:'13~14',
        date: groupDate,
-       location: address,
+       location: location,
      },
      {
        id:'time7',
        time:'14~15',
        date: groupDate,
-       location: address,
+       location: location,
      },
      {
        id:'time8',
        time:'15~16',
        date: groupDate,
-       location: address,
+       location: location,
      },
      {
        id:'time9',
        time:'16~17',
        date: groupDate,
-       location: address,
+       location: location,
      },
    ];
    const Header = () =>{
@@ -107,7 +108,7 @@
            >
            <Text style={styles.backButton}>&lt;</Text>
          </TouchableOpacity>
-         <Text numberOfLines={1} style={styles.headerLocationText}>{address}</Text>
+         <Text numberOfLines={1} style={styles.headerLocationText}>{location.buildingName}</Text>
          <Text style={styles.headerDateText}>{today}</Text>
        </View>
      );
@@ -130,7 +131,7 @@
    }
    const dayArrayEngFixed = [...dayArrayEng.slice(todayDayIndex),...dayArrayEng.slice(0,todayDayIndex)]
    const dayArrayKorFixed = [...dayArrayKor.slice(todayDayIndex),...dayArrayKor.slice(0,todayDayIndex)]
-   
+
    const DayButtons = () =>{
     return (
       <View style={styles.headerButtons}>
@@ -207,6 +208,7 @@
        {Header()}
        {DayButtons()}
        {ListOfWeeklyGroup()}
+       <NewGroupButton initLocation={location} deliDate={null} items={{datePicker: [dayArrayKorFixed,dateDifference]}} />
      </>
    );
  }
