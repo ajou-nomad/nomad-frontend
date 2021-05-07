@@ -7,6 +7,8 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { Bubble, GiftedChat, Send, SystemMessage, MessageImage, Actions, ActionsProps, } from 'react-native-gifted-chat';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { utils } from '@react-native-firebase/app';
+import storage from '@react-native-firebase/storage';
 
 import { COLORS, FONTS2, icons } from '../../constants';
 
@@ -16,6 +18,8 @@ const ChatScreen = ({ route }) => {
 
     const { thread } = route.params;
     const [messages, setMessages] = useState([]);
+
+    // const reference = 
 
     const handleSend = async (mes) => {
         const text = mes[0].text;
@@ -209,9 +213,22 @@ const ChatScreen = ({ route }) => {
         );
     };
 
-    const renderActions = () => {
+    const handlePickImage = () => {
 
     }
+
+    const renderActions = (props) => {
+        return (
+            <Actions
+                {...props}
+                options={{
+                    ['사진 추가']: handlePickImage,
+                }}
+                icon={() => <Image source={icons.plus} style={{ width: 28, height: 28 }} />}
+                onSend={(args) => console.log(args)}
+            />
+        );
+    };
 
     return (
         <View style={{ flex: 1, backgroundColor: '#dee2e6' }}>

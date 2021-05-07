@@ -39,6 +39,7 @@ const point = require("../assets/icons/point.png");
 const send = require("../assets/icons/send.png");
 const arrow = require("../assets/icons/arrow.png");
 const avatar = require("../assets/icons/avatar.png");
+const plus = require("../assets/icons/plus.png");
 
 export default {
     point,
@@ -82,4 +83,5 @@ export default {
     send,
     arrow,
     avatar,
+    plus,
 }
