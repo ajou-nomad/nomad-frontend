@@ -2,34 +2,17 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { Bubble, GiftedChat, Send, utils, SystemMessage } from 'react-native-gifted-chat';
+import { Bubble, GiftedChat, Send, SystemMessage, MessageImage, Actions, ActionsProps, } from 'react-native-gifted-chat';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import { COLORS, FONTS2, icons } from '../../constants';
-import SlackMessage from './SlackMessage';
-
 
 const ChatScreen = ({ route }) => {
 
-    function getInnerComponentProps() {
-    const { containerStyle, ...props } = this.props
-    return {
-      ...props,
-      position: 'left',
-      isSameUser,
-      isSameDay,
-    }
-  }
-
-    const { isSameUser, isSameDay } = utils;
-    
     const user = auth().currentUser;
-    // console.log(user.displayName);
-    //  {"displayName": null, "email": "erang14@naver.com", "emailVerified": true, "isAnonymous": false, "metadata": {"creationTime": 1618893797007, "lastSignInTime": 1620278278220}, "phoneNumber": null, "photoURL": null, "providerData": [[Object]], "providerId": "firebase", "tenantId": null, "uid": "4413yQUDOWP3nrwsyfKpfYJen0I3"}
-    
 
     const { thread } = route.params;
     const [messages, setMessages] = useState([]);
@@ -37,8 +20,6 @@ const ChatScreen = ({ route }) => {
     const handleSend = async (mes) => {
         const text = mes[0].text;
 
-        // console.log('here  ', mes);
-        // [{"_id": "2212d0f9-7a39-43cb-8b60-0acefbf27045", "createdAt": 2021-05-06T03:00:03.383Z, "text": "ㄱㄴ자니너ㆍㄴ", "user": {"_id": 1}}]
         firestore()
             .collection('THREADS')
             .doc(thread._id)
@@ -49,6 +30,7 @@ const ChatScreen = ({ route }) => {
                 user: {
                     _id: user.uid, // currentUser.uid,
                     email: user.email, // currentUser.email
+                    avatar: icons.avatar,
                 },
             });
 
@@ -98,57 +80,8 @@ const ChatScreen = ({ route }) => {
         // stop listening for updates 컴포넌트가 unmount될 때
         return () => messageListener();
     }, [thread._id]);
-
-    const getColor = (username) => {
-        let sumChars = 0;
-        
-        if (username === undefined) {
-            return colors[sumChars % 5];
-        }
-        for (let i = 0; i < username.length; i++) {
-            sumChars += username.charCodeAt(i);
-        }
-
-        const colors = [
-            '#e67e22', // carrot
-            '#2ecc71', // emerald
-            '#3498db', // peter river
-            '#8e44ad', // wisteria
-            '#e74c3c', // alizarin
-            '#1abc9c', // turquoise
-            '#2c3e50', // midnight blue
-        ];
-        return colors[sumChars % colors.length];
-    };
-
-    const renderBubble = (props) => {
-        
-        const isDisplayUsername = isSameUser(props.currentMessage, props.previousMessage) && isSameDay(props.currentMessage, props.previousMessage);
-        // const username = props.currentMessage.user.name;
-        const color = getColor(props.currentMessage.user.name);
-        // console.log(username);
-
-        return (
-            <View style={{ backgroundColor: 'pink',}}>
-                { !isDisplayUsername ? (
-                    <>
-                        {/* <Avatar {...props} /> */}
-                        <Text style={{ ...FONTS2.body2, }}>{props.currentMessage.user.name}</Text>
-                    </>
-                ) : null}
-                <Bubble {...props} 
-        wrapperStyle={{
-          left: {
-            backgroundColor: color
-          }
-        }}/>
-            </View>
-        );
-    };
-
+    
     const renderSend = (props) => {
-
-        // console.log(props.messages[1]);
         return (
             <Send {...props}>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -167,78 +100,158 @@ const ChatScreen = ({ route }) => {
         );
     };
 
-    const renderMessage = (props) => {
+    const renderMessageImage = (props) => {
+        if (props.currentMessage.image) {
+            const { containerStyle, wrapperStyle, ...messageImageProps } = props
+            // if (props.renderMessageImage) {
+            //     return props.renderMessageImage(messageImageProps)
+            // }
+            return (
+                <MessageImage
+                    {...messageImageProps}
+                    imageStyle={[styles.slackImage, messageImageProps.imageStyle]}
+                />
+            );
+        }
+        return null;
+    };
+
+    const renderBubble = (props) => {
         return (
-            // <SlackMessage {...props} />
-            <View style={{
-                marginLeft: 8,
-                marginRight: 8,
-                margin: 5
-            }}>
-                {renderBubble(props)}
+            <View style={{ flexDirection: 'column', flex: 1, }}>
+                <Bubble {...props}
+                    wrapperStyle={{
+                        left: {
+                            backgroundColor: COLORS.white,
+                            paddingRight: 5,
+                            paddingVertical: 3,
+                            margin: 0,
+                            marginBottom: 8,
+                        },
+                        right: {
+                            backgroundColor: '#808080',
+                            paddingVertical: 3,
+                            right: 10,
+                            marginBottom: 8,
+                        },
+                    }}
+                    renderMessageImage={renderMessageImage(props)}
+                />
             </View>
         );
     };
 
-    const renderSystemMessage = (props) => {
-    return (
-      <SystemMessage
-        {...props}
-        wrapperStyle={styles.systemMessageWrapper}
-        textStyle={styles.systemMessageText}
-      />
-    );
-  }
+    function isSameUser(props) {
+        // 자기인지 남인지 판단
+        if (props.currentMessage.user._id === props.user._id) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    const renderContainer = (props) => {
+        
+        const splitUsername = (name) => {
+            const splitname = name.split('@');
+            return splitname[0];
+        };
+
+        if (props.currentMessage.user._id === 0) {
+            return (
+                <SystemMessage
+                    {...props}
+                    wrapperStyle={styles.systemMessageWrapper}
+                    textStyle={styles.systemMessageText}
+                />
+            );
+        }
+        else {
+            return (
+                <View style={[styles.container, props.containerStyle, {
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                }]}>
+                    {isSameUser(props) ? (null) : (
+                        <Image source={icons.avatar}
+                        resizeMode='contain'
+                        style={{
+                            width: 40,
+                            height: 40,
+                            marginRight: 5,
+                            marginTop: 5,
+                        }}
+                    />
+                    )}
+                    <View style={{
+                        flexDirection: 'column',
+                        flex: 1,
+                    }}>
+                        {isSameUser(props) ? (null) : (
+                            <Text style={{ ...FONTS2.h4, marginBottom: 5 }}>{splitUsername(props.currentMessage.user.name)}</Text>
+                        )}
+                        {renderBubble(props)}
+                    </View>
+                </View>
+            );
+        }
+    };
+
+    const renderMessage = (props) => {
+        return (
+            <View style={{
+                marginLeft: 8,
+                marginRight: 0,
+            }}>
+                {renderContainer(props)}
+            </View>
+        );
+    };
+
+    const renderActions = () => {
+
+    }
 
     return (
-        <View style={{ flex: 1, backgroundColor: COLORS.white }}>
+        <View style={{ flex: 1, backgroundColor: '#dee2e6' }}>
             <GiftedChat
                 messages={messages}
                 onSend={handleSend}
-                user={{ // (Object) - User sending the messages: { _id, name, avatar }
+                user={{ 
                     _id: user.uid,
                     name: user.displayName,
                 }}
                 placeholder='메시지 입력'
-                // alwaysShowSend
-                // showUserAvatar
-                // renderBubble={renderBubble}
-                // renderSend={renderSend}
-                // scrollToBottom
-                // renderUsernameOnMessage
-                // renderAvatar={renderAvatar}
+                alwaysShowSend
+                showUserAvatar
+                renderSend={renderSend}
+                scrollToBottom
                 renderMessage={renderMessage}
-                // renderSystemMessage={renderSystemMessage}
+                renderActions={renderActions}
             />
-            {/* <Text>채팅ㅇㄻㅇㄴㄹㄴㅇㄻㄴㅇ</Text> */}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  sendingContainer: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  bottomComponentContainer: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  systemMessageWrapper: {
-    backgroundColor: '#000',
-    borderRadius: 4,
-    padding: 5
-  },
-  systemMessageText: {
-    fontSize: 14,
-    color: '#fff',
-    fontWeight: 'bold'
-  }
+    container: {
+        flex: 1,
+        // alignItems: 'center',
+        justifyContent: 'center',
+    },
+    systemMessageWrapper: {
+        backgroundColor: '#e03131',
+        borderRadius: 4,
+        padding: 5,
+        paddingHorizontal: 10,
+        marginTop: 10,
+    },
+    systemMessageText: {
+        fontSize: 14,
+        color: '#fff',
+        fontWeight: 'bold',
+    },
 });
 
 export default ChatScreen;

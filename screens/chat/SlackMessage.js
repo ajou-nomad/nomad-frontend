@@ -13,7 +13,8 @@ const { isSameUser, isSameDay } = utils
 
 export default class Message extends React.Component {
   getInnerComponentProps() {
-    const { containerStyle, ...props } = this.props
+    const { containerStyle, ...props } = this.props;
+    // console.log('here', props);
     return {
       ...props,
       position: 'left',
@@ -51,15 +52,17 @@ export default class Message extends React.Component {
       extraStyle = { height: 0 }
     }
 
-    const avatarProps = this.getInnerComponentProps()
+    const avatarProps = this.getInnerComponentProps();
+    // console.log(avatarProps);
     return (
       <Avatar
+        
         {...avatarProps}
         imageStyle={{
           left: [styles.slackAvatar,],
-            height: 40,
-            width: 40,
-            borderRadius: 20,
+          height: 40,
+          width: 40,
+          borderRadius: 20,
           bottom: 8,
         }}
       />
