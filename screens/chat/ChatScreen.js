@@ -3,12 +3,14 @@
 /* eslint-disable no-alert */
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { Bubble, GiftedChat, Send, SystemMessage, MessageImage, Actions, ActionsProps, } from 'react-native-gifted-chat';
+import { View, Text, Image, StyleSheet, Alert } from 'react-native';
+import { Bubble, GiftedChat, Send, SystemMessage, Actions, } from 'react-native-gifted-chat';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { utils } from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import uuid from 'react-native-uuid';
+import ImageModal from 'react-native-image-modal';
 
 import { COLORS, FONTS2, icons } from '../../constants';
 
@@ -18,8 +20,6 @@ const ChatScreen = ({ route }) => {
 
     const { thread } = route.params;
     const [messages, setMessages] = useState([]);
-
-    // const reference = 
 
     const handleSend = async (mes) => {
         const text = mes[0].text;
@@ -65,6 +65,7 @@ const ChatScreen = ({ route }) => {
                     const data = {
                         _id: doc.id,
                         text: '',
+                        image: '',
                         createdAt: new Date().getTime(),
                         ...firebaseData,
                     };
@@ -85,7 +86,7 @@ const ChatScreen = ({ route }) => {
         return () => messageListener();
     }, [thread._id]);
     
-    const renderSend = (props) => {
+    const renderSendButton = (props) => {
         return (
             <Send {...props}>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -105,19 +106,21 @@ const ChatScreen = ({ route }) => {
     };
 
     const renderMessageImage = (props) => {
-        if (props.currentMessage.image) {
-            const { containerStyle, wrapperStyle, ...messageImageProps } = props
-            // if (props.renderMessageImage) {
-            //     return props.renderMessageImage(messageImageProps)
-            // }
-            return (
-                <MessageImage
-                    {...messageImageProps}
-                    imageStyle={[styles.slackImage, messageImageProps.imageStyle]}
+        return (
+            <View style={{ padding: 5 }}>
+                <ImageModal
+                    resizeMode="contain"
+                    style={{
+                        width: 200,
+                        height: 200,
+                        padding: 6,
+                        borderRadius: 15,
+                        resizeMode: "cover",
+                    }}
+                    source={{ uri: props.currentMessage.image }}
                 />
-            );
-        }
-        return null;
+            </View>
+        );
     };
 
     const renderBubble = (props) => {
@@ -139,7 +142,8 @@ const ChatScreen = ({ route }) => {
                             marginBottom: 8,
                         },
                     }}
-                    renderMessageImage={renderMessageImage(props)}
+                    renderQuickReplySend
+                    renderMessageImage={renderMessageImage}
                 />
             </View>
         );
@@ -156,7 +160,6 @@ const ChatScreen = ({ route }) => {
     }
 
     const renderContainer = (props) => {
-        
         const splitUsername = (name) => {
             const splitname = name.split('@');
             return splitname[0];
@@ -212,10 +215,95 @@ const ChatScreen = ({ route }) => {
             </View>
         );
     };
+    
+    const uploadImage = (source, imageUri) => {
+        const ext = imageUri.split('.').pop(); // Extract image extension (jpg)
+
+        const filename = `${uuid.v4()}.${ext}`; // Generate unique name
+        //    setImgLoading(true);
+        const imgRef = storage().ref(`chatimage/${filename}`);
+        const unsubscribe = imgRef.putFile(imageUri) // putFile: image Storage에 저장
+            .on(
+                storage.TaskEvent.STATE_CHANGED,
+                async snapshot => {
+                    var state = {
+                        ...state,
+                        progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100, // Calculate progress percentage
+                    };
+                    if (snapshot.state === storage.TaskState.SUCCESS) {
+                        console.log('upload success');
+                        // unsubscribe the event
+                        unsubscribe();
+                        // update the image url
+                        let url;
+                        await imgRef.getDownloadURL()
+                            .then((response) => {
+                                console.log('get url response', response);
+                                url = response;
+                            })
+                            .catch(error => {
+                                console.log('Failed to get url', error);
+                            });
+                        
+                        firestore()
+                            .collection('THREADS')
+                            .doc(thread._id)
+                            .collection('MESSAGES')
+                            .add({
+                                image: url.toString(),
+                                createdAt: new Date().getTime(),
+                                user: {
+                                    _id: user.uid, // currentUser.uid,
+                                    email: user.email, // currentUser.email
+                                    avatar: icons.avatar,
+                                },
+                            });
+
+                        await firestore()
+                            .collection('THREADS')
+                            .doc(thread._id)
+                            .set(
+                                {
+                                    latestMessage: {
+                                        text: '사진을 보냈습니다.',
+                                        createdAt: new Date().getTime(),
+                                    },
+                                },
+                                { merge: true }
+                            );
+
+                    }
+                },
+                error => {
+                    console.log('AccountEditScreen uploading error', error);
+                    // alert for failure to upload avatar
+                    Alert.alert(
+                        ('AccountEditScreen.updateErrorTitle'),
+                        ('AccountEditScreen.updateError'),
+                        [
+                            { text: ('confirm') }
+                        ],
+                        { cancelable: true },
+                    );
+                }
+            );
+    };
 
     const handlePickImage = () => {
+        launchImageLibrary({}, (res) => {
+            const source = { uri: res.uri };
 
-    }
+            uploadImage(source, res.uri);
+        });
+    };
+
+    const handleCamera = () => {
+        launchCamera({}, (res) => {
+            const source = { uri: res.uri };
+
+            uploadImage(source, res.uri);
+        });
+    };
 
     const renderActions = (props) => {
         return (
@@ -223,9 +311,10 @@ const ChatScreen = ({ route }) => {
                 {...props}
                 options={{
                     ['사진 추가']: handlePickImage,
+                    ['사진 찍기']: handleCamera,
                 }}
                 icon={() => <Image source={icons.plus} style={{ width: 28, height: 28 }} />}
-                onSend={(args) => console.log(args)}
+                onSend={(args) => console.log('eerere', args)}
             />
         );
     };
@@ -242,7 +331,7 @@ const ChatScreen = ({ route }) => {
                 placeholder='메시지 입력'
                 alwaysShowSend
                 showUserAvatar
-                renderSend={renderSend}
+                renderSend={renderSendButton}
                 scrollToBottom
                 renderMessage={renderMessage}
                 renderActions={renderActions}

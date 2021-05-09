@@ -199,6 +199,8 @@ dependencies {
     // Add the SDK for Firestore
     implementation 'com.google.firebase:firebase-firestore'
 
+    implementation 'com.google.firebase:firebase-storage'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

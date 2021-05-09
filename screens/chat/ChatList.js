@@ -92,8 +92,6 @@ const ChatList = ({ navigation }) => {
                 }
                 }
             />
-            {/* <ChatItem title="아주대 빽다방1" _id='1'/>
-            <ChatItem title="아주대 빽다방2" _id='2' /> */}
         </View>
     );
 };
