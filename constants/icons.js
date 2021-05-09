@@ -36,6 +36,10 @@ const checkbox = require("../assets/icons/checkbox.png");
 const group = require("../assets/icons/group.png");
 const credit_card = require("../assets/icons/credit_card.png");
 const point = require("../assets/icons/point.png");
+const send = require("../assets/icons/send.png");
+const arrow = require("../assets/icons/arrow.png");
+const avatar = require("../assets/icons/avatar.png");
+const plus = require("../assets/icons/plus.png");
 
 export default {
     point,
@@ -76,4 +80,8 @@ export default {
     home,
     cart,
     checkbox,
+    send,
+    arrow,
+    avatar,
+    plus,
 }
