@@ -4,20 +4,8 @@ import { idTokenChangedListeners } from './utils/helper';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-toast-message';
 
-<<<<<<< HEAD
-import CreateGroupDetail from './screens/group/CreateGroupDetail';
-import PaymentNavigation from './navigation/PaymentNavigation';
-
-import CreateGroupList from './screens/group/CreateGroupList';
-import StoreDetail from './screens/store/StoreDetail';
-import MenuDetail from './screens/store/MenuDetail';
-import CheckOrder from './screens/order/CheckOrder';
-import Cart from './screens/order/Cart';
-import ChatNavigation from './navigation/ChatNavigation';
-=======
 import {NavigationContainer} from '@react-navigation/native';
 import RootNavigation from './navigation/RootNavigation';
->>>>>>> 5ffe0908a09470a685c6298039c4d535bc2a916a
 
 
 const App = () => {

@@ -17,6 +17,7 @@ import MenuDetail from '../screens/store/MenuDetail';
 import CheckOrder from '../screens/order/CheckOrder';
 import Cart from '../screens/order/Cart';
 import PaymentNavigation from './PaymentNavigation';
+import ChatNavigation from './ChatNavigation';
 
 import storeKeeperMain from '../screens/storeKeeperScreens/Main';
 import RegisterStore from '../screens/storeKeeperScreens/RegisterStore';
@@ -115,6 +116,7 @@ const userStack = () => {
             <Stack.Screen name="CheckOrder" component={CheckOrder} />
             <Stack.Screen name="Cart" component={Cart} />
             <Stack.Screen name="PaymentNavigation" component={PaymentNavigation} />
+            <Stack.Screen name="ChatNavigation" component={ChatNavigation} />
         </Stack.Navigator>
     );
 };
