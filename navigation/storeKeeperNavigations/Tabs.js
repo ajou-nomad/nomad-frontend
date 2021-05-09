@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import {Image, TouchableOpacity, Keyboard, Platform} from 'react-native';
@@ -91,7 +90,7 @@ const Tabs = ({route}) => {
         },
       }}>
       <Tab.Screen
-        name="당일 모집"
+        name="진행 주문"
         component={DayNavigation}
         options={{
           tabBarIcon: ({focused}) => (
@@ -110,7 +109,7 @@ const Tabs = ({route}) => {
         }}
       />
       <Tab.Screen
-        name="주간 모집"
+        name="완료 주문"
         component={WeeklyNavigation}
         options={{
           tabBarIcon: ({focused}) => (
@@ -129,7 +128,7 @@ const Tabs = ({route}) => {
         }}
       />
       <Tab.Screen
-        name="주문 내역"
+        name="매출 현황"
         component={OrderDetails}
         options={{
           tabBarIcon: ({focused}) => (
@@ -148,7 +147,7 @@ const Tabs = ({route}) => {
         }}
       />
       <Tab.Screen
-        name="마이페이지"
+        name="매장 관리"
         component={MyPageNavigation}
         options={{
           tabBarIcon: ({focused}) => (

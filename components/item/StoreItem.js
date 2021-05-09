@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { FONTS2, images, icons } from '../../constants';
 
-const StoreItem = ({ deliveryPlace }) => {
+const StoreItem = ({ deliveryPlace, deliDate, items }) => {
 
     const navigation = useNavigation();
 
@@ -58,7 +58,7 @@ const StoreItem = ({ deliveryPlace }) => {
                 width: 20,
             }}
                 // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점', location: location })}
-                onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점', deliveryPlace: deliveryPlace })}
+                onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점', deliveryPlace: deliveryPlace, deliDate: deliDate, items: items })}
             >
                 <Text style={{ ...FONTS2.h3 }}>선택</Text>
             </TouchableOpacity>

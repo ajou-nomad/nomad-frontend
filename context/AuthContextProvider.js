@@ -1,8 +1,5 @@
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-/* eslint-disable no-alert */
-
-import React, { useReducer, useMemo, createContext } from 'react';
+import React, { useReducer, createContext } from 'react';
 
 export const AuthContext = createContext();
 
@@ -10,6 +7,7 @@ export const AuthContext = createContext();
 const initialState = {
     isSignout: false,
     userToken: null,
+    userType: '점주',
 };
 
 const AuthContextProvider = ({children}) => {
@@ -22,21 +20,24 @@ const AuthContextProvider = ({children}) => {
               return {
                 ...prevState,
                 userToken: action.token,
+                userType: action.type,
               };
             case 'SIGN_IN':
               return {
                 ...prevState,
                 isSignout: false,
                 userToken: action.token,
+                userType: action.type,
               };
             case 'SIGN_OUT':
               return {
                 ...prevState,
                 isSignout: true,
                 userToken: null,
+                userType: '유저',
               };
           }
-        }, 
+        },
         initialState
     );
 

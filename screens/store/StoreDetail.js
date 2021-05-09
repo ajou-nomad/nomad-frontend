@@ -51,7 +51,7 @@ const StoreInfoRoute = () => (
 
 // 리뷰
 const ReviewRoute = () => (
-    <ScrollView style={{ flex: 1, backgroundColor: '#ffffff', padding: 15, }}>
+    <ScrollView style={{ flex: 1, backgroundColor: '#ffffff', padding: 15 }}>
         <Review />
     </ScrollView>
 );
@@ -64,7 +64,6 @@ const renderScene = SceneMap({
 
 function StoreDetail({route}) {
     const layout = useWindowDimensions();
-
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         { key: 'first', title: '메뉴', time: route.params.time, location: route.params.deliveryPlace, storeName: route.params.storeName},
@@ -80,7 +79,7 @@ function StoreDetail({route}) {
                 height: '80%',
                 borderRadius: 20,
             }}
-            style={{ backgroundColor: COLORS.white, }}
+            style={{ backgroundColor: COLORS.white }}
             inactiveColor={COLORS.darkgray}
             activeColor={COLORS.black}
             labelStyle={{ ...FONTS2.body2 }}
@@ -107,11 +106,11 @@ function StoreDetail({route}) {
                         width: responsiveWidth(70),
                         alignItems: 'center',
                     }}>
-                    <Text style={{ ...FONTS2.h1, }}>{route.params.storeName}</Text>
+                    <Text style={{ ...FONTS2.h1 }}>{route.params.storeName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 3, alignSelf: 'center' }}>
                         <Image
                             source={icons.star}
-                            resizeMode='contain'
+                            resizeMode="contain"
                             style={{
                                 width: 23,
                                 height: 23,
@@ -123,7 +122,7 @@ function StoreDetail({route}) {
                     </View>
                 </View>
 
-                <View style={{ width: '60%', backgroundColor: 'white', alignSelf: 'center', marginBottom: 10, }}>
+                <View style={{ width: '60%', backgroundColor: 'white', alignSelf: 'center', marginBottom: 10 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ ...FONTS2.body2 }}>최소주문금액</Text>
                         <Text style={{ ...FONTS2.body2 }}>13,500원</Text>
@@ -132,15 +131,15 @@ function StoreDetail({route}) {
                         <Text style={{ ...FONTS2.body2 }}>배달팁</Text>
                         <Text style={{ ...FONTS2.body2 }}>2,000원</Text>
                     </View>
-                    
+
                     <TouchableOpacity>
                         <Text style={{ ...FONTS2.body2, color: 'blue' }}>매장 생성 그룹 보기</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         );
-    }
-    
+    };
+    console.log(route.params)
     return (
         <View style={styles.container}>
             {renderHeader()}
@@ -160,7 +159,7 @@ function StoreDetail({route}) {
                     renderTabBar={renderTabBar}
                 />
             </View>
-            <CartButton time={route.params.time} deliveryPlace={route.params.deliveryPlace} storeName={route.params.storeName} />
+            <CartButton items={route.params.items} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} storeName={route.params.storeName} />
         </View>
     );
 }

@@ -1,11 +1,12 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Keyboard, Text, View, Image, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Button } from 'react-native';
-import { icons, SIZES, FONTS, COLORS, keys } from "../constants";
+import { icons, SIZES, FONTS, COLORS } from "../constants";
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import { emailPasswordLogin, googleLogin } from '../utils/helper';
 import messaging from '@react-native-firebase/messaging';
 import { AuthContext } from '../context/AuthContextProvider';
+import { FIREBASE_WEBCLIENTID } from '@env';
 
 // test ----
 import auth from '@react-native-firebase/auth';
@@ -20,9 +21,9 @@ const SignIn = ({router, navigation}) => {
 
     useEffect(() => {
         GoogleSignin.configure({
-            webClientId: keys.FIREBASE_WEBCLIENTID,
+            webClientId: FIREBASE_WEBCLIENTID,
             offlineAccess: true, //if you want to access Google API on behalf of the user FROM YOUR SERVER
-        });    
+        });
     }, []);
 
 

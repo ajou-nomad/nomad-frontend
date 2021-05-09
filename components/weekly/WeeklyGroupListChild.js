@@ -19,7 +19,7 @@
    ScrollView,
    Image,
  } from 'react-native';
- import {icons, COLORS, SIZES, FONTS, keys} from '../../constants';
+ import {icons, COLORS, SIZES, FONTS} from '../../constants';
  
  import GroupInfo from '../GroupInfo';
  import NewGroupButton from '../map/NewGroupButton';
@@ -32,6 +32,7 @@
    const currentGroup = props.route.params.currentGroup;
    const back = props.route.params.back;
    const groupList = props.route.params.groupList;
+
    const goBack = () => {
      props.navigation.navigate(back,{
         date: props.date,
@@ -46,7 +47,7 @@
            >
            <Text style={styles.backButton}>&lt;</Text>
          </TouchableOpacity>
-         <Text numberOfLines={1} style={styles.headerLocationText}>{location}</Text>
+         <Text numberOfLines={1} style={styles.headerLocationText}>{location.buildingName}</Text>
          <Text style={styles.headerDateText}>{date}</Text>
        </View>
      );
@@ -60,6 +61,7 @@
              time={item.time}
              current={item.current}
              max={item.max}
+             deliDate={date}
              location={location}
              styleGroupInfo={styles.groupInfo}
              styleLogoImage={styles.logoImage}
@@ -89,7 +91,7 @@
      <>
        {Header()}
        {ListOfGroup()}
-       <NewGroupButton item={{back:'WeeklyGroupListChild'}} location={location} />
+       <NewGroupButton initLocation={location} deliDate={date} />
      </>
    );
  }

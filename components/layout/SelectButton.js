@@ -14,10 +14,11 @@ const SelectButton = ({navigation, deliveryPlace, setDeliveryPlace, setIsSelecte
                 <TouchableOpacity
                     style={[styles.button, {backgroundColor: '#1c7ed6'}]}
                     onPress={ () => {
+                        const tmpLocation = {latitude: deliveryPlace.latitude, longitude: deliveryPlace.longitude}
                         if (!deliveryPlace) {
                             Alert.alert('핀을 움직여 배달 장소를 선택해주세요.');
                         } else {
-                            reverseGeocode(deliveryPlace).then( async (result) => {
+                            reverseGeocode(tmpLocation).then( async (result) => {
                                 await setDeliveryPlace(result);
                                 await setIsSelected(true);
                             });

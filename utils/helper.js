@@ -6,9 +6,9 @@ import messaging from '@react-native-firebase/messaging';
 import { getDistance } from 'geolib';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
-import { keys } from '../constants';
+import { GOOGLE_API_KEY } from '@env';
 
-Geocoder.init(keys.GOOGLE_API_KEY, {language: 'ko'});
+Geocoder.init(GOOGLE_API_KEY, {language: 'ko'});
 
 
 // When a user signs in
