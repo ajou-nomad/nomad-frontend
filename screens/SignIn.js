@@ -10,6 +10,7 @@ import { FIREBASE_WEBCLIENTID } from '@env';
 
 // test ----
 import auth from '@react-native-firebase/auth';
+import axiosApiInstance from '../utils/axios';
 // test====
 
 
@@ -50,16 +51,28 @@ const SignIn = ({router, navigation}) => {
     // ------------test----------
     const testButton = async () => {
         
-        const user = auth().currentUser;
+        // const user = auth().currentUser;
 
-        if( user ){
-            const idToken = await user.getIdToken();
-            console.log("user의 정보는\n"+JSON.stringify(user,null, 4));
-            console.log("토큰은\n"+JSON.stringify(idToken,null, 4));
-        } else {
-            console.log("로그인을 해야 볼 수 있습니다.");
-        }
-    }
+        // if( user ){
+        //     const idToken = await user.getIdToken();
+        //     console.log("user의 정보는\n"+JSON.stringify(user,null, 4));
+        //     console.log("토큰은\n"+JSON.stringify(idToken,null, 4));
+        // } else {
+        //     console.log("로그인을 해야 볼 수 있습니다.");
+        // }
+
+
+        axiosApiInstance.post('/user', {
+            firstname: 'Fred',
+            lastname: 'Flintstone',
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    };
 
     const signOutButton = async () => {
 
