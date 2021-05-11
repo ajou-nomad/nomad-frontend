@@ -22,6 +22,7 @@ import ChatNavigation from './ChatNavigation';
 import storeKeeperMain from '../screens/storeKeeperScreens/Main';
 import RegisterStore from '../screens/storeKeeperScreens/RegisterStore';
 import RegisterStoreDetail from '../screens/storeKeeperScreens/RegisterStoreDetail';
+import RegisterFoodDetail from '../screens/storeKeeperScreens/RegisterFoodDetail';
 
 
 
@@ -51,7 +52,7 @@ const RootNavigation = () => {
     }, []);
 
 
-    if (null !== null) { // state.userToken 존재시
+    if (true !== null) { // state.userToken 존재시
         if (state.userType === '유저'){
             return (
                 <RootStack.Navigator>
@@ -131,6 +132,7 @@ const storeKeeperStack = () => {
         >
             <Stack.Screen name="Register" component={RegisterStore} />
             <Stack.Screen name="RegisterStoreDetail" component={RegisterStoreDetail} />
+            <Stack.Screen name="RegisterFoodDetail" component={RegisterFoodDetail} />
         </Stack.Navigator>
     );
 };

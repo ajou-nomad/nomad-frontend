@@ -10,45 +10,61 @@ import {
     KeyboardAvoidingView,
     ScrollView,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 import BottomButton from '../../components/layout/BottomButton';
 import Header from '../../components/layout/Header';
 import { SIZES, FONTS2 } from '../../constants';
+import { responsiveHeight } from 'react-native-responsive-dimensions';
 
 import Postcode from '@actbase/react-daum-postcode';
+import DatePicker from 'react-native-date-picker';
+import { geocode } from '../../utils/helper';
 
-const RegisterStoreDetail = () => {
+const RegisterStoreDetail = ({navigation}) => {
 
-    const [isModal, setModal] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
     const [storeName, setStoreName] = useState('');
-    const [storeNumber, setStoreNumber] = useState('');
-    const [storeAddress, setStoreAddress] = useState('');
+    const [storeCallNumber, setStoreCallNumber] = useState('');
+    const [storeTip, setStoreTip] = useState('');
+    const [storeLocation, setStoreLocation] = useState('');
+    const [openTime, setOpenTime] = useState(new Date());
+    const [closeTime, setCloseTime] = useState(new Date());
 
+    const isEmpty = (val) => {
+        if (val === '') {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
     return (
         <KeyboardAvoidingView style={styles.container}>
-            {isModal &&
+            {modalVisible &&
                 <View style={styles.modal} >
                     <Postcode
-                        style={{ width: SIZES.width, height: SIZES.height }}
+                        style={{ width: SIZES.width, height: SIZES.height - responsiveHeight(13.5) }}
                         jsOptions={{ animated: true, hideMapBtn: true }}
-                        onSelected={data => {
-                            setStoreAddress(data.address);
-                            setModal(false);
+                        onSelected={ async (data) => {
+                            setModalVisible(false);
+                            const addedCoords = await geocode(data.address + ' ' + data.buildingName);
+                            setStoreLocation(addedCoords);
                         }}
                     />
+                    <BottomButton onPress={() =>  setModalVisible(false)} title="뒤로 가기" />
                 </View>
             }
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
             >
                 {/* Header */}
-                <Header title="매장 등록" small="true" />
+                <Header title="매장 정보" small="true" />
 
                 {/* Body */}
                 <View style={{ flex: 1 }}>
                     <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: 30 }}>
-                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold', paddingBottom: 10 }}>가게 이름 (상호명)</Text>
+                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>가게 이름 (상호명)</Text>
                         <TextInput
                             style={{
                                 borderBottomWidth: 1,
@@ -61,6 +77,7 @@ const RegisterStoreDetail = () => {
                             selectionColor="#000000"
                             onChangeText={(text)=>setStoreName(text)}
                         />
+
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>가게 전화번호</Text>
                         <TextInput
                             style={{
@@ -69,14 +86,15 @@ const RegisterStoreDetail = () => {
                                 ...FONTS2.body2,
                             }}
                             placeholder="숫자만 입력해주세요."
-                            value={storeNumber}
+                            value={storeCallNumber}
                             placeholderTextColor="#707070"
                             selectionColor="#000000"
-                            onChangeText={(text)=>setStoreNumber(text)}
+                            onChangeText={(text)=>setStoreCallNumber(text)}
                         />
+
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>가게 주소</Text>
                         <TouchableOpacity
-                            onPress={() => setModal(true)}
+                            onPress={() => setModalVisible(true)}
                         >
                         <Text
                             style={{
@@ -85,11 +103,43 @@ const RegisterStoreDetail = () => {
                                 ...FONTS2.body2,
                                 color: '#707070',
                             }}
-                        >{storeAddress === '' ? "주소 검색하기" : storeAddress}</Text>
+                        >{storeLocation.address === undefined ? '주소 검색하기' : storeLocation.address}</Text>
                         </TouchableOpacity>
+
+                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>배달 팁</Text>
+                        <TextInput
+                            style={{
+                                borderBottomWidth: 1,
+                                width: 300,
+                                ...FONTS2.body2,
+                            }}
+                            placeholder="숫자만 입력해주세요."
+                            value={storeTip}
+                            placeholderTextColor="#707070"
+                            selectionColor="#000000"
+                            onChangeText={(text)=>setStoreTip(text)}
+                        />
+                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop:30, paddingBottom: 10 }}>매장 오픈시간</Text>
+                        <DatePicker date={openTime} onDateChange={ date => setOpenTime(date)} mode="time" minuteInterval={30} />
+                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop:30, paddingBottom: 10 }}>매장 마감시간</Text>
+                        <DatePicker date={closeTime} onDateChange={ date => setCloseTime(date)} mode="time" minuteInterval={30} />
                     </View>
                     {/* Footer */}
-                    <BottomButton onPress={() => console.log("hello")} title="다음" />
+                    <BottomButton onPress={() => {
+                        if ( !isEmpty(storeName) && !isEmpty(storeCallNumber) && !isEmpty(storeLocation) && !isEmpty(storeTip) ) {
+                            const storeInfo = Object.assign({
+                                storeName: storeName,
+                                storeLocation: storeLocation,
+                                storeCallNumber: storeCallNumber,
+                                storeTip: storeTip,
+                                openTime: ('0' + openTime.getHours()).slice(-2) + ':' + ('0' + openTime.getMinutes()).slice(-2),
+                                closeTime: ('0' + closeTime.getHours()).slice(-2) + ':' + ('0' + closeTime.getMinutes()).slice(-2),
+                            });
+                            navigation.navigate('RegisterFoodDetail', {storeInfo});
+                        } else {
+                            Alert.alert('필요한정보를 입력해주세요.');
+                        }
+                    }} title="다음" />
                 </View>
             </ScrollView>
         </KeyboardAvoidingView>
@@ -104,9 +154,8 @@ const styles = StyleSheet.create({
     },
     modal: {
         position: 'absolute',
-        top:0,
-        alignSelf: 'center',
         zIndex: 1,
+        backgroundColor: 'white',
     },
     headerButtons: {
       flexDirection: 'row',
