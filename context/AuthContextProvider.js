@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 const initialState = {
     isSignout: false,
     userToken: null,
-    userType: '유저',
+    userType: '점주',
 };
 
 const AuthContextProvider = ({children}) => {

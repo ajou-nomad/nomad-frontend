@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getAccessToken } from './helper';
 
 
-const API_DEFAULT = '3.36.251.255';
+const API_DEFAULT = 'http://3.36.251.255:8080';
 
 const axiosApiInstance = axios.create({
     baseURL: API_DEFAULT,
