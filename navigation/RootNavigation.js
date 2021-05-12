@@ -53,7 +53,7 @@ const RootNavigation = () => {
     }, []);
 
 
-    if (true !== null) { // 유저가 로그인 하였을 때
+    if (null !== null) { // state.userToken 존재시
         if (state.userType === '유저'){
             return (
                 <RootStack.Navigator>

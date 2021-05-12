@@ -217,76 +217,78 @@ const ChatScreen = ({ route }) => {
     };
     
     const uploadImage = (source, imageUri) => {
-        const ext = imageUri.split('.').pop(); // Extract image extension (jpg)
+        if(imageUri){
+            const ext = imageUri.split('.').pop(); // Extract image extension (jpg)
 
-        const filename = `${uuid.v4()}.${ext}`; // Generate unique name
-        //    setImgLoading(true);
-        const imgRef = storage().ref(`chatimage/${filename}`);
-        const unsubscribe = imgRef.putFile(imageUri) // putFile: image Storage에 저장
-            .on(
-                storage.TaskEvent.STATE_CHANGED,
-                async snapshot => {
-                    var state = {
-                        ...state,
-                        progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100, // Calculate progress percentage
-                    };
-                    if (snapshot.state === storage.TaskState.SUCCESS) {
-                        console.log('upload success');
-                        // unsubscribe the event
-                        unsubscribe();
-                        // update the image url
-                        let url;
-                        await imgRef.getDownloadURL()
-                            .then((response) => {
-                                console.log('get url response', response);
-                                url = response;
-                            })
-                            .catch(error => {
-                                console.log('Failed to get url', error);
-                            });
-                        
-                        firestore()
-                            .collection('THREADS')
-                            .doc(thread._id)
-                            .collection('MESSAGES')
-                            .add({
-                                image: url.toString(),
-                                createdAt: new Date().getTime(),
-                                user: {
-                                    _id: user.uid, // currentUser.uid,
-                                    email: user.email, // currentUser.email
-                                    avatar: icons.avatar,
-                                },
-                            });
-
-                        await firestore()
-                            .collection('THREADS')
-                            .doc(thread._id)
-                            .set(
-                                {
-                                    latestMessage: {
-                                        text: '사진을 보냈습니다.',
-                                        createdAt: new Date().getTime(),
+            const filename = `${uuid.v4()}.${ext}`; // Generate unique name
+            //    setImgLoading(true);
+            const imgRef = storage().ref(`chatimage/${filename}`);
+            const unsubscribe = imgRef.putFile(imageUri) // putFile: image Storage에 저장
+                .on(
+                    storage.TaskEvent.STATE_CHANGED,
+                    async snapshot => {
+                        var state = {
+                            ...state,
+                            progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100, // Calculate progress percentage
+                        };
+                        if (snapshot.state === storage.TaskState.SUCCESS) {
+                            console.log('upload success');
+                            // unsubscribe the event
+                            unsubscribe();
+                            // update the image url
+                            let url;
+                            await imgRef.getDownloadURL()
+                                .then((response) => {
+                                    console.log('get url response', response);
+                                    url = response;
+                                })
+                                .catch(error => {
+                                    console.log('Failed to get url', error);
+                                });
+                            
+                            firestore()
+                                .collection('THREADS')
+                                .doc(thread._id)
+                                .collection('MESSAGES')
+                                .add({
+                                    image: url.toString(),
+                                    createdAt: new Date().getTime(),
+                                    user: {
+                                        _id: user.uid, // currentUser.uid,
+                                        email: user.email, // currentUser.email
+                                        avatar: icons.avatar,
                                     },
-                                },
-                                { merge: true }
-                            );
+                                });
 
+                            await firestore()
+                                .collection('THREADS')
+                                .doc(thread._id)
+                                .set(
+                                    {
+                                        latestMessage: {
+                                            text: '사진을 보냈습니다.',
+                                            createdAt: new Date().getTime(),
+                                        },
+                                    },
+                                    { merge: true }
+                                );
+
+                        }
+                    },
+                    error => {
+                        console.log('AccountEditScreen uploading error', error);
+                        // alert for failure to upload avatar
+                        Alert.alert(
+                            ('AccountEditScreen.updateErrorTitle'),
+                            ('AccountEditScreen.updateError'),
+                            [
+                                { text: ('confirm') }
+                            ],
+                            { cancelable: true },
+                        );
                     }
-                },
-                error => {
-                    console.log('AccountEditScreen uploading error', error);
-                    // alert for failure to upload avatar
-                    Alert.alert(
-                        ('AccountEditScreen.updateErrorTitle'),
-                        ('AccountEditScreen.updateError'),
-                        [
-                            { text: ('confirm') }
-                        ],
-                        { cancelable: true },
-                    );
-                }
-            );
+                );
+        }
     };
 
     const handlePickImage = () => {
