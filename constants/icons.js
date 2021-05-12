@@ -40,8 +40,16 @@ const send = require("../assets/icons/send.png");
 const arrow = require("../assets/icons/arrow.png");
 const avatar = require("../assets/icons/avatar.png");
 const plus = require("../assets/icons/plus.png");
+const request = require("../assets/icons/request.png");
+const statistics = require("../assets/icons/statistics.png");
+const store = require("../assets/icons/store.png");
+const completed = require("../assets/icons/completed.png");
 
 export default {
+    completed,
+    store,
+    statistics,
+    request,
     point,
     credit_card,
     group,

@@ -11,12 +11,12 @@ import {
     SafeAreaView,
     Image,
 } from 'react-native';
-import { SIZES, FONTS2, COLORS, icons } from '../../constants';
-import Header from '../../components/layout/Header';
-import BottomButton from '../../components/layout/BottomButton';
-import AddMenu from '../../components/item/AddMenu';
+import { SIZES, FONTS2, COLORS, icons } from '../../../constants';
+import Header from '../../../components/layout/Header';
+import BottomButton from '../../../components/layout/BottomButton';
+import AddMenu from '../../../components/item/AddMenu';
 import uuid from 'react-native-uuid';
-import axiosApiInstance from '../../utils/axios';
+import axiosApiInstance from '../../../utils/axios';
 
 
 const RegisterMenuDetail = ({navigation, route}) => {
