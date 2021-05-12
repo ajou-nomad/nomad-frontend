@@ -4,7 +4,6 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import {FONTS2, SIZES, COLORS} from '../../constants';
-import BottomButton from '../layout/BottomButton';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 
@@ -71,40 +70,39 @@ const AddMenu = ({modalVisible, closeModal, addMenu}) => {
                         selectionColor="#000000"
                         onChangeText={(text)=> setMenuDescription(text)}
                     />
-                    <TouchableOpacity
-                        style={{ height: responsiveHeight(10), width: responsiveWidth(40) }}
-                        onPress={()=>{
-                            const menuInfo = Object.assign({
-                                name: menuName,
-                                price: menuPrice,
-                                description: menuDescription,
-                            });
-                            resetMenuInfo();
-                            closeModal();
-                            addMenu(menuInfo);
-                        }}
-                    >
-                        <View style={{
-                            flex: 1,
-                            borderRadius: SIZES.radius,
-                            marginTop: 20,
-                            backgroundColor: COLORS.tertiary,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}>
-                            <Text style={{ ...FONTS2.body3, fontWeight: 'bold' }}>추가하기</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-around', width: SIZES.width * 0.7}}>
+                        <TouchableOpacity
+                            style={{ height: responsiveHeight(10), width: responsiveWidth(20) }}
+                            onPress={()=>{
+                                const menuInfo = Object.assign({
+                                    name: menuName,
+                                    price: menuPrice,
+                                    description: menuDescription,
+                                });
+                                resetMenuInfo();
+                                closeModal();
+                                addMenu(menuInfo);
+                            }}
+                        >
+                            <View style={styles.buttonView}>
+                                <Text style={{ ...FONTS2.body3, fontWeight: 'bold' }}>추가</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{ height: responsiveHeight(10), width: responsiveWidth(20) }}
+                            onPress={()=> {
+                                resetMenuInfo();
+                                closeModal();
+                            }}
+                        >
+                            <View style={styles.buttonView}>
+                                <Text style={{ ...FONTS2.body3, fontWeight: 'bold' }}>취소</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
-            {/* Footer */}
-            <BottomButton
-                onPress={() => {
-                    resetMenuInfo();
-                    closeModal();
-                }}
-                title="취소"
-            />
+
         </Modal>
     );
 };
@@ -129,6 +127,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+    },
+    buttonView: {
+        flex: 1,
+        borderRadius: SIZES.radius,
+        marginTop: 20,
+        backgroundColor: COLORS.tertiary,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 

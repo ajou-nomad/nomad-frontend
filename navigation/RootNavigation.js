@@ -22,7 +22,7 @@ import ChatNavigation from './ChatNavigation';
 import storeKeeperMain from '../screens/storeKeeperScreens/Main';
 import RegisterStore from '../screens/storeKeeperScreens/RegisterStore';
 import RegisterStoreDetail from '../screens/storeKeeperScreens/RegisterStoreDetail';
-import RegisterFoodDetail from '../screens/storeKeeperScreens/RegisterFoodDetail';
+import RegisterMenuDetail from '../screens/storeKeeperScreens/RegisterMenuDetail';
 
 
 
@@ -132,7 +132,7 @@ const storeKeeperStack = () => {
         >
             <Stack.Screen name="Register" component={RegisterStore} />
             <Stack.Screen name="RegisterStoreDetail" component={RegisterStoreDetail} />
-            <Stack.Screen name="RegisterFoodDetail" component={RegisterFoodDetail} />
+            <Stack.Screen name="RegisterMenuDetail" component={RegisterMenuDetail} />
         </Stack.Navigator>
     );
 };
