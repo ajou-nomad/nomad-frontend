@@ -26,9 +26,14 @@
  
  
  export default function TimeTable(props) {
-  const location = props.route.params.group.location;
-   
-   const today = JSON.stringify(new Date().toJSON()).substr(1,10);
+   const location = props.route.params.group.location;
+   const todayFullDate = new Date();
+   if (todayFullDate.getDay() === 0){
+    todayFullDate.setDate(todayFullDate.getDate() + 1);
+   } else if (todayFullDate.getDay() === 6){
+    todayFullDate.setDate(todayFullDate.getDate() + 2);
+   }
+   const today = JSON.stringify(todayFullDate.toJSON()).substr(1,10);
    const back = props.route.params.back;
    const goBack = () => {
      props.navigation.navigate(back);
@@ -38,7 +43,7 @@
 
    const setGroupDateValue = (dateDifference) =>{
     const d = new Date(today);
-    d.setDate(d.getDate()+dateDifference);
+    d.setDate(d.getDate() + dateDifference);
     return JSON.stringify(d.toJSON()).substr(1,10);
    };
 
@@ -122,12 +127,13 @@
    const dayArrayKor = ['월','화','수','목','금'];
    const dateDifference = [1,2,3,4];
    const lastIndex = dateDifference.length - 1;
-   let todayDayIndex = (todayDay%6)-1;
+
+   let todayDayIndex = (todayDay % 6) - 1;
    if (todayDayIndex < 0){
     todayDayIndex = 0;
    }
    for(let i = 0; i < todayDayIndex; i++){
-    dateDifference[lastIndex-i] += 2;
+    dateDifference[lastIndex - i] += 2;
    }
    const dayArrayEngFixed = [...dayArrayEng.slice(todayDayIndex),...dayArrayEng.slice(0,todayDayIndex)]
    const dayArrayKorFixed = [...dayArrayKor.slice(todayDayIndex),...dayArrayKor.slice(0,todayDayIndex)]

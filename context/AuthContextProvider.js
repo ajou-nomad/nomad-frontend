@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 const initialState = {
     isSignout: false,
     userToken: null,
-    userType: '점주',
+    userType: '유저',
 };
 
 const AuthContextProvider = ({children}) => {
@@ -34,7 +34,7 @@ const AuthContextProvider = ({children}) => {
                 ...prevState,
                 isSignout: true,
                 userToken: null,
-                userType: '유저',
+                userType: initialState.userType,
               };
           }
         },

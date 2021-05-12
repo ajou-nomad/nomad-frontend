@@ -68,6 +68,20 @@ export default function UserInfo(props) {
                 <Text style={props.userTxtStyle} >Deli</Text>
             </TouchableOpacity>
             </View>
+            { props.userType.IsShop && (
+                <View style={{marginVertical:15,}}>
+                    <Text style={{fontSize:24,fontWeight:'bold'}}>추가 정보</Text>
+                    <Text style={props.mainTxtStyle}>사업자번호</Text>
+                    <TextInputs style={props.inputStyle} change={props.changeShopIdNumber} value={props.ShopIdNumber} type="ShopIdNumber"/>    
+                </View>
+            )}
+            { props.userType.IsDeli && (
+                <View style={{marginVertical:15,}}>
+                    <Text style={{fontSize:24,fontWeight:'bold'}}>추가 정보</Text>
+                    <Text style={props.mainTxtStyle}>운전면허 번호</Text>
+                    <TextInputs style={props.inputStyle} change={props.changeDeliIdNumber} value={props.DeliIdNumber} type="DeliIdNumber"/>    
+                </View>
+            )}
             <Text style={props.mainTxtStyle}>약관 동의</Text>
             <View style={{
                 flexDirection:'row',
