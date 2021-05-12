@@ -9,8 +9,8 @@ import {
     Image,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Splash from '../../components/Splash';
-import {icons, SIZES, FONTS2, FONTS, COLORS} from '../../constants';
+import Splash from '../../../components/Splash';
+import {icons, SIZES, FONTS2, FONTS, COLORS} from '../../../constants';
 
 const RegisterStore = ({navigation}) => {
 

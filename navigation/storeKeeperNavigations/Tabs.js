@@ -1,12 +1,17 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+
 import React, {useState, useEffect} from 'react';
 import {Image, TouchableOpacity, Keyboard, Platform} from 'react-native';
-import {COLORS, FONTS2, icons, SIZES} from '../constants';
+import {COLORS, FONTS2, icons, SIZES} from '../../constants';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Home, WeeklyDelivery, OrderDetails} from '../screens/index';
-import DayNavigation from './DayNavigation';
-import WeeklyNavigation from './WeeklyNavigation';
-import MyPageNavigation from './MyPageNavigation';
+
+import RequestList from '../../screens/storeKeeperScreens/RequestList';
+import CompletedList from '../../screens/storeKeeperScreens/CompletedList';
+import SalesStatus from '../../screens/storeKeeperScreens/SalesStatus';
+import StoreManagementNavigation from './StoreManagementNavigation';
+
+
 
 
 
@@ -68,12 +73,11 @@ const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
   }
 };
 
-const Tabs = ({route}) => {
-  const {routeName} = route.params;
+const Tabs = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName={routeName}
+      initialRouteName={'주문 접수'}
       tabBarOptions={{
         showLabel: true,
         labelPosition: 'below-icon',
@@ -90,17 +94,17 @@ const Tabs = ({route}) => {
         },
       }}>
       <Tab.Screen
-        name="진행 주문"
-        component={DayNavigation}
+        name="주문 접수"
+        component={RequestList}
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.home}
+              source={icons.request}
               resizeMode="contain"
               style={{
                 top: 5,
-                width: 22,
-                height: 22,
+                width: 25,
+                height: 25,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
               }}
             />
@@ -110,16 +114,16 @@ const Tabs = ({route}) => {
       />
       <Tab.Screen
         name="완료 주문"
-        component={WeeklyNavigation}
+        component={CompletedList}
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.cart}
+              source={icons.completed}
               resizeMode="contain"
               style={{
                 top: 5,
-                width: 22,
-                height: 22,
+                width: 23,
+                height: 23,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
               }}
             />
@@ -129,16 +133,16 @@ const Tabs = ({route}) => {
       />
       <Tab.Screen
         name="매출 현황"
-        component={OrderDetails}
+        component={SalesStatus}
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.recipe}
+              source={icons.statistics}
               resizeMode="contain"
               style={{
                 top: 5,
-                width: 22,
-                height: 22,
+                width: 27,
+                height: 27,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
               }}
             />
@@ -148,16 +152,16 @@ const Tabs = ({route}) => {
       />
       <Tab.Screen
         name="매장 관리"
-        component={MyPageNavigation}
+        component={StoreManagementNavigation}
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.user}
+              source={icons.store}
               resizeMode="contain"
               style={{
                 top: 5,
-                width: 22,
-                height: 22,
+                width: 25,
+                height: 25,
                 tintColor: focused ? COLORS.black : COLORS.secondary,
               }}
             />

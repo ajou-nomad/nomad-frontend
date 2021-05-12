@@ -12,14 +12,14 @@ import {
     TouchableOpacity,
     Alert,
 } from 'react-native';
-import BottomButton from '../../components/layout/BottomButton';
-import Header from '../../components/layout/Header';
-import { SIZES, FONTS2 } from '../../constants';
+import BottomButton from '../../../components/layout/BottomButton';
+import Header from '../../../components/layout/Header';
+import { SIZES, FONTS2 } from '../../../constants';
 import { responsiveHeight } from 'react-native-responsive-dimensions';
 
 import Postcode from '@actbase/react-daum-postcode';
 import DatePicker from 'react-native-date-picker';
-import { geocode } from '../../utils/helper';
+import { geocode } from '../../../utils/helper';
 
 const RegisterStoreDetail = ({navigation}) => {
 
