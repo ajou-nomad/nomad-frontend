@@ -120,9 +120,9 @@ const RegisterStoreDetail = ({navigation}) => {
                             onChangeText={(text)=>setStoreTip(text)}
                         />
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop:30, paddingBottom: 10 }}>매장 오픈시간</Text>
-                        <DatePicker date={openTime} onDateChange={ date => setOpenTime(date)} mode="time" minuteInterval={30} />
+                        <DatePicker date={openTime} onDateChange={ date => setOpenTime(date)} mode="time" />
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop:30, paddingBottom: 10 }}>매장 마감시간</Text>
-                        <DatePicker date={closeTime} onDateChange={ date => setCloseTime(date)} mode="time" minuteInterval={30} />
+                        <DatePicker date={closeTime} onDateChange={ date => setCloseTime(date)} mode="time" />
                     </View>
                     {/* Footer */}
                     <BottomButton onPress={() => {
@@ -135,7 +135,7 @@ const RegisterStoreDetail = ({navigation}) => {
                                 openTime: ('0' + openTime.getHours()).slice(-2) + ':' + ('0' + openTime.getMinutes()).slice(-2),
                                 closeTime: ('0' + closeTime.getHours()).slice(-2) + ':' + ('0' + closeTime.getMinutes()).slice(-2),
                             });
-                            navigation.navigate('RegisterFoodDetail', {storeInfo});
+                            navigation.navigate('RegisterMenuDetail', {storeInfo});
                         } else {
                             Alert.alert('필요한정보를 입력해주세요.');
                         }
