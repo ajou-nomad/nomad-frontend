@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from '../context/AuthContextProvider';
 import {createStackNavigator} from '@react-navigation/stack';
 
-
+// user 관련
 import {SignIn, SignUp, Main} from '../screens/index';
 import Tabs from './Tabs';
 import CreateGroupDetail from '../screens/group/CreateGroupDetail';
@@ -19,11 +19,11 @@ import Cart from '../screens/order/Cart';
 import PaymentNavigation from './PaymentNavigation';
 import ChatNavigation from './ChatNavigation';
 
-import storeKeeperMain from '../screens/storeKeeperScreens/Main';
-import RegisterStore from '../screens/storeKeeperScreens/RegisterStore';
-import RegisterStoreDetail from '../screens/storeKeeperScreens/RegisterStoreDetail';
-import RegisterFoodDetail from '../screens/storeKeeperScreens/RegisterFoodDetail';
-import CreateReview from '../screens/review/CreateReview';
+// store 관련
+import StoreTabs from './storeKeeperNavigations/Tabs';
+import RegisterStore from '../screens/storeKeeperScreens/register/RegisterStore';
+import RegisterStoreDetail from '../screens/storeKeeperScreens/register/RegisterStoreDetail';
+import RegisterMenuDetail from '../screens/storeKeeperScreens/register/RegisterMenuDetail';
 import Receipt from '../screens/Receipt';
 
 
@@ -53,7 +53,7 @@ const RootNavigation = () => {
     }, []);
 
 
-    if (true !== null) { // state.userToken 존재시
+    if (null !== null) { // state.userToken 존재시
         if (state.userType === '유저'){
             return (
                 <RootStack.Navigator>
@@ -65,7 +65,6 @@ const RootNavigation = () => {
                 </RootStack.Navigator>
             );
         } else if (state.userType === '점주'){
-
             return (
                 <RootStack.Navigator>
                     <RootStack.Screen
@@ -126,18 +125,32 @@ const userStack = () => {
 };
 
 const storeKeeperStack = () => {
-    return (
-        <Stack.Navigator
-        screenOptions={{
-            headerShown: false,
-        }}
-        initialRouteName={'Register'}
-        >
-            <Stack.Screen name="Register" component={RegisterStore} />
-            <Stack.Screen name="RegisterStoreDetail" component={RegisterStoreDetail} />
-            <Stack.Screen name="RegisterFoodDetail" component={RegisterFoodDetail} />
-        </Stack.Navigator>
-    );
+
+    if (true){ //점주가 매장등록 했을 때, 안했을 때
+        return (
+            <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+            initialRouteName={'StoreTabs'}
+            >
+                <Stack.Screen name="StoreTabs" component={StoreTabs} />
+            </Stack.Navigator>
+        );
+    } else {
+        return (
+            <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+            initialRouteName={'Register'}
+            >
+                <Stack.Screen name="Register" component={RegisterStore} />
+                <Stack.Screen name="RegisterStoreDetail" component={RegisterStoreDetail} />
+                <Stack.Screen name="RegisterMenuDetail" component={RegisterMenuDetail} />
+            </Stack.Navigator>
+        );
+    }
 };
 
 const carrierStack = () => {

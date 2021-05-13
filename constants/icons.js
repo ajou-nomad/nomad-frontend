@@ -49,8 +49,16 @@ const chat = require("../assets/icons/chat.png");
 const pencil = require("../assets/icons/pencil.png");
 const logout = require("../assets/icons/logout.png");
 const picture = require("../assets/icons/picture.png");
+const request = require("../assets/icons/request.png");
+const statistics = require("../assets/icons/statistics.png");
+const store = require("../assets/icons/store.png");
+const completed = require("../assets/icons/completed.png");
 
 export default {
+    completed,
+    store,
+    statistics,
+    request,
     point,
     credit_card,
     group,

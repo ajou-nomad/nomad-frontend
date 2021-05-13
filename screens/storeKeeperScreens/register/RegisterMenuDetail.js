@@ -11,14 +11,15 @@ import {
     SafeAreaView,
     Image,
 } from 'react-native';
-import { SIZES, FONTS2, COLORS, icons } from '../../constants';
-import Header from '../../components/layout/Header';
-import BottomButton from '../../components/layout/BottomButton';
-import AddMenu from '../../components/item/AddMenu';
+import { SIZES, FONTS2, COLORS, icons } from '../../../constants';
+import Header from '../../../components/layout/Header';
+import BottomButton from '../../../components/layout/BottomButton';
+import AddMenu from '../../../components/item/AddMenu';
 import uuid from 'react-native-uuid';
+import axiosApiInstance from '../../../utils/axios';
 
 
-const RegisterFoodDetail = ({navigation, route}) => {
+const RegisterMenuDetail = ({navigation, route}) => {
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -125,7 +126,25 @@ const RegisterFoodDetail = ({navigation, route}) => {
                 </View>
 
                 {/* Footer */}
-                <BottomButton onPress={() => console.log('axios로 매장등록하기')} title="매장 등록하기" />
+                <BottomButton
+                    onPress={() => {
+                        // axiosApiInstance.post('/store', {
+                        //     storeInfo: storeInfo,
+                        //     menus: menus,
+                        // }).then(function (response) {
+
+                        //     //응답은 곧 생성완료이기 때문에 리렌더링하여 매장이 등록되어있을때의 화면으로 이동한다.
+                        //     // 1. context의 user property에 dispatch하여 리렌딩
+
+                        //     console.log(response);
+                        // }).catch(function (error) {
+
+                        //     console.log(error);
+                        // });
+                        console.log('axios로 매장등록하기')
+                    }}
+                    title="매장 등록하기"
+                />
             </View>
         </KeyboardAvoidingView>
     );
@@ -170,4 +189,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default RegisterFoodDetail;
+export default RegisterMenuDetail;

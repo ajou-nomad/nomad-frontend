@@ -34,7 +34,7 @@ const AuthContextProvider = ({children}) => {
                 ...prevState,
                 isSignout: true,
                 userToken: null,
-                userType: '유저',
+                userType: initialState.userType,
               };
           }
         },

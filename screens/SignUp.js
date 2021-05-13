@@ -26,21 +26,25 @@ import UserInfo from '../components/login/UserInfo';
 export default function SignUpScreen(props) {
   const [userType, setUserType] = useState('User');
   const [phoneNumber, setPhoneNumber] = useState(props.route.params.phoneNumber);
-  const [phoneUnique, setPhoneUnique] = useState(props.route.params.phoneNumber !== '');
+  const googlePhoneUnique = props.route.params.phoneNumber !== '';
+  const [phoneUnique, setPhoneUnique] = useState(googlePhoneUnique);
   const [validCode, setValidCode] = useState('');
   const [phoneValid, setPhoneValid] = useState(props.route.params.phoneNumber !== '');
   const [email, setEmail] = useState(props.route.params.email);
   const [emailValid, setEmailValid] = useState(props.route.params.email !== '');
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState(props.route.params.nickname);
-  const [isUser, setIsUser] = useState(true);
-  const [isShop, setIsShop] = useState(false);
-  const [isDeli, setIsDeli] = useState(false);
+  const [IsUser, setIsUser] = useState(true);
+  const [IsShop, setIsShop] = useState(false);
+  const [IsDeli, setIsDeli] = useState(false);
+  const [ShopIdNumber,setShopIdNumber] = useState();
+  const [DeliIdNumber,setDeliIdNumber] = useState();
   const [term1, setTerm1] = useState(false);
   const [term2, setTerm2] = useState(false);
   const [confirm, setConfirm] = useState(null);
 
   const IsGoogle = props.route.params.IsGoogle;
+  
 
   const onChangePhoneNumber = event => {
     setPhoneNumber(event.nativeEvent.text);
@@ -60,6 +64,14 @@ export default function SignUpScreen(props) {
   const onChangeValidCode = event => {
     setValidCode(event.nativeEvent.text);
   };
+
+  const onChangeShopIdNumber = event => {
+    setShopIdNumber(event.nativeEvent.text);
+  }
+
+  const onChangeDeliIdNumber = event => {
+    setDeliIdNumber(event.nativeEvent.text);
+  }
 
   const emailCheckDuplicated = () => {
     if (
@@ -166,11 +178,21 @@ export default function SignUpScreen(props) {
     });
   };
   const confirmCode = () => {
-    confirm.confirm(validCode).then(
-      ()=>setPhoneValid(true)
-      ).catch(error =>  console.log('Invalid code.'));
-  };
 
+    //   user.delete().then(function() {
+    //     // User deleted.
+    //   }).catch(function(error) {
+    //     // An error happened.
+    //   }); 
+    confirm.confirm(validCode).then( ()=>{
+      // let user = auth().currentUser;
+      auth().currentUser.delete().then(()=>{
+        setPhoneValid(true);
+      }).catch(error =>  console.log('Delete Failed.'));
+
+    }).catch(error =>  console.log('Invalid code.'));
+  };
+  
 
   return (
     <>
@@ -199,7 +221,7 @@ export default function SignUpScreen(props) {
         <Text style={styles.headerText}>회원가입</Text>
       </View>
       <ScrollView style={styles.mainView}>
-        {phoneUnique||
+        {googlePhoneUnique ||
         <>
           <PhoneNumber
             phoneNumber={phoneNumber}
@@ -226,6 +248,7 @@ export default function SignUpScreen(props) {
           email={email}
           password={password}
           nickname={nickname}
+          userType={{IsUser:IsUser,IsShop:IsShop,IsDeli:IsDeli}}
           term1={term1}
           term2={term2}
           inputStyle={styles.input}
@@ -244,6 +267,8 @@ export default function SignUpScreen(props) {
           changeEmail={onChangeEmail}
           changePassword={onChangePassword}
           changeNickname={onChangeNickname}
+          changeShopIdNumber={onChangeShopIdNumber}
+          changeDeliIdNumber={onChangeDeliIdNumber}
           duplicated={emailCheckDuplicated}
           termSelected={termSelected}
           checkEmptyExist={checkEmptyExist}
