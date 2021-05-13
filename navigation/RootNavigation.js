@@ -25,6 +25,7 @@ import RegisterStore from '../screens/storeKeeperScreens/register/RegisterStore'
 import RegisterStoreDetail from '../screens/storeKeeperScreens/register/RegisterStoreDetail';
 import RegisterMenuDetail from '../screens/storeKeeperScreens/register/RegisterMenuDetail';
 import Receipt from '../screens/Receipt';
+import CreateReview from '../screens/review/CreateReview';
 
 
 const RootStack = createStackNavigator();
