@@ -200,7 +200,7 @@ export const currentLocation = async () => {
     if (result === 'granted') {
         console.log( 'You can use the ACCESS_FINE_LOCATION' );
 
-        return new Promise( (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             Geolocation.getCurrentPosition(
                 async (position) => {
 
@@ -209,8 +209,10 @@ export const currentLocation = async () => {
                         longitude: position.coords.longitude,
                     };
 
+                    console.log('here: ', position);
                     location = await reverseGeocode(geometry);
                     resolve(location);
+
                 },
                 error => {
                     // 타임아웃 시, 초기location 반환

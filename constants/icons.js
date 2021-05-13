@@ -1,3 +1,6 @@
+/* eslint-disable quotes */
+/* eslint-disable prettier/prettier */
+
 const back = require("../assets/icons/back.png");
 const car = require("../assets/icons/car.png");
 const cutlery = require("../assets/icons/cutlery.png");
@@ -40,6 +43,12 @@ const send = require("../assets/icons/send.png");
 const arrow = require("../assets/icons/arrow.png");
 const avatar = require("../assets/icons/avatar.png");
 const plus = require("../assets/icons/plus.png");
+const like2 = require("../assets/icons/like2.png");
+const review = require("../assets/icons/review.png");
+const chat = require("../assets/icons/chat.png");
+const pencil = require("../assets/icons/pencil.png");
+const logout = require("../assets/icons/logout.png");
+const picture = require("../assets/icons/picture.png");
 const request = require("../assets/icons/request.png");
 const statistics = require("../assets/icons/statistics.png");
 const store = require("../assets/icons/store.png");
@@ -92,4 +101,10 @@ export default {
     arrow,
     avatar,
     plus,
+    like2,
+    review,
+    chat,
+    pencil,
+    logout,
+    picture,
 }

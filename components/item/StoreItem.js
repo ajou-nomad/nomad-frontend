@@ -8,17 +8,18 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    StyleSheet,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { FONTS2, images, icons } from '../../constants';
+import { FONTS2, images, icons, COLORS } from '../../constants';
 
-const StoreItem = ({ deliveryPlace, deliDate, items }) => {
+const StoreItem = ({ deliveryPlace, deliDate, items, isLikeList }) => {
 
     const navigation = useNavigation();
 
     return (
-        <View style={{ flexDirection: 'row', marginBottom: 10, marginLeft: 10, }}>
+        <View style={styles.container}>
             <Image
                 source={images.store_logo}
                 resizeMode='contain'
@@ -45,25 +46,39 @@ const StoreItem = ({ deliveryPlace, deliDate, items }) => {
                 </View>
             </View>
 
-            <TouchableOpacity style={{
-                marginRight: 15,
-                flex: 0.3,
-                padding: 5,
-                alignItems: 'center',
-                borderWidth: 0.5,
-                borderRadius: 8,
-                borderBottomRightRadius: 20,
-                borderColor: '#707070',
-                alignSelf: 'center',
-                width: 20,
-            }}
+            <TouchableOpacity style={styles.selectButton}
                 // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점', location: location })}
                 onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점', deliveryPlace: deliveryPlace, deliDate: deliDate, items: items })}
             >
-                <Text style={{ ...FONTS2.h3 }}>선택</Text>
+                {!isLikeList ? (
+                    <Text style={{ ...FONTS2.body3, color: COLORS.white }}>선택</Text>
+                ) : (
+                    <Text style={{ ...FONTS2.body2, color: COLORS.black, fontSize: 19 }}>매장 보기</Text>
+                )}
             </TouchableOpacity>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        paddingVertical: 10,
+        paddingLeft: 10,
+    },
+    selectButton: {
+        width: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 35,
+        // borderWidth: 0.5,
+        borderRadius: 8,
+        borderColor: '#707070',
+        marginRight: 15,
+        alignSelf: 'center',
+        // backgroundColor: '#1c7ed6',
+        backgroundColor: COLORS.lightGray
+    },
+});
 
 export default StoreItem;
