@@ -23,7 +23,8 @@ import storeKeeperMain from '../screens/storeKeeperScreens/Main';
 import RegisterStore from '../screens/storeKeeperScreens/RegisterStore';
 import RegisterStoreDetail from '../screens/storeKeeperScreens/RegisterStoreDetail';
 import RegisterFoodDetail from '../screens/storeKeeperScreens/RegisterFoodDetail';
-
+import CreateReview from '../screens/review/CreateReview';
+import Receipt from '../screens/Receipt';
 
 
 const RootStack = createStackNavigator();
@@ -118,6 +119,8 @@ const userStack = () => {
             <Stack.Screen name="Cart" component={Cart} />
             <Stack.Screen name="PaymentNavigation" component={PaymentNavigation} />
             <Stack.Screen name="ChatNavigation" component={ChatNavigation} />
+            <Stack.Screen name="CreateReview" component={CreateReview} />
+            <Stack.Screen name="Receipt" component={Receipt} />
         </Stack.Navigator>
     );
 };

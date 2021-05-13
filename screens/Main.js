@@ -1,3 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-alert */
+
 import React from 'react';
 import { Image, StyleSheet ,View, Text, TouchableOpacity } from 'react-native';
 import {icons, COLORS, SIZES, FONTS} from "../constants";
