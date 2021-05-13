@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /**
  * @format
  */
@@ -18,11 +19,7 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
 const RNProvider = () => (
     <AuthContextProvider>
         <App />
-    </AuthContextProvider>   
-)
+    </AuthContextProvider>
+);
 
 AppRegistry.registerComponent(appName, () => RNProvider);
-
-
-
-// AppRegistry.registerComponent(appName, () => App);
