@@ -6,8 +6,11 @@ export const AuthContext = createContext();
 // state의 초기 값을 설정한다
 const initialState = {
     isSignout: false,
-    userToken: null,
-    userType: '유저',
+    // userToken: null,
+    // userType: '유저',
+    user: {
+      userType: '유저',
+    },
 };
 
 const AuthContextProvider = ({children}) => {
@@ -19,22 +22,28 @@ const AuthContextProvider = ({children}) => {
             case 'RESTORE_TOKEN':
               return {
                 ...prevState,
-                userToken: action.token,
-                userType: action.type,
+                // userToken: action.token,
+                user: {
+                  userType: action.type,
+                }
               };
             case 'SIGN_IN':
               return {
                 ...prevState,
                 isSignout: false,
-                userToken: action.token,
-                userType: action.type,
+                // userToken: action.token,
+                user: {
+                  userType: action.type,
+                }
               };
             case 'SIGN_OUT':
               return {
                 ...prevState,
                 isSignout: true,
-                userToken: null,
-                userType: initialState.userType,
+                // userToken: null,
+                user: {
+                  userType: initialState.user.userType,
+                }
               };
           }
         },
