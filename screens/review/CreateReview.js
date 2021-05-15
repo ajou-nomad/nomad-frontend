@@ -3,12 +3,10 @@
 /* eslint-disable no-alert */
 
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, ScrollView, TouchableOpacity, ToastAndroid, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import Modal from "react-native-simple-modal";
-
+import { launchImageLibrary } from 'react-native-image-picker';
 
 import BottomButton from '../../components/layout/BottomButton';
 import Header from '../../components/layout/Header';
@@ -16,8 +14,15 @@ import { FONTS2, COLORS, icons } from '../../constants';
 
 const CreateReview = () => {
     const navigation = useNavigation();
-    // const [open, setOpen] = useState(false);
     const [uploadImage, setUploadImage] = useState('');
+
+    const [review, setReview] = useState({
+        userId: '',
+        photo: '',
+        text: '',
+        rating: 0,
+        storeName: '',
+    });
 
     const renderRating = () => {
         return (
@@ -62,6 +67,13 @@ const CreateReview = () => {
         );
     };
 
+    const sendReview = () => {
+        // 리뷰 DB에 등록
+
+        navigation.goBack();
+        ToastAndroid.showWithGravity('리뷰가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    };
+
     return (
         <ScrollView style={styles.container}>
             <Header title='리뷰 작성' small='true' />
@@ -93,7 +105,7 @@ const CreateReview = () => {
                 </View>
             </View>
 
-            <BottomButton title='등록하기' onPress={() => console.log('등록 후 어디로?')} />
+            <BottomButton title='등록하기' onPress={sendReview} />
         </ScrollView>
     );
 };

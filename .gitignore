@@ -57,10 +57,7 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
-
-<<<<<<< HEAD
-temp.json
-=======
 # dotenv environment variables file
 .env
->>>>>>> 5ffe0908a09470a685c6298039c4d535bc2a916a
+
+temp.js

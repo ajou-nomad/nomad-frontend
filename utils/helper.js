@@ -7,6 +7,7 @@ import { getDistance } from 'geolib';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import { GOOGLE_API_KEY } from '@env';
+import axiosApiInstance from './axios';
 
 Geocoder.init(GOOGLE_API_KEY, {language: 'ko'});
 
@@ -80,17 +81,17 @@ export const emailPasswordLogin = (data, dispatch) => {
                 fcmToken: fcmToken,
             };
             // // update fcmToken in DB
-            // axios
-            //     .post('/auth/user/:id', payload)
-            //     .then( async (response) => {
-            //         // STORAGE에 token 저장
-            //         await AsyncStorage.setItem('userToken', response.idToken);
-            //         // 전역 변수에 token 저장
-            //         await dispatch({ type: 'SIGN_IN', token: response.idToken });
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
+            axiosApiInstance
+                .get('/auth/user', payload)
+                .then( async (response) => {
+                    // STORAGE에 token 저장
+                    await AsyncStorage.setItem('userToken', response.idToken);
+                    // 전역 변수에 token 저장
+                    await dispatch({ type: 'SIGN_IN', token: response.idToken });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
 
         })
         .catch(error => {
@@ -184,8 +185,9 @@ export const currentLocation = async () => {
                         longitude: position.coords.longitude,
                     };
 
-                    console.log('here: ', position);
+                    console.log('here--: ', position);
                     location = await reverseGeocode(geometry);
+                    console.log('here---: ', location);
                     resolve(location);
 
                 },

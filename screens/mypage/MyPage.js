@@ -4,7 +4,7 @@
 
 import React, { useEffect } from 'react';
 
-import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
@@ -54,15 +54,20 @@ const MyPage = ({ navigation }) => {
             resizeMode='contain'
           />
           <Text style={styles.largeFont}>사용자 닉네임</Text>
+          
+      {/* <TouchableOpacity onPress={() => navigation.navigate('GroupList')}>
+        <Text style={{ ...FONTS2.h1}}>dsfds임시</Text>
+      </TouchableOpacity> */}
         </View>
+        
       </View>
-      
       <MyPageButton title='채팅방' img={icons.chat} onPress={() => navigation.navigate('ChatNavigation')} />
       <MyPageButton title='리뷰 관리' img={icons.review} onPress={() => navigation.navigate('ReviewPage')} />
       <MyPageButton title='찜한 목록' img={icons.like2} onPress={() => navigation.navigate('LikeList')} />
       <MyPageButton title='포인트' img={icons.point} onPress={() => navigation.navigate('MyPointPage')} />
       <MyPageButton title='정보수정' img={icons.pencil} />
       <MyPageButton title='로그아웃' img={icons.logout} onPress={signOutGoogle} />
+      
     </ScrollView>
   );
 };

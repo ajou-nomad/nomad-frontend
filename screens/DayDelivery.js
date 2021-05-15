@@ -15,6 +15,7 @@ import GoogleMap from '../components/map/GoogleMap';
 import NewGroupButton from '../components/map/NewGroupButton';
 import GpsButton from '../components/map/GpsButton';
 import { currentLocation } from '../utils/helper';
+import axiosApiInstance from '../utils/axios';
 
 
 
@@ -28,8 +29,7 @@ const DayDelivery = ({ route, navigation }) => {
     setLocation(result);
   };
 
-  useEffect( () => {
-
+  useEffect(() => {
     // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
     if (route.params?.post) {
       setLocation(route.params.post);
@@ -44,7 +44,7 @@ const DayDelivery = ({ route, navigation }) => {
 
     }
 
-  }, [route.params?.post] );
+  }, [route.params?.post]);
 
   // 검색 창 헤더
   const renderDestinationHeader = () => {

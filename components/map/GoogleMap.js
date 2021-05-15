@@ -293,8 +293,8 @@ const GoogleMap = ({initLocation, back, today}) => {
     },
     {
         location: {
-            latitude: 37.5000145,
-            longitude: 127.0090984,
+            latitude: 37.2764383,
+            longitude: 127.0439244,
             address:'수원시 원천동',
             buildingName: '먼 곳',
         },

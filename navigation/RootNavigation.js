@@ -34,7 +34,7 @@ const Stack = createStackNavigator();
 
 const RootNavigation = () => {
 
-    const {state, dispatch} = useContext(AuthContext);
+    const { state, dispatch } = useContext(AuthContext);
 
     useEffect(() => {
         // local store에서 token을 가져와 세션유지 ( 지금은 deviceToken으로 하였음)
@@ -51,11 +51,11 @@ const RootNavigation = () => {
         };
 
         bootstrapAsync();
-    }, []);
+    }, [dispatch]);
 
 
-    if (null !== null) { // state.userToken 존재시
-        if (state.userType === '유저'){
+    if (true !== null) { // state.userToken 존재시
+        if (state.user.userType === '유저'){
             return (
                 <RootStack.Navigator>
                     <RootStack.Screen
@@ -65,7 +65,7 @@ const RootNavigation = () => {
                     />
                 </RootStack.Navigator>
             );
-        } else if (state.userType === '점주'){
+        } else if (state.user.userType === '점주'){
             return (
                 <RootStack.Navigator>
                     <RootStack.Screen
