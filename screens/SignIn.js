@@ -62,23 +62,23 @@ const SignIn = ({router, navigation}) => {
         // }
 
 
-        axiosApiInstance.post('/user', {
-            firstname: 'Fred',
-            lastname: 'Flintstone',
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        // axiosApiInstance.post('/user', {
+        //     firstname: 'Fred',
+        //     lastname: 'Flintstone',
+        //   })
+        //   .then(function (response) {
+        //     console.log(response);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
     };
 
     const signOutButton = async () => {
 
         const user = auth().currentUser;
 
-        if( user && user.providerData[0].providerId === 'google.com' ) {
+        if ( user && user.providerData[0].providerId === 'google.com' ) {
             try {
                 await GoogleSignin.revokeAccess();
                 await GoogleSignin.signOut();
@@ -108,47 +108,43 @@ const SignIn = ({router, navigation}) => {
             const { idToken } = await GoogleSignin.getTokens();
             const fcmToken = await messaging().getToken();
 
-            const payload = {
-                idToken: idToken,
-                fcmToken: fcmToken,
-            }
-
             // test
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
             await auth().signInWithCredential(googleCredential);
             const user = auth().currentUser;
-            navigation.navigate("SignUp", {
-                            idToken: idToken,
-                            fcmToken: fcmToken,
-                            phoneNumber: user.phoneNumber,
-                            email: user.email,
-                            nickname: user.displayName,
-                            IsGoogle: true,
-                        });
+            console.log("user의 정보는\n"+JSON.stringify(user,null, 4));
+            const iddToken = await user.getIdToken();
+            console.log("파이어토큰은\n"+JSON.stringify(iddToken,null, 4));
+
+                    //             navigation.navigate("SignUp", {
+                    //     fcmToken: fcmToken,
+                    //     phoneNumber: googleCredential.phoneNumber,
+                    //     email: googleCredential.email,
+                    //     nickname: googleCredential.displayName,
+                    //     IsGoogle: true,
+                    // });
+
             
-            // test
 
-
-
+            //test
             //백엔드에서 idToken 해체해서 uid로 조회해서 없으면 에러 / 있으면 fcmToken 업데이트하고 성공
-            // axios
-            //     .post('/auth/user/:id', payload)
-            //     .then((response) => {
-            //         googleLogin(response, dispatch);
-            //     })
-            //     .catch((error) => {
-            //         alert(error.message+"구글계정으로 회원가입");
-            //         // 회원가입 페이지 이동
-            //         navigation.navigate("SignUp", {
-            //             idToken: idToken,
-            //             fcmToken: fcmToken,
-            //             phoneNumber: googleCredential.phoneNumber,
-            //             email: googleCredential.email,
-            //             nickname: googleCredential.displayName,
-            //             IsGoogle: true,
-            //         });
-            //     });
-            
+            axiosApiInstance
+                .get('/auth/user')
+                .then((response) => {
+                    // googleLogin(response, dispatch);
+                })
+                .catch((error) => {
+                    alert(error.message+"구글계정으로 회원가입");
+                    // 회원가입 페이지 이동
+                    navigation.navigate("SignUp", {
+                        idToken: idToken,
+                        fcmToken: fcmToken,
+                        phoneNumber: googleCredential.phoneNumber,
+                        email: googleCredential.email,
+                        nickname: googleCredential.displayName,
+                        IsGoogle: true,
+                    });
+                });
         } catch (error) {
             console.log(error);
         }
