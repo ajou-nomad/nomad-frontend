@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Keyboard, Text, View, Image, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Button } from 'react-native';
-import { icons, SIZES, FONTS, COLORS } from "../constants";
+import { icons, SIZES, FONTS, COLORS } from '../constants';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import { emailPasswordLogin, googleLogin } from '../utils/helper';
 import messaging from '@react-native-firebase/messaging';
@@ -11,6 +11,7 @@ import { FIREBASE_WEBCLIENTID } from '@env';
 // test ----
 import auth from '@react-native-firebase/auth';
 import axiosApiInstance from '../utils/axios';
+import axios from 'axios';
 // test====
 
 
@@ -38,10 +39,10 @@ const SignIn = ({router, navigation}) => {
 
             emailPasswordLogin(data, dispatch);
 
-            setEmail("");
-            setPassword("");
+            setEmail('');
+            setPassword('');
         } else {
-            Alert.alert("이메일과 비밀번호를 적어주세요.")
+            Alert.alert('이메일과 비밀번호를 적어주세요.')
         }
     }
 
@@ -76,13 +77,21 @@ const SignIn = ({router, navigation}) => {
 
     const signOutButton = async () => {
 
+        // try {
+        // await GoogleSignin.revokeAccess();
+        // await GoogleSignin.signOut();
+        // console.log('구글 로그아웃성공');
+        // } catch (error){
+        //     console.log(error);
+        // }
+
         const user = auth().currentUser;
 
         if ( user && user.providerData[0].providerId === 'google.com' ) {
             try {
                 await GoogleSignin.revokeAccess();
                 await GoogleSignin.signOut();
-                console.log("구글 로그아웃성공");
+                console.log('구글 로그아웃성공');
                 await auth()
                         .signOut()
                         .then(() => console.log('파이어베이스 로그아웃성공'));
@@ -94,7 +103,7 @@ const SignIn = ({router, navigation}) => {
                 .signOut()
                 .then(() => console.log('파이어베이스 로그아웃성공'));
         } else {
-            console.log("로그인 상태가 아닙니다.");
+            console.log('로그인 상태가 아닙니다.');
         }
     }
     // ------------test----------
@@ -103,55 +112,51 @@ const SignIn = ({router, navigation}) => {
 
     const signInGoogle = async () => {
         try {
-            await GoogleSignin.signIn();
 
-            const { idToken } = await GoogleSignin.getTokens();
+            const userInfo = await GoogleSignin.signIn();
             const fcmToken = await messaging().getToken();
 
-            // test
+            const { idToken } = await GoogleSignin.getTokens();
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
             await auth().signInWithCredential(googleCredential);
-            const user = auth().currentUser;
-            console.log("user의 정보는\n"+JSON.stringify(user,null, 4));
-            const iddToken = await user.getIdToken();
-            console.log("파이어토큰은\n"+JSON.stringify(iddToken,null, 4));
 
-                    //             navigation.navigate("SignUp", {
-                    //     fcmToken: fcmToken,
-                    //     phoneNumber: googleCredential.phoneNumber,
-                    //     email: googleCredential.email,
-                    //     nickname: googleCredential.displayName,
-                    //     IsGoogle: true,
-                    // });
 
-            
-
-            //test
-            //백엔드에서 idToken 해체해서 uid로 조회해서 없으면 에러 / 있으면 fcmToken 업데이트하고 성공
             axiosApiInstance
-                .get('/auth/user')
-                .then((response) => {
+                .get('/member')
+                .then( async (response) => {
+
+                    // console.log("토큰은\n"+JSON.stringify(response.data.data[0],null, 4));
+
+                    // //유저 정보가 없을 때
+                    if (response.data.data === 400){
+                        Alert.alert('구글계정으로 회원가입합니다.');
+                        navigation.navigate('SignUp', {
+                            fcmToken: fcmToken,
+                            phoneNumber: userInfo.user.phoneNumber,
+                            email: userInfo.user.email,
+                            nickname: userInfo.user.name ? userInfo.user.name : '',
+                            IsGoogle: true,
+                        });
+
+
+                    } else {
+                        googleLogin(response, dispatch);
+                    }
+                    // const { idToken } = await GoogleSignin.getTokens();
+                    // response.data.idToken = idToken;
+
                     // googleLogin(response, dispatch);
                 })
                 .catch((error) => {
-                    alert(error.message+"구글계정으로 회원가입");
-                    // 회원가입 페이지 이동
-                    navigation.navigate("SignUp", {
-                        idToken: idToken,
-                        fcmToken: fcmToken,
-                        phoneNumber: googleCredential.phoneNumber,
-                        email: googleCredential.email,
-                        nickname: googleCredential.displayName,
-                        IsGoogle: true,
-                    });
+                    Alert.alert(error.message);
                 });
+
         } catch (error) {
             console.log(error);
         }
     };
 
-    
-    return (        
+    return (
         <KeyboardAvoidingView style={styles.container} behavior="height" keyboardVerticalOffset={0}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.loginScreenContainer}>
@@ -182,7 +187,7 @@ const SignIn = ({router, navigation}) => {
                         {/* 회원가입 이동 */}
                         <TouchableOpacity 
                             style={styles.signUpButton}
-                            onPress={()=> navigation.navigate("SignUp",{
+                            onPress={()=> navigation.navigate('SignUp',{
                                 phoneNumber: '',
                                 email: '',
                                 nickname: '',

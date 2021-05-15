@@ -22,13 +22,21 @@ import Header from '../../components/layout/Header';
 import BottomButton from '../../components/layout/BottomButton';
 
 function CreateGroupDetail({ navigation, route: { params } }) {
-    const [date, setDate] = useState(new Date());
+
     const [buildingName, setBuildingName] = useState(params.location.buildingName);
-    
+    const todayFullDate = new Date();
+    todayFullDate.setDate(todayFullDate.getDate() + 1);
+    if (todayFullDate.getDay() === 0){
+     todayFullDate.setDate(todayFullDate.getDate() + 1);
+    } else if (todayFullDate.getDay() === 6){
+     todayFullDate.setDate(todayFullDate.getDate() + 2);
+    }
+    const today = JSON.stringify(todayFullDate.toJSON()).substr(1,10);
+
     const dayArrayKorFixed = params.items === undefined ? [0,0,0,0,0] : params.items.datePicker[0];
     const dateDifference = params.items === undefined ? [0,0,0,0] : params.items.datePicker[1];
 
-    const today = JSON.stringify(date.toJSON()).substr(1,10);
+    const [date, setDate] = useState(todayFullDate);
 
     const [groupDate,setGroupDate] = useState(today);
 
@@ -155,7 +163,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                     
                 {/* Footer */}
                 
-                <BottomButton onPress={() => navigation.navigate('CheckOrder', { time: JSON.stringify(date).slice(12,17), location: {...params.location,buildingName:buildingName}, storeName: params.storeName })} title="그룹 생성하기" />
+                <BottomButton onPress={() => navigation.navigate('CheckOrder', {deliDate: groupDate, time: JSON.stringify(date).slice(12,17), location: {...params.location,buildingName:buildingName}, storeName: params.storeName })} title="그룹 생성하기" />
             </ScrollView>
         </KeyboardAvoidingView>
     );

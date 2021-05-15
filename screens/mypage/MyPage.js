@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import { GoogleSignin } from '@react-native-community/google-signin';
@@ -10,10 +10,16 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 
 import { animations, icons, COLORS, SIZES, FONTS2 } from "../../constants";
 import MyPageButton from '../../components/MyPageButton';
+import auth from '@react-native-firebase/auth';
+import { AuthContext } from '../../context/AuthContextProvider';
 
 
 
 const MyPage = ({ navigation }) => {
+
+
+  const { dispatch } = useContext(AuthContext);
+
 
   useEffect(() => {
     console.log("Mypage 불릴때");
@@ -28,13 +34,34 @@ const MyPage = ({ navigation }) => {
   }, []);
 
 
-  // 구글에서만 로그아웃한 것이라 나중에 firebase에서도 로그아웃을 처리해줘야함
+
   const signOutGoogle = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-    } catch (error) {
-      console.error(error);
+
+    const user = auth().currentUser;
+
+    if ( user && user.providerData[0].providerId === 'google.com' ) {
+        try {
+            await GoogleSignin.revokeAccess();
+            await GoogleSignin.signOut();
+            console.log('구글 로그아웃성공');
+            await auth()
+                    .signOut()
+                    .then(() => {
+                      console.log('파이어베이스 로그아웃성공');
+                      dispatch({ type: 'SIGN_OUT'});
+                    });
+        } catch (error) {
+            console.error(error);
+        }
+    } else if (user) {
+        await auth()
+            .signOut()
+            .then(() => {
+              console.log('파이어베이스 로그아웃성공');
+              dispatch({ type: 'SIGN_OUT'});
+            });
+    } else {
+        console.log('로그인 상태가 아닙니다.');
     }
   };
 

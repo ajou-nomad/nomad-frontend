@@ -9,6 +9,8 @@ import Geocoder from 'react-native-geocoding';
 import { GOOGLE_API_KEY } from '@env';
 import axiosApiInstance from './axios';
 
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+
 Geocoder.init(GOOGLE_API_KEY, {language: 'ko'});
 
 
@@ -76,16 +78,26 @@ export const autoLogin = async ({dispatch}) => {
 };
 
 export const googleLogin = async (response, dispatch) => {
-    // firebase에 login
-    const googleCredential = auth.GoogleAuthProvider.credential(response.idToken);
-    await auth().signInWithCredential(googleCredential);
-    const user = auth().currentUser;
-    Alert.alert(user.displayName + '님 반갑습니다.');
 
-    // STORAGE에 token 저장
-    await AsyncStorage.setItem('userToken', response.idToken);
-    // 전역 변수에 token 저장
-    await dispatch({ type: 'SIGN_IN', token: response.idToken });
+    // const currentUser = await GoogleSignin.getCurrentUser();
+
+    // console.log(currentUser);
+
+    // const googleCredential = auth.GoogleAuthProvider.credential(response.data.idToken);
+    // await auth().signInWithCredential(googleCredential);
+
+    Alert.alert(response.data.data[0].nickName + '님 반갑습니다.');
+
+    const userData = {
+        memberType:  response.data.data[0].memberType,
+        email: response.data.data[0].email,
+        nickName: response.data.data[0].nickName,
+        phoneNum: response.data.data[0].phoneNum,
+        point: response.data.data[0].point,
+    }
+
+    // // 전역 변수에 user 저장
+    await dispatch({ type: 'SIGN_IN', member: userData });
 };
 
 

@@ -17,13 +17,17 @@ import {
   ScrollView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import messaging from '@react-native-firebase/messaging';
 import TextInputs from '../components/TextInput';
 
 import PhoneNumber from '../components/login/PhoneNumber';
 import PhoneValid from '../components/login/PhoneValid';
 import UserInfo from '../components/login/UserInfo';
+import axiosApiInstance from '../utils/axios';
 
 export default function SignUpScreen(props) {
+
+  const IsGoogle = props.route.params.IsGoogle;
   const [userType, setUserType] = useState('User');
   const [phoneNumber, setPhoneNumber] = useState(props.route.params.phoneNumber);
   const googlePhoneUnique = props.route.params.phoneNumber !== '';
@@ -32,7 +36,7 @@ export default function SignUpScreen(props) {
   const [phoneValid, setPhoneValid] = useState(props.route.params.phoneNumber !== '');
   const [email, setEmail] = useState(props.route.params.email);
   const [emailValid, setEmailValid] = useState(props.route.params.email !== '');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState(IsGoogle === false ? '' : 'GoogleLogin');
   const [nickname, setNickname] = useState(props.route.params.nickname);
   const [IsUser, setIsUser] = useState(true);
   const [IsShop, setIsShop] = useState(false);
@@ -43,7 +47,40 @@ export default function SignUpScreen(props) {
   const [term2, setTerm2] = useState(false);
   const [confirm, setConfirm] = useState(null);
 
-  const IsGoogle = props.route.params.IsGoogle;
+  const [fcmToken,setFcmToken] = useState(props.route.params.fcmToken);
+
+  
+  const getFcmToken = async () => {
+    try{
+      const getFcmToken = await messaging().getToken()
+      setFcmToken(getFcmToken);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  if(fcmToken === undefined){
+    getFcmToken();
+  }
+
+  const initState = () => {
+    setUserType('User');
+    setPhoneNumber('');
+    setPhoneUnique(false);
+    setValidCode('');
+    setPhoneValid(false);
+    setEmail('');
+    setEmailValid(false);
+    setPassword('');
+    setNickname('');
+    setIsUser(true);
+    setIsShop(false);
+    setIsDeli(false);
+    setTerm1(false);
+    setTerm2(false);
+    setConfirm(null);
+  }
+
   
 
   const onChangePhoneNumber = event => {
@@ -137,31 +174,45 @@ export default function SignUpScreen(props) {
     }
   };
 
-  const checkEmptyExist = () => {
+  const SignUpMember = () => {
+
+    axiosApiInstance.post('/member', {
+      memberType: userType,
+      nickName: nickname,
+      phoneNum: phoneNumber,
+      email: email,
+      token: fcmToken,
+      shopIdNumber: ShopIdNumber,
+      deliIdNumber: DeliIdNumber,
+    }).then(function (response) {
+
+      console.log("여기는 signUP"+response.data);
+
+      if (response.data === 1){
+
+        alert('회원가입이 완료되었습니다.');
+        props.navigation.navigate('SignIn');
+        initState();
+      } else {
+        alert('error');
+      }
+
+    }).catch(function (error) {
+      console.log(error);
+    });
+  };
+
+  const checkEmptyExist = async () => {
     if (
       phoneValid &&
-      // emailValid &&
-      // password.length > 0 &&
+      emailValid &&
+      password.length > 0 &&
       nickname.length > 0 &&
-      term1
+      term1 &&
+      ((IsUser) || (IsShop && ShopIdNumber) || (IsDeli && DeliIdNumber))
     ) {
-      alert('회원가입이 완료되었습니다.');
-      props.navigation.navigate('SignIn');
-      setUserType('User');
-      setPhoneNumber('');
-      setPhoneUnique(false);
-      setValidCode('');
-      setPhoneValid(false);
-      setEmail('');
-      setEmailValid(false);
-      setPassword('');
-      setNickname('');
-      setIsUser(true);
-      setIsShop(false);
-      setIsDeli(false);
-      setTerm1(false);
-      setTerm2(false);
-      setConfirm(null);
+
+      SignUpMember();
     } else {
       alert('필요한 정보를 모두 입력해주세요!');
     }
@@ -178,12 +229,6 @@ export default function SignUpScreen(props) {
     });
   };
   const confirmCode = () => {
-
-    //   user.delete().then(function() {
-    //     // User deleted.
-    //   }).catch(function(error) {
-    //     // An error happened.
-    //   }); 
     confirm.confirm(validCode).then( ()=>{
       // let user = auth().currentUser;
       auth().currentUser.delete().then(()=>{
