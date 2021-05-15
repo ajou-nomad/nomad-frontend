@@ -54,8 +54,8 @@ const RootNavigation = () => {
     }, []);
 
 
-    if (null !== null) { // state.userToken 존재시
-        if (state.userType === '유저'){
+    if (true !== null) { // state.userToken 존재시
+        if (state.user.userType === '유저'){
             return (
                 <RootStack.Navigator>
                     <RootStack.Screen
@@ -65,7 +65,7 @@ const RootNavigation = () => {
                     />
                 </RootStack.Navigator>
             );
-        } else if (state.userType === '점주'){
+        } else if (state.user.userType === '점주'){
             return (
                 <RootStack.Navigator>
                     <RootStack.Screen
