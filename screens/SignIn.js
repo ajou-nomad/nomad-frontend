@@ -117,7 +117,7 @@ const SignIn = ({router, navigation}) => {
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
             await auth().signInWithCredential(googleCredential);
             const user = auth().currentUser;
-            navigation.navigate("SignUp", {
+            navigation.navigate('SignUp', {
                             idToken: idToken,
                             fcmToken: fcmToken,
                             phoneNumber: user.phoneNumber,
@@ -125,14 +125,14 @@ const SignIn = ({router, navigation}) => {
                             nickname: user.displayName,
                             IsGoogle: true,
                         });
-            
+
             // test
 
 
 
             //백엔드에서 idToken 해체해서 uid로 조회해서 없으면 에러 / 있으면 fcmToken 업데이트하고 성공
             // axios
-            //     .post('/auth/user/:id', payload)
+            //     .get('/auth/user')
             //     .then((response) => {
             //         googleLogin(response, dispatch);
             //     })
@@ -148,14 +148,13 @@ const SignIn = ({router, navigation}) => {
             //             IsGoogle: true,
             //         });
             //     });
-            
+
         } catch (error) {
             console.log(error);
         }
     };
 
-    
-    return (        
+    return (
         <KeyboardAvoidingView style={styles.container} behavior="height" keyboardVerticalOffset={0}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.loginScreenContainer}>

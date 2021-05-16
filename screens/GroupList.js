@@ -8,7 +8,7 @@
  */
 
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   FlatList,
@@ -28,8 +28,8 @@ export default function GroupList({navigation, route}) {
   const location = route.params.group.location;
   const back = route.params.back;
   const today = route.params.today;
+  const groupList = route.params.group.groupList;
 
-  console.log(route.params);
 
 
   const goBack = () => {
@@ -37,11 +37,13 @@ export default function GroupList({navigation, route}) {
   };
 
   const sortPeople = () => {
-    alert('인원 정렬');
+    groupList.sort((prev,next)=>(prev.max-prev.current)>(next.max-next.current) ? 1 : (prev.max-prev.current) === (next.max-next.current) ? (parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : -1 : -1)
+    alert('인원순 정렬');
   };
 
   const sortTime = () => {
-    alert('10:30' < '10:31');
+    groupList.sort((prev,next)=>(parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : (parseInt(prev.time.replace(':',''))) === (parseInt(next.time.replace(':',''))) ? (prev.max-prev.current) > (next.max-next.current) ? 1 : -1 : -1)
+    alert('시간순 정렬');
   };
 
   const Header = () =>{
@@ -105,7 +107,7 @@ export default function GroupList({navigation, route}) {
     const ListOfGroup = () => (
       <SafeAreaView style={{marginBottom: 100}}>
         <FlatList
-          data={route.params.group.groupList}
+          data={[...groupList]}
           renderItem={InfoOfGroup}
           keyExtractor={item => item.id}
         />

@@ -18,15 +18,15 @@ import CheckOrder from '../screens/order/CheckOrder';
 import Cart from '../screens/order/Cart';
 import PaymentNavigation from './PaymentNavigation';
 import ChatNavigation from './ChatNavigation';
+import Receipt from '../screens/Receipt';
+import CreateReview from '../screens/review/CreateReview';
 
 // store 관련
 import StoreTabs from './storeKeeperNavigations/Tabs';
 import RegisterStore from '../screens/storeKeeperScreens/register/RegisterStore';
 import RegisterStoreDetail from '../screens/storeKeeperScreens/register/RegisterStoreDetail';
 import RegisterMenuDetail from '../screens/storeKeeperScreens/register/RegisterMenuDetail';
-import Receipt from '../screens/Receipt';
-import CreateReview from '../screens/review/CreateReview';
-
+import OrderDetailItem from '../components/storeKeeperComponents/item/OrderDetailItem';
 
 const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
@@ -55,7 +55,7 @@ const RootNavigation = () => {
 
 
     if (true !== null) { // state.userToken 존재시
-        if (state.user.userType === '유저'){
+        if (state.user.memberType === '유저'){
             return (
                 <RootStack.Navigator>
                     <RootStack.Screen
@@ -65,7 +65,7 @@ const RootNavigation = () => {
                     />
                 </RootStack.Navigator>
             );
-        } else if (state.user.userType === '점주'){
+        } else if (state.user.memberType === '점주'){
             return (
                 <RootStack.Navigator>
                     <RootStack.Screen
@@ -130,12 +130,13 @@ const storeKeeperStack = () => {
     if (true){ //점주가 매장등록 했을 때, 안했을 때
         return (
             <Stack.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-            initialRouteName={'StoreTabs'}
+                screenOptions={{
+                    headerShown: false,
+                }}
+                initialRouteName={'StoreTabs'}
             >
                 <Stack.Screen name="StoreTabs" component={StoreTabs} />
+                <Stack.Screen name="OrderDetailItem" component={OrderDetailItem} />
             </Stack.Navigator>
         );
     } else {

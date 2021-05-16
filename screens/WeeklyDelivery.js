@@ -17,10 +17,15 @@ import GpsButton from '../components/map/GpsButton';
 import { currentLocation } from '../utils/helper';
 
 const ItemsForCreateGroupDetailDayPicker = () => {
-  
-  const today = JSON.stringify(new Date().toJSON()).substr(1,10);
-  const todayDate = new Date(today);
-  const todayDay = todayDate.getDay();
+  const todayFullDate = new Date();
+  todayFullDate.setDate(todayFullDate.getDate() + 1);
+  if (todayFullDate.getDay() === 0){
+    todayFullDate.setDate(todayFullDate.getDate() + 1);
+  } else if (todayFullDate.getDay() === 6){
+    todayFullDate.setDate(todayFullDate.getDate() + 2);
+  }
+  todayFullDate.setDate(todayFullDate.getDate() + 1);
+  const todayDay = todayFullDate.getDay();
   const dayArrayKor = ['월','화','수','목','금'];
   const dateDifference = [1,2,3,4];
   const lastIndex = dateDifference.length - 1;
@@ -94,7 +99,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
   };
 
 
-  const [dayArrayKorFixed,dateDifference] = ItemsForCreateGroupDetailDayPicker()
+  const [dayArrayKorFixed,dateDifference,today] = ItemsForCreateGroupDetailDayPicker()
 
 
 
@@ -105,7 +110,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
           <GoogleMap initLocation={location} back="WeeklyDelivery" />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
-          <NewGroupButton initLocation={location} deliDate={null} items={{datePicker:[dayArrayKorFixed,dateDifference]}} />
+          <NewGroupButton initLocation={location} deliDate={null} items={{datePicker:[dayArrayKorFixed,dateDifference,today]}} />
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

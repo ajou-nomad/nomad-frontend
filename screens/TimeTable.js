@@ -28,6 +28,7 @@
  export default function TimeTable(props) {
    const location = props.route.params.group.location;
    const todayFullDate = new Date();
+   todayFullDate.setDate(todayFullDate.getDate() + 1);
    if (todayFullDate.getDay() === 0){
     todayFullDate.setDate(todayFullDate.getDate() + 1);
    } else if (todayFullDate.getDay() === 6){
@@ -47,7 +48,6 @@
     return JSON.stringify(d.toJSON()).substr(1,10);
    };
 
-   const [day, setDay] = useState('monday');
    const groupList = [
      {
        id:'time1',
@@ -137,6 +137,7 @@
    }
    const dayArrayEngFixed = [...dayArrayEng.slice(todayDayIndex),...dayArrayEng.slice(0,todayDayIndex)]
    const dayArrayKorFixed = [...dayArrayKor.slice(todayDayIndex),...dayArrayKor.slice(0,todayDayIndex)]
+   const [day, setDay] = useState(dayArrayEngFixed[0]);
 
    const DayButtons = () =>{
     return (

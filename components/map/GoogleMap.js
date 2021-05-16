@@ -6,6 +6,8 @@ import { calculateDistance } from '../../utils/helper';
 import React, { useRef } from 'react';
 import CustomMarker from './CustomMarker';
 import {icons} from '../../constants';
+import axios from 'axios';
+import axiosApiInstance from '../../utils/axios';
 
 
 const GoogleMap = ({initLocation, back, today}) => {
@@ -16,6 +18,11 @@ const GoogleMap = ({initLocation, back, today}) => {
     //------------------------------
     //넘어온 location값은 단지 지도에 표현할려고 하는 값일뿐 실제 그룹 데이터는 아래 데이터 내부에
     //axios를 통해 백엔드에서 생성된 배달그룹을 가져옴.
+    // axiosApiInstance.get('/GroupData').then((response)=>{
+    //   console.log('Get GroupData Response.Data: ' + JSON.stringify(response.data))
+    // }).catch((error)=>{
+    //   console.log('Get GroupData Error: ' + JSON.stringify(error))
+    // })
     const tempGroupData = [
     {
         location: {
@@ -304,7 +311,7 @@ const GoogleMap = ({initLocation, back, today}) => {
               logo: icons.donut,
               shopName:'TempName1',
               rate:3.5,
-              time:'9:00',
+              time:'09:00',
               current:9,
               max:10,
             },
@@ -313,7 +320,7 @@ const GoogleMap = ({initLocation, back, today}) => {
               logo:icons.pizza,
               shopName:'TempName2',
               rate:4.5,
-              time:'9:05',
+              time:'09:05',
               current:5,
               max:10,
             },
@@ -322,7 +329,7 @@ const GoogleMap = ({initLocation, back, today}) => {
               logo:icons.noodle,
               shopName:'TempName3',
               rate:4.0,
-              time:'9:10',
+              time:'09:10',
               current:7,
               max:10,
             },
@@ -331,7 +338,7 @@ const GoogleMap = ({initLocation, back, today}) => {
               logo:icons.rice_bowl,
               shopName:'TempName4',
               rate:3.5,
-              time:'9:15',
+              time:'09:15',
               current:9,
               max:10,
             },
@@ -340,7 +347,7 @@ const GoogleMap = ({initLocation, back, today}) => {
               logo:icons.salad,
               shopName:'TempName5',
               rate:4.5,
-              time:'9:20',
+              time:'09:20',
               current:5,
               max:10,
             },
@@ -349,7 +356,7 @@ const GoogleMap = ({initLocation, back, today}) => {
               logo:icons.sushi,
               shopName:'TempName6',
               rate:4.0,
-              time:'9:25',
+              time:'09:25',
               current:7,
               max:10,
             },
