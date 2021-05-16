@@ -26,6 +26,7 @@ import UserInfo from '../components/login/UserInfo';
 import axiosApiInstance from '../utils/axios';
 
 export default function SignUpScreen(props) {
+
   const IsGoogle = props.route.params.IsGoogle;
   const [userType, setUserType] = useState('User');
   const [phoneNumber, setPhoneNumber] = useState(props.route.params.phoneNumber);
@@ -47,6 +48,7 @@ export default function SignUpScreen(props) {
   const [confirm, setConfirm] = useState(null);
 
   const [fcmToken,setFcmToken] = useState(props.route.params.fcmToken);
+
   
   const getFcmToken = async () => {
     try{
@@ -59,6 +61,24 @@ export default function SignUpScreen(props) {
 
   if(fcmToken === undefined){
     getFcmToken();
+  }
+
+  const initState = () => {
+    setUserType('User');
+    setPhoneNumber('');
+    setPhoneUnique(false);
+    setValidCode('');
+    setPhoneValid(false);
+    setEmail('');
+    setEmailValid(false);
+    setPassword('');
+    setNickname('');
+    setIsUser(true);
+    setIsShop(false);
+    setIsDeli(false);
+    setTerm1(false);
+    setTerm2(false);
+    setConfirm(null);
   }
 
   
@@ -154,30 +174,35 @@ export default function SignUpScreen(props) {
     }
   };
 
-  const SignUpMember = () =>{
-    console.log(`${JSON.stringify({
-      'nickName' : nickname,
-      'email' : email,
-      'phoneNum' :  phoneNumber,
-      'token' : fcmToken,
-      'point' : 1241,
-    })}`);
-    axiosApiInstance.post('/auth/user', {
-    'nickName' : nickname,
-    'email' : email,
-    'phoneNum' :  phoneNumber,
-    'token' : fcmToken,
-    'point' : 1241,
-}
-  )
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  })};
+  const SignUpMember = () => {
 
-  const checkEmptyExist = () => {
+    axiosApiInstance.post('/member', {
+      memberType: userType,
+      nickName: nickname,
+      phoneNum: phoneNumber,
+      email: email,
+      token: fcmToken,
+      shopIdNumber: ShopIdNumber,
+      deliIdNumber: DeliIdNumber,
+    }).then(function (response) {
+
+      console.log("여기는 signUP"+response.data);
+
+      if (response.data === 1){
+
+        alert('회원가입이 완료되었습니다.');
+        props.navigation.navigate('SignIn');
+        initState();
+      } else {
+        alert('error');
+      }
+
+    }).catch(function (error) {
+      console.log(error);
+    });
+  };
+
+  const checkEmptyExist = async () => {
     if (
       phoneValid &&
       emailValid &&
@@ -186,24 +211,8 @@ export default function SignUpScreen(props) {
       term1 &&
       ((IsUser) || (IsShop && ShopIdNumber) || (IsDeli && DeliIdNumber))
     ) {
-      alert('회원가입이 완료되었습니다.');
+
       SignUpMember();
-      props.navigation.navigate('SignIn');
-      setUserType('User');
-      setPhoneNumber('');
-      setPhoneUnique(false);
-      setValidCode('');
-      setPhoneValid(false);
-      setEmail('');
-      setEmailValid(false);
-      setPassword('');
-      setNickname('');
-      setIsUser(true);
-      setIsShop(false);
-      setIsDeli(false);
-      setTerm1(false);
-      setTerm2(false);
-      setConfirm(null);
     } else {
       alert('필요한 정보를 모두 입력해주세요!');
     }

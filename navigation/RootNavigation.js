@@ -53,9 +53,10 @@ const RootNavigation = () => {
         bootstrapAsync();
     }, [dispatch]);
 
+    console.log(state);
 
-    if (true !== null) { // state.userToken 존재시
-        if (state.user.memberType === '유저'){
+    if (state.isSignIn) { // state.userToken 존재시
+        if (state.member.memberType === 'User'){
             return (
                 <RootStack.Navigator>
                     <RootStack.Screen
@@ -65,7 +66,7 @@ const RootNavigation = () => {
                     />
                 </RootStack.Navigator>
             );
-        } else if (state.user.memberType === '점주'){
+        } else if (state.member.memberType === 'Shop'){
             return (
                 <RootStack.Navigator>
                     <RootStack.Screen

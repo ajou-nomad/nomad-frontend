@@ -9,31 +9,33 @@ import Geocoder from 'react-native-geocoding';
 import { GOOGLE_API_KEY } from '@env';
 import axiosApiInstance from './axios';
 
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+
 Geocoder.init(GOOGLE_API_KEY, {language: 'ko'});
 
 
-// When a user signs in
-// When the current user signs out
-// When the current user changes
-// When there is a change in the current user's token
-export const idTokenChangedListeners = (state, dispatch) => {
-    auth().onIdTokenChanged( async (user) => {
-        if (user) {
-            const prevIdToken = state.idToken;
-            const nextIdToken = await user.getIdToken();
-            if (prevIdToken !== nextIdToken) {
-                console.log('아이디토큰이 바뀌었다.');
-                // 여기서 바뀐 토큰을 asyncstore에 재저장 및 reducer에 재저장
-                await AsyncStorage.setItem('userToken', nextIdToken);
-                await dispatch({ type: 'RESTORE_TOKEN', token: nextIdToken });
-            } else {
-                console.log('불필요한 중복 호출');
-            }
-        } else {
-            console.log('유저 정보없음');
-        }
-    });
-};
+// // When a user signs in
+// // When the current user signs out
+// // When the current user changes
+// // When there is a change in the current user's token
+// export const idTokenChangedListeners = (state, dispatch) => {
+//     auth().onIdTokenChanged( async (user) => {
+//         if (user) {
+//             const prevIdToken = state.idToken;
+//             const nextIdToken = await user.getIdToken();
+//             if (prevIdToken !== nextIdToken) {
+//                 console.log('아이디토큰이 바뀌었다.');
+//                 // 여기서 바뀐 토큰을 asyncstore에 재저장 및 reducer에 재저장
+//                 await AsyncStorage.setItem('userToken', nextIdToken);
+//                 await dispatch({ type: 'RESTORE_TOKEN', token: nextIdToken });
+//             } else {
+//                 console.log('불필요한 중복 호출');
+//             }
+//         } else {
+//             console.log('유저 정보없음');
+//         }
+//     });
+// };
 
 export const getAccessToken = async () => {
     const user = auth().currentUser;
@@ -51,17 +53,51 @@ export const getAccessToken = async () => {
     }
 };
 
-export const googleLogin = async (response, dispatch) => {
-    // firebase에 login
-    const googleCredential = auth.GoogleAuthProvider.credential(response.idToken);
-    await auth().signInWithCredential(googleCredential);
-    const user = auth().currentUser;
-    Alert.alert(user.displayName + '님 반갑습니다.');
+export const autoLogin = async ({dispatch}) => {
 
-    // STORAGE에 token 저장
-    await AsyncStorage.setItem('userToken', response.idToken);
-    // 전역 변수에 token 저장
-    await dispatch({ type: 'SIGN_IN', token: response.idToken });
+    const user = auth().currentUser;
+
+    if (user) {
+
+        axiosApiInstance.get('/auth/user')
+            .then( async (response) => {
+                // 전역 변수에 token 저장
+                await dispatch({ type: 'SIGN_IN', token: response.idToken });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+        return "autologin";
+    } else {
+        console.log('현재 로그인한 유저가 없음.');
+        return Promise.reject('Not found user');
+    }
+
+
+};
+
+export const googleLogin = async (response, dispatch) => {
+
+    // const currentUser = await GoogleSignin.getCurrentUser();
+
+    // console.log(currentUser);
+
+    // const googleCredential = auth.GoogleAuthProvider.credential(response.data.idToken);
+    // await auth().signInWithCredential(googleCredential);
+
+    Alert.alert(response.data.data[0].nickName + '님 반갑습니다.');
+
+    const userData = {
+        memberType:  response.data.data[0].memberType,
+        email: response.data.data[0].email,
+        nickName: response.data.data[0].nickName,
+        phoneNum: response.data.data[0].phoneNum,
+        point: response.data.data[0].point,
+    }
+
+    // // 전역 변수에 user 저장
+    await dispatch({ type: 'SIGN_IN', member: userData });
 };
 
 

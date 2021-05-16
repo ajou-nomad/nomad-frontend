@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect} from 'react';
-import { idTokenChangedListeners } from './utils/helper';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-toast-message';
 
@@ -25,9 +24,6 @@ const App = () => {
         bottomOffset: 40,
       });
     });
-
-    // idToken이 바뀌었을 때 실행하는 listener
-    // idTokenChangedListeners(state, dispatch);
 
     return unsubscribe;
   }, []);
