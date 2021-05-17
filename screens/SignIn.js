@@ -1,18 +1,19 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Keyboard, Text, View, Image, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Button } from 'react-native';
 import { icons, SIZES, FONTS, COLORS } from '../constants';
-import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
-import { emailPasswordLogin, googleLogin } from '../utils/helper';
+import { GoogleSignin } from '@react-native-community/google-signin';
+import { emailPasswordLogin, googleLogin, logout } from '../utils/helper';
 import messaging from '@react-native-firebase/messaging';
 import { AuthContext } from '../context/AuthContextProvider';
 import { FIREBASE_WEBCLIENTID } from '@env';
 
-// test ----
+
 import auth from '@react-native-firebase/auth';
 import axiosApiInstance from '../utils/axios';
-import axios from 'axios';
-// test====
+
 
 
 const SignIn = ({router, navigation}) => {
@@ -29,6 +30,7 @@ const SignIn = ({router, navigation}) => {
     }, []);
 
 
+
     const signInEmailPw = async () => {
         if ( email !== '' && password !== ''){
 
@@ -42,72 +44,19 @@ const SignIn = ({router, navigation}) => {
             setEmail('');
             setPassword('');
         } else {
-            Alert.alert('이메일과 비밀번호를 적어주세요.')
+            Alert.alert('이메일과 비밀번호를 적어주세요.');
         }
-    }
-
-
-
-
-    // ------------test----------
-    const testButton = async () => {
-        
-        // const user = auth().currentUser;
-
-        // if( user ){
-        //     const idToken = await user.getIdToken();
-        //     console.log("user의 정보는\n"+JSON.stringify(user,null, 4));
-        //     console.log("토큰은\n"+JSON.stringify(idToken,null, 4));
-        // } else {
-        //     console.log("로그인을 해야 볼 수 있습니다.");
-        // }
-
-
-        // axiosApiInstance.post('/user', {
-        //     firstname: 'Fred',
-        //     lastname: 'Flintstone',
-        //   })
-        //   .then(function (response) {
-        //     console.log(response);
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
     };
 
+
+
+
+    // // ------------test----------
+
     const signOutButton = async () => {
-
-        // try {
-        // await GoogleSignin.revokeAccess();
-        // await GoogleSignin.signOut();
-        // console.log('구글 로그아웃성공');
-        // } catch (error){
-        //     console.log(error);
-        // }
-
-        const user = auth().currentUser;
-
-        if ( user && user.providerData[0].providerId === 'google.com' ) {
-            try {
-                await GoogleSignin.revokeAccess();
-                await GoogleSignin.signOut();
-                console.log('구글 로그아웃성공');
-                await auth()
-                        .signOut()
-                        .then(() => console.log('파이어베이스 로그아웃성공'));
-            } catch (error) {
-                console.error(error);
-            }
-        } else if (user) {
-            await auth()
-                .signOut()
-                .then(() => console.log('파이어베이스 로그아웃성공'));
-        } else {
-            console.log('로그인 상태가 아닙니다.');
-        }
+        logout(dispatch);
     }
-    // ------------test----------
-
+    // // ------------test----------
 
 
     const signInGoogle = async () => {
@@ -120,37 +69,28 @@ const SignIn = ({router, navigation}) => {
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
             await auth().signInWithCredential(googleCredential);
 
-
             axiosApiInstance
                 .get('/member')
                 .then( async (response) => {
 
-                    // console.log("토큰은\n"+JSON.stringify(response.data.data[0],null, 4));
-
-                    // //유저 정보가 없을 때
+                    // 멤버정보가 없을 때
                     if (response.data.data === 400){
                         Alert.alert('구글계정으로 회원가입합니다.');
                         navigation.navigate('SignUp', {
                             fcmToken: fcmToken,
                             phoneNumber: userInfo.user.phoneNumber,
                             email: userInfo.user.email,
-                            nickname: userInfo.user.name ? userInfo.user.name : '',
+                            nickname: userInfo.user.name,
                             IsGoogle: true,
                         });
-
-
                     } else {
                         googleLogin(response, dispatch);
                     }
-                    // const { idToken } = await GoogleSignin.getTokens();
-                    // response.data.idToken = idToken;
-
-                    // googleLogin(response, dispatch);
                 })
                 .catch((error) => {
-                    Alert.alert(error.message);
+                    Alert.alert(error);
+                    logout(dispatch);
                 });
-
         } catch (error) {
             console.log(error);
         }
@@ -161,7 +101,7 @@ const SignIn = ({router, navigation}) => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.loginScreenContainer}>
                     <View style={styles.logoContainer}>
-                        <Image 
+                        <Image
                             source={icons.logo}
                             resizeMode="contain"
                             style={{
@@ -185,13 +125,13 @@ const SignIn = ({router, navigation}) => {
                         </TouchableOpacity>
 
                         {/* 회원가입 이동 */}
-                        <TouchableOpacity 
+                        <TouchableOpacity
                             style={styles.signUpButton}
                             onPress={()=> navigation.navigate('SignUp',{
                                 phoneNumber: '',
                                 email: '',
                                 nickname: '',
-                                IsGoogle: false,})}
+                                IsGoogle: false})}
                         >
                             <View style={{ flexDirection: 'row' }}>
                                 <Text
@@ -202,7 +142,7 @@ const SignIn = ({router, navigation}) => {
                                 >회원가입</Text>
                             </View>
                         </TouchableOpacity>
-                        
+
                         {/* 구글 로그인 */}
                         <TouchableOpacity
                             style={styles.googleButton}
@@ -216,27 +156,21 @@ const SignIn = ({router, navigation}) => {
                                         style={{
                                             width: 25,
                                             height: 25,
-                                            margin: 5
+                                            margin: 5,
                                         }}
                                     />
                                 </View>
- 
+
                                 <Text style={{...FONTS.body4, color: COLORS.black}}>Google 계정으로 로그인</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.googleButton}
-                            onPress={ testButton }
-                        >
-                            <Text style={{...FONTS.body4, color: COLORS.black}}>임시유저정보출력</Text>    
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.googleButton}
                             onPress={ signOutButton }
                         >
-                            <Text style={{...FONTS.body4, color: COLORS.black}}>임시로그아웃</Text>    
-                        </TouchableOpacity>                   
-                    </ScrollView>                    
+                            <Text style={{...FONTS.body4, color: COLORS.black}}>임시로그아웃</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
                 </View>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -272,7 +206,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
         marginTop: 5,
         marginBottom: 15,
-    
+
     },
     loginButton: {
         justifyContent: 'center',
@@ -281,7 +215,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         height: 45,
         marginTop: 10,
-        marginHorizontal: 15
+        marginHorizontal: 15,
     },
     googleButton: {
         alignSelf: 'center',
@@ -301,6 +235,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 15,
     },
-})
+});
 
 export default SignIn;

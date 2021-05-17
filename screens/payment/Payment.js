@@ -11,8 +11,9 @@ const Payment = ({route, navigation}) => {
   const paymentTermination = (response) => {
     console.log(response);
     if (response.imp_success === 'true') {
-
+      //이미 결제완료
     } else {
+
       Alert.alert(response.error_msg);
       navigation.goBack();
     }
