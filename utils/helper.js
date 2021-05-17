@@ -278,3 +278,52 @@ export const calculateDistance = (origLat, origLon, markerLat, markerLon) => {
 
     return distance;
 };
+
+
+export const setData = async (key, value) => {
+    try {
+        const jsonValue = JSON.stringify(value);
+        await AsyncStorage.setItem(key, jsonValue);
+        console.log(key + '저장완료');
+    } catch (e) {
+        console.log(e);
+        // saving error
+    }
+};
+
+export const getData = async (key) => {
+    try {
+        const jsonValue = await AsyncStorage.getItem(key);
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+        console.log(e);
+        // error reading value
+    }
+};
+
+// 배열에 추가시
+export const addData = async (key, value) => {
+    try {
+        let jsonValue = await AsyncStorage.getItem(key);
+
+        jsonValue = JSON.parse(jsonValue).concat(value);
+
+        //재저장
+        const addedJsonValue = JSON.stringify(jsonValue);
+        await AsyncStorage.setItem(key, addedJsonValue);
+        console.log(key + '추가완료');
+
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+// 전체 삭제
+export const clearAll = async () => {
+    try {
+      await AsyncStorage.clear();
+    } catch (e) {
+      // clear error
+    }
+    console.log('Done.');
+};

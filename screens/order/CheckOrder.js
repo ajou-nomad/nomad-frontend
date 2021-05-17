@@ -13,7 +13,7 @@ import BottomButton from '../../components/layout/BottomButton';
 import { FONTS2 } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
 
-const CheckOrder = ({route:{params}}) => {
+const CheckOrder = ({ route: { params } }) => {
 
     console.log(`CheckOrder's params: ${JSON.stringify(params)}`);
 

@@ -14,8 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { FONTS2, images, icons, COLORS } from '../../constants';
 
-const StoreItem = ({ deliveryPlace, deliDate, items, isLikeList }) => {
-
+const StoreItem = ({ deliveryPlace, deliDate, items, isLikeList, item }) => {
     const navigation = useNavigation();
 
     return (
@@ -30,7 +29,7 @@ const StoreItem = ({ deliveryPlace, deliDate, items, isLikeList }) => {
             />
 
             <View style={{ flex: 1, alignSelf: 'center', marginLeft: 5, }}>
-                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>빽다방 아주대점</Text>
+                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>{item.storeName}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3, }}>
                     <Image
                         source={icons.star}
@@ -48,10 +47,10 @@ const StoreItem = ({ deliveryPlace, deliDate, items, isLikeList }) => {
 
             <TouchableOpacity style={styles.selectButton}
                 // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점', location: location })}
-                onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점', deliveryPlace: deliveryPlace, deliDate: deliDate, items: items })}
+                onPress={() => navigation.navigate('StoreDetail', { time: null, deliveryPlace: deliveryPlace, deliDate: deliDate, /* items: items */ item: item})}
             >
                 {!isLikeList ? (
-                    <Text style={{ ...FONTS2.body3, color: COLORS.white }}>선택</Text>
+                    <Text style={{ ...FONTS2.body2, color: COLORS.black }}>선택</Text>
                 ) : (
                     <Text style={{ ...FONTS2.body2, color: COLORS.black, fontSize: 19 }}>매장 보기</Text>
                 )}
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
         marginRight: 15,
         alignSelf: 'center',
         // backgroundColor: '#1c7ed6',
-        backgroundColor: COLORS.lightGray
+        backgroundColor: COLORS.lightGray,
     },
 });
 

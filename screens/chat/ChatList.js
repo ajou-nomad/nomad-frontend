@@ -8,24 +8,42 @@ import {
     Text,
     StyleSheet,
 } from 'react-native';
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import Header from '../../components/layout/Header';
 import ChatItem from '../../components/item/ChatItem';
 import { COLORS, FONTS2, } from '../../constants';
-import { FlatList, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+
+import { clearAll, setData, getData, addData} from '../../utils/helper';
 
 const ChatList = ({ navigation }) => {
 
     const [threads, setThreads] = useState([]);
-
+    const chatList = [
+        {
+            uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+            chatIds: ['채팅방id1', '채팅방id2'],
+        },
+    ];
     // Fetch threads from firestore
     useEffect(() => {
+
         const unsubscribe = firestore()
-            .collection('THREADS')
+            .collection('THREADS') // THREADS.chatId
             .onSnapshot(querySnapShot => {
-                const threads = querySnapShot.docs.map(docSnapShot => {
+                const threads = querySnapShot.docs.map(docSnapShot => { // filter로 바꾸면 될듯?
+                    // if (docSnapShot.id === 'J20cpij66wXL371qUcXt') {
+                    //     console.log('여기!! ', docSnapShot.id);
+                    //     return {
+                    //         _id: docSnapShot.id,
+                    //         name: '',
+                    //         latestMessage: {
+                    //             text: '',
+                    //         },
+                    //         ...docSnapShot.data(),
+                    //     };
+                    // }
                     return {
                         _id: docSnapShot.id,
                         name: '',
@@ -45,17 +63,19 @@ const ChatList = ({ navigation }) => {
 
     // console.log(threads);
 
-    const addChatRoom = () => {
+    const addChatRoom = () => { // 채팅방 리스트
         firestore()
             .collection('THREADS')
             .add({
-                name: '방이름',
+                name: '방이름', // storeName + deliveryTime + deliveryPlace
                 latestMessage: {
                     text: '주문 생성 성공',
                     createdAt: new Date().getTime(),
                 },
             })
             .then(docRef => {
+                console.log('채팅방id : ', docRef.id); // 채팅방 ID
+
                 docRef.collection('MESSAGES').add({
                     text: '주문 생성 성공',
                     createdAt: new Date().getTime(),
@@ -92,6 +112,7 @@ const ChatList = ({ navigation }) => {
                 }
                 }
             />
+            {/* <ChatItem thread={threads} /> */}
         </View>
     );
 };

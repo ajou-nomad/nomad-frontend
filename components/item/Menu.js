@@ -13,17 +13,19 @@ import { FONTS2 } from '../../constants';
 
 import { useNavigation } from '@react-navigation/native';
 
-function Menu(props) {
+function Menu({ item }) {
     const navigation = useNavigation();
+    const { cost, description, imageUrl, menuId, menuName } = item;
+
     return (
         <View>
             <TouchableOpacity
                 style={{ margin: 15 }}
-                onPress={() => navigation.navigate('MenuDetail',{time:props.time, location:props.location, storeName:props.storeName})}
+                onPress={() => navigation.navigate('MenuDetail', { menu: item } /* { time: props.time, location: props.location, storeName: props.storeName }*/)}
             >
-                <Text style={{ ...FONTS2.h2 }}>파인트(플레이버 3가지) - 메뉴 이름</Text>
-                <Text style={{ ...FONTS2.body2 }}>8,200원 - 가격</Text>
-                <Text style={{ ...FONTS2.body4, color: '#707070' }}>3가지 맛의 아이스크림이 선택 가능한 파인트 사이즈! - 메뉴 설명</Text>
+                <Text style={{ ...FONTS2.h2 }}>{menuName}</Text>
+                <Text style={{ ...FONTS2.body2 }}>{cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                <Text style={{ ...FONTS2.body4, color: '#707070' }}>{description}</Text>
             </TouchableOpacity>
         </View>
     );

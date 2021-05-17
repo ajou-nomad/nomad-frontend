@@ -38,7 +38,7 @@ const Cart = ({ navigation, route:{params} }) => {
                     </TouchableOpacity>
                 </View>
                 {/* 요청 사항(가게 사장님, 배달 기사님?) */}
-                <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                {/* <View style={{ marginHorizontal: 20, marginTop: 20 }}>
                     <Text style={{ ...FONTS2.h2, marginBottom: 10 }}>요청사항</Text>
                     <View>
                         <Text style={{ ...FONTS2.body2, marginBottom: 5 }}>가게 사장님에게</Text>
@@ -51,7 +51,7 @@ const Cart = ({ navigation, route:{params} }) => {
                         <TextInput
                             style={{ ...FONTS2.body2, borderWidth: 0.5, color: COLORS.lightGray, }} placeholder="배달원에게" />
                     </View>
-                </View>
+                </View> */}
 
                 {/* 주문 금액 */}
                 <View style={{ marginHorizontal: 20, marginTop: 30, marginBottom: 20 }}>

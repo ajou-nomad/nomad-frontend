@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -12,6 +12,7 @@ import {
     ScrollView,
     SafeAreaView,
     TouchableOpacity,
+    FlatList,
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
@@ -27,27 +28,36 @@ import Review from '../../screens/review/Review';
 import StoreInfo from './StoreInfo';
 
 // 메뉴 (flatlist로 바꾸기)
-const MenuRoute = ({ route }) => (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        <ScrollView>
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-        </ScrollView>
-    </SafeAreaView>
-);
+const MenuRoute = ({ route }) => {
+    const { logoUrl, menu } = route.item;
+
+    const renderItem = ({ item }) => {
+        return (
+            <Menu item={item} />
+        );
+    };
+
+    return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+            <ScrollView>
+                <FlatList data={menu} keyExtractor={item => item.menuId} renderItem={renderItem} />
+                {/* <Menu time={route.time} location={route.location} storeName={route.storeName} /> */}
+            </ScrollView>
+        </SafeAreaView>
+    );
+};
 
 // 매장 정보
-const StoreInfoRoute = () => (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff', padding: 15 }}>
-        <ScrollView>
-            <StoreInfo />
-        </ScrollView>
-    </SafeAreaView>
-);
+const StoreInfoRoute = ({ route }) => {
+
+    return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff', padding: 15 }}>
+            <ScrollView>
+                <StoreInfo item={route.item} />
+            </ScrollView>
+        </SafeAreaView>
+    );
+};
 
 // 리뷰
 const ReviewRoute = () => (
@@ -62,12 +72,30 @@ const renderScene = SceneMap({
     third: ReviewRoute,
 });
 
-function StoreDetail({route}) {
+function StoreDetail({ route }) {
+    const { deliDate, deliveryPlace, time, item } = route.params;
+
+
+    // console.log('ddd', route.params);
+
+    // const storeInfo = {
+    //     'address': route.params.item.address,
+    //     'closeTime': route.params.item.closeTime,
+    //     'deliveryTip': route.params.item.deliveryTip,
+    //     'latitude': route.params.item.latitude,
+    //     'logoUrl': route.params.item.logoUrl,
+    //     'longitude': route.params.item.longitude,
+    //     'openTime': route.params.item.openTime,
+    //     'phoneNumber': route.params.item.phoneNumber,
+    //     'storeId': route.params.item.storeId,
+    //     'storeName': route.params.item.storeName,
+    // };
+
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: 'first', title: '메뉴', time: route.params.time, location: route.params.deliveryPlace, storeName: route.params.storeName},
-        { key: 'second', title: '매장 정보' },
+        { key: 'first', title: '메뉴', time: time, /*location: deliveryPlace, */ item: item },
+        { key: 'second', title: '매장 정보', item: item },
         { key: 'third', title: '리뷰' },
     ]);
 
@@ -96,17 +124,8 @@ function StoreDetail({route}) {
                 }}
             >
                 <View
-                    style={{
-                        alignSelf: 'center',
-                        padding: 15,
-                        borderWidth: 1,
-                        borderColor: '#adb5bd',
-                        borderBottomRightRadius: 20,
-                        marginBottom: 10,
-                        width: responsiveWidth(70),
-                        alignItems: 'center',
-                    }}>
-                    <Text style={{ ...FONTS2.h1 }}>{route.params.storeName}</Text>
+                    style={styles.headerBox}>
+                    <Text style={{ ...FONTS2.h1 }}>{item.storeName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 3, alignSelf: 'center' }}>
                         <Image
                             source={icons.star}
@@ -139,7 +158,7 @@ function StoreDetail({route}) {
             </View>
         );
     };
-    console.log(route.params)
+
     return (
         <View style={styles.container}>
             {renderHeader()}
@@ -168,6 +187,16 @@ function StoreDetail({route}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    headerBox: {
+        alignSelf: 'center',
+        padding: 15,
+        borderWidth: 1,
+        borderColor: '#adb5bd',
+        borderBottomRightRadius: 20,
+        marginBottom: 10,
+        width: responsiveWidth(70),
+        alignItems: 'center',
     },
 });
 

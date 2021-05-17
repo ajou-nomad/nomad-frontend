@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, } from 'react-native';
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
@@ -10,8 +10,19 @@ import { useNavigation } from '@react-navigation/native';
 import Header from '../components/layout/Header';
 import { FONTS2, COLORS } from '../constants';
 
+import { clearAll, setData, getData, addData} from '../utils/helper';
+
 const OrderDetails = () => {
     const navigation = useNavigation();
+
+    const [orderData, setOrderData] = useState(null);
+
+    useEffect(() => {
+        getData('orderData').then(data => {
+            console.log(JSON.stringify(data, null, 4));
+            setOrderData(data);
+        });
+    }, []);
 
     const ReviewButton = ({ isWriteReview, onPress }) => {
 

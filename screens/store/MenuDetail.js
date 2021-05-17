@@ -75,7 +75,9 @@ const Option = ({ item, userOption, setUserOption }) => {
     );
 }
 
-function MenuDetail({ navigation, route:{params} }) {
+function MenuDetail({ navigation, route: { params } }) {
+    console.log('ddd: ', params);
+    const { menu } = params;
     
     // 메뉴 정보
     const [menuDetail] = useState({
@@ -157,22 +159,23 @@ function MenuDetail({ navigation, route:{params} }) {
     });
 
     // 최종 금액
-    const [totalPrice, setTotalPrice] = useState(menuDetail.price);
+    const [totalCost, setTotalCost] = useState(menu.cost);
 
     // 유저가 선택한 옵션 정보
     const [userOption, setUserOption] = useState([]);
 
     // 총 가격 계산
-    const handleTotalPrice = (number, type) => {
+    const handleTotalCost = (number, type) => {
         if (type === '+') {
-            setTotalPrice(totalPrice + menuDetail.price);
+            setTotalCost(totalCost + menu.cost);
         }
         else {
-            setTotalPrice(totalPrice - menuDetail.price);
+            setTotalCost(totalCost - menu.cost);
         }
     };
 
     const addCart = () => {
+        // Cart를 어디다가 저장할 것인가....? store에??
         ToastAndroid.showWithGravity('카트에 담겼습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
         navigation.navigate('StoreDetail', { storeName: params.storeName, time: params.time, location: params.location });
     };
@@ -191,10 +194,10 @@ function MenuDetail({ navigation, route:{params} }) {
                         <Text style={{ ...FONTS2.h1 }}>{menuDetail.photo}</Text>
                     </View>
                     {/* 메뉴 이름 */}
-                    <Text style={{ ...FONTS2.h1, margin: 10 }}>{menuDetail.menuName}</Text>
+                    <Text style={{ ...FONTS2.h1, margin: 10 }}>{menu.menuName}</Text>
                     {/* 메뉴 설명 */}
                     <View style={{ width: '80%', }}>
-                        <Text style={{ ...FONTS2.body2 }}>{menuDetail.description}</Text>
+                        <Text style={{ ...FONTS2.body2 }}>{menu.description}</Text>
                     </View>
                 </View>
 
@@ -204,7 +207,7 @@ function MenuDetail({ navigation, route:{params} }) {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>가격</Text>
                         {/* useState로 price update */}
-                        <Text style={{ ...FONTS2.h2, }}>{totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
+                        <Text style={{ ...FONTS2.h2, }}>{totalCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
                     </View>
                     {/* 수량 */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
@@ -216,12 +219,12 @@ function MenuDetail({ navigation, route:{params} }) {
                             buttonTextStyle={{ color: 'black', ...FONTS2.h2 }}
                             buttonStyle={{ borderColor: 'black' }}
                             countTextStyle={{ color: 'black', ...FONTS2.h2 }}
-                            onChange={handleTotalPrice}
+                            onChange={handleTotalCost}
                         />
                     </View>
                 
                     {/* 맛 선택 */}
-                    <View style={{ borderTopWidth: 0.5, marginTop: 10, }}>
+                    {/* <View style={{ borderTopWidth: 0.5, marginTop: 10, }}>
                         <Text style={{ ...FONTS2.h2, marginTop: 10 }}>맛 선택 ({menuDetail.quantity}개)</Text>
                         <FlatList
                             data={menuDetail.flavors}
@@ -237,7 +240,7 @@ function MenuDetail({ navigation, route:{params} }) {
                             style={{ marginTop: 10, }}
                             keyExtractor={item => item.id}
                         />
-                    </View>
+                    </View> */}
                 </View>
             </View>
         );
@@ -257,7 +260,7 @@ function MenuDetail({ navigation, route:{params} }) {
                     }}
                 >
                     <TouchableOpacity
-                        onPress={() => addCart()}    
+                        onPress={() => addCart()}
                     >
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>카트에 담기</Text>
                     </TouchableOpacity>

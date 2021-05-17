@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 const initialState = {
   isSignIn: false,
   member: {
-    memberType: '유저',
+    memberType: 'User',
     phoneNum: 0,
     nickName: '',
     email: '',

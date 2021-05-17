@@ -10,7 +10,7 @@ import {
 
 import { FONTS2, } from '../../constants';
 
-function StoreInfo() {
+function StoreInfo({ item }) {
   return (
     <View>
       {/* 지도 */}
@@ -32,32 +32,32 @@ function StoreInfo() {
         {/* 영업시간 */}
         <View style={{ flexDirection: 'row' }}>
           <Text style={{ ...FONTS2.body2, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>영업시간</Text>
-          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>월요일 ~ 일요일: 7:00 ~ 26:00</Text>
+          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>{item.openTime} ~ {item.closeTime}</Text>
         </View>
 
         {/* 전화변호 */}
         <View style={{ flexDirection: 'row' }}>
           <Text style={{ ...FONTS2.body2, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>전화번호</Text>
-          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>031-123-4567</Text>
+          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>{item.phoneNumber}</Text>
         </View>
 
         {/* 주소 */}
         <View style={{ flexDirection: 'row' }}>
           <Text style={{ ...FONTS2.body2, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>주소</Text>
-          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>경기도 수원시 영통구 주소 주소</Text>
+          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>{item.address}</Text>
         </View>
       </View>
 
       {/* 가게 공지사항 */}
-      <View style={{ marginBottom: 20 }}>
+      {/* <View style={{ marginBottom: 20 }}>
         <Text style={{ ...FONTS2.h2, marginBottom: 5 }}>&lt; 공지사항 &gt;</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
           <Text style={{ ...FONTS2.body2 }}>공지사항 공지사항공지사항 공지사항공지사항공지사항공지사항공지사항공지사항</Text>
         </View>
-      </View>
+      </View> */}
 
       {/* 가게 통계 */}
-      <View style={{ width: '30%', marginBottom: 20 }}>
+      {/* <View style={{ width: '30%', marginBottom: 20 }}>
         <Text style={{ ...FONTS2.h2, marginBottom: 5 }}>&lt; 가게 통계 &gt;</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
           <Text style={{ ...FONTS2.h3 }}>주문 수</Text>
@@ -67,7 +67,7 @@ function StoreInfo() {
           <Text style={{ ...FONTS2.h3 }}>리뷰 수</Text>
           <Text style={{ ...FONTS2.body2 }}>35개</Text>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 }

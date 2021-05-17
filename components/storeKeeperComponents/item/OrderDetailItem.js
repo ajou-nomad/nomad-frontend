@@ -2,61 +2,111 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView, SafeAreaView, } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import uuid from 'react-native-uuid';
 
-import { COLORS, FONTS2 } from '../../../constants';
+import { COLORS, FONTS, FONTS2 } from '../../../constants';
+
 
 import Header from '../../layout/Header';
 
-const OrderDetailItem = ({ route }) => {
-    const status = route.params.status;
-    const { menu, orderStatus, place, time } = route.params.data;
-    
+const Button = ({ color, text, onPress }) => {
     return (
-        <View style={styles.container}>
-            <Header title='진행 주문' small='true' />
+        <View>
+            {!color ? (
+                <TouchableOpacity
+                    style={[styles.orderButton, { backgroundColor: '#CED4DA' }]}
+                    onPress={onPress}
+                >
+                    <Text style={{ ...FONTS2.h3, color: COLORS.white }}>{text}</Text>
+                </TouchableOpacity>
+            ) : (
+                <TouchableOpacity
+                    style={styles.orderButton}
+                >
+                    <Text style={{ ...FONTS2.h3, color: COLORS.white }}>{text}</Text>
+                </TouchableOpacity>
+            )}
+        </View>
+    );
+};
+
+const OrderDetailItem = ({ route }) => {
+    // {"date": "12:00", "id": 0, "menus": [{"menu": "석류 아이스티", "option": [Array]}, {"menu": "아메리카노", "option": [Array]}, {"menu": "바닐라 라떼", "option": [Array]}], "orderStatus": true, "place": "아주대학교 팔달관"}
+    const { menus, orderStatus, place, date } = route.params.data;
+
+    const renderOptions = (item) => {
+        const list = item.option.map(
+            option_ => (<Text key={uuid.v4()} style={{ ...FONTS2.body2 }}>- {option_}</Text>)
+        )
+
+        return (
+            <View>
+                {list}
+            </View>
+        )
+    };
+
+    const renderItem = ({ item }) => {
+        return (
+            <View style={{ marginVertical: 5 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <Text style={{ ...FONTS2.h1 }}>{item.menu}</Text>
+                    <Text style={{ ...FONTS2.h2 }}>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                </View>
+                {renderOptions(item)}
+                {/* {item.option} */}
+            </View>
+        );
+    };
+
+    return (
+        <ScrollView style={styles.container}>
+            {/* <ScrollView> */}
+                <Header title='진행 주문' small='true' />
 
             <View style={[styles.itemContainer, { marginTop: 20, }]}>
                 <View>
-                    <Text style={{ ...FONTS2.body2 }}>{time} 주문</Text>
+                    <Text style={{ ...FONTS2.body2 }}>{date} 주문</Text>
                     <Text style={{ ...FONTS2.h2 }}>{place}</Text>
                 </View>
 
-                {!status ? (
-                    <TouchableOpacity
-                        style={[styles.orderButton, { backgroundColor: '#CED4DA' }]}
-                        onPress={() => alert('백엔드에 주문상태 업데이트 및 버튼 색깔 바꾸기')}
-                    >
-                        <Text style={{ ...FONTS2.h3, color: COLORS.white }}>접수하기</Text>
-                    </TouchableOpacity>
+                {!orderStatus ? (
+                    <Button text='접수하기'onPress={() => alert('백엔드에 주문상태 업데이트 및 버튼 색깔 바꾸기')}/>
                 ) : (
-                    <TouchableOpacity
-                        style={styles.orderButton}
-                    >
-                        <Text style={{ ...FONTS2.h3, color: COLORS.white }}>접수완료</Text>
-                    </TouchableOpacity>
+                    <Button text='접수완료' color='true' />
                 )}
             </View>
             
             <View style={{ padding: 20 }}>
-                <Text style={{ color: 'red', ...FONTS2.body2 }}>점주에게 보내는 요청사항</Text>
-                
-                {!status ? (null) : (
-                    <View style={{ width: responsiveWidth(90), backgroundColor: '#F1F3F5', padding: 30, borderRadius: 8, }}>
-                        <Text>ㅇㄴㄹ</Text>
+                <Text style={{ color: 'red', ...FONTS2.body2, marginBottom: 20 }}>점주에게 보내는 요청사항</Text>
+
+                <SafeAreaView>
+                <FlatList
+                    data={menus}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+                />
+                </SafeAreaView>
+                {!orderStatus ? (null) : (
+                    <View style={styles.cookStatus}>
+                        <View style={{ alignItems: 'center'}}>
+                            <Text style={{ ...FONTS2.body3 }}>남은 준비 시간</Text>
+                            <Text style={{ ...FONTS2.h1 }}>27분</Text>
+                        </View>
+                        <Button text='조리완료'/>
                     </View>
                 )}
             </View>
-            
-            
-        </View>
+            {/* </ScrollView> */}
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         backgroundColor: COLORS.white,
     },
     itemContainer: {
@@ -74,6 +124,15 @@ const styles = StyleSheet.create({
         height: 35,
         borderBottomRightRadius: 25,
     },
+    cookStatus: {
+        marginTop: 20,
+        width: responsiveWidth(90),
+        backgroundColor: '#F1F3F5',
+        padding: 20,
+        borderRadius: 8,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    }
 });
 
 export default OrderDetailItem;
