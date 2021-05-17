@@ -55,8 +55,7 @@ const RootNavigation = () => {
 
     console.log(state);
 
-
-    if (state.isSignIn) { // state.userToken 존재시
+    if (state.isSignedIn) { //로그인시
         if (state.member.memberType === 'User'){
             return (
                 <RootStack.Navigator>
@@ -129,7 +128,7 @@ const userStack = () => {
 
 const storeKeeperStack = () => {
 
-    if (true){ //점주가 매장등록 했을 때, 안했을 때
+    if (false){ //점주가 매장등록 했을 때, 안했을 때
         return (
             <Stack.Navigator
             screenOptions={{

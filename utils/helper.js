@@ -73,62 +73,56 @@ export const autoLogin = async ({dispatch}) => {
         console.log('현재 로그인한 유저가 없음.');
         return Promise.reject('Not found user');
     }
-
-
 };
 
 export const googleLogin = async (response, dispatch) => {
 
-    // const currentUser = await GoogleSignin.getCurrentUser();
 
-    // console.log(currentUser);
+    Alert.alert(response.data.data.nickName + '님 반갑습니다.');
 
-    // const googleCredential = auth.GoogleAuthProvider.credential(response.data.idToken);
-    // await auth().signInWithCredential(googleCredential);
-
-    Alert.alert(response.data.data[0].nickName + '님 반갑습니다.');
-
-    const userData = {
-        memberType:  response.data.data[0].memberType,
-        email: response.data.data[0].email,
-        nickName: response.data.data[0].nickName,
-        phoneNum: response.data.data[0].phoneNum,
-        point: response.data.data[0].point,
-    }
+    const memberData = {
+        memberType:  response.data.data.memberType,
+        email: response.data.data.email,
+        nickName: response.data.data.nickName,
+        phoneNum: response.data.data.phoneNum,
+        point: response.data.data.point,
+    };
 
     // // 전역 변수에 user 저장
-    await dispatch({ type: 'SIGN_IN', member: userData });
+    await dispatch({ type: 'SIGN_IN', member: memberData });
 };
 
 
 export const emailPasswordLogin = (data, dispatch) => {
-    // firebase에 login
+
     auth()
         .signInWithEmailAndPassword(data.email, data.pw)
         .then( async () => {
-            const user = auth().currentUser;
-            Alert.alert(user.displayName + '님 반갑습니다.');
+            axiosApiInstance
+                .get('/member')
+                .then( async (response) => {
 
-            const idToken = await user.getIdToken();
-            const fcmToken = await messaging().getToken();
+                    if (response.data.data === 400){
+                        Alert.alert('해당하는 멤버정보가 없습니다.');
+                        logout(dispatch);
+                    } else {
 
-            const payload = {
-                idToken: idToken,
-                fcmToken: fcmToken,
-            };
-            // // update fcmToken in DB
-            // axios
-            //     .post('/auth/user/:id', payload)
-            //     .then( async (response) => {
-            //         // STORAGE에 token 저장
-            //         await AsyncStorage.setItem('userToken', response.idToken);
-            //         // 전역 변수에 token 저장
-            //         await dispatch({ type: 'SIGN_IN', token: response.idToken });
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
+                        Alert.alert(response.data.data.nickName + '님 반갑습니다.');
+                        const memberData = {
+                            memberType:  response.data.data.memberType,
+                            email: response.data.data.email,
+                            nickName: response.data.data.nickName,
+                            phoneNum: response.data.data.phoneNum,
+                            point: response.data.data.point,
+                        };
 
+                        //전역 변수에 member정보 저장
+                        await dispatch({ type: 'SIGN_IN', member: memberData });
+                    }
+                })
+                .catch((error) => {
+                    Alert.alert(error.message);
+                });
         })
         .catch(error => {
             if (error.code === 'auth/email-already-in-use') {
@@ -153,6 +147,36 @@ export const emailPasswordLogin = (data, dispatch) => {
 
             console.error(error);
         });
+};
+
+export const logout = async (dispatch) => {
+    const googleUser = await GoogleSignin.getCurrentUser();
+    const user = auth().currentUser;
+
+    if ( user && googleUser ) {
+        try {
+            await GoogleSignin.revokeAccess();
+            await GoogleSignin.signOut();
+            console.log('구글 로그아웃성공');
+            await auth()
+                    .signOut()
+                    .then(() => {
+                      console.log('파이어베이스 로그아웃성공');
+                      dispatch({ type: 'SIGN_OUT'});
+                    });
+        } catch (error) {
+            console.error(error);
+        }
+    } else if (user) {
+        await auth()
+            .signOut()
+            .then(() => {
+              console.log('파이어베이스 로그아웃성공');
+              dispatch({ type: 'SIGN_OUT'});
+            });
+    } else {
+        console.log('로그인 상태가 아닙니다.');
+    }
 };
 
 // 장소, 명칭 -> 좌표
@@ -277,3 +301,75 @@ export const calculateDistance = (origLat, origLon, markerLat, markerLon) => {
 
     return distance;
 };
+
+
+
+// -----------------------------------------------------------------------------------------
+
+export const setData = async (key, value) => {
+    try {
+        const jsonValue = JSON.stringify(value);
+        await AsyncStorage.setItem(key, jsonValue);
+        console.log(key + '저장완료');
+    } catch (e) {
+        console.log(e);
+        // saving error
+    }
+};
+
+export const getData = async (key) => {
+    try {
+        const jsonValue = await AsyncStorage.getItem(key);
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+        console.log(e);
+        // error reading value
+    }
+};
+
+// 배열에 추가시
+export const addData = async (key, value) => {
+    try {
+        let jsonValue = await AsyncStorage.getItem(key);
+
+        jsonValue = JSON.parse(jsonValue).concat(value);
+
+        //재저장
+        const addedJsonValue = JSON.stringify(jsonValue);
+        await AsyncStorage.setItem(key, addedJsonValue);
+        console.log(key + '추가완료');
+
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+// 전체 삭제
+export const clearAll = async () => {
+    try {
+      await AsyncStorage.clear();
+    } catch (e) {
+      // clear error
+    }
+    console.log('Done.');
+};
+
+
+export const getDaliyGroupData = async () => {
+
+    getData('groupData').then( (data) => {
+        const dailyData = data.filter((goal) => goal.groupType === 'day');
+
+        console.log(JSON.stringify(dailyData, null, 4))
+    })
+}
+
+
+export const getWeeklyGroupData = async () => {
+
+    getData('groupData').then( (data) => {
+        const weeklyData = data.filter((goal) => goal.groupType === 'weekly');
+
+        console.log(JSON.stringify(weeklyData, null, 4))
+    })
+}

@@ -31,7 +31,7 @@ const CustomMarker = ({item, back, today, items}) => {
                         </Text>
                     </View>
                     {/* marker 배달그룹 상위 목록 */}
-                    <View style={styles.groupList}>
+                    {/* <View style={styles.groupList}>
                         <View style={{flex: 1, paddingHorizontal: 5, justifyContent: 'center'}}>
                             <Text
                                 numberOfLines={1}
@@ -61,7 +61,7 @@ const CustomMarker = ({item, back, today, items}) => {
                             9:00 파리바게트
                             </Text>
                         </View>
-                    </View>
+                    </View> */}
                 </View>
             </Marker>
         ) : (
