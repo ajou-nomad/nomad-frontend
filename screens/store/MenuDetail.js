@@ -25,7 +25,6 @@ const Option = ({ item, userOption, setUserOption }) => {
     const [selectOption, setSelectOption] = useState([]);
     const [isSelect, setIsselect] = useState(false);
 
-
     const theme = {
         ...DefaultTheme,
         colors: {
@@ -75,14 +74,21 @@ const Option = ({ item, userOption, setUserOption }) => {
     );
 }
 
+const postOrderData = (orderData) => {
+
+}
+
 function MenuDetail({ navigation, route:{params} }) {
-    
+
+    const menu = params.menu;
+
     // 메뉴 정보
     const [menuDetail] = useState({
-        photo: '사진',
-        menuName: '파인트(플레이버 3가지)',
-        description: '3가지 맛의 아이스크림이 선택 가능한 파인트 사이즈 설명 설명 설명 설명 설명 설명 설명 설명',
-        price: 8200,
+        menuId: menu.menuId,
+        photo: menu.imgUrl,
+        menuName: menu.menuName,
+        description: menu.description,
+        price: menu.cost,
         flavors: [
             {
                 id: '1',
@@ -172,7 +178,14 @@ function MenuDetail({ navigation, route:{params} }) {
         }
     };
 
+    // console.log(params);
     const addCart = () => {
+        params.setCartItems((prevState)=>[...prevState,{
+            menuId: menuDetail.menuId, 
+            menuName: menuDetail.menuName,
+            quantity: totalPrice/menuDetail.price,
+            cost: totalPrice,
+        }]);
         ToastAndroid.showWithGravity('카트에 담겼습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
         navigation.navigate('StoreDetail', { storeName: params.storeName, time: params.time, location: params.location });
     };

@@ -19,9 +19,9 @@ import { currentLocation } from '../utils/helper';
 
 
 const DayDelivery = ({ route, navigation }) => {
+  const groupData = route.params.groupData;
 
   const [location, setLocation] = useState(null);
-
 
   const setCurrentLocation = (result) => {
 
@@ -80,7 +80,7 @@ const DayDelivery = ({ route, navigation }) => {
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap initLocation={location} back="DayDelivery" today={today} />
+          <GoogleMap initLocation={location} back="DayDelivery" today={today} groupData = {groupData} />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
           <NewGroupButton initLocation={location} deliDate={today}/>
