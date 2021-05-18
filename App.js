@@ -20,6 +20,8 @@ const App = () => {
 
     setData('groupData', groupData);
 
+    setData('orderData', orderData);
+
     setData('storeData', storeData);
 
     // addData('storeData', testData2);
@@ -70,9 +72,6 @@ export default App;
 
 // dummy Data
 
-const cartData = [
-
-];
 
 //get /storeList가 가능
 const storeData = [

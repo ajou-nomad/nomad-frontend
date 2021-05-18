@@ -92,7 +92,7 @@ const Tabs = ({route}) => {
       }}>
       <Tab.Screen
         name="당일 모집"
-        initialParams={{groupData:groupData}}
+        initialParams={{groupData:groupData.groupDayData}}
         component={DayNavigation}
         options={{
           tabBarIcon: ({focused}) => (
@@ -112,7 +112,7 @@ const Tabs = ({route}) => {
       />
       <Tab.Screen
         name="주간 모집"
-        initialParams={{groupData:groupData}}
+        initialParams={{groupData:groupData.groupWeekData}}
         component={WeeklyNavigation}
         options={{
           tabBarIcon: ({focused}) => (

@@ -43,7 +43,7 @@ const CheckOrder = ({route:{params}}) => {
         ]
     };
 
-    const price = orderInfo.foods[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const totalPrice = params.totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     return (
         <View style={styles.container}>
@@ -60,12 +60,15 @@ const CheckOrder = ({route:{params}}) => {
                 </View>
                 <View style={{ flex: 3, margin: 30, }}>
                     {/* FlatList로 변경하기 */}
-                    <OrderMenuItem />
+                    {params.cartItems.map((items,index)=>{
+                        return <OrderMenuItem key={index} isCart="false" orderDetail = {items} />
+                    })}
+                    
                 </View>
             </View>
 
 
-            <BottomButton onPress={() => navigation.navigate('PaymentNavigation')} title={price + "원 결제하기"} />
+            <BottomButton onPress={() => navigation.navigate('PaymentNavigation',{totalData:params})} title={totalPrice + "원 결제하기"} />
         </View>
     );
 };

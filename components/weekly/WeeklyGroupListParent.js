@@ -42,7 +42,7 @@ export default function WeeklyGroupListParent(props) {
         ({date,time}) => (date === props.date) && (time.slice(0,2) === tableTime)
     );
 
-
+        
     const currentGroup = groupList.length
 
         return (
