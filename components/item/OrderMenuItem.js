@@ -33,7 +33,7 @@ const orderInfo = {
 };
 
 const OrderMenuItem = ({ isCart, orderDetail }) => {
-    console.log(orderDetail);
+    // console.log(orderDetail);
     return (
         <View style={{ borderBottomWidth: 0.5, paddingBottom: 15, borderBottomColor: '#ced4da' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15, }}>

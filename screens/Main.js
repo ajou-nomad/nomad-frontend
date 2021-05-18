@@ -37,15 +37,18 @@ const Main = ({navigation}) => {
                         height: 120,
                     }}
                 />
-            </View>     
-        
+            </View>
+
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
                     navigation.navigate('Tabs', {
                         routeName: '당일 모집',
-                        groupData: responseDailyData,
-                    });       
+                        groupData: {
+                            groupDayData: responseDailyData,
+                            groupWeekData: responseWeeklyData,
+                        },
+                    });
                 }}
             >
                 <Text style={{...FONTS.body3, color: COLORS.black}}>당일 모집</Text>
@@ -56,7 +59,10 @@ const Main = ({navigation}) => {
                 onPress={() => {
                     navigation.navigate('Tabs', {
                         routeName: '주간 모집',
-                        groupData: responseWeeklyData,
+                        groupData: {
+                            groupDayData: responseDailyData,
+                            groupWeekData: responseWeeklyData,
+                        },
                     });               
                 }}
             >

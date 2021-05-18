@@ -163,7 +163,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                     
                 {/* Footer */}
                 
-                <BottomButton onPress={() => navigation.navigate('CheckOrder', {deliDate: groupDate, time: JSON.stringify(date).slice(12,17), location: {...params.location,buildingName:buildingName}, storeName: params.storeName })} title="그룹 생성하기" />
+                <BottomButton onPress={() => navigation.navigate('CheckOrder', { totalPrice: params.totalPrice, cartItems: params.cartItems, deliDate: groupDate, time: JSON.stringify(date).slice(12,17), location: {...params.location,buildingName:buildingName}, storeName: params.storeName , groupId: params.groupId})} title="그룹 생성하기" />
             </ScrollView>
         </KeyboardAvoidingView>
     );

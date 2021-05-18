@@ -68,6 +68,8 @@ function StoreDetail({route}) {
     const storeInfo = route.params.storeInfo;
 
     const [cartItems, setCartItems] = useState([]);
+
+    // console.log(route.params);
     
     const menu = storeInfo.menu;
     const layout = useWindowDimensions();
@@ -168,7 +170,7 @@ function StoreDetail({route}) {
                     renderTabBar={renderTabBar}
                 />
             </View>
-            <CartButton cartItems={cartItems} storeInfo={route.params.storeInfo} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} />
+            <CartButton cartItems={cartItems} storeInfo={route.params.storeInfo} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} groupId = {route.params.groupId}/>
         </View>
     );
 }
