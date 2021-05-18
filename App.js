@@ -5,6 +5,9 @@ import Toast from 'react-native-toast-message';
 
 import {NavigationContainer} from '@react-navigation/native';
 import RootNavigation from './navigation/RootNavigation';
+import {images} from './constants';
+
+
 
 // ----test-----
 import { clearAll, setData, getData, addData, getDaliyGroupData, getWeeklyGroupData} from './utils/helper';
@@ -15,32 +18,17 @@ const App = () => {
 
   useEffect(() => {
 
-    // setData('groupData', groupData);
+    setData('groupData', groupData);
+
+    setData('storeData', storeData);
 
     // addData('storeData', testData2);
 
     // getData('groupData').then( data => console.log(JSON.stringify(data, null, 4)))
 
-    // getWeeklyGroupData();
+    // getWeeklyGroupData().then( data => console.log(JSON.stringify(data, null, 4)));
+    // getDaliyGroupData().then( data => console.log(JSON.stringify(data, null, 4)));
     // clearAll();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // Foreground state messages
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
@@ -82,6 +70,10 @@ export default App;
 
 // dummy Data
 
+const cartData = [
+
+];
+
 //get /storeList가 가능
 const storeData = [
   {
@@ -96,7 +88,8 @@ const storeData = [
     openTime: '09:00',
     closeTime: '22:00',
     deliveryTip: 2000,
-    logoUrl: '',
+    rate: 3.2,
+    logoUrl: images.bbacks,
     menu:[
       {
         menuId: 1,
@@ -182,7 +175,8 @@ const storeData = [
     openTime: '07:00',
     closeTime: '22:00',
     deliveryTip: 2000,
-    logoUrl: '',
+    rate: 4.6,
+    logoUrl: images.starbucks,
     menu:[
       {
         menuId: 11,
@@ -216,6 +210,8 @@ const storeData = [
   },
 ];
 
+
+
 const groupData = [
   {
     groupId: 1,
@@ -225,12 +221,12 @@ const groupData = [
     groupType: 'day',
     current: 2,
     maxValue: 5,
-    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', '다음uid'],
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
     latitude: 37.284525,
     longitude: 127.044113,
     address: '수원시 원천동',
     buildingName: '팔달관',
-    orderStatus:  '모집중',
+    orderStatus:  'recruiting',
   },
   {
     groupId: 2,
@@ -240,27 +236,27 @@ const groupData = [
     groupType: 'day',
     current: 2,
     maxValue: 5,
-    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', '다음uid'],
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
     latitude: 37.284525,
     longitude: 127.044113,
     address: '수원시 원천동',
     buildingName: '팔달관',
-    orderStatus:  '모집중',
+    orderStatus:  'recruiting',
   },
   {
     groupId: 3,
     storeId: 1, //빽다방 아주대점
     time: '15:00',
-    date: '2021-05-20',
+    date: '2021-05-19',
     groupType: 'weekly',
     current: 2,
     maxValue: 5,
-    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', '다음uid'],
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
     latitude: 37.284525,
     longitude: 127.044113,
     address: '수원시 원천동',
     buildingName: '팔달관',
-    orderStatus:  '모집중',
+    orderStatus:  'recruiting',
   },
   {
     groupId: 4,
@@ -270,15 +266,14 @@ const groupData = [
     groupType: 'weekly',
     current: 2,
     maxValue: 5,
-    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', '다음uid'],
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
     latitude: 37.284525,
     longitude: 127.044113,
     address: '수원시 원천동',
     buildingName: '팔달관',
-    orderStatus:  '모집중',
+    orderStatus:  'recruiting',
   },
 ];
-
 
 
 

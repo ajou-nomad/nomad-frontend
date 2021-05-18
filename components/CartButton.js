@@ -10,6 +10,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 import { COLORS, icons } from '../constants';
+import { getData } from '../utils/helper';
 
 const CartButton = (props) => {
 
@@ -29,7 +30,7 @@ const CartButton = (props) => {
                 borderRadius: 38,
                 elevation: 5,
             }}
-            onPress={() => navigation.navigate('Cart',{items:props.items, time:props.time, location: props.deliveryPlace, storeName:props.storeName, deliDate: props.deliDate})}
+            onPress={() => navigation.navigate('Cart',{cartItems: props.cartItems, storeInfo:props.storeInfo, time:props.time, location: props.deliveryPlace, deliDate: props.deliDate})}
         >
             <Image
                 source={icons.cart}

@@ -10,11 +10,10 @@ import SearchPlace from '../screens/search/SearchPlace';
 const DayStack = createStackNavigator();
 
 const DayNavigation = ({route, navigation}) => {
-
     useEffect( () => {
 
     }, []);
-
+    const groupData = route.params.groupData;
     return (
         <DayStack.Navigator
             screenOptions={{
@@ -22,7 +21,7 @@ const DayNavigation = ({route, navigation}) => {
             }}
             initialRouteName={'DayDelivery'}
         >
-            <DayStack.Screen name="DayDelivery" component={DayDelivery} />
+            <DayStack.Screen name="DayDelivery" component={DayDelivery} initialParams={{groupData: groupData}} />
             <DayStack.Screen name="GroupList" component={GroupList} />
             {/* 채팅방, 뭐 등등 추가시 작성  */}
             <DayStack.Screen name="SearchPlace" component={SearchPlace} />

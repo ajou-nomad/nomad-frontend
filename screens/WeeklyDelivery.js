@@ -42,11 +42,11 @@ const ItemsForCreateGroupDetailDayPicker = () => {
 
 }
 
-
-
 const WeeklyDelivery = ({ route, navigation }) => {
 
   const [location, setLocation] = useState();
+
+  const groupData = route.params.groupData;
 
   const setCurrentLocation = (result) => {
     setLocation(result);
@@ -107,7 +107,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap initLocation={location} back="WeeklyDelivery" />
+          <GoogleMap initLocation={location} back="WeeklyDelivery" groupData = {groupData} />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
           <NewGroupButton initLocation={location} deliDate={null} items={{datePicker:[dayArrayKorFixed,dateDifference,today]}} />

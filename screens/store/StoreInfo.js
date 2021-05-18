@@ -7,10 +7,14 @@ import {
   View,
   Text,
 } from 'react-native';
+import MiniMap from '../../components/map/MiniMap';
 
 import { FONTS2, } from '../../constants';
 
-function StoreInfo() {
+function StoreInfo(props) {
+  const storeInfo = props.storeInfo;
+
+  
   return (
     <View>
       {/* 지도 */}
@@ -23,7 +27,7 @@ function StoreInfo() {
           alignItems: 'center',
           marginVertical: 15,
         }}>
-        <Text style={{ ...FONTS2.h1, }}>지도</Text>
+        <MiniMap location={{latitude: storeInfo.latitude, longitude: storeInfo.longitude}} />
       </View>
 
       {/* 영업 정보 */}
@@ -32,19 +36,19 @@ function StoreInfo() {
         {/* 영업시간 */}
         <View style={{ flexDirection: 'row' }}>
           <Text style={{ ...FONTS2.body2, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>영업시간</Text>
-          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>월요일 ~ 일요일: 7:00 ~ 26:00</Text>
+          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>월요일 ~ 일요일: {storeInfo.openTime} ~ {storeInfo.closeTime}</Text>
         </View>
 
         {/* 전화변호 */}
         <View style={{ flexDirection: 'row' }}>
           <Text style={{ ...FONTS2.body2, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>전화번호</Text>
-          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>031-123-4567</Text>
+          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>{storeInfo.phoneNumber}</Text>
         </View>
 
         {/* 주소 */}
         <View style={{ flexDirection: 'row' }}>
           <Text style={{ ...FONTS2.body2, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>주소</Text>
-          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>경기도 수원시 영통구 주소 주소</Text>
+          <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>{storeInfo.address}</Text>
         </View>
       </View>
 
@@ -52,7 +56,10 @@ function StoreInfo() {
       <View style={{ marginBottom: 20 }}>
         <Text style={{ ...FONTS2.h2, marginBottom: 5 }}>&lt; 공지사항 &gt;</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
-          <Text style={{ ...FONTS2.body2 }}>공지사항 공지사항공지사항 공지사항공지사항공지사항공지사항공지사항공지사항</Text>
+          <Text style={{ ...FONTS2.body2 }}>
+            {`5/22부터 일주일간 앗!메리카노 1+1 행사!
+(* 1인당 한 번만 참여 가능합니다)`}
+            </Text>
         </View>
       </View>
 
@@ -65,7 +72,7 @@ function StoreInfo() {
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
           <Text style={{ ...FONTS2.h3 }}>리뷰 수</Text>
-          <Text style={{ ...FONTS2.body2 }}>35개</Text>
+          <Text style={{ ...FONTS2.body2 }}>78개</Text>
         </View>
       </View>
     </View>

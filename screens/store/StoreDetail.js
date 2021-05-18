@@ -27,24 +27,26 @@ import Review from '../../screens/review/Review';
 import StoreInfo from './StoreInfo';
 
 // 메뉴 (flatlist로 바꾸기)
-const MenuRoute = ({ route }) => (
+const MenuRoute = ({ route }) => {
+    
+    return(
+    
     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
         <ScrollView>
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
-            <Menu time={route.time} location={route.location} storeName={route.storeName} />
+            {route.menu.map((items,index)=>{
+                return(
+                    <Menu key={index} menu={items} time={route.time} location={route.location} storeName={route.storeName} setCartItems={route.setCartItems}/>
+                )
+            })}
         </ScrollView>
     </SafeAreaView>
-);
+)};
 
 // 매장 정보
-const StoreInfoRoute = () => (
+const StoreInfoRoute = ({route}) => (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff', padding: 15 }}>
         <ScrollView>
-            <StoreInfo />
+            <StoreInfo storeInfo={route.storeInfo} />
         </ScrollView>
     </SafeAreaView>
 );
@@ -63,13 +65,20 @@ const renderScene = SceneMap({
 });
 
 function StoreDetail({route}) {
+    const storeInfo = route.params.storeInfo;
+
+    const [cartItems, setCartItems] = useState([]);
+    
+    const menu = storeInfo.menu;
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: 'first', title: '메뉴', time: route.params.time, location: route.params.deliveryPlace, storeName: route.params.storeName},
-        { key: 'second', title: '매장 정보' },
+        { key: 'first', title: '메뉴', setCartItems: setCartItems, menu: menu ,time: route.params.time, location: route.params.deliveryPlace, storeName: storeInfo.storeName},
+        { key: 'second', title: '매장 정보', storeInfo: storeInfo},
         { key: 'third', title: '리뷰' },
     ]);
+
+
 
     const renderTabBar = props => (
         <TabBar
@@ -106,7 +115,7 @@ function StoreDetail({route}) {
                         width: responsiveWidth(70),
                         alignItems: 'center',
                     }}>
-                    <Text style={{ ...FONTS2.h1 }}>{route.params.storeName}</Text>
+                    <Text style={{ ...FONTS2.h1 }}>{storeInfo.storeName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 3, alignSelf: 'center' }}>
                         <Image
                             source={icons.star}
@@ -117,19 +126,19 @@ function StoreDetail({route}) {
                                 marginRight: 5,
                             }}
                         />
-                        <Text style={{ ...FONTS2.body2 }}>4.2 </Text>
+                        <Text style={{ ...FONTS2.body2 }}>{storeInfo.rate} / 5.0</Text>
                         <Text style={{ ...FONTS2.body2 }}>(50+)</Text>
                     </View>
                 </View>
 
                 <View style={{ width: '60%', backgroundColor: 'white', alignSelf: 'center', marginBottom: 10 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ ...FONTS2.body2 }}>최소주문금액</Text>
                         <Text style={{ ...FONTS2.body2 }}>13,500원</Text>
-                    </View>
+                    </View> */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ ...FONTS2.body2 }}>배달팁</Text>
-                        <Text style={{ ...FONTS2.body2 }}>2,000원</Text>
+                        <Text style={{ ...FONTS2.body2 }}>{storeInfo.deliveryTip}원</Text>
                     </View>
 
                     <TouchableOpacity>
@@ -139,7 +148,7 @@ function StoreDetail({route}) {
             </View>
         );
     };
-    console.log(route.params)
+
     return (
         <View style={styles.container}>
             {renderHeader()}
@@ -159,7 +168,7 @@ function StoreDetail({route}) {
                     renderTabBar={renderTabBar}
                 />
             </View>
-            <CartButton items={route.params.items} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} storeName={route.params.storeName} />
+            <CartButton cartItems={cartItems} storeInfo={route.params.storeInfo} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} />
         </View>
     );
 }

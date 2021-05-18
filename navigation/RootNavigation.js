@@ -55,7 +55,7 @@ const RootNavigation = () => {
 
     console.log(state);
 
-    if (state.isSignedIn) { //로그인시
+    if (!state.isSignedIn) { //로그인시
         if (state.member.memberType === 'User'){
             return (
                 <RootStack.Navigator>

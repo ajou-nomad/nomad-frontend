@@ -61,6 +61,7 @@
              time={item.time}
              current={item.current}
              max={item.max}
+             storeInfo={item.store}
              deliDate={date}
              location={location}
              styleGroupInfo={styles.groupInfo}
@@ -83,7 +84,7 @@
          <FlatList
            data={groupList}
            renderItem={InfoOfGroup}
-           keyExtractor={item => item.id}
+           keyExtractor={item => item.groupId.toString()}
          />
        </SafeAreaView>
      );

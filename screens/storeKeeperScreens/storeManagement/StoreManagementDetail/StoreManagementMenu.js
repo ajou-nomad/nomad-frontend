@@ -8,7 +8,7 @@ const StoreManagementMenu = (props) => {
         <View>
             <View style={{flexDirection:'row', alignItems:'center'}}>
                 <TouchableOpacity
-                    onPress={()=>props.navigation.navigate(props.route.params.back)}
+                    onPress={()=>props.navigation.navigate('StoreManagementMain')}
                 >
                 <Text style={{fontSize:35,}}>&lt;</Text>
                 </TouchableOpacity>

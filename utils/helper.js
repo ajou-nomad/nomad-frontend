@@ -355,21 +355,47 @@ export const clearAll = async () => {
 };
 
 
+
 export const getDaliyGroupData = async () => {
 
-    getData('groupData').then( (data) => {
-        const dailyData = data.filter((goal) => goal.groupType === 'day');
+    const storeData =  await getData('storeData');
 
-        console.log(JSON.stringify(dailyData, null, 4))
-    })
-}
+    return getData('groupData').then( (data) => {
+        let dailyData = data.filter((goal) => goal.groupType === 'day');
+
+        dailyData = dailyData.map( (groupDatum) => {
+
+            let storeInfo = storeData.filter((store) => store.storeId === groupDatum.storeId);
+
+            groupDatum.store = storeInfo[0];
+
+            return groupDatum;
+
+        });
+
+        return dailyData;
+    });
+};
+
 
 
 export const getWeeklyGroupData = async () => {
 
-    getData('groupData').then( (data) => {
-        const weeklyData = data.filter((goal) => goal.groupType === 'weekly');
+    const storeData =  await getData('storeData');
 
-        console.log(JSON.stringify(weeklyData, null, 4))
-    })
-}
+    return getData('groupData').then( (data) => {
+        let weeklyData = data.filter((goal) => goal.groupType === 'weekly');
+
+        weeklyData = weeklyData.map( (groupDatum) => {
+
+            let storeInfo = storeData.filter((store) => store.storeId === groupDatum.storeId);
+
+            groupDatum.store = storeInfo[0];
+
+            return groupDatum;
+
+        });
+
+        return weeklyData;
+    });
+};

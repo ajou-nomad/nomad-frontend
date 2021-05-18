@@ -10,7 +10,7 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
+  ScrollView,
   FlatList,
   View,
   Text,
@@ -82,11 +82,11 @@ export default function GroupList({navigation, route}) {
   const InfoOfGroup = ({item}) =>(
           <GroupInfo
             logo={item.logo}
-            shopName={item.shopName}
             rate={item.rate}
             time={item.time}
             current={item.current}
             max={item.max}
+            storeInfo={item.store}
             deliDate={today}
             location={location}
             styleGroupInfo={styles.groupInfo}
@@ -105,13 +105,13 @@ export default function GroupList({navigation, route}) {
     );
 
     const ListOfGroup = () => (
-      <SafeAreaView style={{marginBottom: 100}}>
+      <View style={{marginBottom: 100}}>
         <FlatList
-          data={[...groupList]}
+          data={groupList}
           renderItem={InfoOfGroup}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.groupId.toString()}
         />
-      </SafeAreaView>
+      </View>
     );
 
   return (

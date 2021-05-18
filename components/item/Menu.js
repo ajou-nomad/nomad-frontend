@@ -15,15 +15,16 @@ import { useNavigation } from '@react-navigation/native';
 
 function Menu(props) {
     const navigation = useNavigation();
+    
     return (
         <View>
             <TouchableOpacity
                 style={{ margin: 15 }}
-                onPress={() => navigation.navigate('MenuDetail',{time:props.time, location:props.location, storeName:props.storeName})}
+                onPress={() => navigation.navigate('MenuDetail',{setCartItems: props.setCartItems ,menu: props.menu, time:props.time, location:props.location, storeName:props.storeName})}
             >
-                <Text style={{ ...FONTS2.h2 }}>파인트(플레이버 3가지) - 메뉴 이름</Text>
-                <Text style={{ ...FONTS2.body2 }}>8,200원 - 가격</Text>
-                <Text style={{ ...FONTS2.body4, color: '#707070' }}>3가지 맛의 아이스크림이 선택 가능한 파인트 사이즈! - 메뉴 설명</Text>
+                <Text style={{ ...FONTS2.h2 }}>{props.menu.menuName}</Text>
+                <Text style={{ ...FONTS2.body2 }}>{props.menu.cost}원</Text>
+                <Text style={{ ...FONTS2.body4, color: '#707070' }}>{props.menu.description}</Text>
             </TouchableOpacity>
         </View>
     );
