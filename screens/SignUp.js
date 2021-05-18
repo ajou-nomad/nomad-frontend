@@ -8,13 +8,14 @@
  */
 
 import 'react-native-gesture-handler';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
@@ -24,9 +25,13 @@ import PhoneNumber from '../components/login/PhoneNumber';
 import PhoneValid from '../components/login/PhoneValid';
 import UserInfo from '../components/login/UserInfo';
 import axiosApiInstance from '../utils/axios';
+import { googleLogin, logout } from '../utils/helper';
+import { AuthContext } from '../context/AuthContextProvider';
+
 
 export default function SignUpScreen(props) {
 
+  const { dispatch } = useContext(AuthContext);
   const IsGoogle = props.route.params.IsGoogle;
   const [userType, setUserType] = useState('User');
   const [phoneNumber, setPhoneNumber] = useState(props.route.params.phoneNumber);
@@ -49,17 +54,16 @@ export default function SignUpScreen(props) {
 
   const [fcmToken,setFcmToken] = useState(props.route.params.fcmToken);
 
-  
   const getFcmToken = async () => {
     try{
-      const getFcmToken = await messaging().getToken()
+      const getFcmToken = await messaging().getToken();
       setFcmToken(getFcmToken);
     } catch (error) {
       console.log(error);
     }
   }
 
-  if(fcmToken === undefined){
+  if (fcmToken === undefined){
     getFcmToken();
   }
 
@@ -81,7 +85,7 @@ export default function SignUpScreen(props) {
     setConfirm(null);
   }
 
-  
+
 
   const onChangePhoneNumber = event => {
     setPhoneNumber(event.nativeEvent.text);
@@ -176,30 +180,48 @@ export default function SignUpScreen(props) {
 
   const SignUpMember = () => {
 
-    axiosApiInstance.post('/member', {
-      memberType: userType,
-      nickName: nickname,
-      phoneNum: phoneNumber,
-      email: email,
-      token: fcmToken,
-      shopIdNumber: ShopIdNumber,
-      deliIdNumber: DeliIdNumber,
-    }).then(function (response) {
+    if (props.route.params.IsGoogle){
 
-      console.log("여기는 signUP"+response.data);
+      axiosApiInstance.post('/member', {
+        memberType: userType,
+        nickName: nickname,
+        phoneNum: phoneNumber,
+        email: email,
+        token: fcmToken,
+        shopIdNumber: ShopIdNumber,
+        deliIdNumber: DeliIdNumber,
+      })
+      .then(function (response) {
+        axiosApiInstance
+          .get('/member')
+          .then( async (response) => {
 
-      if (response.data === 1){
-
-        alert('회원가입이 완료되었습니다.');
-        props.navigation.navigate('SignIn');
-        initState();
-      } else {
-        alert('error');
-      }
-
-    }).catch(function (error) {
-      console.log(error);
-    });
+            googleLogin(response, dispatch);
+          })
+          .catch((error) => {
+              Alert.alert(error);
+              logout(dispatch);
+          });
+      });
+    } else {
+      auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          axiosApiInstance.post('/member', {
+              memberType: userType,
+              nickName: nickname,
+              phoneNum: phoneNumber,
+              email: email,
+              token: fcmToken,
+              shopIdNumber: ShopIdNumber,
+              deliIdNumber: DeliIdNumber,
+            })
+            .then(function (response) {
+              alert('회원가입이 완료되었습니다.');
+              props.navigation.navigate('SignIn');
+              initState();
+            });
+        });
+    }
   };
 
   const checkEmptyExist = async () => {
@@ -263,7 +285,7 @@ export default function SignUpScreen(props) {
           }}>
           <Text style={styles.backButton}>&lt;</Text>
         </TouchableOpacity>
-        <Text style={styles.headerText}>회원가입</Text>
+        <Text style={styles.headerText}>{IsGoogle ? '구글 간편가입' : '회원가입'}</Text>
       </View>
       <ScrollView style={styles.mainView}>
         {googlePhoneUnique ||

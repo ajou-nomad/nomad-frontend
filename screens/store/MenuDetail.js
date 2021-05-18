@@ -76,7 +76,6 @@ const Option = ({ item, userOption, setUserOption }) => {
 }
 
 function MenuDetail({ navigation, route: { params } }) {
-    console.log('ddd: ', params);
     const { menu } = params;
     
     // 메뉴 정보
@@ -160,9 +159,6 @@ function MenuDetail({ navigation, route: { params } }) {
 
     // 최종 금액
     const [totalCost, setTotalCost] = useState(menu.cost);
-
-    // 유저가 선택한 옵션 정보
-    const [userOption, setUserOption] = useState([]);
 
     // 총 가격 계산
     const handleTotalCost = (number, type) => {

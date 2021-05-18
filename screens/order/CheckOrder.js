@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const CheckOrder = ({ route: { params } }) => {
 
-    console.log(`CheckOrder's params: ${JSON.stringify(params)}`);
+    // console.log(`CheckOrder's params: ${JSON.stringify(params)}`);
 
     const navigation = useNavigation();
     const orderInfo = {

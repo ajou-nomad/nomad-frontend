@@ -17,7 +17,8 @@ import OrderMenuItem from '../../components/item/OrderMenuItem';
 
 import { COLORS, FONTS2 } from '../../constants';
 
-const Cart = ({ navigation, route:{params} }) => {
+const Cart = ({ navigation, route: { params } }) => {
+    const { storeName } = params;
 
     const renderBody = () => {
         return (
@@ -25,7 +26,7 @@ const Cart = ({ navigation, route:{params} }) => {
                 <View>
                     {/* 가게이름, 메뉴 */}
                     <View style={{ margin: 30, }}>
-                        <Text style={{ ...FONTS2.h2, marginBottom: 10, }}>배스킨라빈스 아주대점</Text>
+                        <Text style={{ ...FONTS2.h2, marginBottom: 10, }}>{storeName}</Text>
                         <OrderMenuItem isCart="true" />
                     </View>
                     {/* 메뉴 추가 버튼 */}
@@ -38,7 +39,7 @@ const Cart = ({ navigation, route:{params} }) => {
                     </TouchableOpacity>
                 </View>
                 {/* 요청 사항(가게 사장님, 배달 기사님?) */}
-                {/* <View style={{ marginHorizontal: 20, marginTop: 20 }}>
+                <View style={{ marginHorizontal: 20, marginTop: 20 }}>
                     <Text style={{ ...FONTS2.h2, marginBottom: 10 }}>요청사항</Text>
                     <View>
                         <Text style={{ ...FONTS2.body2, marginBottom: 5 }}>가게 사장님에게</Text>
@@ -51,8 +52,9 @@ const Cart = ({ navigation, route:{params} }) => {
                         <TextInput
                             style={{ ...FONTS2.body2, borderWidth: 0.5, color: COLORS.lightGray, }} placeholder="배달원에게" />
                     </View>
-                </View> */}
+                </View>
 
+                {/* <View style={{ margin: 40 }} /> */}
                 {/* 주문 금액 */}
                 <View style={{ marginHorizontal: 20, marginTop: 30, marginBottom: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
@@ -69,11 +71,10 @@ const Cart = ({ navigation, route:{params} }) => {
                         <Text style={{ ...FONTS2.h2 }}>8,200원</Text>
                     </View>
                 </View>
+                {/* <View style={{ margin: 10 }} /> */}
             </View>
         );
     };
-
-    console.log(params)
 
     return (
         <View style={styles.container}>
@@ -86,7 +87,7 @@ const Cart = ({ navigation, route:{params} }) => {
                 {(params.location.buildingName && params.deliDate && params.time) ? (
                     <BottomButton onPress={() => navigation.navigate('CheckOrder', { time: params.time, location: params.location, storeName: params.storeName })} title="결제하기" />
                 ) : (
-                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', {items:params.items, location: params.location, storeName: params.storeName, deliDate: params.deliDate })} title="그룹 생성하기" />
+                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', { items: params.items, location: params.location, storeName: params.storeName, deliDate: params.deliDate })} title="그룹 생성하기" />
                 )}
             </ScrollView>
         </View>
@@ -96,6 +97,7 @@ const Cart = ({ navigation, route:{params} }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: COLORS.white,
     },
 });
 

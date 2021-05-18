@@ -2,26 +2,32 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, ScrollView, TouchableOpacity, ToastAndroid, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { launchImageLibrary } from 'react-native-image-picker';
+import uuid from 'react-native-uuid';
+import storage from '@react-native-firebase/storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BottomButton from '../../components/layout/BottomButton';
 import Header from '../../components/layout/Header';
 import { FONTS2, COLORS, icons } from '../../constants';
+import { clearAll, setData, getData, addData } from '../../utils/helper';
 
-const CreateReview = () => {
+const CreateReview = ({ route }) => {
     const navigation = useNavigation();
     const [uploadImage, setUploadImage] = useState('');
+    const [text, setText] = useState('');
 
-    const [review, setReview] = useState({
-        userId: '',
-        photo: '',
-        text: '',
-        rating: 0,
-        storeName: '',
+    const [storageImage, setStorageImage] = useState('');
+    const [orderData, setOrderData] = useState();
+    const { item } = route.params;
+    // console.log('CreateReview ', item); // item.orderId
+
+    useEffect(() => {
+        getData('orderData').then(data => setOrderData(data));
     });
 
     const renderRating = () => {
@@ -29,14 +35,14 @@ const CreateReview = () => {
             <View style={{
                 marginVertical: 10,
             }}>
-                <Image
+                {/* <Image
                 source={icons.star}
                 resizeMode='contain'
                 style={{
                     width: 20,
                     height: 20,
                 }}
-            />
+            /> */}
             </View>
         );
     };
@@ -47,9 +53,50 @@ const CreateReview = () => {
 
             // uploadImage(source, res.uri);
             console.log(source);
+
             setUploadImage(res.uri);
         });
-    }
+    };
+
+    const uploadImageToStorage = async (imageUri) => {
+        if (imageUri) {
+            const ext = imageUri.split('.').pop(); // Extract image extension (jpg)
+
+            const filename = `${uuid.v4()}.${ext}`; // Generate unique name
+            //    setImgLoading(true);
+            const imgRef = storage().ref(`reviewimage/${filename}`);
+            const unsubscribe = imgRef.putFile(imageUri) // putFile: image Storage에 저장
+                .on(
+                    storage.TaskEvent.STATE_CHANGED,
+                    async snapshot => {
+                        var state = {
+                            ...state,
+                            progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100, // Calculate progress percentage
+                        };
+                        if (snapshot.state === storage.TaskState.SUCCESS) {
+                            console.log('upload success');
+                            // unsubscribe the event
+                            unsubscribe();
+                            // update the image url
+                            let url;
+                            await imgRef.getDownloadURL()
+                                .then((response) => {
+                                    console.log('get url response', response);
+                                    url = response;
+                                })
+                                .catch(error => {
+                                    console.log('Failed to get url', error);
+                                });
+                            setStorageImage(url.toString());
+                            // return url.toString();
+                        }
+                    },
+                    error => {
+                        console.log('AccountEditScreen uploading error', error);
+                    }
+                );
+        }
+    };
 
     const renderAddPhoto = () => {
         return (
@@ -67,12 +114,65 @@ const CreateReview = () => {
         );
     };
 
-    const sendReview = () => {
+    const sendReview = async () => {
         // 리뷰 DB에 등록
+        // storeId, useId, image, text,
+        // let result;
 
-        navigation.goBack();
-        ToastAndroid.showWithGravity('리뷰가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+        // if (uploadImage) {
+        //     await uploadImageToStorage(uploadImage);
+        // }
+
+        // const reviewData = {
+        //     reviewId: uuid.v4(),
+        //     text: text,
+        //     imgUrl: result,
+        // };
+
+        // getData('orderData').then(data => {
+        //     data.map(item => {
+        //         if (item.orderId === 2) {
+        //             console.log('전: ', item);
+        //             item.review = {
+        //                 reviewId: uuid.v4(),
+        //                 text: text,
+        //                 imgUrl: storageImage,
+        //             };
+        //             console.log('후: ', item);
+        //         }
+        //     });
+        // });
+
+        orderData.map(item => {
+            if (item.orderId === 2) {
+                item.review = {
+                    reviewId: uuid.v4().toString(),
+                    text: text,
+                    // imgUrl: storageImage,
+                };
+            }
+        });
+
+        console.log('orderData: ', orderData);
+        setData('orderData', orderData);
+        getData('orderData').then(data => console.log(data));
+        // try {
+        //     await AsyncStorage.mergeItem('orderData', JSON.stringify(orderData));
+        // } catch (e) {
+        //     console.log('에러러러러ㅓㄹ: ', e);
+        // }
+        // getData('orderData').then(data => console.log('ddddd:::::::: ', data));
+        // setData('orderData', reviewData);
+        // navigation.goBack();
+        // ToastAndroid.showWithGravity('리뷰가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
     };
+
+    const onChange = (text) => {
+        // console.log(e);
+        setText(text);
+    };
+
+   
 
     return (
         <ScrollView style={styles.container}>
@@ -80,13 +180,14 @@ const CreateReview = () => {
 
             <View style={styles.body}>
                 <View style={styles.reviewBox}>
-                    <Text style={{ ...FONTS2.h2 }}>가게 이름</Text>
+                    <Text style={{ ...FONTS2.h2 }}>{item.storeName}</Text>
 
                     {renderRating()}
 
                     <TextInput
                         placeholder='리뷰를 작성해주세요.'
                         style={styles.textInput}
+                        onChangeText={(e) => onChange(e)}
                     />
                     {uploadImage ? (
                         <View style={{ paddingTop: 10, }}>

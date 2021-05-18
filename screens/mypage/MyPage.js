@@ -18,16 +18,18 @@ import { AuthContext } from '../../context/AuthContextProvider';
 const MyPage = ({ navigation }) => {
 
 
-  const { dispatch } = useContext(AuthContext);
-
-
+  const { state, dispatch } = useContext(AuthContext);
+  
+  // {"isSignedIn": true, "member": {"email": "ajouajou@gmail.com", "memberType": "User", "nickName": "아주아주", "phoneNum": "010-1111-1111", "point": 0}}
+  console.log('mypage', state);
+  
   useEffect(() => {
     console.log("Mypage 불릴때");
 
     // navigation에서 올때마다 호출( 리렌더링은 제외 )
     navigation.addListener('focus', async () => {
       console.log("Mypage 올떄마다 호출")
-            
+              
     })
 
 
@@ -39,29 +41,29 @@ const MyPage = ({ navigation }) => {
 
     const user = auth().currentUser;
 
-    if ( user && user.providerData[0].providerId === 'google.com' ) {
-        try {
-            await GoogleSignin.revokeAccess();
-            await GoogleSignin.signOut();
-            console.log('구글 로그아웃성공');
-            await auth()
-                    .signOut()
-                    .then(() => {
-                      console.log('파이어베이스 로그아웃성공');
-                      dispatch({ type: 'SIGN_OUT'});
-                    });
-        } catch (error) {
-            console.error(error);
-        }
-    } else if (user) {
+    if (user && user.providerData[0].providerId === 'google.com') {
+      try {
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+        console.log('구글 로그아웃성공');
         await auth()
-            .signOut()
-            .then(() => {
-              console.log('파이어베이스 로그아웃성공');
-              dispatch({ type: 'SIGN_OUT'});
-            });
+          .signOut()
+          .then(() => {
+            console.log('파이어베이스 로그아웃성공');
+            dispatch({ type: 'SIGN_OUT' });
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (user) {
+      await auth()
+        .signOut()
+        .then(() => {
+          console.log('파이어베이스 로그아웃성공');
+          dispatch({ type: 'SIGN_OUT' });
+        });
     } else {
-        console.log('로그인 상태가 아닙니다.');
+      console.log('로그인 상태가 아닙니다.');
     }
   };
 
@@ -80,11 +82,7 @@ const MyPage = ({ navigation }) => {
             }}
             resizeMode='contain'
           />
-          <Text style={styles.largeFont}>사용자 닉네임</Text>
-          
-      {/* <TouchableOpacity onPress={() => navigation.navigate('GroupList')}>
-        <Text style={{ ...FONTS2.h1}}>dsfds임시</Text>
-      </TouchableOpacity> */}
+          <Text style={styles.largeFont}>{state.member.nickName}</Text>
         </View>
         
       </View>
@@ -98,7 +96,6 @@ const MyPage = ({ navigation }) => {
     </ScrollView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

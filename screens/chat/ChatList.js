@@ -15,7 +15,7 @@ import ChatItem from '../../components/item/ChatItem';
 import { COLORS, FONTS2, } from '../../constants';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 
-import { clearAll, setData, getData, addData} from '../../utils/helper';
+import { clearAll, setData, getData, addData, createChatRoom } from '../../utils/helper';
 
 const ChatList = ({ navigation }) => {
 
@@ -26,8 +26,17 @@ const ChatList = ({ navigation }) => {
             chatIds: ['채팅방id1', '채팅방id2'],
         },
     ];
+
+    const [groupData, setGroupData] = useState(null);
+
     // Fetch threads from firestore
     useEffect(() => {
+
+        // uid들을 불러온다...? chatList
+        getData('groupData').then(data => {
+            // console.log('OrderDetails', JSON.stringify(data, null, 4));
+            setGroupData(data);
+        });
 
         const unsubscribe = firestore()
             .collection('THREADS') // THREADS.chatId
@@ -61,35 +70,39 @@ const ChatList = ({ navigation }) => {
         return () => unsubscribe();
     }, []);
 
-    // console.log(threads);
 
     const addChatRoom = () => { // 채팅방 리스트
-        firestore()
-            .collection('THREADS')
-            .add({
-                name: '방이름', // storeName + deliveryTime + deliveryPlace
-                latestMessage: {
-                    text: '주문 생성 성공',
-                    createdAt: new Date().getTime(),
-                },
-            })
-            .then(docRef => {
-                console.log('채팅방id : ', docRef.id); // 채팅방 ID
+        // firestore()
+        //     .collection('THREADS')
+        //     .add({
+        //         name: '방이름', // storeName + deliveryTime + deliveryPlace
+        //         latestMessage: {
+        //             text: '주문 생성이 성공되었습니다. 👏',
+        //             createdAt: new Date().getTime(),
+        //         },
+        //     })
+        //     .then(docRef => {
+        //         console.log('채팅방id : ', docRef.id); // 채팅방 ID
 
-                docRef.collection('MESSAGES').add({
-                    text: '주문 생성 성공',
-                    createdAt: new Date().getTime(),
-                    system: true,
-                });
-                navigation.navigate('ChatList');
-            });
+        //         docRef.collection('MESSAGES').add({
+        //             text: '주문 생성이 성공되었습니다. 👏',
+        //             createdAt: new Date().getTime(),
+        //             system: true,
+        //         });
+        //         navigation.navigate('ChatList');
+        //     });
+        const storeName = '빽다방 아주대점';
+        const deliveryTime = '9:00';
+        const deliveryPlace = '팔달관';
+
+        createChatRoom(storeName, deliveryTime, deliveryPlace, navigation);
     };
 
     return (
         <View style={styles.container}>
             {/* Header */}
             <Header title="채팅방" small="true" />
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 style={{
                     backgroundColor: 'yellow',
                     justifyContent: 'center',
@@ -99,7 +112,7 @@ const ChatList = ({ navigation }) => {
                 onPress={addChatRoom}
             >
                 <Text style={{ ...FONTS2.h1 }}>임시 채팅방 생성 버튼</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <FlatList
                 data={threads}
                 keyExtractor={item => item._id}
@@ -112,7 +125,6 @@ const ChatList = ({ navigation }) => {
                 }
                 }
             />
-            {/* <ChatItem thread={threads} /> */}
         </View>
     );
 };

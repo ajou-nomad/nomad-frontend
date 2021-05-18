@@ -40,10 +40,10 @@ export default function UserInfo(props) {
             </View>
             <Text style={props.mainTxtStyle}>비밀번호</Text>
             <TextInputs style={props.inputStyle} change={props.changePassword} value={props.password} type="password"/>
-            </>
-            }
             <Text style={props.mainTxtStyle}>닉네임</Text>
             <TextInputs style={props.inputStyle} change={props.changeNickname} value={props.nickname} type="nickname"/>
+            </>
+            }
             <View style={{
                 flexDirection:'row',
                 marginTop: 5,

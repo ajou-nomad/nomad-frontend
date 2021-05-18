@@ -13,6 +13,11 @@ import { COLORS, icons } from '../constants';
 
 const CartButton = (props) => {
 
+
+    const { storeName } = props;
+    
+    console.log('ddd', storeName);
+
     const navigation = useNavigation();
 
     return (
@@ -29,7 +34,7 @@ const CartButton = (props) => {
                 borderRadius: 38,
                 elevation: 5,
             }}
-            onPress={() => navigation.navigate('Cart',{items:props.items, time:props.time, location: props.deliveryPlace, storeName:props.storeName, deliDate: props.deliDate})}
+            onPress={() => navigation.navigate('Cart', { items: props.items, time: props.time, location: props.deliveryPlace, storeName: storeName, deliDate: props.deliDate })}
         >
             <Image
                 source={icons.cart}
@@ -42,6 +47,6 @@ const CartButton = (props) => {
             />
         </TouchableOpacity>
     );
-}
+};
 
 export default CartButton;

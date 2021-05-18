@@ -8,6 +8,7 @@ import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import { GOOGLE_API_KEY } from '@env';
 import axiosApiInstance from './axios';
+import firestore from '@react-native-firebase/firestore';
 
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 
@@ -73,62 +74,56 @@ export const autoLogin = async ({dispatch}) => {
         console.log('현재 로그인한 유저가 없음.');
         return Promise.reject('Not found user');
     }
-
-
 };
 
 export const googleLogin = async (response, dispatch) => {
 
-    // const currentUser = await GoogleSignin.getCurrentUser();
 
-    // console.log(currentUser);
+    Alert.alert(response.data.data.nickName + '님 반갑습니다.');
 
-    // const googleCredential = auth.GoogleAuthProvider.credential(response.data.idToken);
-    // await auth().signInWithCredential(googleCredential);
-
-    Alert.alert(response.data.data[0].nickName + '님 반갑습니다.');
-
-    const userData = {
-        memberType:  response.data.data[0].memberType,
-        email: response.data.data[0].email,
-        nickName: response.data.data[0].nickName,
-        phoneNum: response.data.data[0].phoneNum,
-        point: response.data.data[0].point,
-    }
+    const memberData = {
+        memberType:  response.data.data.memberType,
+        email: response.data.data.email,
+        nickName: response.data.data.nickName,
+        phoneNum: response.data.data.phoneNum,
+        point: response.data.data.point,
+    };
 
     // // 전역 변수에 user 저장
-    await dispatch({ type: 'SIGN_IN', member: userData });
+    await dispatch({ type: 'SIGN_IN', member: memberData });
 };
 
 
 export const emailPasswordLogin = (data, dispatch) => {
-    // firebase에 login
+
     auth()
         .signInWithEmailAndPassword(data.email, data.pw)
         .then( async () => {
-            const user = auth().currentUser;
-            Alert.alert(user.displayName + '님 반갑습니다.');
-
-            const idToken = await user.getIdToken();
-            const fcmToken = await messaging().getToken();
-
-            const payload = {
-                idToken: idToken,
-                fcmToken: fcmToken,
-            };
-            // // update fcmToken in DB
             axiosApiInstance
-                .get('/auth/user', payload)
+                .get('/member')
                 .then( async (response) => {
-                    // STORAGE에 token 저장
-                    await AsyncStorage.setItem('userToken', response.idToken);
-                    // 전역 변수에 token 저장
-                    await dispatch({ type: 'SIGN_IN', token: response.idToken });
+
+                    if (response.data.data === 400){
+                        Alert.alert('해당하는 멤버정보가 없습니다.');
+                        logout(dispatch);
+                    } else {
+
+                        Alert.alert(response.data.data.nickName + '님 반갑습니다.');
+                        const memberData = {
+                            memberType:  response.data.data.memberType,
+                            email: response.data.data.email,
+                            nickName: response.data.data.nickName,
+                            phoneNum: response.data.data.phoneNum,
+                            point: response.data.data.point,
+                        };
+
+                        //전역 변수에 member정보 저장
+                        await dispatch({ type: 'SIGN_IN', member: memberData });
+                    }
                 })
                 .catch((error) => {
-                    console.log(error);
+                    Alert.alert(error.message);
                 });
-
         })
         .catch(error => {
             if (error.code === 'auth/email-already-in-use') {
@@ -153,6 +148,36 @@ export const emailPasswordLogin = (data, dispatch) => {
 
             console.error(error);
         });
+};
+
+export const logout = async (dispatch) => {
+    const googleUser = await GoogleSignin.getCurrentUser();
+    const user = auth().currentUser;
+
+    if ( user && googleUser ) {
+        try {
+            await GoogleSignin.revokeAccess();
+            await GoogleSignin.signOut();
+            console.log('구글 로그아웃성공');
+            await auth()
+                    .signOut()
+                    .then(() => {
+                      console.log('파이어베이스 로그아웃성공');
+                      dispatch({ type: 'SIGN_OUT'});
+                    });
+        } catch (error) {
+            console.error(error);
+        }
+    } else if (user) {
+        await auth()
+            .signOut()
+            .then(() => {
+              console.log('파이어베이스 로그아웃성공');
+              dispatch({ type: 'SIGN_OUT'});
+            });
+    } else {
+        console.log('로그인 상태가 아닙니다.');
+    }
 };
 
 // 장소, 명칭 -> 좌표
@@ -280,6 +305,9 @@ export const calculateDistance = (origLat, origLon, markerLat, markerLon) => {
 };
 
 
+// -----------------------------------------------------------------------------------------
+
+
 export const setData = async (key, value) => {
     try {
         const jsonValue = JSON.stringify(value);
@@ -326,4 +354,46 @@ export const clearAll = async () => {
       // clear error
     }
     console.log('Done.');
+};
+
+
+export const getDaliyGroupData = async () => {
+
+    getData('groupData').then((data) => {
+        const dailyData = data.filter((goal) => goal.groupType === 'day');
+
+        console.log(JSON.stringify(dailyData, null, 4));
+    });
+};
+
+
+export const getWeeklyGroupData = async () => {
+
+    getData('groupData').then((data) => {
+        const weeklyData = data.filter((goal) => goal.groupType === 'weekly');
+
+        console.log(JSON.stringify(weeklyData, null, 4));
+    });
+};
+
+export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, navigation) => {
+    
+    console.log('createChatRoom: ', storeName, deliveryTime, deliveryPlace, navigation);
+    firestore()
+        .collection('THREADS')
+        .add({
+            name: storeName + ' ' + deliveryPlace + ' ' + deliveryTime,
+            latestMessage: {
+                text: '주문 생성이 성공되었습니다. 👏',
+                createdAt: new Date().getTime(),
+            },
+        })
+        .then(docRef => {
+            docRef.collection('MESSAGES').add({
+                text: '주문 생성이 성공되었습니다. 👏',
+                createdAt: new Date().getTime(),
+                system: true,
+            });
+            navigation.navigate('ChatList');
+        });
 };

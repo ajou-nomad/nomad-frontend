@@ -41,7 +41,6 @@ const MenuRoute = ({ route }) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
             <ScrollView>
                 <FlatList data={menu} keyExtractor={item => item.menuId} renderItem={renderItem} />
-                {/* <Menu time={route.time} location={route.location} storeName={route.storeName} /> */}
             </ScrollView>
         </SafeAreaView>
     );
@@ -75,21 +74,7 @@ const renderScene = SceneMap({
 function StoreDetail({ route }) {
     const { deliDate, deliveryPlace, time, item } = route.params;
 
-
-    // console.log('ddd', route.params);
-
-    // const storeInfo = {
-    //     'address': route.params.item.address,
-    //     'closeTime': route.params.item.closeTime,
-    //     'deliveryTip': route.params.item.deliveryTip,
-    //     'latitude': route.params.item.latitude,
-    //     'logoUrl': route.params.item.logoUrl,
-    //     'longitude': route.params.item.longitude,
-    //     'openTime': route.params.item.openTime,
-    //     'phoneNumber': route.params.item.phoneNumber,
-    //     'storeId': route.params.item.storeId,
-    //     'storeName': route.params.item.storeName,
-    // };
+    console.log('StoreDetail: ', item);
 
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
@@ -150,10 +135,6 @@ function StoreDetail({ route }) {
                         <Text style={{ ...FONTS2.body2 }}>배달팁</Text>
                         <Text style={{ ...FONTS2.body2 }}>2,000원</Text>
                     </View>
-
-                    <TouchableOpacity>
-                        <Text style={{ ...FONTS2.body2, color: 'blue' }}>매장 생성 그룹 보기</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -178,7 +159,7 @@ function StoreDetail({ route }) {
                     renderTabBar={renderTabBar}
                 />
             </View>
-            <CartButton items={route.params.items} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} storeName={route.params.storeName} />
+            <CartButton storeName={item.storeName} items={route.params.items} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} />
         </View>
     );
 }

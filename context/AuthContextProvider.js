@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 // state의 초기 값을 설정한다
 const initialState = {
-  isSignIn: false,
+  isSignedIn: false,
   member: {
     memberType: 'User',
     phoneNum: 0,
@@ -24,26 +24,22 @@ const AuthContextProvider = ({ children }) => {
             case 'RESTORE_TOKEN':
               return {
                 ...prevState,
-                // userToken: action.token,
-                user: {
-                  userType: action.type,
-                }
+                member: {
+                  memberType: action.type,
+                },
               };
             case 'SIGN_IN':
               return {
                 ...prevState,
-                isSignIn: true,
-                // userToken: action.token,
+                isSignedIn: true,
+
                 member: action.member,
               };
             case 'SIGN_OUT':
               return {
                 ...prevState,
-                isSignIn: false,
-                // userToken: null,
-                member: {
-                  memberType: initialState.member.memberType,
-                },
+                isSignedIn: false,
+                member: initialState.member,
               };
           }
         },
