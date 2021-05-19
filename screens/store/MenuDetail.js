@@ -200,7 +200,7 @@ function MenuDetail({ navigation, route:{params} }) {
                         alignItems: 'center',
                     }}>
                     {/* 음식 사진 */}
-                    <View style={{ height: 150, width: '80%', marginTop: 20, backgroundColor: '#ced4da', justifyContent: 'center', alignItems: 'center', }}>
+                    <View style={{ height: 450, width: '80%', marginTop: 20, backgroundColor: '#ced4da', justifyContent: 'center', alignItems: 'center', }}>
                         <Text style={{ ...FONTS2.h1 }}>{menuDetail.photo}</Text>
                     </View>
                     {/* 메뉴 이름 */}
@@ -234,7 +234,7 @@ function MenuDetail({ navigation, route:{params} }) {
                     </View>
                 
                     {/* 맛 선택 */}
-                    <View style={{ borderTopWidth: 0.5, marginTop: 10, }}>
+                    {/* <View style={{ borderTopWidth: 0.5, marginTop: 10, }}>
                         <Text style={{ ...FONTS2.h2, marginTop: 10 }}>맛 선택 ({menuDetail.quantity}개)</Text>
                         <FlatList
                             data={menuDetail.flavors}
@@ -250,7 +250,7 @@ function MenuDetail({ navigation, route:{params} }) {
                             style={{ marginTop: 10, }}
                             keyExtractor={item => item.id}
                         />
-                    </View>
+                    </View> */}
                 </View>
             </View>
         );

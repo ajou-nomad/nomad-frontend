@@ -7,14 +7,14 @@ import { SIZES, icons, FONTS, COLORS } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
 
 const SelectMethod = (props) => {
-
+    // console.log(JSON.stringify(props,null,4));
     const navigation = useNavigation();
     const imgSource = (props.iconName === 'point') ? icons.point : icons.credit_card;
 
     return (
         <TouchableOpacity
             onPress={() => {
-                (props.method === '포인트') ? navigation.replace('Point', { paymentInfo: props.paymentInfo}) : navigation.replace('Payment', { paymentInfo: props.paymentInfo});
+                (props.method === '포인트') ? navigation.replace('Point', { paymentInfo: props.paymentInfo, postData: props.postData}) : navigation.replace('Payment', { paymentInfo: props.paymentInfo, postData: props.postData });
             }}
         >
             <View style={cardStyle(props.disable)}>

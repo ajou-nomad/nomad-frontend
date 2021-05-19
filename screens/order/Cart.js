@@ -18,16 +18,24 @@ import OrderMenuItem from '../../components/item/OrderMenuItem';
 import { COLORS, FONTS2 } from '../../constants';
 
 const Cart = ({ navigation, route:{params} }) => {
-    console.log(params.cartItems);
+    // console.log(params);
+    const datePicker = params.datePicker;
 
     // const [totalPrice, setTotalPrice] = useState(0);
-    let totalPrice = 0;
+    let itemPrice = 0;
     for(let indexOfCart = 0; indexOfCart<params.cartItems.length; indexOfCart++){
-        totalPrice += params.cartItems[indexOfCart].cost;
+        itemPrice += params.cartItems[indexOfCart].cost;
     }
-    const itemPriceString = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let deliveryTip = 0;
+    if (params.cartItems.length > 0){
+        deliveryTip = params.storeInfo.deliveryTip;
+    }
+    const totalPrice = itemPrice + deliveryTip;
 
-    const totalPriceString = (totalPrice + params.storeInfo.deliveryTip).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const itemPriceString = itemPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const deliveryTipString = deliveryTip.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const totalPriceString = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
     const renderBody = () => {
         return (
             <View style={{ backgroundColor: COLORS.white, }}>
@@ -75,7 +83,7 @@ const Cart = ({ navigation, route:{params} }) => {
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                         <Text style={{ ...FONTS2.body2 }}>배달비</Text>
-                        <Text style={{ ...FONTS2.body2 }}>{params.storeInfo.deliveryTip}원</Text>
+                        <Text style={{ ...FONTS2.body2 }}>{deliveryTipString}원</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, paddingTop: 15, borderTopWidth: 0.5 }}>
                         <Text style={{ ...FONTS2.h2 }}>총 결제 금액</Text>
@@ -96,9 +104,9 @@ const Cart = ({ navigation, route:{params} }) => {
                 {renderBody()}
                 {/* 그룹 생성하기 버튼 */}
                 {(params.location.buildingName && params.deliDate && params.time) ? (
-                    <BottomButton onPress={() => navigation.navigate('CheckOrder', { time: params.time, location: params.location, storeInfo: params.storeInfo })} title="결제하기" />
+                    <BottomButton onPress={() => !totalPrice ? alert('? 아무것도 사지 않으셨는데 결제는 어떻게 하시려고요??') : navigation.navigate('CheckOrder', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupId: params.groupId })} title="결제하기" />
                 ) : (
-                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', {items:params.items, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate })} title="그룹 생성하기" />
+                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupId: params.groupId, datePicker:datePicker })} title="그룹 생성하기" />
                 )}
             </ScrollView>
         </View>

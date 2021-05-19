@@ -31,17 +31,20 @@ function CreateGroupDetail({ navigation, route: { params } }) {
     } else if (todayFullDate.getDay() === 6){
      todayFullDate.setDate(todayFullDate.getDate() + 2);
     }
-    const today = JSON.stringify(todayFullDate.toJSON()).substr(1,10);
+    const todayForWeekly = JSON.stringify(todayFullDate.toJSON()).substr(1,10);
+    // console.log(params);
 
-    const dayArrayKorFixed = params.items === undefined ? [0,0,0,0,0] : params.items.datePicker[0];
-    const dateDifference = params.items === undefined ? [0,0,0,0] : params.items.datePicker[1];
+    const dayArrayKorFixed = params.datePicker === undefined ? [0,0,0,0,0] : params.datePicker[0];
+    const dateDifference = params.datePicker === undefined ? [0,0,0,0] : params.datePicker[1];
 
     const [date, setDate] = useState(todayFullDate);
-
+    const today = params.deliDate !== undefined ? params.deliDate : todayForWeekly;
     const [groupDate,setGroupDate] = useState(today);
 
+    const [maxValue,setMax] = useState(1);
+
     const setGroupDateValue = (dateDifference) =>{
-        const d = new Date(today);
+        const d = new Date(todayForWeekly);
         d.setDate(d.getDate()+dateDifference);
         return JSON.stringify(d.toJSON()).substr(1,10);
    };
@@ -150,6 +153,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                                 buttonTextStyle={{ color: 'black', ...FONTS2.h1 }}
                                 buttonStyle={{ borderColor: 'black' }}
                                 countTextStyle={{ color: 'black', ...FONTS2.h1 }}
+                                onChange={(value)=>setMax(value)}
                             />
                         </View>
                         <View style={{
@@ -160,10 +164,10 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                         }} />
                     </View>
                 </View>
-                    
+
                 {/* Footer */}
-                
-                <BottomButton onPress={() => navigation.navigate('CheckOrder', {deliDate: groupDate, time: JSON.stringify(date).slice(12,17), location: {...params.location,buildingName:buildingName}, storeName: params.storeName })} title="그룹 생성하기" />
+
+                <BottomButton onPress={() => navigation.navigate('CheckOrder', { totalPrice: params.totalPrice, cartItems: params.cartItems, deliDate: groupDate, time: JSON.stringify(date).slice(12,17), location: {...params.location,buildingName:buildingName}, storeInfo: params.storeInfo , groupId: undefined, maxValue: maxValue})} title="그룹 생성하기" />
             </ScrollView>
         </KeyboardAvoidingView>
     );
