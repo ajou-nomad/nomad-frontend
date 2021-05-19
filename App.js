@@ -6,6 +6,7 @@ import Toast from 'react-native-toast-message';
 import {NavigationContainer} from '@react-navigation/native';
 import RootNavigation from './navigation/RootNavigation';
 import {images} from './constants';
+import storage from '@react-native-firebase/storage';
 
 
 
@@ -18,7 +19,7 @@ const App = () => {
 
   useEffect(() => {
 
-    // setData('groupData', groupData);
+    setData('groupData', groupData);
 
     setData('orderData', orderData);
 
@@ -86,77 +87,77 @@ const storeData = [
     closeTime: '22:00',
     deliveryTip: 2000,
     rate: 2.8,
-    logoUrl: images.bbacks,
+    logoUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fpaik.png?alt=media&token=25375f0a-592d-4b66-b801-6cae5d1cfaee',
     menu:[
       {
         menuId: 1,
         menuName: '앗!메리카노(ICED)',
         cost: 2000,
         description: '빽다방만의 맛과 향을 더한 100% 아라비카 로스팅 원두로 뽑아내 깊고 진한 맛의 앗!메리카노',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F04_%EC%95%97%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8_ICED-1.jpg?alt=media&token=d30d224f-53d5-4946-a943-fddc65bf4576',
       },
       {
         menuId: 2,
         menuName: '앗!메리카노(HOT)',
         cost: 1500,
         description: '빽다방만의 맛과 향을 더한 100% 아라비카 로스팅 원두로 뽑아내 깊고 진한 맛의 앗!메리카노',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F03_%EC%95%97%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8_HOT.jpg?alt=media&token=529afacf-945e-46f9-b0b1-ed2d6f41103d',
       },
       {
         menuId: 3,
         menuName: '바닐라라떼(ICED)',
         cost: 3000,
         description: '부드러운 우유와 달콤하고 은은한 바닐라가 조화를 이루는 음료',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F13_%EB%B0%94%EB%8B%90%EB%9D%BC%EB%9D%BC%EB%96%BC_ICED-1.jpg?alt=media&token=3197127c-95f2-4ade-8c81-7e3a067c7815',
       },
       {
         menuId: 4,
         menuName: '바닐라라떼(HOT)',
         cost: 2500,
         description: '부드러운 우유와 달콤하고 은은한 바닐라가 조화를 이루는 음료',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F12_%EB%B0%94%EB%8B%90%EB%9D%BC%EB%9D%BC%EB%96%BC_HOT.jpg?alt=media&token=3f13af82-5b4c-416f-989e-8637d5ee6095',
       },
       {
         menuId: 5,
         menuName: '달달연유라떼(ICED)',
         cost: 2500,
         description: '달달하고 향긋한 베트남식 연유라떼',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F%EB%8B%AC%EB%8B%AC%EC%97%B0%EC%9C%A0%EB%9D%BC%EB%96%BC_%EC%95%84%EC%9D%B4%EC%8A%A4.jpg?alt=media&token=2dbb82f0-244d-44fb-b7cc-5cf6ab11df76',
       },
       {
         menuId: 6,
         menuName: '달달연유라떼(HOT)',
         cost: 2500,
         description: '달달하고 향긋한 베트남식 연유라떼',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F%EB%8B%AC%EB%8B%AC%EC%97%B0%EC%9C%A0%EB%9D%BC%EB%96%BC_%ED%95%AB.jpg?alt=media&token=a019986a-1623-4353-a0db-40ee07631b71',
       },
       {
         menuId: 7,
         menuName: '카라멜마키아또(ICED)',
         cost: 3500,
         description: '카라멜소스와 신선한 우유, 에스프레소로 맛을 낸 달콤한 빽다방 인기메뉴',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F17_%EC%B9%B4%EB%9D%BC%EB%A9%9C%EB%A7%88%ED%82%A4%EC%95%84%EB%98%90_ICED-1.jpg?alt=media&token=f3ebb79f-c62e-47c7-a045-0a2dcb965367',
       },
       {
         menuId: 8,
         menuName: '카라멜마키아또(HOT)',
         cost: 3000,
         description: '카라멜소스와 신선한 우유, 에스프레소로 맛을 낸 달콤한 빽다방 인기메뉴',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F16_%EC%B9%B4%EB%9D%BC%EB%A9%9C%EB%A7%88%ED%82%A4%EC%95%84%EB%98%90_HOT.jpg?alt=media&token=0a1d1187-bc99-4d68-b174-f2293987cf92',
       },
       {
         menuId: 9,
         menuName: '완전아이스초코',
         cost: 3500,
         description: '초코에 퐁당 빠지고 싶을때~!? 진짜~! 완~전 진한 초코라떼',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2FHOT-%EC%99%84%EC%A0%84%EC%B4%88%EC%BD%94-450x588.png?alt=media&token=273c009e-bf92-430c-b404-4ce4b588182a',
       },
       {
         menuId: 10,
         menuName: '완전핫초코',
         cost: 3000,
         description: '초코에 퐁당 빠지고 싶을때~!? 진짜~! 완~전 진한 초코라떼',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2FHOT-%EC%99%84%EC%A0%84%EC%B4%88%EC%BD%94-450x588.png?alt=media&token=273c009e-bf92-430c-b404-4ce4b588182a',
       },
     ],
   },
@@ -173,35 +174,36 @@ const storeData = [
     closeTime: '22:00',
     deliveryTip: 2000,
     rate: 4.2,
-    logoUrl: images.starbucks,
+    logoUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fstarbucks.png?alt=media&token=4ae10322-dab3-4511-b2a6-0bd375393260',
+
     menu:[
       {
         menuId: 11,
         menuName: '아이스 카페 아메리카노',
         cost: 4100,
         description: '진한 에스프레소에 시원한 정수물과 얼음을 더하여 스타벅스의 깔끔하고 강렬한 에스프레소를 가장 부드럽고 시원하게 즐길 수 있는 커피',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F%EC%95%84%EC%9D%B4%EC%8A%A4%EC%B9%B4%ED%8E%98%EC%95%84%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8.jpg?alt=media&token=bc38f7c8-63d8-499e-8a55-4ea29bd66ebd',
       },
       {
         menuId: 12,
         menuName: '아이스 카푸치노',
         cost: 4600,
         description: '풍부하고 진한 에스프레소에 신선한 우유와 우유 거품이 얼음과 함께 들어간 시원하고 부드러운 커피 음료',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F%EC%95%84%EC%9D%B4%EC%8A%A4%EC%B9%B4%ED%91%B8%EC%B9%98%EB%85%B8.jpg?alt=media&token=44c1759f-d899-4ddf-ac39-2528547596ee',
       },
       {
         menuId: 13,
         menuName: '스타벅스 돌체 라떼',
         cost: 5600,
         description: '스타벅스의 다른 커피 음료보다 더욱 깊은 커피의 맛과 향에 깔끔한 무지방 우유와 부드러운 돌체 시럽이 들어간 음료로 달콤하고 진한 커피 라떼',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4%20%EB%8F%8C%EC%B2%B4%20%EB%9D%BC%EB%96%BC.jpg?alt=media&token=5a28a49c-3c3c-435f-970f-52cadd420daf',
       },
       {
         menuId: 14,
         menuName: '자바 칩 프라푸치노',
         cost: 6100,
         description: '커피, 모카 소스, 진한 초콜릿 칩이 입안 가득 느껴지는 스타벅스에서만 맛볼 수 있는 프라푸치노',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F%EC%9E%90%EB%B0%94%20%EC%B9%A9%20%ED%94%84%EB%9D%BC%ED%91%B8%EC%B9%98%EB%85%B8.jpg?alt=media&token=c0ba39d4-7ff5-4126-84c6-e821ba362288',
       },
     ],
   },
@@ -218,14 +220,14 @@ const storeData = [
     closeTime: '22:00',
     deliveryTip: 2000,
     rate: 3.7,
-    logoUrl: '',
+    logoUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fhollys.jpg?alt=media&token=1dd864d1-1446-4707-a9e4-6117b28efd72',
     menu:[
       {
         menuId: 15,
         menuName: '디카페인 아메리카노',
         cost: 4100,
         description: '부드러운 풍미와 균형잡힌 바디감의 디카페인 아메리카노',
-        imgUrl: '',
+        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F%EB%94%94%EC%B9%B4%ED%8E%98%EC%9D%B8%20%EC%95%84%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8.png?alt=media&token=426037b8-bdb7-4a43-867a-40f335d42840',
       },
     ],
   },

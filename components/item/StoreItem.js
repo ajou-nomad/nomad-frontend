@@ -17,16 +17,15 @@ import { FONTS2, images, icons, COLORS } from '../../constants';
 const StoreItem = ({ deliveryPlace, deliDate, datePicker, storeData, isLikeList }) => {
 
     const navigation = useNavigation();
-    // console.log(JSON.stringify(storeData,null,4))
 
     return (
         <View style={styles.container}>
             <Image
-                source={images.store_logo}
+                source={{ uri: storeData.logoUrl}}
                 resizeMode='contain'
                 style={{
-                    width: 60,
-                    height: 60,
+                    width: 55,
+                    height: 55,
                 }}
             />
 
@@ -51,7 +50,7 @@ const StoreItem = ({ deliveryPlace, deliDate, datePicker, storeData, isLikeList 
                 onPress={() => navigation.navigate('StoreDetail', { time: null, storeName: storeData.storeName , deliveryPlace: deliveryPlace, deliDate: deliDate,storeInfo: storeData, datePicker: datePicker })}
             >
                 {!isLikeList ? (
-                    <Text style={{ ...FONTS2.body3, color: COLORS.white }}>선택</Text>
+                    <Text style={{ ...FONTS2.body3, color: COLORS.black }}>선택</Text>
                 ) : (
                     <Text style={{ ...FONTS2.body2, color: COLORS.black, fontSize: 19 }}>매장 보기</Text>
                 )}

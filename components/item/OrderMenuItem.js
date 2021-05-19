@@ -35,10 +35,10 @@ const orderInfo = {
 const OrderMenuItem = ({ isCart, orderDetail }) => {
     // console.log(orderDetail);
     return (
-        <View style={{ borderBottomWidth: 0.5, paddingBottom: 15, borderBottomColor: '#ced4da' }}>
+        <View style={{ borderBottomWidth: 0.5, paddingBottom: 15, borderBottomColor: '#ced4da', marginBottom: 25, }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15, }}>
-                <Text style={{ ...FONTS2.body2, fontSize: 26 }}>{orderDetail.menuName}</Text>
-                <Text style={{ ...FONTS2.body2, fontSize: 26 }}>{orderDetail.quantity}개</Text>
+                <Text style={{ ...FONTS2.body2,  }}>{orderDetail.menuName}</Text>
+                <Text style={{ ...FONTS2.body2,  }}>{orderDetail.quantity}개</Text>
             </View>
 
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>

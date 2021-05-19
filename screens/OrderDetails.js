@@ -3,13 +3,15 @@
 /* eslint-disable no-alert */
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, LogBox, Image } from 'react-native';
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 
 import Header from '../components/layout/Header';
 import { FONTS2, COLORS } from '../constants';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+
+LogBox.ignoreAllLogs();
 
 import { getData } from '../utils/helper';
 
@@ -24,16 +26,17 @@ const OrderDetails = () => {
     console.log('orderDetails ', orderData);
 
     const ReviewButton = ({ item }) => {
+        const [items, setItems] = useState(item);
         return (
             <View>
-                {item.review === null ? (
-                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('CreateReview', { item: item })}>
+                {items.review === null ? (
+                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('CreateReview', { item: items, setItems: setItems })}>
                         <Text style={styles.ReviewButton}>
                             리뷰 쓰기
                         </Text>
                     </TouchableOpacity>
                 ) : (
-                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('MyReview', { item: item })}>
+                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('MyReview', { item: items })}>
                         <Text style={styles.ReviewButton}>
                             작성한 리뷰 보기
                         </Text>
@@ -142,7 +145,6 @@ const OrderDetails = () => {
     return (
         <ScrollView style={styles.container}>
             <Header title="주문 내역" small='true' />
-
             <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={renderItem} />
         </ScrollView>
     );
