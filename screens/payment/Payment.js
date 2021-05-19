@@ -16,6 +16,7 @@ const Payment = ({route, navigation}) => {
       storeId: postData.storeInfo.storeId,
       time: postData.time,
       date: postData.deliDate,
+      maxValue: postData.maxValue,
       grouptype: (postData.deliDate === todayString) ? 'day' : 'weekly',
       latitude: postData.location.latitude,
       longitude: postData.location.longitude,
@@ -42,12 +43,13 @@ const Payment = ({route, navigation}) => {
         orderTime: new Date(),
       },
     };
-    
-    participationGroup(participationGroupData.groupId, participationGroupData.orderData);
+
+    console.log(JSON.stringify(participationGroupData,null,4));
+    // participationGroup(participationGroupData.groupId, participationGroupData.orderData);
   }
 
 
-  
+
 
   const paymentTermination = (response) => {
     console.log(response);

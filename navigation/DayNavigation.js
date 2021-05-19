@@ -14,6 +14,7 @@ const DayNavigation = ({route, navigation}) => {
 
     }, []);
     const groupData = route.params.groupData;
+    const storeData = route.params.storeData;
     return (
         <DayStack.Navigator
             screenOptions={{
@@ -21,7 +22,7 @@ const DayNavigation = ({route, navigation}) => {
             }}
             initialRouteName={'DayDelivery'}
         >
-            <DayStack.Screen name="DayDelivery" component={DayDelivery} initialParams={{groupData: groupData}} />
+            <DayStack.Screen name="DayDelivery" component={DayDelivery} initialParams={{groupData: groupData, storeData: storeData}} />
             <DayStack.Screen name="GroupList" component={GroupList} />
             {/* 채팅방, 뭐 등등 추가시 작성  */}
             <DayStack.Screen name="SearchPlace" component={SearchPlace} />

@@ -30,7 +30,7 @@ const CartButton = (props) => {
                 borderRadius: 38,
                 elevation: 5,
             }}
-            onPress={() => navigation.navigate('Cart',{cartItems: props.cartItems, storeInfo:props.storeInfo, time:props.time, location: props.deliveryPlace, deliDate: props.deliDate, groupId: props.groupId})}
+            onPress={() => navigation.navigate('Cart',{cartItems: props.cartItems, storeInfo:props.storeInfo, time:props.time, location: props.deliveryPlace, deliDate: props.deliDate, groupId: props.groupId, datePicker:props.datePicker})}
         >
             <Image
                 source={icons.cart}

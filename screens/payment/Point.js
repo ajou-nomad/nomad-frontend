@@ -6,15 +6,20 @@ const Point = ({ route, navigation }) => {
 
     const { paymentInfo, postData } = route.params;
 
-    // console.log(postData);
+    console.log(postData.deliDate);
+    const today = new Date();
+    const todayString = JSON.stringify(today).substr(1,10);
+    console.log(todayString)
+    console.log(postData.deliDate);
 
     if (postData.groupId === undefined){
-      const today = new Date();
-      const todayString = JSON.stringify(today).slice(1,10);
+      // const today = new Date();
+      // const todayString = JSON.stringify(today).slice(1,10);
       const creationGroupData = {
         storeId: postData.storeInfo.storeId,
         time: postData.time,
         date: postData.deliDate,
+        maxValue: postData.maxValue,
         grouptype: (postData.deliDate === todayString) ? 'day' : 'weekly',
         latitude: postData.location.latitude,
         longitude: postData.location.longitude,
@@ -30,7 +35,6 @@ const Point = ({ route, navigation }) => {
       };
       console.log(JSON.stringify(creationGroupData,null,4));
     } else {
-  
       const participationGroupData = {
         groupId: postData.groupId,
         orderData: {

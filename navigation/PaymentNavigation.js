@@ -19,7 +19,7 @@ const PaymentNavigation = ({route, navigation}) => {
             }}
             initialRouteName={'PaymentMethods'}
         >
-            <PaymentStack.Screen name="PaymentMethods" component={PaymentMethods} initialParams={{totalData:route.params}} />
+            <PaymentStack.Screen name="PaymentMethods" component={PaymentMethods} initialParams={{totalData:route.params.totalData}} />
             <PaymentStack.Screen name="Point" component={Point} />
             <PaymentStack.Screen name="Payment" component={Payment} />
             {/* 채팅방, 뭐 등등 추가시 작성  */}

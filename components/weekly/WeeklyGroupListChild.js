@@ -32,6 +32,7 @@
    const currentGroup = props.route.params.currentGroup;
    const back = props.route.params.back;
    const groupList = props.route.params.groupList;
+   const storeData = props.route.params.storeData;
 
    const goBack = () => {
      props.navigation.navigate(back,{
@@ -93,7 +94,7 @@
      <>
        {Header()}
        {ListOfGroup()}
-       <NewGroupButton initLocation={location} deliDate={date} />
+       <NewGroupButton initLocation={location} deliDate={date} storeData={storeData} />
      </>
    );
  }
