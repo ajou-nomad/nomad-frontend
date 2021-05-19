@@ -23,8 +23,6 @@ const OrderDetails = () => {
         getData('orderData').then(data => setOrderData(data));
     }, []);
 
-    console.log('orderDetails ', orderData);
-
     const ReviewButton = ({ item }) => {
         const [items, setItems] = useState(item);
         return (
