@@ -44,45 +44,11 @@ const App = () => {
     // setData('orderData', orderData);
     // setData('groupData',groupData);
 
-    // addData('storeData', testData2);
-
-    // getData('groupData').then( data => console.log(JSON.stringify(data, null, 4)))
-
-    // getDaliyGroupData().then( data => console.log(JSON.stringify(data, null, 4)));
-    // clearAll();
-
-
 
 
     // participationGroup(2,{orderata:1 });
 
     // getData('orderData').then( data => console.log(JSON.stringify(data, null, 4)))
-
-
-
-
-
-
-
-
-
-
-    // setData('orderData', orderData);
-
-    // setData('storeData', storeData);
-
-    // addData('storeData', testData2);
-
-    // Toast.show({
-    //   type: 'success',
-    //   position: 'top',
-    //   text1: '배달 알림',
-    //   text2: '배달모집이 완료되었습니다. 👋',
-    //   visibilityTime: 4000,
-    //   autoHide: true,
-    //   topOffset: 30,
-    //   bottomOffset: 40,
-    // });
 
 
 
@@ -233,8 +199,8 @@ const storeData = [
     phoneNumber: '1522-3232',
 
     address: '경기도 수원시 팔달구 우만동 58-32',
-    latitude: 37.2783595,
-    longitude: 127.046209,
+    latitude: 37.279694366226124,
+    longitude: 127.04334752495063,
 
     openTime: '07:00',
     closeTime: '22:00',
@@ -278,8 +244,8 @@ const storeData = [
     phoneNumber: '031-211-2884',
 
     address: '경기 수원시 영통구 중부대로 258',
-    latitude: 37.2742778,
-    longitude: 127.0439584,
+    latitude: 37.274346079201365,
+    longitude: 127.04396912671824,
 
     openTime: '08:00',
     closeTime: '22:00',

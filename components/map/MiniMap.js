@@ -4,12 +4,11 @@
 
 import React, {useRef} from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { icons } from '../../constants';
 const MiniMap = ({location, onPlaceChange, prevScreen}) => {
 
     const mapView = useRef();
-
 
     return (
         <>
@@ -37,22 +36,20 @@ const MiniMap = ({location, onPlaceChange, prevScreen}) => {
             </View>
 
         ) : (
-            <View style={{ flex: 1 }}>
-                <MapView
-                    ref={mapView}
-                    style={{ flex: 1 }}
-                    provider={PROVIDER_GOOGLE}
-                    initialRegion={{
-                        latitude: location.latitude,
-                        longitude: location.longitude,
-                        latitudeDelta: 0.0033,
-                        longitudeDelta: 0.0033,
-                    }}
+            <MapView
+                style={{ flex: 1, width: '100%',height: 200 }}
+                provider={PROVIDER_GOOGLE}
+                initialRegion={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+                }}
+            >
+                <Marker
+                    coordinate={{latitude: location.latitude, longitude: location.longitude}}
                 />
-                <View style={styles.markerFixed}>
-                    <Image style={styles.marker} source={icons.pin} />
-                </View>
-            </View>
+            </MapView>
         )}
         </>
     );

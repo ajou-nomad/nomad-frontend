@@ -1,3 +1,4 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
@@ -25,6 +26,7 @@ import Menu from '../../components/item/Menu';
 import CartButton from '../../components/CartButton';
 import Review from '../../screens/review/Review';
 import StoreInfo from './StoreInfo';
+
 
 // 메뉴 (flatlist로 바꾸기)
 const MenuRoute = ({ route }) => {
