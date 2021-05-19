@@ -81,7 +81,7 @@ export default function GroupList({navigation, route}) {
 
   const InfoOfGroup = ({item}) =>(
           <GroupInfo
-            groupId={item.groupId}
+            groupData={item}
             logo={item.logo}
             rate={item.rate}
             time={item.time}
