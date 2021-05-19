@@ -38,9 +38,10 @@ function CreateGroupDetail({ navigation, route: { params } }) {
     const dateDifference = params.datePicker === undefined ? [0,0,0,0] : params.datePicker[1];
 
     const [date, setDate] = useState(todayFullDate);
-    const today = params.deliDate !== undefined ? params.deliDate : todayForWeekly;
+    const today = params.deliDate !== (undefined || null) ? params.deliDate : todayForWeekly;
+    // console.log(today)
     const [groupDate,setGroupDate] = useState(today);
-
+    const [time,setTime] = useState(today);
     const [maxValue,setMax] = useState(1);
 
     const setGroupDateValue = (dateDifference) =>{
@@ -135,7 +136,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                             !params.time ?
                             <View style={{ marginVertical: 15,}}>
                                 <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>시간</Text>
-                                <DatePicker date={date} onDateChange={setDate} mode="time" minuteInterval={5} />
+                                <DatePicker date={date} onDateChange={(data)=>{data.setHours(data.getHours()+9);setTime(data);}} mode="time" minuteInterval={5}/>
                             </View>
                             :
                             <>
@@ -167,7 +168,9 @@ function CreateGroupDetail({ navigation, route: { params } }) {
 
                 {/* Footer */}
 
-                <BottomButton onPress={() => navigation.navigate('CheckOrder', { totalPrice: params.totalPrice, cartItems: params.cartItems, deliDate: groupDate, time: JSON.stringify(date).slice(12,17), location: {...params.location,buildingName:buildingName}, storeInfo: params.storeInfo , groupId: undefined, maxValue: maxValue})} title="그룹 생성하기" />
+                <BottomButton onPress={() => {
+                  navigation.navigate('CheckOrder', { totalPrice: params.totalPrice, cartItems: params.cartItems, deliDate: groupDate, time: JSON.stringify(time).slice(12,17), location: {...params.location,buildingName:buildingName}, storeInfo: params.storeInfo , groupData: params.groupData, maxValue: maxValue})
+                  }} title="그룹 생성하기" />
             </ScrollView>
         </KeyboardAvoidingView>
     );

@@ -69,7 +69,6 @@ export default App;
 
 
 
-
 // dummy Data
 
 
@@ -87,7 +86,7 @@ const storeData = [
     closeTime: '22:00',
     deliveryTip: 2000,
     rate: 2.8,
-    logoUrl: '',
+    logoUrl: images.bbacks,
     menu:[
       {
         menuId: 1,
@@ -174,7 +173,7 @@ const storeData = [
     closeTime: '22:00',
     deliveryTip: 2000,
     rate: 4.2,
-    logoUrl: '',
+    logoUrl: images.starbucks,
     menu:[
       {
         menuId: 11,

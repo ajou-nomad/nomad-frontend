@@ -56,7 +56,7 @@
 
    const InfoOfGroup = ({item}) =>(
            <GroupInfo
-             groupId={item.groupId}
+             groupData={item}
              logo={item.logo}
              shopName={item.shopName}
              rate={item.rate}

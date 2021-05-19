@@ -30,6 +30,7 @@
    const groupList = props.route.params.group.groupList;
    const storeData = props.route.params.storeData;
    const todayFullDate = new Date();
+   const todayHeader = JSON.stringify(new Date().toJSON()).substr(1,10);
    todayFullDate.setDate(todayFullDate.getDate() + 1);
    if (todayFullDate.getDay() === 0){
     todayFullDate.setDate(todayFullDate.getDate() + 1);
@@ -116,7 +117,7 @@
            <Text style={styles.backButton}>&lt;</Text>
          </TouchableOpacity>
          <Text numberOfLines={1} style={styles.headerLocationText}>{location.buildingName}</Text>
-         <Text style={styles.headerDateText}>{today}</Text>
+         <Text style={styles.headerDateText}>{todayHeader}</Text>
        </View>
      );
    };
