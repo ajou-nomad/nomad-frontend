@@ -150,6 +150,10 @@ const storeKeeperStack = () => {
                 <Stack.Screen name="Register" component={RegisterStore} />
                 <Stack.Screen name="RegisterStoreDetail" component={RegisterStoreDetail} />
                 <Stack.Screen name="RegisterMenuDetail" component={RegisterMenuDetail} />
+
+
+                {/* 임시 */}
+                <Stack.Screen name="StoreTabs" component={StoreTabs} />
             </Stack.Navigator>
         );
     }

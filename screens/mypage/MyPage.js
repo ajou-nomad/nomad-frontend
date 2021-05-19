@@ -12,6 +12,7 @@ import { animations, icons, COLORS, SIZES, FONTS2 } from "../../constants";
 import MyPageButton from '../../components/MyPageButton';
 import auth from '@react-native-firebase/auth';
 import { AuthContext } from '../../context/AuthContextProvider';
+import { logout } from '../../utils/helper';
 
 
 
@@ -37,32 +38,7 @@ const MyPage = ({ navigation }) => {
 
   const signOutGoogle = async () => {
 
-    const user = auth().currentUser;
-
-    if ( user && user.providerData[0].providerId === 'google.com' ) {
-        try {
-            await GoogleSignin.revokeAccess();
-            await GoogleSignin.signOut();
-            console.log('구글 로그아웃성공');
-            await auth()
-                    .signOut()
-                    .then(() => {
-                      console.log('파이어베이스 로그아웃성공');
-                      dispatch({ type: 'SIGN_OUT'});
-                    });
-        } catch (error) {
-            console.error(error);
-        }
-    } else if (user) {
-        await auth()
-            .signOut()
-            .then(() => {
-              console.log('파이어베이스 로그아웃성공');
-              dispatch({ type: 'SIGN_OUT'});
-            });
-    } else {
-        console.log('로그인 상태가 아닙니다.');
-    }
+    logout(dispatch);
   };
 
   //추가적인 찜한 목록, 채팅방 등을 구현할 예정

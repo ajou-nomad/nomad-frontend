@@ -2,25 +2,35 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import React, {useState} from 'react';
-import { View, Text, TextInput, StyleSheet, Modal, TouchableOpacity } from 'react-native';
-import {FONTS2, SIZES, COLORS} from '../../constants';
+import { View, Text, TextInput, StyleSheet, Modal, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView } from 'react-native';
+import {FONTS2, SIZES, COLORS, icons} from '../../constants';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const AddMenu = ({modalVisible, closeModal, addMenu}) => {
 
     const [menuName, setMenuName] = useState('');
     const [menuPrice, setMenuPrice] = useState('');
     const [menuDescription, setMenuDescription] = useState('');
+    const [uploadImage, setUploadImage] = useState('');
 
     const resetMenuInfo = () => {
         setMenuName('');
         setMenuDescription('');
         setMenuPrice('');
+        setUploadImage('');
     };
+
+    const handleImage = () => {
+        launchImageLibrary({}, (res) => {
+            const source = { uri: res.uri };
+            setUploadImage(res.uri);
+        })
+    }
 
 
     return (
+
         <Modal
             animationType="slide"
             visible={modalVisible}
@@ -29,80 +39,120 @@ const AddMenu = ({modalVisible, closeModal, addMenu}) => {
                 closeModal();
             }}
         >
-            <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                    <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>메뉴 이름</Text>
-                    <TextInput
-                        style={{
-                            borderBottomWidth: 1,
-                            width: SIZES.width * 0.8,
-                            ...FONTS2.body2,
-                        }}
-                        placeholder="메뉴 이름을 입력해주세요."
-                        value={menuName}
-                        placeholderTextColor="#707070"
-                        selectionColor="#000000"
-                        onChangeText={(text)=> setMenuName(text)}
-                    />
-                    <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>메뉴 가격</Text>
-                    <TextInput
-                        style={{
-                            borderBottomWidth: 1,
-                            width: SIZES.width * 0.8,
-                            ...FONTS2.body2,
-                        }}
-                        placeholder="숫자만 입력해주세요."
-                        value={menuPrice}
-                        placeholderTextColor="#707070"
-                        selectionColor="#000000"
-                        onChangeText={(text)=> setMenuPrice(text)}
-                    />
-                    <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>메뉴 설명</Text>
-                    <TextInput
-                        style={{
-                            borderBottomWidth: 1,
-                            width: SIZES.width * 0.8,
-                            ...FONTS2.body2,
-                        }}
-                        placeholder="메뉴에 대해 설명해주세요."
-                        value={menuDescription}
-                        placeholderTextColor="#707070"
-                        selectionColor="#000000"
-                        onChangeText={(text)=> setMenuDescription(text)}
-                    />
-                    <View style={{flexDirection: 'row', justifyContent: 'space-around', width: SIZES.width * 0.7}}>
-                        <TouchableOpacity
-                            style={{ height: responsiveHeight(10), width: responsiveWidth(20) }}
-                            onPress={()=>{
-                                const menuInfo = Object.assign({
-                                    name: menuName,
-                                    price: menuPrice,
-                                    description: menuDescription,
-                                });
-                                resetMenuInfo();
-                                closeModal();
-                                addMenu(menuInfo);
+            <KeyboardAvoidingView style={{flex: 1}}>
+                <ScrollView
+                    contentContainerStyle={{ flexGrow: 1 }}
+                >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>메뉴 이름</Text>
+                        <TextInput
+                            style={{
+                                borderBottomWidth: 1,
+                                width: SIZES.width * 0.8,
+                                ...FONTS2.body2,
                             }}
+                            placeholder="메뉴 이름을 입력해주세요."
+                            value={menuName}
+                            placeholderTextColor="#707070"
+                            selectionColor="#000000"
+                            onChangeText={(text)=> setMenuName(text)}
+                        />
+                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>메뉴 가격</Text>
+                        <TextInput
+                            style={{
+                                borderBottomWidth: 1,
+                                width: SIZES.width * 0.8,
+                                ...FONTS2.body2,
+                            }}
+                            placeholder="숫자만 입력해주세요."
+                            value={menuPrice}
+                            placeholderTextColor="#707070"
+                            selectionColor="#000000"
+                            onChangeText={(text)=> setMenuPrice(text)}
+                        />
+                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>메뉴 설명</Text>
+                        <TextInput
+                            style={{
+                                borderBottomWidth: 1,
+                                width: SIZES.width * 0.8,
+                                ...FONTS2.body2,
+                                marginBottom: 20,
+                            }}
+                            placeholder="메뉴에 대해 설명해주세요."
+                            value={menuDescription}
+                            placeholderTextColor="#707070"
+                            selectionColor="#000000"
+                            onChangeText={(text)=> setMenuDescription(text)}
+                        />
+
+                        {
+                            uploadImage ? (
+                                <View>
+                                    <Image 
+                                        source={{ uri: uploadImage}}
+                                        resizeMode='contain'
+                                        style={{ width: 100, height: 100
+                                        }}
+                                    />
+                                </View>
+                            ) : (
+                                <View style={{borderWidth: 2,}}>
+                                <Image
+                                    source={icons.cancel}
+                                    resizeMode='contain'
+                                    style={{ width: 100, height: 100
+                                    }}
+                                />
+                            </View>
+
+
+                            )
+                        }
+                        <TouchableOpacity
+                            onPress={handleImage}
                         >
-                            <View style={styles.buttonView}>
-                                <Text style={{ ...FONTS2.body3, fontWeight: 'bold' }}>추가</Text>
+                            <View style={{}}>
+                                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>사진 첨부</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            style={{ height: responsiveHeight(10), width: responsiveWidth(20) }}
-                            onPress={()=> {
-                                resetMenuInfo();
-                                closeModal();
-                            }}
-                        >
-                            <View style={styles.buttonView}>
-                                <Text style={{ ...FONTS2.body3, fontWeight: 'bold' }}>취소</Text>
-                            </View>
-                        </TouchableOpacity>
+
+
+                        <View style={{flexDirection: 'row', justifyContent: 'space-around', width: SIZES.width * 0.7}}>
+                            <TouchableOpacity
+                                style={{ height: responsiveHeight(10), width: responsiveWidth(20) }}
+                                onPress={()=>{
+                                    const menuInfo = Object.assign({
+                                        name: menuName,
+                                        price: menuPrice,
+                                        description: menuDescription,
+                                    });
+                                    resetMenuInfo();
+                                    closeModal();
+                                    addMenu(menuInfo);
+                                }}
+                            >
+                                <View style={styles.buttonView}>
+                                    <Text style={{ ...FONTS2.body3, fontWeight: 'bold' }}>추가</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={{ height: responsiveHeight(10), width: responsiveWidth(20) }}
+                                onPress={()=> {
+                                    resetMenuInfo();
+                                    closeModal();
+                                }}
+                            >
+                                <View style={styles.buttonView}>
+                                    <Text style={{ ...FONTS2.body3, fontWeight: 'bold' }}>취소</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </View>
+                </ScrollView>
 
+            </KeyboardAvoidingView>
         </Modal>
     );
 };

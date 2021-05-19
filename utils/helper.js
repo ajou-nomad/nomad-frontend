@@ -37,6 +37,23 @@ Geocoder.init(GOOGLE_API_KEY, {language: 'ko'});
 //     });
 // };
 
+
+const setMemberInfo = async (dispatch, memberInfo) => {
+
+    Alert.alert(memberInfo.data.data.nickName + '님 반갑습니다.');
+
+    const memberData = {
+        memberType:  memberInfo.data.data.memberType,
+        email: memberInfo.data.data.email,
+        nickName: memberInfo.data.data.nickName,
+        phoneNum: memberInfo.data.data.phoneNum,
+        point: memberInfo.data.data.point,
+    };
+
+    //전역 변수에 member정보 저장
+    await dispatch({ type: 'SIGN_IN', member: memberData });
+};
+
 export const getAccessToken = async () => {
     const user = auth().currentUser;
     if (user) {
@@ -53,43 +70,35 @@ export const getAccessToken = async () => {
     }
 };
 
-export const autoLogin = async ({dispatch}) => {
+export const autoLogin = async (dispatch) => {
 
     const user = auth().currentUser;
 
-    if (user) {
-
-        axiosApiInstance.get('/auth/user')
+    if (user){
+        return axiosApiInstance
+            .get('/member')
             .then( async (response) => {
-                // 전역 변수에 token 저장
-                await dispatch({ type: 'SIGN_IN', token: response.idToken });
+
+                if (response.data.data === 400){
+                    Alert.alert('해당하는 멤버정보가 없습니다.');
+                    logout(dispatch);
+                } else {
+                    return setMemberInfo(dispatch, response);
+                }
             })
             .catch((error) => {
-                console.log(error);
+                Alert.alert(error.message);
+                logout(dispatch);
             });
-
-        return "autologin";
     } else {
         console.log('현재 로그인한 유저가 없음.');
-        return Promise.reject('Not found user');
+        return Promise.reject('Not Found User');
     }
 };
 
 export const googleLogin = async (response, dispatch) => {
 
-
-    Alert.alert(response.data.data.nickName + '님 반갑습니다.');
-
-    const memberData = {
-        memberType:  response.data.data.memberType,
-        email: response.data.data.email,
-        nickName: response.data.data.nickName,
-        phoneNum: response.data.data.phoneNum,
-        point: response.data.data.point,
-    };
-
-    // // 전역 변수에 user 저장
-    await dispatch({ type: 'SIGN_IN', member: memberData });
+    setMemberInfo(dispatch, response);
 };
 
 
@@ -106,22 +115,11 @@ export const emailPasswordLogin = (data, dispatch) => {
                         Alert.alert('해당하는 멤버정보가 없습니다.');
                         logout(dispatch);
                     } else {
-
-                        Alert.alert(response.data.data.nickName + '님 반갑습니다.');
-                        const memberData = {
-                            memberType:  response.data.data.memberType,
-                            email: response.data.data.email,
-                            nickName: response.data.data.nickName,
-                            phoneNum: response.data.data.phoneNum,
-                            point: response.data.data.point,
-                        };
-
-                        //전역 변수에 member정보 저장
-                        await dispatch({ type: 'SIGN_IN', member: memberData });
+                        setMemberInfo(dispatch, response);
                     }
                 })
                 .catch((error) => {
-                    Alert.alert(error.message);
+                    Alert.alert(error);
                 });
         })
         .catch(error => {
@@ -357,19 +355,132 @@ export const clearAll = async () => {
 
 export const getDaliyGroupData = async () => {
 
-    getData('groupData').then( (data) => {
-        const dailyData = data.filter((goal) => goal.groupType === 'day');
+    const storeData =  await getData('storeData');
 
-        console.log(JSON.stringify(dailyData, null, 4))
-    })
-}
+    return getData('groupData').then( (data) => {
+        let daliyData = data.filter((goal) => goal.groupType === 'day');
+
+        daliyData = daliyData.map( (groupDatum) => {
+
+            let storeInfo = storeData.filter((store) => store.storeId === groupDatum.storeId);
+
+            groupDatum.store = storeInfo[0];
+
+            return groupDatum;
+
+        });
+
+        return daliyData;
+    });
+};
 
 
 export const getWeeklyGroupData = async () => {
 
-    getData('groupData').then( (data) => {
-        const weeklyData = data.filter((goal) => goal.groupType === 'weekly');
+    const storeData =  await getData('storeData');
 
-        console.log(JSON.stringify(weeklyData, null, 4))
-    })
-}
+    return getData('groupData').then( (data) => {
+        let weeklyData = data.filter((goal) => goal.groupType === 'weekly');
+
+        weeklyData = weeklyData.map( (groupDatum) => {
+
+            let storeInfo = storeData.filter((store) => store.storeId === groupDatum.storeId);
+
+            groupDatum.store = storeInfo[0];
+
+            return groupDatum;
+
+        });
+
+        return weeklyData;
+    });
+};
+
+
+
+
+// post "participationGroup"
+export const participationGroup = async (groupId, orderData) => {
+
+    await getData('groupData').then( async (data) => {
+
+        //object merge가 안되어서
+        //해당 그룹만 가져온 후
+        let seletedGroup = data.filter((goal) => goal.groupId === groupId);
+        // 나머지 그룹
+        let exceptedGroup = data.filter((goal) => goal.groupId !== groupId);
+
+        //모집완료일 때
+        if ( seletedGroup[0].current++ === (seletedGroup[0].maxValue-3) ){
+
+            console.log('모집완료시');
+            // 위에서 count 증가 완료
+            // 모집완료 상태 변경
+            //참가하는 uid 추가
+            seletedGroup[0].memberList.push('참가하는Uid');
+            seletedGroup[0].orderStatus = 'recruitmentDone';
+
+            orderData.orederStatus = 'recruitmentDone';
+            orderData.orderId = 'orderId';
+            orderData.uid = '8MaepsFt67SrssZX1zxA8s96S0k1';
+            orderData.review = null;
+
+            exceptedGroup.push(seletedGroup[0]);
+
+            // console.log(JSON.stringify(exceptedGroup,null,4));
+
+            // await setData('groupData',exceptedGroup);
+            // console.log('추가완료');
+        } else {
+            console.log('아직 모집완료 x');
+            // 위에서 count 증가 완료
+            //참가하는 uid 추가
+            seletedGroup[0].memberList.push('참가하는Uid');
+
+            orderData.orederStatus = 'recruiting';
+            orderData.orderId = 'orderId';
+            orderData.uid = '8MaepsFt67SrssZX1zxA8s96S0k1';
+            orderData.review = null;
+
+            exceptedGroup.push(seletedGroup[0]);
+            await setData('groupData',exceptedGroup);
+            console.log('추가완료');
+        }
+    });
+
+    await addData('orderData', orderData);
+    console.log('최종적인 배달참가완성');
+
+
+    // {
+    //     orderId: 1,
+    //     uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+    
+    //     storeId: 1,
+    //     storeName: '빽다방 아주대점',
+    
+    
+    //     // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    //     orederStatus: 'deliveryDone',
+    
+    //     // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //     //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    //     review: {
+    //       uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+    //       text: '가성비가 좋아요.!!',
+    //       imgUrl: '',
+    //     },
+    
+    //     menu: [
+    //       {
+    //         menuId: 1,
+    //         menuName: '앗!메리카노(ICED)',
+    //         cost: 2000,
+    //         quantity: 1,
+    //       }
+    //     ],
+    //     totalCost: 2000,
+    //     payMethod: 'card',
+    //     orderTime: '2021-05-15T15:30:00.480Z',
+    //   },
+};

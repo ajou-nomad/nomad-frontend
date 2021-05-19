@@ -1,32 +1,62 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-toast-message';
 
 import {NavigationContainer} from '@react-navigation/native';
 import RootNavigation from './navigation/RootNavigation';
+import {AuthContext} from './context/AuthContextProvider';
+import { GoogleSignin } from '@react-native-community/google-signin';
+import { FIREBASE_WEBCLIENTID } from '@env';
 
 // ----test-----
-import { clearAll, setData, getData, addData, getDaliyGroupData, getWeeklyGroupData} from './utils/helper';
+import { participationGroup, clearAll, setData, getData, addData, getDaliyGroupData, getWeeklyGroupData, autoLogin} from './utils/helper';
+import Splash from './components/Splash';
 // ----test-----
 
 
 const App = () => {
+  // const [test, setTest] = useState();
+
+  const {dispatch} = useContext(AuthContext);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+
+
+  const checkLogin = () => {
+    autoLogin(dispatch)
+      .then(() => setIsLoading(true) )
+      .catch(() => setIsLoading(true));
+  };
 
   useEffect(() => {
 
-    // setData('groupData', groupData);
+    GoogleSignin.configure({
+      webClientId: FIREBASE_WEBCLIENTID,
+      offlineAccess: true, //if you want to access Google API on behalf of the user FROM YOUR SERVER
+    });
+
+    //서버 켜져있을 때
+    // setTimeout(checkLogin, 2000);
+
+    // setData('storeData', storeData);
+    // setData('orderData', orderData);
+    // setData('groupData',groupData);
 
     // addData('storeData', testData2);
 
     // getData('groupData').then( data => console.log(JSON.stringify(data, null, 4)))
 
-    // getWeeklyGroupData();
+    // getDaliyGroupData().then( data => console.log(JSON.stringify(data, null, 4)));
     // clearAll();
 
 
 
 
+    // participationGroup(2,{orderata:1 });
+
+    // getData('orderData').then( data => console.log(JSON.stringify(data, null, 4)))
 
 
 
@@ -37,6 +67,19 @@ const App = () => {
 
 
 
+
+
+
+    // Toast.show({
+    //   type: 'success',
+    //   position: 'top',
+    //   text1: '배달 알림',
+    //   text2: '배달모집이 완료되었습니다. 👋',
+    //   visibilityTime: 4000,
+    //   autoHide: true,
+    //   topOffset: 30,
+    //   bottomOffset: 40,
+    // });
 
 
 
@@ -48,8 +91,8 @@ const App = () => {
       Toast.show({
         type: 'success',
         position: 'top',
-        text1: '배달 알림',
-        text2: '배달모집이 완료되었습니다. 👋',
+        text1: '본인확인 인증번호를 입력하세요!',
+        text2: `[DutchDelivery] 인증번호 [${remoteMessage.notification.body}]를 입력해주세요.`,
         visibilityTime: 4000,
         autoHide: true,
         topOffset: 30,
@@ -62,10 +105,16 @@ const App = () => {
 
   return (
     <>
-      <NavigationContainer>
-        <RootNavigation />
-      </NavigationContainer>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+        {isLoading ? (
+          <>
+            <NavigationContainer>
+              <RootNavigation />
+            </NavigationContainer>
+            <Toast ref={(ref) => Toast.setRef(ref)} />
+          </>
+        ) : (
+          <Splash />
+        )}
     </>
   );
 };
@@ -214,6 +263,29 @@ const storeData = [
       },
     ],
   },
+  {
+    storeId: 3,
+    storeName: '할리스 아주대점',
+    phoneNumber: '031-211-2884',
+
+    address: '경기 수원시 영통구 중부대로 258',
+    latitude: 37.2742778,
+    longitude: 127.0439584,
+
+    openTime: '08:00',
+    closeTime: '22:00',
+    deliveryTip: 2000,
+    logoUrl: '',
+    menu:[
+      {
+        menuId: 15,
+        menuName: '디카페인 아메리카노',
+        cost: 4100,
+        description: '부드러운 풍미와 균형잡힌 바디감의 디카페인 아메리카노',
+        imgUrl: '',
+      },
+    ],
+  },
 ];
 
 const groupData = [
@@ -224,13 +296,13 @@ const groupData = [
     date: '2021-05-18',
     groupType: 'day',
     current: 2,
-    maxValue: 5,
-    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', '다음uid'],
+    maxValue: 3,
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
     latitude: 37.284525,
     longitude: 127.044113,
     address: '수원시 원천동',
     buildingName: '팔달관',
-    orderStatus:  '모집중',
+    orderStatus:  'recruiting',
   },
   {
     groupId: 2,
@@ -240,12 +312,12 @@ const groupData = [
     groupType: 'day',
     current: 2,
     maxValue: 5,
-    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', '다음uid'],
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
     latitude: 37.284525,
     longitude: 127.044113,
     address: '수원시 원천동',
     buildingName: '팔달관',
-    orderStatus:  '모집중',
+    orderStatus:  'recruiting',
   },
   {
     groupId: 3,
@@ -255,12 +327,12 @@ const groupData = [
     groupType: 'weekly',
     current: 2,
     maxValue: 5,
-    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', '다음uid'],
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
     latitude: 37.284525,
     longitude: 127.044113,
     address: '수원시 원천동',
     buildingName: '팔달관',
-    orderStatus:  '모집중',
+    orderStatus:  'recruiting',
   },
   {
     groupId: 4,
@@ -270,12 +342,12 @@ const groupData = [
     groupType: 'weekly',
     current: 2,
     maxValue: 5,
-    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', '다음uid'],
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
     latitude: 37.284525,
     longitude: 127.044113,
     address: '수원시 원천동',
     buildingName: '팔달관',
-    orderStatus:  '모집중',
+    orderStatus:  'recruiting',
   },
 ];
 
@@ -292,8 +364,21 @@ const orderData = [
     storeId: 1,
     storeName: '빽다방 아주대점',
 
+
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orederStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: {
+      uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+      text: '가성비가 좋아요.!!',
+      imgUrl: '',
+    },
+
     menu: [
       {
+        menuId: 1,
         menuName: '앗!메리카노(ICED)',
         cost: 2000,
         quantity: 1,
@@ -310,13 +395,22 @@ const orderData = [
     storeId: 1,
     storeName: '빽다방 아주대점',
 
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orederStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: null,
+
     menu: [
       {
+        menuId: 1,
         menuName: '앗!메리카노(ICED)',
         cost: 2000,
         quantity: 1,
       },
       {
+        menuId: 9,
         menuName: '완전아이스초코',
         cost: 3500,
         quantity: 1,
@@ -328,7 +422,9 @@ const orderData = [
   },
 ];
 
-// get("/chatList")
+
+
+// 해당 uid의 채팅방리스트 얻기 get("/chatList")
 const chatList = [
   {
     uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
