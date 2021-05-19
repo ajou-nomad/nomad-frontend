@@ -28,6 +28,9 @@ const sushi = require('../assets/images/sushi.jpg');
 const teh_c_peng = require('../assets/images/teh-c-peng.jpg');
 const tomato_pasta = require('../assets/images/tomato-pasta.jpg');
 const store_logo = require('../assets/images/store-logo.png');
+const people = require('../assets/images/people.png');
+const group = require('../assets/images/group.jpg');
+const people2 = require('../assets/images/people2.jpg');
 
 const bbacks = require('../assets/images/bbacks.gif');
 const starbucks = require('../assets/images/starbucks.jpg');
@@ -63,6 +66,9 @@ export default {
   sushi,
   teh_c_peng,
   tomato_pasta,
+  people,
+  group,
+  people2,
 
   store_logo,
   bbacks,

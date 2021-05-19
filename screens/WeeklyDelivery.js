@@ -52,7 +52,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
     setLocation(result);
   };
 
-  useEffect( () => {
+  useEffect(() => {
 
     // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
     if (route.params?.post) {
@@ -60,11 +60,11 @@ const WeeklyDelivery = ({ route, navigation }) => {
     } else {
 
       currentLocation()
-      .then((result)=> {
-        setCurrentLocation(result);
-        console.log('현재위치 저장 완료');
-      })
-      .catch(e => console.log(e));
+        .then((result) => {
+          setCurrentLocation(result);
+          console.log('현재위치 저장 완료');
+        })
+        .catch(e => console.log(e));
 
     }
 
@@ -75,7 +75,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
     return (
       <TouchableOpacity
         style={styles.destinationHeader}
-        onPress={() => navigation.navigate('SearchPlace', {prevScreen: 'WeeklyDelivery'})}
+        onPress={() => navigation.navigate('SearchPlace', { prevScreen: 'WeeklyDelivery' })}
       >
         <View style={styles.destinationHeaderView}>
           <Image
@@ -91,7 +91,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
               flex: 1,
               alignItems: 'center',
             }}>
-            <Text style={{...FONTS.body3}}>{location.address}</Text>
+            <Text style={{ ...FONTS.body3 }}>{location.address}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -99,22 +99,22 @@ const WeeklyDelivery = ({ route, navigation }) => {
   };
 
 
-  const [dayArrayKorFixed,dateDifference] = ItemsForCreateGroupDetailDayPicker()
+  const [dayArrayKorFixed, dateDifference] = ItemsForCreateGroupDetailDayPicker()
 
 
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       { location ? (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <GoogleMap initLocation={location} back="WeeklyDelivery" groupData={groupData} storeData={storeData} />
-          { renderDestinationHeader() }
+          { renderDestinationHeader()}
           <GpsButton setLocation={setCurrentLocation} />
-          <NewGroupButton storeData={storeData} initLocation={location} deliDate={null} datePicker={[dayArrayKorFixed,dateDifference]} />
+          <NewGroupButton storeData={storeData} initLocation={location} deliDate={null} datePicker={[dayArrayKorFixed, dateDifference]} />
         </View>
       ) : (
-        <View style={{flex: 1, justifyContent: 'center'}}>
-            <ActivityIndicator size="large" color={COLORS.primary} />
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ActivityIndicator size="large" color={COLORS.primary} />
         </View>
       )}
     </View>

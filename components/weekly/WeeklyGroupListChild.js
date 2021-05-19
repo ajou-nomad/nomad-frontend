@@ -19,7 +19,7 @@
    ScrollView,
    Image,
  } from 'react-native';
- import {icons, COLORS, SIZES, FONTS} from '../../constants';
+ import {icons, COLORS, SIZES, FONTS, FONTS2} from '../../constants';
  
  import GroupInfo from '../GroupInfo';
  import NewGroupButton from '../map/NewGroupButton';
@@ -97,7 +97,7 @@
        <NewGroupButton initLocation={location} deliDate={date} storeData={storeData} />
      </>
    );
- }
+};
  
  // react-native-linear-gradient
  // 연한 블루: #EDF2FF
@@ -119,10 +119,9 @@
      width: '50%',
    },
    headerDateText: {
-     fontSize: 20,
-     fontWeight: 'bold',
+     ...FONTS2.body2,
      position: 'absolute',
-     right: 10,
+     right: 12,
    },
    headerButtons: {
      flexDirection: 'row',
@@ -137,7 +136,8 @@
      borderWidth: 5,
      borderRadius: 25,
    },
-   headerButtonText:{
+   headerButtonText: {
+     ...FONTS2.h2,
      fontSize: 14,
      fontWeight: 'bold',
    },
@@ -159,8 +159,9 @@
      height:45,
      marginHorizontal: 10,
    },
-   shopText:{
-     fontSize:20,
+   shopText: {
+     ...FONTS2.h3,
+    //  fontSize:20,
      fontWeight:'bold',
    },
    rating:{

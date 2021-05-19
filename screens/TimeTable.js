@@ -8,7 +8,7 @@
  */
 
  import 'react-native-gesture-handler';
- import React, {useState} from 'react';
+import React, { useState } from 'react';
  import {
    SafeAreaView,
    FlatList,
@@ -19,7 +19,7 @@
    ScrollView,
    Image,
  } from 'react-native';
- import {icons, COLORS, SIZES, FONTS} from '../constants';
+import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
  
  import WeeklyGroupInfo from '../components/weekly/WeeklyGroupListParent';
  import NewGroupButton from '../components/map/NewGroupButton';
@@ -53,67 +53,68 @@
 
    const timeTableList = [
      {
-       id:'time1',
-       time:'08~09',
+       id: 'time1',
+       time: '08~09',
        date: groupDate,
        location: location,
-      //  currentGroup:6,
+       //  currentGroup:6,
      },
      {
-       id:'time2',
-       time:'09~10',
-       date: groupDate,
-       location: location,
-     },
-     {
-       id:'time3',
-       time:'10~11',
+       id: 'time2',
+       time: '09~10',
        date: groupDate,
        location: location,
      },
      {
-       id:'time4',
-       time:'11~12',
+       id: 'time3',
+       time: '10~11',
        date: groupDate,
        location: location,
      },
      {
-       id:'time5',
-       time:'12~13',
+       id: 'time4',
+       time: '11~12',
        date: groupDate,
        location: location,
      },
      {
-       id:'time6',
-       time:'13~14',
+       id: 'time5',
+       time: '12~13',
        date: groupDate,
        location: location,
      },
      {
-       id:'time7',
-       time:'14~15',
+       id: 'time6',
+       time: '13~14',
        date: groupDate,
        location: location,
      },
      {
-       id:'time8',
-       time:'15~16',
+       id: 'time7',
+       time: '14~15',
        date: groupDate,
        location: location,
      },
      {
-       id:'time9',
-       time:'16~17',
+       id: 'time8',
+       time: '15~16',
+       date: groupDate,
+       location: location,
+     },
+     {
+       id: 'time9',
+       time: '16~17',
        date: groupDate,
        location: location,
      },
    ];
-   const Header = () =>{
+
+   const Header = () => {
      return (
        <View style={styles.headerText}>
          <TouchableOpacity
-           onPress={() => {goBack();}}
-           >
+           onPress={() => { goBack(); }}
+         >
            <Text style={styles.backButton}>&lt;</Text>
          </TouchableOpacity>
          <Text numberOfLines={1} style={styles.headerLocationText}>{location.buildingName}</Text>
@@ -215,12 +216,12 @@
      );
 
    return (
-     <>
+     <View style={{ flex: 1, backgroundColor: COLORS.white }}>
        {Header()}
        {DayButtons()}
        {ListOfWeeklyGroup()}
        <NewGroupButton storeData= {storeData} initLocation={location} deliDate={null} items={{datePicker: [dayArrayKorFixed,dateDifference]}} />
-     </>
+     </View>
    );
  }
  
@@ -239,32 +240,37 @@
      fontSize: 42,
    },
    headerLocationText: {
-     fontSize: 24,
+     ...FONTS2.h2,
+    //  fontSize: 24,
      marginLeft: 50,
      width: '50%',
    },
    headerDateText: {
-     fontSize: 20,
-     fontWeight: 'bold',
+     ...FONTS2.body2,
      position: 'absolute',
-     right: 10,
+     right: 12,
    },
    headerButtons: {
      flexDirection: 'row',
      alignItems: 'center',
      justifyContent:'center',
      marginBottom: 5,
+     marginTop: 5,
    },
    headerButton: {
-     marginHorizontal: 10,
+     marginHorizontal: 15,
      padding: 5,
-     borderColor: '#e5e5e5',
-     borderWidth: 5,
-     borderRadius: 25,
+     width: 35,
+     borderColor: '#f1f3f5',
+     borderWidth: 2,
+     borderRadius: 70,
+     backgroundColor: '#f1f3f5',
+     alignItems: 'center',
    },
-   headerButtonText:{
-     fontSize: 14,
-     fontWeight: 'bold',
+   headerButtonText: {
+     ...FONTS2.body3,
+    //  fontSize: 14,
+    //  fontWeight: 'bold',
    },
    mainView: {
      backgroundColor: '#eee',
