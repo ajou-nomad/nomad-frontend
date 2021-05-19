@@ -53,8 +53,15 @@ const request = require("../assets/icons/request.png");
 const statistics = require("../assets/icons/statistics.png");
 const store = require("../assets/icons/store.png");
 const completed = require("../assets/icons/completed.png");
+const plus2 = require("../assets/icons/plus2.png");
+const no = require("../assets/icons/no.png");
+const cancel = require("../assets/icons/cancel.png");
+
 
 export default {
+    cancel,
+    no,
+    plus2,
     completed,
     store,
     statistics,

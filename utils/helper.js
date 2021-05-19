@@ -38,6 +38,23 @@ Geocoder.init(GOOGLE_API_KEY, {language: 'ko'});
 //     });
 // };
 
+
+const setMemberInfo = async (dispatch, memberInfo) => {
+
+    Alert.alert(memberInfo.data.data.nickName + '님 반갑습니다.');
+
+    const memberData = {
+        memberType:  memberInfo.data.data.memberType,
+        email: memberInfo.data.data.email,
+        nickName: memberInfo.data.data.nickName,
+        phoneNum: memberInfo.data.data.phoneNum,
+        point: memberInfo.data.data.point,
+    };
+
+    //전역 변수에 member정보 저장
+    await dispatch({ type: 'SIGN_IN', member: memberData });
+};
+
 export const getAccessToken = async () => {
     const user = auth().currentUser;
     if (user) {
@@ -54,43 +71,35 @@ export const getAccessToken = async () => {
     }
 };
 
-export const autoLogin = async ({dispatch}) => {
+export const autoLogin = async (dispatch) => {
 
     const user = auth().currentUser;
 
-    if (user) {
-
-        axiosApiInstance.get('/auth/user')
+    if (user){
+        return axiosApiInstance
+            .get('/member')
             .then( async (response) => {
-                // 전역 변수에 token 저장
-                await dispatch({ type: 'SIGN_IN', token: response.idToken });
+
+                if (response.data.data === 400){
+                    Alert.alert('해당하는 멤버정보가 없습니다.');
+                    logout(dispatch);
+                } else {
+                    return setMemberInfo(dispatch, response);
+                }
             })
             .catch((error) => {
-                console.log(error);
+                Alert.alert(error.message);
+                logout(dispatch);
             });
-
-        return "autologin";
     } else {
         console.log('현재 로그인한 유저가 없음.');
-        return Promise.reject('Not found user');
+        return Promise.reject('Not Found User');
     }
 };
 
 export const googleLogin = async (response, dispatch) => {
 
-
-    Alert.alert(response.data.data.nickName + '님 반갑습니다.');
-
-    const memberData = {
-        memberType:  response.data.data.memberType,
-        email: response.data.data.email,
-        nickName: response.data.data.nickName,
-        phoneNum: response.data.data.phoneNum,
-        point: response.data.data.point,
-    };
-
-    // // 전역 변수에 user 저장
-    await dispatch({ type: 'SIGN_IN', member: memberData });
+    setMemberInfo(dispatch, response);
 };
 
 
@@ -107,22 +116,11 @@ export const emailPasswordLogin = (data, dispatch) => {
                         Alert.alert('해당하는 멤버정보가 없습니다.');
                         logout(dispatch);
                     } else {
-
-                        Alert.alert(response.data.data.nickName + '님 반갑습니다.');
-                        const memberData = {
-                            memberType:  response.data.data.memberType,
-                            email: response.data.data.email,
-                            nickName: response.data.data.nickName,
-                            phoneNum: response.data.data.phoneNum,
-                            point: response.data.data.point,
-                        };
-
-                        //전역 변수에 member정보 저장
-                        await dispatch({ type: 'SIGN_IN', member: memberData });
+                        setMemberInfo(dispatch, response);
                     }
                 })
                 .catch((error) => {
-                    Alert.alert(error.message);
+                    Alert.alert(error);
                 });
         })
         .catch(error => {
@@ -428,6 +426,8 @@ export const participationGroup = async (groupId, orderData) => {
             orderData.review = null;
 
             exceptedGroup.push(seletedGroup[0]);
+            await setData('groupData',exceptedGroup);
+            console.log('추가완료');
 
             // console.log(JSON.stringify(exceptedGroup,null,4));
 
@@ -450,9 +450,12 @@ export const participationGroup = async (groupId, orderData) => {
         }
     });
 
-    console.log(JSON.stringify(orderData,null,4));
+    // console.log(JSON.stringify(orderData,null,4));
     await addData('orderData', orderData);
     console.log('최종적인 배달참가완성');
+    Alert.alert("그룹에 참여가 완료되었습니다.");
+
+    return 'complete';
 
 
     // {

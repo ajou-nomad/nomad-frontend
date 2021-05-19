@@ -20,6 +20,9 @@ import Counter from 'react-native-counters';
 import { ScrollView } from 'react-native-gesture-handler';
 import { DefaultTheme, Checkbox } from 'react-native-paper';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
+
 // 옵션 선택 컴포넌트
 const Option = ({ item, userOption, setUserOption }) => {
     // 유저가 선택한 옵션 항목들 => 전역 상태?

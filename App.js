@@ -1,33 +1,60 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-toast-message';
 
 import {NavigationContainer} from '@react-navigation/native';
 import RootNavigation from './navigation/RootNavigation';
-import {images} from './constants';
-import storage from '@react-native-firebase/storage';
-
+import {AuthContext} from './context/AuthContextProvider';
+import { GoogleSignin } from '@react-native-community/google-signin';
+import { FIREBASE_WEBCLIENTID } from '@env';
 
 
 // ----test-----
-import { clearAll, setData, getData, addData, getDaliyGroupData, getWeeklyGroupData} from './utils/helper';
+import { participationGroup, clearAll, setData, getData, addData, getDaliyGroupData, getWeeklyGroupData, autoLogin} from './utils/helper';
+import Splash from './components/Splash';
 // ----test-----
 
 
 const App = () => {
+  // const [test, setTest] = useState();
+
+  const {dispatch} = useContext(AuthContext);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+
+
+  const checkLogin = () => {
+    autoLogin(dispatch)
+      .then(() => setIsLoading(true) )
+      .catch(() => setIsLoading(true));
+  };
 
   useEffect(() => {
 
-    setData('groupData', groupData);
+    GoogleSignin.configure({
+      webClientId: FIREBASE_WEBCLIENTID,
+      offlineAccess: true, //if you want to access Google API on behalf of the user FROM YOUR SERVER
+    });
 
-    setData('orderData', orderData);
+    //서버 켜져있을 때
+    // setTimeout(checkLogin, 2000);
 
-    setData('storeData', storeData);
+    // setData('storeData', storeData);
+    // setData('orderData', orderData);
+    // setData('groupData',groupData);
 
-    // addData('storeData', testData2);
 
-    // getData('groupData').then( data => console.log(JSON.stringify(data, null, 4)));
+
+    // participationGroup(2,{orderata:1 });
+
+    // getData('storeData').then( data => console.log(JSON.stringify(data, null, 4)))
+
+
+
+    // getData('orderData').then( data => console.log(JSON.stringify(data, null, 4)));
+    
 
     // getWeeklyGroupData().then( data => console.log(JSON.stringify(data, null, 4)));
     // getDaliyGroupData().then( data => console.log(JSON.stringify(data, null, 4)));
@@ -39,8 +66,8 @@ const App = () => {
       Toast.show({
         type: 'success',
         position: 'top',
-        text1: '배달 알림',
-        text2: '배달모집이 완료되었습니다. 👋',
+        text1: '본인확인 인증번호를 입력하세요!',
+        text2: `[DutchDelivery] 인증번호 [${remoteMessage.notification.body}]를 입력해주세요.`,
         visibilityTime: 4000,
         autoHide: true,
         topOffset: 30,
@@ -53,10 +80,16 @@ const App = () => {
 
   return (
     <>
-      <NavigationContainer>
-        <RootNavigation />
-      </NavigationContainer>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+        {isLoading ? (
+          <>
+            <NavigationContainer>
+              <RootNavigation />
+            </NavigationContainer>
+            <Toast ref={(ref) => Toast.setRef(ref)} />
+          </>
+        ) : (
+          <Splash />
+        )}
     </>
   );
 };
@@ -167,8 +200,8 @@ const storeData = [
     phoneNumber: '1522-3232',
 
     address: '경기도 수원시 팔달구 우만동 58-32',
-    latitude: 37.2783595,
-    longitude: 127.046209,
+    latitude: 37.279694366226124,
+    longitude: 127.04334752495063,
 
     openTime: '07:00',
     closeTime: '22:00',
@@ -213,8 +246,8 @@ const storeData = [
     phoneNumber: '031-211-2884',
 
     address: '경기 수원시 영통구 중부대로 258',
-    latitude: 37.2742778,
-    longitude: 127.0439584,
+    latitude: 37.274346079201365,
+    longitude: 127.04396912671824,
 
     openTime: '08:00',
     closeTime: '22:00',
@@ -243,7 +276,7 @@ const groupData = [
     date: '2021-05-18',
     groupType: 'day',
     current: 2,
-    maxValue: 5,
+    maxValue: 3,
     memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
     latitude: 37.284525,
     longitude: 127.044113,

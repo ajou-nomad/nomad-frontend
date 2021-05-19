@@ -2,32 +2,16 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { Image, StyleSheet ,View, Text, TouchableOpacity } from 'react-native';
 import {icons, COLORS, SIZES, FONTS} from "../constants";
 import LinearGradient from 'react-native-linear-gradient';
-import {getData, getDaliyGroupData, getWeeklyGroupData} from '../utils/helper';
+
 
 
 
 
 const Main = ({navigation}) => {
-
-    const [responseDailyData,setResponseDailyData] = useState();
-    const [responseWeeklyData,setResponseWeeklyData] = useState();
-    const [responseStoreData,setResponseStoreData] = useState();
-
-    useEffect(() => {
-    getDaliyGroupData().then((reponse)=>
-        setResponseDailyData(reponse)
-    );
-    getWeeklyGroupData().then((response)=>
-        setResponseWeeklyData(response)
-    );
-    getData('storeData').then( (response) =>
-        setResponseStoreData(response)
-      );
-    }, []);
 
     return (
         <View style={styles.container}>
@@ -48,11 +32,6 @@ const Main = ({navigation}) => {
                 onPress={() => {
                     navigation.navigate('Tabs', {
                         routeName: '당일 모집',
-                        groupData: {
-                            groupDayData: responseDailyData,
-                            groupWeekData: responseWeeklyData,
-                        },
-                        storeData: responseStoreData,
                     });
                 }}
             >
@@ -64,11 +43,6 @@ const Main = ({navigation}) => {
                 onPress={() => {
                     navigation.navigate('Tabs', {
                         routeName: '주간 모집',
-                        groupData: {
-                            groupDayData: responseDailyData,
-                            groupWeekData: responseWeeklyData,
-                        },
-                        storeData: responseStoreData,
                     });
                 }}
             >

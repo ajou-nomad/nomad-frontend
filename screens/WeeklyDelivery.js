@@ -14,7 +14,7 @@ import {icons, COLORS, SIZES, FONTS} from '../constants';
 import GoogleMap from '../components/map/GoogleMap';
 import NewGroupButton from '../components/map/NewGroupButton';
 import GpsButton from '../components/map/GpsButton';
-import { currentLocation } from '../utils/helper';
+import { currentLocation, getWeeklyGroupData, getData } from '../utils/helper';
 
 const ItemsForCreateGroupDetailDayPicker = () => {
   const todayFullDate = new Date();
@@ -45,8 +45,9 @@ const WeeklyDelivery = ({ route, navigation }) => {
 
   const [location, setLocation] = useState();
 
-  const groupData = route.params.groupData;
-  const storeData = route.params.storeData;
+  const [responseWeeklyData,setResponseWeeklyData] = useState();
+  const [responseStoreData,setResponseStoreData] = useState();
+
 
   const setCurrentLocation = (result) => {
     setLocation(result);
@@ -54,20 +55,31 @@ const WeeklyDelivery = ({ route, navigation }) => {
 
   useEffect(() => {
 
-    // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
-    if (route.params?.post) {
-      setLocation(route.params.post);
-    } else {
+    const getAxiosData = async () => {
 
-      currentLocation()
-        .then((result) => {
+      await getWeeklyGroupData().then((reponse)=>
+        setResponseWeeklyData(reponse)
+      );
+      await getData('storeData').then( (response) =>
+        setResponseStoreData(response)
+      );
+    };
+
+    getAxiosData().then((data) => {
+      console.log("axiosData들은 받아왔고");
+      // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
+      if (route.params?.post) {
+        setLocation(route.params.post);
+      } else {
+
+        currentLocation()
+        .then((result)=> {
           setCurrentLocation(result);
           console.log('현재위치 저장 완료');
         })
         .catch(e => console.log(e));
-
-    }
-
+      }
+    });
   }, [route.params?.post]);
 
   // 검색 창 헤더
@@ -106,11 +118,11 @@ const WeeklyDelivery = ({ route, navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       { location ? (
-        <View style={{ flex: 1 }}>
-          <GoogleMap initLocation={location} back="WeeklyDelivery" groupData={groupData} storeData={storeData} />
-          { renderDestinationHeader()}
+        <View style={{flex: 1}}>
+          <GoogleMap initLocation={location} back="WeeklyDelivery" groupData={responseWeeklyData} storeData={responseStoreData} />
+          { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
-          <NewGroupButton storeData={storeData} initLocation={location} deliDate={null} datePicker={[dayArrayKorFixed, dateDifference]} />
+          <NewGroupButton storeData={responseStoreData} initLocation={location} deliDate={null} datePicker={[dayArrayKorFixed,dateDifference]} />
         </View>
       ) : (
         <View style={{ flex: 1, justifyContent: 'center' }}>

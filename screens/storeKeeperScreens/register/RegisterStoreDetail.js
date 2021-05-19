@@ -126,7 +126,8 @@ const RegisterStoreDetail = ({navigation}) => {
                     </View>
                     {/* Footer */}
                     <BottomButton onPress={() => {
-                        if ( !isEmpty(storeName) && !isEmpty(storeCallNumber) && !isEmpty(storeLocation) && !isEmpty(storeTip) ) {
+                        // !isEmpty(storeName) && !isEmpty(storeCallNumber) && !isEmpty(storeLocation) && !isEmpty(storeTip)
+                        if ( true ) {
                             const storeInfo = Object.assign({
                                 storeName: storeName,
                                 storeLocation: storeLocation,

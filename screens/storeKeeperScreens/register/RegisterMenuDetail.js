@@ -10,12 +10,14 @@ import {
     TouchableOpacity,
     SafeAreaView,
     Image,
+    Alert,
 } from 'react-native';
 import { SIZES, FONTS2, COLORS, icons } from '../../../constants';
 import Header from '../../../components/layout/Header';
 import BottomButton from '../../../components/layout/BottomButton';
 import AddMenu from '../../../components/item/AddMenu';
 import uuid from 'react-native-uuid';
+import { responsiveHeight } from 'react-native-responsive-dimensions';
 import axiosApiInstance from '../../../utils/axios';
 
 
@@ -26,18 +28,18 @@ const RegisterMenuDetail = ({navigation, route}) => {
     const [storeInfo, setStoreInfo] = useState(route.params?.storeInfo); // 전 단계에서 넘어온 상점정보
 
     const [menus,setMenus] = useState([
-        {
-            id: 'tempasdnasldanksd',
-            name: '앗!메리카노(ICED)',
-            price: 2000,
-            description: '빽다방만의 맛과 향을 더한 100% 아라비카 로스팅 원두로 뽑아내 깊고 진한 맛의 앗!메리카노',
-        },
-        {
-            id: 'tempasdnasldanks34343434d',
-            name: '완전초코(ICED)',
-            price: 3500,
-            description: '초코에 퐁당 빠지고 싶을때~!? 진짜~! 완~전 진한 초코라떼',
-        },
+        // {
+        //     id: 'tempasdnasldanksd',
+        //     name: '앗!메리카노(ICED)',
+        //     price: 2000,
+        //     description: '빽다방만의 맛과 향을 더한 100% 아라비카 로스팅 원두로 뽑아내 깊고 진한 맛의 앗!메리카노',
+        // },
+        // {
+        //     id: 'tempasdnasldanks34343434d',
+        //     name: '완전초코(ICED)',
+        //     price: 3500,
+        //     description: '초코에 퐁당 빠지고 싶을때~!? 진짜~! 완~전 진한 초코라떼',
+        // },
     ]);
 
 
@@ -94,24 +96,30 @@ const RegisterMenuDetail = ({navigation, route}) => {
         <KeyboardAvoidingView style={styles.container}>
             <View style={{flex: 1}} >
                 {/* Header */}
-                <Header title="메뉴 정보" small="true" />
-
-                {/* add Button */}
-                <TouchableOpacity
+                <View style={{
+                    height: responsiveHeight(8),
+                    backgroundColor: 'white',
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: COLORS.darkgray,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
+                    <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>메뉴 정보</Text>
+                    <TouchableOpacity
                         style={styles.button}
                         onPress={()=> setModalVisible(!modalVisible)}
-                >
-                    <View style={styles.buttonView}>
+                    >
                         <Image
-                            source={icons.plus}
+                            source={icons.plus2}
                             style={{
-                                width: 20,
-                                height: 20,
+                                width: 25,
+                                height: 25,
                             }}
                         />
-                        <Text style={styles.buttonText}>메뉴 추가</Text>
-                    </View>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+
+                </View>
+
 
                 {/* Body */}
                 <View style={{ flex: 1 }}>
@@ -141,7 +149,8 @@ const RegisterMenuDetail = ({navigation, route}) => {
 
                         //     console.log(error);
                         // });
-                        console.log('axios로 매장등록하기')
+                        Alert.alert('매장 등록이 완료되었습니다.');
+                        navigation.navigate('StoreTabs');
                     }}
                     title="매장 등록하기"
                 />
@@ -168,20 +177,10 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     button: {
-        marginVertical: SIZES.height * 0.02,
-        width: SIZES.width * 0.3,
-        alignSelf: 'flex-end',
-    },
-    buttonView:{
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        paddingVertical: SIZES.padding,
-        paddingHorizontal: SIZES.padding,
-        borderRadius: SIZES.radius,
-        backgroundColor: COLORS.tertiary,
-        opacity: 0.8,
-        elevation: 5,
+        // marginVertical: SIZES.height * 0.02,
+        // width: SIZES.width * 0.15,
+        position: 'absolute',
+        right: 15,
     },
     buttonText:{
         ...FONTS2.body4,

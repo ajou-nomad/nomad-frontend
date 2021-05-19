@@ -14,37 +14,57 @@ import {icons, COLORS, SIZES, FONTS} from '../constants';
 import GoogleMap from '../components/map/GoogleMap';
 import NewGroupButton from '../components/map/NewGroupButton';
 import GpsButton from '../components/map/GpsButton';
-import { currentLocation } from '../utils/helper';
+import { currentLocation, getDaliyGroupData, getData } from '../utils/helper';
 
 
 
 const DayDelivery = ({ route, navigation }) => {
-  const groupData = route.params.groupData;
-  const storeData = route.params.storeData;
+
+  const [responseDailyData,setResponseDailyData] = useState();
+  const [responseStoreData,setResponseStoreData] = useState();
 
   const [location, setLocation] = useState(null);
 
-  const setCurrentLocation = (result) => {
 
+  const setCurrentLocation = (result) => {
     setLocation(result);
   };
 
   useEffect( () => {
 
-    // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
-    if (route.params?.post) {
-      setLocation(route.params.post);
-    } else {
+    const getAxiosData = async () => {
 
-      currentLocation()
-      .then((result)=> {
-        setCurrentLocation(result);
-        console.log('현재위치 저장 완료');
-      })
-      .catch(e => console.log(e));
+      await getDaliyGroupData().then((reponse)=>
+        setResponseDailyData(reponse)
+      );
+      await getData('storeData').then( (response) =>
+        setResponseStoreData(response)
+      );
+    };
 
-    }
+    getAxiosData().then((data) => {
+      console.log("axiosData들은 받아왔고");
+      // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
+      // if (route.params?.post) {
+      //   setLocation(route.params.post);
+      // } else {
 
+      //   currentLocation()
+      //   .then((result)=> {
+      //     setCurrentLocation(result);
+      //     console.log('현재위치 저장 완료');
+      //   })
+      //   .catch(e => console.log(e));
+      // }
+
+
+      let location = {
+        latitude: 37.284696906069975,
+        longitude: 127.04438918710983,
+        address: '아주대학교 팔달관',
+      };
+    setCurrentLocation(location);
+    });
   }, [route.params?.post] );
 
   // 검색 창 헤더
@@ -82,10 +102,10 @@ const DayDelivery = ({ route, navigation }) => {
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap initLocation={location} back="DayDelivery" today={today} groupData = {groupData} storeData= {storeData} />
+          <GoogleMap initLocation={location} back="DayDelivery" today={today} groupData = {responseDailyData} storeData= {responseStoreData} />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
-          <NewGroupButton initLocation={location} deliDate={today} storeData={storeData} />
+          <NewGroupButton initLocation={location} deliDate={today} storeData={responseStoreData} />
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

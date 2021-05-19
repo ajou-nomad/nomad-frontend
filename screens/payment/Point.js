@@ -44,6 +44,10 @@ const Point = ({ route, navigation }) => {
         },
       };
       console.log(JSON.stringify(participationGroupData,null,4));
+      participationGroup(participationGroupData.groupId, participationGroupData.orderData).then((data)=>{
+        console.log("hi");
+        navigation.popToTop();
+      });
       // participationGroup(participationGroupData.groupId, participationGroupData.orderData);
     }
 

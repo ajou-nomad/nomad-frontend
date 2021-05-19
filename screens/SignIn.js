@@ -8,7 +8,7 @@ import { GoogleSignin } from '@react-native-community/google-signin';
 import { emailPasswordLogin, googleLogin, logout } from '../utils/helper';
 import messaging from '@react-native-firebase/messaging';
 import { AuthContext } from '../context/AuthContextProvider';
-import { FIREBASE_WEBCLIENTID } from '@env';
+// import { FIREBASE_WEBCLIENTID } from '@env';
 
 
 import auth from '@react-native-firebase/auth';
@@ -22,12 +22,12 @@ const SignIn = ({router, navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(() => {
-        GoogleSignin.configure({
-            webClientId: FIREBASE_WEBCLIENTID,
-            offlineAccess: true, //if you want to access Google API on behalf of the user FROM YOUR SERVER
-        });
-    }, []);
+    // useEffect(() => {
+    //     GoogleSignin.configure({
+    //         webClientId: FIREBASE_WEBCLIENTID,
+    //         offlineAccess: true, //if you want to access Google API on behalf of the user FROM YOUR SERVER
+    //     });
+    // }, []);
 
 
 
@@ -164,12 +164,12 @@ const SignIn = ({router, navigation}) => {
                                 <Text style={{...FONTS.body4, color: COLORS.black}}>Google 계정으로 로그인</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             style={styles.googleButton}
                             onPress={ signOutButton }
                         >
                             <Text style={{...FONTS.body4, color: COLORS.black}}>임시로그아웃</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </ScrollView>
                 </View>
             </TouchableWithoutFeedback>

@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { SIZES, FONTS } from '../../constants';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { SIZES, FONTS, icons } from '../../constants';
 import { Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 
@@ -20,10 +20,23 @@ const CustomMarker = ({item, back, today, items, storeData}) => {
                 <View style={styles.markerView}>
                     {/* marker 매장명 */}
                     <View style={styles.buildingName}>
+                        <View style={{ width: 25, height: 25,backgroundColor: 'white', borderRadius: SIZES.radius * 3, justifyContent: 'center', alignItems: 'center'}}>
+
+                            <Image
+                                source={icons.cutlery}
+                                style={{
+                                width: 15,
+                                height: 15,
+                                tintColor: '#1c7ed6',
+                                }}
+
+                            />
+                        </View>
                         <Text
                             numberOfLines={1}
                             style={{
                             ...FONTS.body4,
+                            marginLeft: 10,
                             color: 'white',
                             }}
                         >
@@ -93,22 +106,24 @@ const CustomMarker = ({item, back, today, items, storeData}) => {
 const styles = StyleSheet.create({
 
     markerView: {
-        height: 75,
+        // height: 75,
         width: 90,
-        alignItems: 'center',
-        justifyContent: 'center',
+        // alignItems: 'center',
+        // justifyContent: 'center',
     },
     buildingName: {
         position: 'absolute',
         top: 0,
-        height: 25,
+        height: 30,
         width: 90,
-        borderTopRightRadius: 5,
-        borderTopLeftRadius: 5,
+        borderRadius: SIZES.radius * 2,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#1c7ed6',
         padding: 10,
+        borderColor: '#1c7ed6',
+        borderWidth: 1,
+        flexDirection: 'row',
     },
     buildingNameWeek:{
         position: 'absolute',
