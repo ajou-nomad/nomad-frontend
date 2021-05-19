@@ -66,8 +66,8 @@ const App = () => {
       Toast.show({
         type: 'success',
         position: 'top',
-        text1: '본인확인 인증번호를 입력하세요!',
-        text2: `[DutchDelivery] 인증번호 [${remoteMessage.notification.body}]를 입력해주세요.`,
+        text1: '모집 완료!',
+        text2: `[${remoteMessage.notification.body}] 배달모집이 완료되었습니다.를 입력해주세요.`,
         visibilityTime: 4000,
         autoHide: true,
         topOffset: 30,
@@ -346,7 +346,7 @@ const orderData = [
 
 
     // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
-    orederStatus: 'deliveryDone',
+    orderStatus: 'deliveryDone',
 
     // 실제로는 storeId를 통해서 해당 storeId로 이동 후
     //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
@@ -376,7 +376,7 @@ const orderData = [
     storeName: '빽다방 아주대점',
 
     // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
-    orederStatus: 'deliveryDone',
+    orderStatus: 'deliveryDone',
 
     // 실제로는 storeId를 통해서 해당 storeId로 이동 후
     //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.

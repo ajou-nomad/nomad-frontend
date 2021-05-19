@@ -25,6 +25,7 @@ const Point = ({ route, navigation }) => {
         buildingName: postData.location.buildingName,
         orderData: {
           storeId: postData.storeInfo.storeId,
+          storeName: postData.storeInfo.storeName,
           menu: postData.cartItems,
           totalCost: postData.totalPrice,
           payMethod: 'Point',
@@ -37,6 +38,7 @@ const Point = ({ route, navigation }) => {
         groupId: postData.groupData.groupId,
         orderData: {
           storeId: postData.storeInfo.storeId,
+          storeName: postData.storeInfo.storeName,
           menu: postData.cartItems,
           totalCost: postData.totalPrice,
           payMethod: 'Point',
