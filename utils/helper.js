@@ -420,7 +420,7 @@ export const participationGroup = async (groupId, orderData) => {
             seletedGroup[0].memberList.push('참가하는Uid');
             seletedGroup[0].orderStatus = 'recruitmentDone';
 
-            orderData.orederStatus = 'recruitmentDone';
+            orderData.orderStatus = 'recruitmentDone';
             orderData.orderId = 'orderId';
             orderData.uid = '8MaepsFt67SrssZX1zxA8s96S0k1';
             orderData.review = null;
@@ -439,7 +439,7 @@ export const participationGroup = async (groupId, orderData) => {
             //참가하는 uid 추가
             seletedGroup[0].memberList.push('참가하는Uid');
 
-            orderData.orederStatus = 'recruiting';
+            orderData.orderStatus = 'recruiting';
             orderData.orderId = 'orderId';
             orderData.uid = '8MaepsFt67SrssZX1zxA8s96S0k1';
             orderData.review = null;
