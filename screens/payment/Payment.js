@@ -34,7 +34,7 @@ const Payment = ({route, navigation}) => {
   } else {
 
     const participationGroupData = {
-      groupId: postData.groupId,
+      groupId: postData.groupData.groupId,
       orderData: {
         storeId: postData.storeInfo.storeId,
         menu: postData.cartItems,
@@ -44,8 +44,8 @@ const Payment = ({route, navigation}) => {
       },
     };
 
-    // console.log(JSON.stringify(participationGroupData,null,4));
-    participationGroup(participationGroupData.groupId, participationGroupData.orderData);
+    console.log(JSON.stringify(participationGroupData,null,4));
+    // participationGroup(participationGroupData.groupId, participationGroupData.orderData);
   }
 
 
