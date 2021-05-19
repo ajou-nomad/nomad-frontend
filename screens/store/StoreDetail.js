@@ -68,6 +68,7 @@ const renderScene = SceneMap({
 });
 
 function StoreDetail({route}) {
+    const groupData = route.params.groupData;
     const storeInfo = route.params.storeInfo;
     const datePicker = route.params.datePicker;
 
@@ -155,7 +156,7 @@ function StoreDetail({route}) {
                     renderTabBar={renderTabBar}
                 />
             </View>
-            <CartButton datePicker={datePicker} cartItems={cartItems} storeInfo={route.params.storeInfo} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} groupId = {route.params.groupId}/>
+            <CartButton datePicker={datePicker} cartItems={cartItems} storeInfo={route.params.storeInfo} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} groupData={route.params.groupData} />
         </View>
     );
 }
