@@ -11,7 +11,7 @@ import { SIZES, icons } from '../../constants';
 
 const PaymentMethods = ({navigation,route:{params}}) => {
     // console.log('PaymentMethods: ' + JSON.stringify(params,null,4));
-    const totalData = params.totalData.totalData;
+    const totalData = params.totalData;
     const data = {
         amount: totalData.totalPrice, // 최종 주문 결제 내역에서 가져올
         myPoint: 150000, // axios로 불러야 할 정보들

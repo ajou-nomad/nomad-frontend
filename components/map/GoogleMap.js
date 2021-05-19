@@ -13,7 +13,7 @@ import {getDaliyGroupData, getWeeklyGroupData} from '../../utils/helper';
 
 
 
-const GoogleMap = ({initLocation, back, today, groupData}) => {
+const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
     
     const mapView = useRef();
     //------------------------------
@@ -210,7 +210,7 @@ const GoogleMap = ({initLocation, back, today, groupData}) => {
             }}
         >
             { filteredMarkers.map((item, idx) => (
-                <CustomMarker key={idx} item={item} back={back} today={today} />
+                <CustomMarker key={idx} item={item} back={back} today={today} storeData={storeData} />
             ))}
             <Marker
                 coordinate={initLocation}

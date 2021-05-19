@@ -28,6 +28,7 @@
  export default function TimeTable(props) {
    const location = props.route.params.group.location;
    const groupList = props.route.params.group.groupList;
+   const storeData = props.route.params.storeData;
    const todayFullDate = new Date();
    todayFullDate.setDate(todayFullDate.getDate() + 1);
    if (todayFullDate.getDay() === 0){
@@ -198,6 +199,7 @@
              location={item.location}
              groupList={groupList}
              day={day}
+             storeData={storeData}
            />
      );
  
@@ -216,7 +218,7 @@
        {Header()}
        {DayButtons()}
        {ListOfWeeklyGroup()}
-       <NewGroupButton initLocation={location} deliDate={null} items={{datePicker: [dayArrayKorFixed,dateDifference]}} />
+       <NewGroupButton storeData= {storeData} initLocation={location} deliDate={null} items={{datePicker: [dayArrayKorFixed,dateDifference]}} />
      </>
    );
  }

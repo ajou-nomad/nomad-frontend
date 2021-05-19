@@ -19,6 +19,7 @@ import { COLORS, FONTS2 } from '../../constants';
 
 const Cart = ({ navigation, route:{params} }) => {
     // console.log(params);
+    const datePicker = params.datePicker;
 
     // const [totalPrice, setTotalPrice] = useState(0);
     let itemPrice = 0;
@@ -105,7 +106,7 @@ const Cart = ({ navigation, route:{params} }) => {
                 {(params.location.buildingName && params.deliDate && params.time) ? (
                     <BottomButton onPress={() => !totalPrice ? alert('? 아무것도 사지 않으셨는데 결제는 어떻게 하시려고요??') : navigation.navigate('CheckOrder', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupId: params.groupId })} title="결제하기" />
                 ) : (
-                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, items:params.items, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupId: params.groupId })} title="그룹 생성하기" />
+                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupId: params.groupId, datePicker:datePicker })} title="그룹 생성하기" />
                 )}
             </ScrollView>
         </View>

@@ -26,7 +26,7 @@ const App = () => {
 
     // addData('storeData', testData2);
 
-    // getData('groupData').then( data => console.log(JSON.stringify(data, null, 4)))
+    // getData('groupData').then( data => console.log(JSON.stringify(data, null, 4)));
 
     // getWeeklyGroupData().then( data => console.log(JSON.stringify(data, null, 4)));
     // getDaliyGroupData().then( data => console.log(JSON.stringify(data, null, 4)));
@@ -87,8 +87,8 @@ const storeData = [
     openTime: '09:00',
     closeTime: '22:00',
     deliveryTip: 2000,
-    rate: 3.2,
-    logoUrl: images.bbacks,
+    rate: 2.8,
+    logoUrl: '',
     menu:[
       {
         menuId: 1,
@@ -174,8 +174,8 @@ const storeData = [
     openTime: '07:00',
     closeTime: '22:00',
     deliveryTip: 2000,
-    rate: 4.6,
-    logoUrl: images.starbucks,
+    rate: 4.2,
+    logoUrl: '',
     menu:[
       {
         menuId: 11,
@@ -203,6 +203,30 @@ const storeData = [
         menuName: '자바 칩 프라푸치노',
         cost: 6100,
         description: '커피, 모카 소스, 진한 초콜릿 칩이 입안 가득 느껴지는 스타벅스에서만 맛볼 수 있는 프라푸치노',
+        imgUrl: '',
+      },
+    ],
+  },
+  {
+    storeId: 3,
+    storeName: '할리스 아주대점',
+    phoneNumber: '031-211-2884',
+
+    address: '경기 수원시 영통구 중부대로 258',
+    latitude: 37.2742778,
+    longitude: 127.0439584,
+
+    openTime: '08:00',
+    closeTime: '22:00',
+    deliveryTip: 2000,
+    rate: 3.7,
+    logoUrl: '',
+    menu:[
+      {
+        menuId: 15,
+        menuName: '디카페인 아메리카노',
+        cost: 4100,
+        description: '부드러운 풍미와 균형잡힌 바디감의 디카페인 아메리카노',
         imgUrl: '',
       },
     ],

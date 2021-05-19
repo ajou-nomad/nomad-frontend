@@ -42,8 +42,9 @@ export default function WeeklyGroupListParent(props) {
         ({date,time}) => (date === props.date) && (time.slice(0,2) === tableTime)
     );
 
-        
-    const currentGroup = groupList.length
+    const storeData = props.storeData;
+
+    const currentGroup = groupList.length;
 
         return (
             <>
@@ -54,6 +55,7 @@ export default function WeeklyGroupListParent(props) {
                         location: props.location,
                         currentGroup: currentGroup,
                         groupList: groupList,
+                        storeData: storeData,
                         back:'TimeTable',
                     })}
                 >

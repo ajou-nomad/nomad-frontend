@@ -6,7 +6,7 @@ import React, {useState, useEffect} from 'react';
 import { Image, StyleSheet ,View, Text, TouchableOpacity } from 'react-native';
 import {icons, COLORS, SIZES, FONTS} from "../constants";
 import LinearGradient from 'react-native-linear-gradient';
-import {getDaliyGroupData, getWeeklyGroupData} from '../utils/helper';
+import {getData, getDaliyGroupData, getWeeklyGroupData} from '../utils/helper';
 
 
 
@@ -15,6 +15,7 @@ const Main = ({navigation}) => {
 
     const [responseDailyData,setResponseDailyData] = useState();
     const [responseWeeklyData,setResponseWeeklyData] = useState();
+    const [responseStoreData,setResponseStoreData] = useState();
 
     useEffect(() => {
     getDaliyGroupData().then((reponse)=>
@@ -22,7 +23,10 @@ const Main = ({navigation}) => {
     );
     getWeeklyGroupData().then((response)=>
         setResponseWeeklyData(response)
-    )
+    );
+    getData('storeData').then( (response) =>
+        setResponseStoreData(response)
+      );
     }, []);
 
     return (
@@ -48,6 +52,7 @@ const Main = ({navigation}) => {
                             groupDayData: responseDailyData,
                             groupWeekData: responseWeeklyData,
                         },
+                        storeData: responseStoreData,
                     });
                 }}
             >
@@ -63,7 +68,8 @@ const Main = ({navigation}) => {
                             groupDayData: responseDailyData,
                             groupWeekData: responseWeeklyData,
                         },
-                    });               
+                        storeData: responseStoreData,
+                    });
                 }}
             >
                 <Text style={{...FONTS.body3, color: COLORS.black}}>주간 모집</Text>

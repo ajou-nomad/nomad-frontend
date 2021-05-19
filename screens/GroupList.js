@@ -29,6 +29,8 @@ export default function GroupList({navigation, route}) {
   const back = route.params.back;
   const today = route.params.today;
   const groupList = route.params.group.groupList;
+  const storeData = route.params.storeData;
+
 
 
 
@@ -38,12 +40,10 @@ export default function GroupList({navigation, route}) {
 
   const sortPeople = () => {
     groupList.sort((prev,next)=>(prev.max-prev.current)>(next.max-next.current) ? 1 : (prev.max-prev.current) === (next.max-next.current) ? (parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : -1 : -1)
-    alert('인원순 정렬');
   };
 
   const sortTime = () => {
     groupList.sort((prev,next)=>(parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : (parseInt(prev.time.replace(':',''))) === (parseInt(next.time.replace(':',''))) ? (prev.max-prev.current) > (next.max-next.current) ? 1 : -1 : -1)
-    alert('시간순 정렬');
   };
 
   const Header = () =>{
@@ -120,7 +120,7 @@ export default function GroupList({navigation, route}) {
       {Header()}
       {SortButtons()}
       {ListOfGroup()}
-      <NewGroupButton initLocation={location} deliDate={today}/>
+      <NewGroupButton storeData={storeData} initLocation={location} deliDate={today}/>
     </>
   );
 }

@@ -70,7 +70,7 @@ const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
 };
 
 const Tabs = ({route}) => {
-  const {routeName, groupData} = route.params;
+  const {routeName, groupData, storeData} = route.params;
 
   return (
     <Tab.Navigator
@@ -92,7 +92,7 @@ const Tabs = ({route}) => {
       }}>
       <Tab.Screen
         name="당일 모집"
-        initialParams={{groupData:groupData.groupDayData}}
+        initialParams={{groupData:groupData.groupDayData, storeData:storeData}}
         component={DayNavigation}
         options={{
           tabBarIcon: ({focused}) => (
@@ -112,7 +112,7 @@ const Tabs = ({route}) => {
       />
       <Tab.Screen
         name="주간 모집"
-        initialParams={{groupData:groupData.groupWeekData}}
+        initialParams={{groupData:groupData.groupWeekData, storeData:storeData}}
         component={WeeklyNavigation}
         options={{
           tabBarIcon: ({focused}) => (

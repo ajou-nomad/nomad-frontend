@@ -20,6 +20,7 @@ import { currentLocation } from '../utils/helper';
 
 const DayDelivery = ({ route, navigation }) => {
   const groupData = route.params.groupData;
+  const storeData = route.params.storeData;
 
   const [location, setLocation] = useState(null);
 
@@ -75,15 +76,16 @@ const DayDelivery = ({ route, navigation }) => {
   };
 
   const today = JSON.stringify(new Date().toJSON()).substr(1,10);
+  // console.log(today)
 
   return (
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap initLocation={location} back="DayDelivery" today={today} groupData = {groupData} />
+          <GoogleMap initLocation={location} back="DayDelivery" today={today} groupData = {groupData} storeData= {storeData} />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
-          <NewGroupButton initLocation={location} deliDate={today}/>
+          <NewGroupButton initLocation={location} deliDate={today} storeData={storeData} />
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>
