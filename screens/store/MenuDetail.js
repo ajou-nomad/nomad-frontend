@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     ToastAndroid,
     FlatList,
+    Image,
     SafeAreaView,
 } from 'react-native';
 
@@ -200,9 +201,14 @@ function MenuDetail({ navigation, route:{params} }) {
                         alignItems: 'center',
                     }}>
                     {/* 음식 사진 */}
-                    <View style={{ height: 450, width: '80%', marginTop: 20, backgroundColor: '#ced4da', justifyContent: 'center', alignItems: 'center', }}>
-                        <Text style={{ ...FONTS2.h1 }}>{menuDetail.photo}</Text>
-                    </View>
+                    <Image
+                        source={{ uri: menuDetail.photo }}
+                        resizeMode='contain'
+                        style={{
+                            width: 300,
+                            height: 300,
+                        }}
+                    />
                     {/* 메뉴 이름 */}
                     <Text style={{ ...FONTS2.h1, margin: 10 }}>{menuDetail.menuName}</Text>
                     {/* 메뉴 설명 */}
@@ -220,7 +226,7 @@ function MenuDetail({ navigation, route:{params} }) {
                         <Text style={{ ...FONTS2.h2, }}>{totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Text>
                     </View>
                     {/* 수량 */}
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, marginBottom: 50 }}>
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>수량</Text>
                         {/* useState로 수량 update */}
                         <Counter
@@ -254,7 +260,7 @@ function MenuDetail({ navigation, route:{params} }) {
                 </View>
             </View>
         );
-    }
+    };
 
     const renderBottom = () => {
         return (

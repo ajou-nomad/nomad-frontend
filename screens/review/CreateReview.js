@@ -20,13 +20,14 @@ const CreateReview = ({ route }) => {
     const [uploadImage, setUploadImage] = useState('');
     const [text, setText] = useState('');
 
-    let [orderData, setOrderData] = useState();
-    const { item } = route.params;
+    // let [orderData, setOrderData] = useState();
+    let { item,setItems } = route.params;
+
 
     // console.log('hhhh: ', item);
     // console.log('CreateReview ', item); // item.orderId
 
-    getData('orderData').then(data => setOrderData(data));
+    // getData('orderData').then(data => setOrderData(data));
 
 
     const renderRating = () => {
@@ -80,15 +81,26 @@ const CreateReview = ({ route }) => {
     const sendReview = async () => {
         // 리뷰 DB에 등록
 
-        orderData.map(item_ => {
-            if (item_.orderId === item.orderId) {
-                item_.review = {
-                    reviewId: uuid.v4(),
-                    text: text,
-                    // imgUrl: storageImage,
-                };
-            }
-        });
+        console.log('바ddd ', item);
+        item = {
+            ...item,
+            review: {
+                reviewId: uuid.v4(),
+                text: text,
+            },
+        };
+        setItems(item);
+        // route.item.map(item_ => {
+        //     if (item_.orderId === item.orderId) {
+        //         item_.review = {
+        //             reviewId: uuid.v4(),
+        //             text: text,
+        //             // imgUrl: storageImage,
+        //         };
+        //     }
+        // });
+
+        console.log('바꼈나 ', item);
 
         navigation.goBack();
         ToastAndroid.showWithGravity('리뷰가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);

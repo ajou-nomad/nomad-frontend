@@ -29,18 +29,19 @@ import StoreInfo from './StoreInfo';
 // 메뉴 (flatlist로 바꾸기)
 const MenuRoute = ({ route }) => {
     
-    return(
+    return (
     
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        <ScrollView>
-            {route.menu.map((items,index)=>{
-                return(
-                    <Menu key={index} menu={items} time={route.time} location={route.location} storeName={route.storeName} setCartItems={route.setCartItems}/>
-                )
-            })}
-        </ScrollView>
-    </SafeAreaView>
-)};
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+            <ScrollView>
+                {route.menu.map((items, index) => {
+                    return (
+                        <Menu key={index} menu={items} time={route.time} location={route.location} storeName={route.storeName} setCartItems={route.setCartItems} />
+                    );
+                })}
+            </ScrollView>
+        </SafeAreaView>
+    )
+};
 
 // 매장 정보
 const StoreInfoRoute = ({route}) => (
@@ -102,22 +103,11 @@ function StoreDetail({route}) {
         return (
             <View
                 style={{
-                    flex: 1,
                     backgroundColor: COLORS.white,
-                    justifyContent: 'flex-end',
+                    paddingTop: 30,
                 }}
             >
-                <View
-                    style={{
-                        alignSelf: 'center',
-                        padding: 15,
-                        borderWidth: 1,
-                        borderColor: '#adb5bd',
-                        borderBottomRightRadius: 20,
-                        marginBottom: 10,
-                        width: responsiveWidth(70),
-                        alignItems: 'center',
-                    }}>
+                <View style={styles.headerLogo}>
                     <Text style={{ ...FONTS2.h1 }}>{storeInfo.storeName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 3, alignSelf: 'center' }}>
                         <Image
@@ -135,18 +125,10 @@ function StoreDetail({route}) {
                 </View>
 
                 <View style={{ width: '60%', backgroundColor: 'white', alignSelf: 'center', marginBottom: 10 }}>
-                    {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ ...FONTS2.body2 }}>최소주문금액</Text>
-                        <Text style={{ ...FONTS2.body2 }}>13,500원</Text>
-                    </View> */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ ...FONTS2.body2 }}>배달팁</Text>
                         <Text style={{ ...FONTS2.body2 }}>{storeInfo.deliveryTip}원</Text>
                     </View>
-
-                    <TouchableOpacity>
-                        <Text style={{ ...FONTS2.body2, color: 'blue' }}>매장 생성 그룹 보기</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -180,6 +162,16 @@ function StoreDetail({route}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    headerLogo: {
+        alignSelf: 'center',
+        padding: 15,
+        borderWidth: 1,
+        borderColor: '#adb5bd',
+        borderBottomRightRadius: 20,
+        marginBottom: 10,
+        width: responsiveWidth(70),
+        alignItems: 'center',
     },
 });
 
