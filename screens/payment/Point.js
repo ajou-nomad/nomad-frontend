@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { View, Text } from 'react-native';
+import { participationGroup } from '../../utils/helper';
 
 const Point = ({ route, navigation }) => {
 
@@ -46,6 +47,10 @@ const Point = ({ route, navigation }) => {
         },
       };
       console.log(JSON.stringify(participationGroupData,null,4));
+      participationGroup(participationGroupData.groupId, participationGroupData.orderData).then((data)=>{
+        console.log("hi");
+        navigation.popToTop();
+      });
     }
 
     return (

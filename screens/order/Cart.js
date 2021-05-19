@@ -43,10 +43,10 @@ const Cart = ({ navigation, route:{params} }) => {
                     {/* 가게이름, 메뉴 */}
                     <View style={{ margin: 30, }}>
                         <Text style={{ ...FONTS2.h2, marginBottom: 10, }}>{params.storeInfo.storeName}</Text>
-                        {params.cartItems.map((items,index)=>{
-                            return <OrderMenuItem key={index} isCart="true" orderDetail = {items} />
-                        }
-                        )
+                        {
+                            params.cartItems.map((items, index) => {
+                                return <OrderMenuItem key={index} isCart="true" orderDetail={items} />
+                            })
                         }
                     </View>
                     {/* 메뉴 추가 버튼 */}
@@ -85,7 +85,7 @@ const Cart = ({ navigation, route:{params} }) => {
                         <Text style={{ ...FONTS2.body2 }}>배달비</Text>
                         <Text style={{ ...FONTS2.body2 }}>{deliveryTipString}원</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, paddingTop: 15, borderTopWidth: 0.5 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, paddingTop: 15, borderTopWidth: 0.5, marginBottom: 20, }}>
                         <Text style={{ ...FONTS2.h2 }}>총 결제 금액</Text>
                         <Text style={{ ...FONTS2.h2 }}>{totalPriceString}원</Text>
                     </View>

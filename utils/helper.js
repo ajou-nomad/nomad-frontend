@@ -426,6 +426,8 @@ export const participationGroup = async (groupId, orderData) => {
             orderData.review = null;
 
             exceptedGroup.push(seletedGroup[0]);
+            await setData('groupData',exceptedGroup);
+            console.log('추가완료');
 
             // console.log(JSON.stringify(exceptedGroup,null,4));
 
@@ -448,9 +450,12 @@ export const participationGroup = async (groupId, orderData) => {
         }
     });
 
-    console.log(JSON.stringify(orderData,null,4));
+    // console.log(JSON.stringify(orderData,null,4));
     await addData('orderData', orderData);
     console.log('최종적인 배달참가완성');
+    Alert.alert("그룹에 참여가 완료되었습니다.");
+
+    return 'complete';
 
 
     // {
