@@ -22,6 +22,7 @@ const OrderDetails = () => {
     }, []);
 
     console.log('orderDetails ', orderData);
+
     const ReviewButton = ({ item }) => {
         return (
             <View>
@@ -29,7 +30,7 @@ const OrderDetails = () => {
                     <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('CreateReview', { item: item })}>
                         <Text style={styles.ReviewButton}>
                             리뷰 쓰기
-                    </Text>
+                        </Text>
                     </TouchableOpacity>
                 ) : (
                     <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('MyReview', { item: item })}>
@@ -141,7 +142,7 @@ const OrderDetails = () => {
     return (
         <ScrollView style={styles.container}>
             <Header title="주문 내역" small='true' />
-            
+
             <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={renderItem} />
         </ScrollView>
     );

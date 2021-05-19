@@ -21,7 +21,7 @@ const MyPage = ({ navigation }) => {
   const { state, dispatch } = useContext(AuthContext);
   
   // {"isSignedIn": true, "member": {"email": "ajouajou@gmail.com", "memberType": "User", "nickName": "아주아주", "phoneNum": "010-1111-1111", "point": 0}}
-  console.log('mypage', state);
+  console.log('mypage:: ', state);
   
   useEffect(() => {
     console.log("Mypage 불릴때");
@@ -33,7 +33,7 @@ const MyPage = ({ navigation }) => {
     })
 
 
-  }, []);
+  }, [navigation]);
 
 
 

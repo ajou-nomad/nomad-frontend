@@ -20,12 +20,6 @@ import { clearAll, setData, getData, addData, createChatRoom } from '../../utils
 const ChatList = ({ navigation }) => {
 
     const [threads, setThreads] = useState([]);
-    const chatList = [
-        {
-            uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
-            chatIds: ['채팅방id1', '채팅방id2'],
-        },
-    ];
 
     const [groupData, setGroupData] = useState(null);
 
