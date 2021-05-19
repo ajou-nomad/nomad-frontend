@@ -44,6 +44,8 @@ const CheckOrder = ({route:{params}}) => {
     // };
 
     const totalPrice = params.totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const current = (params.groupData === undefined || params.groupData === null) ? 1 : params.groupData.current;
+    const maxValue = (params.groupData === undefined || params.groupData === null) ?  params.maxValue :  params.groupData.max;
 
     return (
         <View style={styles.container}>
@@ -56,7 +58,7 @@ const CheckOrder = ({route:{params}}) => {
                         <Text style={{ ...FONTS2.body2 }}>수령 장소: {params.location.buildingName}</Text>
                         <Text style={{ ...FONTS2.body2 }}>수령 시간: {params.time}</Text>
                         <Text style={{ ...FONTS2.body2 }}>수령 날짜: {params.deliDate}</Text>
-                        <Text style={{ ...FONTS2.body2 }}>현재 인원: 1/{params.maxValue}</Text>
+                        <Text style={{ ...FONTS2.body2 }}>현재 인원: {current}/{maxValue}</Text>
                     </View>
                 </View>
                 <View style={{ flex: 3, margin: 30, }}>
@@ -64,7 +66,7 @@ const CheckOrder = ({route:{params}}) => {
                     {params.cartItems.map((items,index)=>{
                         return <OrderMenuItem key={index} isCart="false" orderDetail = {items} />
                     })}
-                    
+
                 </View>
             </View>
 

@@ -21,7 +21,7 @@ export default function GroupInfo(props) {
         const navigation = useNavigation();
         return (
             <TouchableOpacity
-                onPress={()=>navigation.navigate('StoreDetail', {storeInfo:props.storeInfo, groupId: props.groupId ,deliDate:props.deliDate, time:props.time, deliveryPlace:props.location})}
+                onPress={()=>navigation.navigate('StoreDetail', {storeInfo:props.storeInfo, groupData: props.groupData ,deliDate:props.deliDate, time:props.groupData.time, deliveryPlace:props.location})}
             >
                 <View style={props.styleGroupInfo}>
                     <Image style={[props.styleLogoImage, { width: 55, height: 55 }]} source={{ uri: props.storeInfo.logoUrl }} resizeMode='contain'/>

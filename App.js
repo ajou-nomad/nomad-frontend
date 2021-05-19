@@ -70,7 +70,6 @@ export default App;
 
 
 
-
 // dummy Data
 
 
@@ -176,6 +175,7 @@ const storeData = [
     deliveryTip: 2000,
     rate: 4.2,
     logoUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fstarbucks.png?alt=media&token=4ae10322-dab3-4511-b2a6-0bd375393260',
+
     menu:[
       {
         menuId: 11,

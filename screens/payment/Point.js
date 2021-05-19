@@ -1,18 +1,16 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { View, Text } from 'react-native';
+import { participationGroup } from '../../utils/helper';
 
 const Point = ({ route, navigation }) => {
 
     const { paymentInfo, postData } = route.params;
 
-    console.log(postData.deliDate);
     const today = new Date();
     const todayString = JSON.stringify(today).substr(1,10);
-    console.log(todayString)
-    console.log(postData.deliDate);
 
-    if (postData.groupId === undefined){
+    if (postData.groupData === undefined || postData.groupData === null){
       // const today = new Date();
       // const todayString = JSON.stringify(today).slice(1,10);
       const creationGroupData = {
@@ -36,7 +34,7 @@ const Point = ({ route, navigation }) => {
       console.log(JSON.stringify(creationGroupData,null,4));
     } else {
       const participationGroupData = {
-        groupId: postData.groupId,
+        groupId: postData.groupData.groupId,
         orderData: {
           storeId: postData.storeInfo.storeId,
           menu: postData.cartItems,
@@ -46,6 +44,7 @@ const Point = ({ route, navigation }) => {
         },
       };
       console.log(JSON.stringify(participationGroupData,null,4));
+      // participationGroup(participationGroupData.groupId, participationGroupData.orderData);
     }
 
     return (

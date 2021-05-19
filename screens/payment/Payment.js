@@ -9,7 +9,7 @@ const Payment = ({route, navigation}) => {
 
   const { paymentInfo, postData } = route.params;
   // console.log(postData);
-  if (postData.groupId === undefined){
+  if (postData.groupData === undefined || postData.groupData === null){
     const today = new Date();
     const todayString = JSON.stringify(today).slice(1,10);
     const creationGroupData = {
@@ -30,11 +30,11 @@ const Payment = ({route, navigation}) => {
         orderTime: new Date(),
       },
     };
-    // console.log(JSON.stringify(creationGroupData,null,4));
+    console.log(JSON.stringify(creationGroupData,null,4));
   } else {
 
     const participationGroupData = {
-      groupId: postData.groupId,
+      groupId: postData.groupData.groupId,
       orderData: {
         storeId: postData.storeInfo.storeId,
         menu: postData.cartItems,

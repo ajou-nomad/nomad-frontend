@@ -54,34 +54,32 @@
      );
    };
 
-   const InfoOfGroup = ({ item }) => {
-     return (
-       <GroupInfo
-         groupId={item.groupId}
-         logo={item.logo}
-         shopName={item.shopName}
-         rate={item.rate}
-         time={item.time}
-         current={item.current}
-         max={item.max}
-         storeInfo={item.store}
-         deliDate={date}
-         location={location}
-         styleGroupInfo={styles.groupInfo}
-         styleLogoImage={styles.logoImage}
-         styleShopText={styles.shopText}
-         styleRating={styles.rating}
-         styleStarImage={styles.starImage}
-         styleRateText={styles.rateText}
-         styleDeliveryTime={styles.deliveryTime}
-         styleTimeImage={styles.timeImage}
-         styleDeliveryTimeText={styles.deliveryTimeText}
-         styleGroupNumber={styles.groupNumber}
-         styleUserImage={styles.userImage}
-         groupNumberText={styles.groupNumberText}
-       />
+   const InfoOfGroup = ({item}) =>(
+           <GroupInfo
+             groupData={item}
+             logo={item.logo}
+             shopName={item.shopName}
+             rate={item.rate}
+             time={item.time}
+             current={item.current}
+             max={item.max}
+             storeInfo={item.store}
+             deliDate={date}
+             location={location}
+             styleGroupInfo={styles.groupInfo}
+             styleLogoImage={styles.logoImage}
+             styleShopText={styles.shopText}
+             styleRating={styles.rating}
+             styleStarImage={styles.starImage}
+             styleRateText={styles.rateText}
+             styleDeliveryTime={styles.deliveryTime}
+             styleTimeImage={styles.timeImage}
+             styleDeliveryTimeText={styles.deliveryTimeText}
+             styleGroupNumber={styles.groupNumber}
+             styleUserImage={styles.userImage}
+             groupNumberText={styles.groupNumberText}
+           />
      );
-   };
  
      const ListOfGroup = () => (
        <SafeAreaView style={{marginBottom: 100}}>
