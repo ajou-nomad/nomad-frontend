@@ -8,6 +8,7 @@ import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import { GOOGLE_API_KEY } from '@env';
 import axiosApiInstance from './axios';
+import firestore from '@react-native-firebase/firestore';
 
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 

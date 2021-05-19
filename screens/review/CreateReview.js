@@ -2,22 +2,32 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TextInput, ScrollView, TouchableOpacity, ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import Modal from "react-native-simple-modal";
-
+import { launchImageLibrary } from 'react-native-image-picker';
+import uuid from 'react-native-uuid';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BottomButton from '../../components/layout/BottomButton';
 import Header from '../../components/layout/Header';
 import { FONTS2, COLORS, icons } from '../../constants';
+import { getData } from '../../utils/helper';
 
-const CreateReview = () => {
+const CreateReview = ({ route }) => {
     const navigation = useNavigation();
-    // const [open, setOpen] = useState(false);
     const [uploadImage, setUploadImage] = useState('');
+    const [text, setText] = useState('');
+
+    let [orderData, setOrderData] = useState();
+    const { item } = route.params;
+
+    // console.log('hhhh: ', item);
+    // console.log('CreateReview ', item); // item.orderId
+
+    getData('orderData').then(data => setOrderData(data));
+
 
     const renderRating = () => {
         return (
@@ -62,19 +72,42 @@ const CreateReview = () => {
         );
     };
 
+    const onChange = (text) => {
+        // console.log(e);
+        setText(text);
+    };
+
+    const sendReview = async () => {
+        // 리뷰 DB에 등록
+
+        orderData.map(item_ => {
+            if (item_.orderId === item.orderId) {
+                item_.review = {
+                    reviewId: uuid.v4(),
+                    text: text,
+                    // imgUrl: storageImage,
+                };
+            }
+        });
+
+        navigation.goBack();
+        ToastAndroid.showWithGravity('리뷰가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+    };
+
     return (
         <ScrollView style={styles.container}>
             <Header title='리뷰 작성' small='true' />
 
             <View style={styles.body}>
                 <View style={styles.reviewBox}>
-                    <Text style={{ ...FONTS2.h2 }}>가게 이름</Text>
+                    <Text style={{ ...FONTS2.h2, marginBottom: 20 }}>{item.storeName}</Text>
 
-                    {renderRating()}
+                    {/* {renderRating()} */}
 
                     <TextInput
                         placeholder='리뷰를 작성해주세요.'
                         style={styles.textInput}
+                        onChangeText={(e) => onChange(e)}
                     />
                     {uploadImage ? (
                         <View style={{ paddingTop: 10, }}>
@@ -93,7 +126,7 @@ const CreateReview = () => {
                 </View>
             </View>
 
-            <BottomButton title='등록하기' onPress={() => console.log('등록 후 어디로?')} />
+            <BottomButton title='등록하기' onPress={sendReview} />
         </ScrollView>
     );
 };

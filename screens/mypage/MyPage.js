@@ -4,7 +4,7 @@
 
 import React, { useEffect, useContext } from 'react';
 
-import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
@@ -18,20 +18,22 @@ import { AuthContext } from '../../context/AuthContextProvider';
 const MyPage = ({ navigation }) => {
 
 
-  const { dispatch } = useContext(AuthContext);
-
-
+  const { state, dispatch } = useContext(AuthContext);
+  
+  // {"isSignedIn": true, "member": {"email": "ajouajou@gmail.com", "memberType": "User", "nickName": "아주아주", "phoneNum": "010-1111-1111", "point": 0}}
+  console.log('mypage:: ', state);
+  
   useEffect(() => {
     console.log("Mypage 불릴때");
 
     // navigation에서 올때마다 호출( 리렌더링은 제외 )
     navigation.addListener('focus', async () => {
       console.log("Mypage 올떄마다 호출")
-            
+              
     })
 
 
-  }, []);
+  }, [navigation]);
 
 
 
@@ -39,29 +41,29 @@ const MyPage = ({ navigation }) => {
 
     const user = auth().currentUser;
 
-    if ( user && user.providerData[0].providerId === 'google.com' ) {
-        try {
-            await GoogleSignin.revokeAccess();
-            await GoogleSignin.signOut();
-            console.log('구글 로그아웃성공');
-            await auth()
-                    .signOut()
-                    .then(() => {
-                      console.log('파이어베이스 로그아웃성공');
-                      dispatch({ type: 'SIGN_OUT'});
-                    });
-        } catch (error) {
-            console.error(error);
-        }
-    } else if (user) {
+    if (user && user.providerData[0].providerId === 'google.com') {
+      try {
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+        console.log('구글 로그아웃성공');
         await auth()
-            .signOut()
-            .then(() => {
-              console.log('파이어베이스 로그아웃성공');
-              dispatch({ type: 'SIGN_OUT'});
-            });
+          .signOut()
+          .then(() => {
+            console.log('파이어베이스 로그아웃성공');
+            dispatch({ type: 'SIGN_OUT' });
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (user) {
+      await auth()
+        .signOut()
+        .then(() => {
+          console.log('파이어베이스 로그아웃성공');
+          dispatch({ type: 'SIGN_OUT' });
+        });
     } else {
-        console.log('로그인 상태가 아닙니다.');
+      console.log('로그인 상태가 아닙니다.');
     }
   };
 
@@ -80,20 +82,20 @@ const MyPage = ({ navigation }) => {
             }}
             resizeMode='contain'
           />
-          <Text style={styles.largeFont}>사용자 닉네임</Text>
+          <Text style={styles.largeFont}>{state.member.nickName}</Text>
         </View>
+        
       </View>
-      
       <MyPageButton title='채팅방' img={icons.chat} onPress={() => navigation.navigate('ChatNavigation')} />
       <MyPageButton title='리뷰 관리' img={icons.review} onPress={() => navigation.navigate('ReviewPage')} />
       <MyPageButton title='찜한 목록' img={icons.like2} onPress={() => navigation.navigate('LikeList')} />
       <MyPageButton title='포인트' img={icons.point} onPress={() => navigation.navigate('MyPointPage')} />
       <MyPageButton title='정보수정' img={icons.pencil} />
       <MyPageButton title='로그아웃' img={icons.logout} onPress={signOutGoogle} />
+      
     </ScrollView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

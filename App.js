@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
 
-    setData('groupData', groupData);
+    // setData('groupData', groupData);
 
     setData('orderData', orderData);
 
@@ -73,7 +73,6 @@ export default App;
 // dummy Data
 
 
-//get /storeList가 가능
 const storeData = [
   {
     storeId: 1,
@@ -270,7 +269,7 @@ const groupData = [
     groupId: 3,
     storeId: 1, //빽다방 아주대점
     time: '15:00',
-    date: '2021-05-19',
+    date: '2021-05-20',
     groupType: 'weekly',
     current: 2,
     maxValue: 5,
@@ -300,6 +299,7 @@ const groupData = [
 
 
 
+
 // get /orderDetail시 얻어올수 있는 정보들
 // uid에 해당하는 유저의 주문목록
 const orderData = [
@@ -310,8 +310,21 @@ const orderData = [
     storeId: 1,
     storeName: '빽다방 아주대점',
 
+
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orederStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: {
+      uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+      text: '가성비가 좋아요.!!',
+      imgUrl: '',
+    },
+
     menu: [
       {
+        menuId: 1,
         menuName: '앗!메리카노(ICED)',
         cost: 2000,
         quantity: 1,
@@ -328,13 +341,22 @@ const orderData = [
     storeId: 1,
     storeName: '빽다방 아주대점',
 
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orederStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: null,
+
     menu: [
       {
+        menuId: 1,
         menuName: '앗!메리카노(ICED)',
         cost: 2000,
         quantity: 1,
       },
       {
+        menuId: 9,
         menuName: '완전아이스초코',
         cost: 3500,
         quantity: 1,
@@ -346,14 +368,15 @@ const orderData = [
   },
 ];
 
-// get("/chatList")
+
+
+// 해당 uid의 채팅방리스트 얻기 get("/chatList")
 const chatList = [
   {
     uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
     chatIds: ['채팅방id1','채팅방id2'],
   },
 ];
-
 
 
 
