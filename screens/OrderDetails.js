@@ -143,7 +143,7 @@ const OrderDetails = () => {
     return (
         <ScrollView style={styles.container}>
             <Header title="주문 내역" small='true' />
-            <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={renderItem} />
+            <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={renderItem} inverted />
         </ScrollView>
     );
 };

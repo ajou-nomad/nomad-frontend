@@ -67,8 +67,8 @@ const App = () => {
         type: 'success',
         position: 'top',
         text1: '모집 완료!',
-        text2: `[${remoteMessage.notification.body}] 배달모집이 완료되었습니다.를 입력해주세요.`,
-        visibilityTime: 4000,
+        text2: `[${remoteMessage.notification.body}] 배달모집이 완료되었습니다.`,
+        visibilityTime: 6000,
         autoHide: true,
         topOffset: 30,
         bottomOffset: 40,
@@ -272,8 +272,8 @@ const groupData = [
   {
     groupId: 1,
     storeId: 1, //빽다방 아주대점
-    time: '13:00',
-    date: '2021-05-18',
+    time: '20:00',
+    date: '2021-05-19',
     groupType: 'day',
     current: 2,
     maxValue: 3,
@@ -287,8 +287,8 @@ const groupData = [
   {
     groupId: 2,
     storeId: 2, //스타벅스 아주대점
-    time: '13:30',
-    date: '2021-05-18',
+    time: '20:30',
+    date: '2021-05-19',
     groupType: 'day',
     current: 2,
     maxValue: 5,

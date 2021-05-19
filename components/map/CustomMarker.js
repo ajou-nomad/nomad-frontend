@@ -106,7 +106,7 @@ const CustomMarker = ({item, back, today, items, storeData}) => {
 const styles = StyleSheet.create({
 
     markerView: {
-        // height: 75,
+        height: 30,
         width: 90,
         // alignItems: 'center',
         // justifyContent: 'center',

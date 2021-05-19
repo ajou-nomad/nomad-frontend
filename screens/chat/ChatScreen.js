@@ -169,7 +169,7 @@ const ChatScreen = ({ route }) => {
             // else {
             //     return '배달원';
             // }
-            return splitname[0];
+            return '배달원';
         };
 
         if (props.currentMessage.user._id === 0) {
