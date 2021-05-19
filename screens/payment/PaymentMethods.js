@@ -9,10 +9,11 @@ import { SIZES, icons } from '../../constants';
 
 
 
-const PaymentMethods = ({navigation}) => {
-
+const PaymentMethods = ({navigation,route:{params}}) => {
+    // console.log('PaymentMethods: ' + JSON.stringify(params,null,4));
+    const totalData = params.totalData;
     const data = {
-        amount: 8200, // 최종 주문 결제 내역에서 가져올
+        amount: totalData.totalPrice, // 최종 주문 결제 내역에서 가져올
         myPoint: 150000, // axios로 불러야 할 정보들
         buyerName: '테스트용',
         buyerTel: '010-1234-5678',
@@ -47,12 +48,14 @@ const PaymentMethods = ({navigation}) => {
                 method="포인트"
                 disable={false}
                 paymentInfo={data}
+                postData = {totalData}
             />
             <SelectMethod
                 iconName="credit_card"
                 method="신용카드"
                 disable={true}
                 paymentInfo={data}
+                postData = {totalData}
             />
             <MyPoint point={data.myPoint} />
       </View>

@@ -10,7 +10,7 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
+  ScrollView,
   FlatList,
   View,
   Text,
@@ -29,6 +29,8 @@ export default function GroupList({navigation, route}) {
   const back = route.params.back;
   const today = route.params.today;
   const groupList = route.params.group.groupList;
+  const storeData = route.params.storeData;
+
 
 
 
@@ -38,12 +40,10 @@ export default function GroupList({navigation, route}) {
 
   const sortPeople = () => {
     groupList.sort((prev,next)=>(prev.max-prev.current)>(next.max-next.current) ? 1 : (prev.max-prev.current) === (next.max-next.current) ? (parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : -1 : -1)
-    alert('인원순 정렬');
   };
 
   const sortTime = () => {
     groupList.sort((prev,next)=>(parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : (parseInt(prev.time.replace(':',''))) === (parseInt(next.time.replace(':',''))) ? (prev.max-prev.current) > (next.max-next.current) ? 1 : -1 : -1)
-    alert('시간순 정렬');
   };
 
   const Header = () =>{
@@ -81,12 +81,13 @@ export default function GroupList({navigation, route}) {
 
   const InfoOfGroup = ({item}) =>(
           <GroupInfo
+            groupId={item.groupId}
             logo={item.logo}
-            shopName={item.shopName}
             rate={item.rate}
             time={item.time}
             current={item.current}
             max={item.max}
+            storeInfo={item.store}
             deliDate={today}
             location={location}
             styleGroupInfo={styles.groupInfo}
@@ -105,13 +106,13 @@ export default function GroupList({navigation, route}) {
     );
 
     const ListOfGroup = () => (
-      <SafeAreaView style={{marginBottom: 100}}>
+      <View style={{marginBottom: 100}}>
         <FlatList
-          data={[...groupList]}
+          data={groupList}
           renderItem={InfoOfGroup}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.groupId.toString()}
         />
-      </SafeAreaView>
+      </View>
     );
 
   return (
@@ -119,7 +120,7 @@ export default function GroupList({navigation, route}) {
       {Header()}
       {SortButtons()}
       {ListOfGroup()}
-      <NewGroupButton initLocation={location} deliDate={today}/>
+      <NewGroupButton storeData={storeData} initLocation={location} deliDate={today}/>
     </>
   );
 }

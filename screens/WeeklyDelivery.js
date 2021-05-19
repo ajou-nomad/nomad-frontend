@@ -24,7 +24,6 @@ const ItemsForCreateGroupDetailDayPicker = () => {
   } else if (todayFullDate.getDay() === 6){
     todayFullDate.setDate(todayFullDate.getDate() + 2);
   }
-  todayFullDate.setDate(todayFullDate.getDate() + 1);
   const todayDay = todayFullDate.getDay();
   const dayArrayKor = ['월','화','수','목','금'];
   const dateDifference = [1,2,3,4];
@@ -42,11 +41,12 @@ const ItemsForCreateGroupDetailDayPicker = () => {
 
 }
 
-
-
 const WeeklyDelivery = ({ route, navigation }) => {
 
   const [location, setLocation] = useState();
+
+  const groupData = route.params.groupData;
+  const storeData = route.params.storeData;
 
   const setCurrentLocation = (result) => {
     setLocation(result);
@@ -99,7 +99,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
   };
 
 
-  const [dayArrayKorFixed,dateDifference,today] = ItemsForCreateGroupDetailDayPicker()
+  const [dayArrayKorFixed,dateDifference] = ItemsForCreateGroupDetailDayPicker()
 
 
 
@@ -107,10 +107,10 @@ const WeeklyDelivery = ({ route, navigation }) => {
     <View style={{flex: 1}}>
       { location ? (
         <View style={{flex: 1}}>
-          <GoogleMap initLocation={location} back="WeeklyDelivery" />
+          <GoogleMap initLocation={location} back="WeeklyDelivery" groupData={groupData} storeData={storeData} />
           { renderDestinationHeader() }
           <GpsButton setLocation={setCurrentLocation} />
-          <NewGroupButton initLocation={location} deliDate={null} items={{datePicker:[dayArrayKorFixed,dateDifference,today]}} />
+          <NewGroupButton storeData={storeData} initLocation={location} deliDate={null} datePicker={[dayArrayKorFixed,dateDifference]} />
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

@@ -106,6 +106,7 @@ const ChatScreen = ({ route }) => {
     };
 
     const renderMessageImage = (props) => {
+        // console.log('사진:: ', props.currentMessage.image);
         return (
             <View style={{ padding: 5 }}>
                 <ImageModal
@@ -162,7 +163,12 @@ const ChatScreen = ({ route }) => {
     const renderContainer = (props) => {
         const splitUsername = (name) => {
             const splitname = name.split('@');
-            return splitname[0];
+            if (splitname === 'erangerang15') {
+                return '배달원';
+            }
+            else {
+                return splitname[0];
+            }
         };
 
         if (props.currentMessage.user._id === 0) {

@@ -17,6 +17,8 @@ import { FONTS2, images } from '../../constants';
 
 const ChatItem = ({ thread }) => {
     const navigation = useNavigation();
+
+    // console.log('ChatItem ', thread);
     
     return (
         <View>
@@ -37,7 +39,11 @@ const ChatItem = ({ thread }) => {
                         marginVertical: 5,
                     }}
                 />
-                <Text style={{ ...FONTS2.h2, }}>{thread.name}</Text>
+                <View>
+                    <Text style={{ ...FONTS2.h3, }}>{thread.name}</Text>
+                    <Text style={{ ...FONTS2.body3, }}>{thread.latestMessage.text}</Text>
+                    {/* <Text style={{ ...FONTS2.body3, }}>{(new Date(thread.latestMessage.createdAt)).toString()}</Text> */}
+                </View>
             </TouchableOpacity>
         </View>
     );

@@ -10,29 +10,51 @@ const MiniMap = ({location, onPlaceChange, prevScreen}) => {
 
     const mapView = useRef();
 
-    return (
-        <View style={{ flex: 1 }}>
-            <MapView
-                ref={mapView}
-                style={{ flex: 1 }}
-                provider={PROVIDER_GOOGLE}
-                initialRegion={{
-                    latitude: location.latitude,
-                    longitude: location.longitude,
-                    latitudeDelta: 0.0033,
-                    longitudeDelta: 0.0033,
-                }}
-                onRegionChangeComplete={(region)=> {
-                    delete region.latitudeDelta;
-                    delete region.longitudeDelta;
-                    onPlaceChange(region);
-                }}
-            />
-            <View style={styles.markerFixed}>
-                <Image style={styles.marker} source={icons.pin} />
-            </View>
-        </View>
 
+    return (
+        <>
+        {onPlaceChange ? (
+            <View style={{ flex: 1 }}>
+                <MapView
+                    ref={mapView}
+                    style={{ flex: 1 }}
+                    provider={PROVIDER_GOOGLE}
+                    initialRegion={{
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                        latitudeDelta: 0.0033,
+                        longitudeDelta: 0.0033,
+                    }}
+                    onRegionChangeComplete={(region)=> {
+                        delete region.latitudeDelta;
+                        delete region.longitudeDelta;
+                        onPlaceChange(region);
+                    }}
+                />
+                <View style={styles.markerFixed}>
+                    <Image style={styles.marker} source={icons.pin} />
+                </View>
+            </View>
+
+        ) : (
+            <View style={{ flex: 1 }}>
+                <MapView
+                    ref={mapView}
+                    style={{ flex: 1 }}
+                    provider={PROVIDER_GOOGLE}
+                    initialRegion={{
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                        latitudeDelta: 0.0033,
+                        longitudeDelta: 0.0033,
+                    }}
+                />
+                <View style={styles.markerFixed}>
+                    <Image style={styles.marker} source={icons.pin} />
+                </View>
+            </View>
+        )}
+        </>
     );
 };
 

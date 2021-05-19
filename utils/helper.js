@@ -8,6 +8,7 @@ import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import { GOOGLE_API_KEY } from '@env';
 import axiosApiInstance from './axios';
+import firestore from '@react-native-firebase/firestore';
 
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 
@@ -353,14 +354,15 @@ export const clearAll = async () => {
 };
 
 
+
 export const getDaliyGroupData = async () => {
 
     const storeData =  await getData('storeData');
 
     return getData('groupData').then( (data) => {
-        let daliyData = data.filter((goal) => goal.groupType === 'day');
+        let dailyData = data.filter((goal) => goal.groupType === 'day');
 
-        daliyData = daliyData.map( (groupDatum) => {
+        dailyData = dailyData.map( (groupDatum) => {
 
             let storeInfo = storeData.filter((store) => store.storeId === groupDatum.storeId);
 
@@ -370,9 +372,10 @@ export const getDaliyGroupData = async () => {
 
         });
 
-        return daliyData;
+        return dailyData;
     });
 };
+
 
 
 export const getWeeklyGroupData = async () => {
@@ -396,9 +399,6 @@ export const getWeeklyGroupData = async () => {
     });
 };
 
-
-
-
 // post "participationGroup"
 export const participationGroup = async (groupId, orderData) => {
 
@@ -411,7 +411,7 @@ export const participationGroup = async (groupId, orderData) => {
         let exceptedGroup = data.filter((goal) => goal.groupId !== groupId);
 
         //모집완료일 때
-        if ( seletedGroup[0].current++ === (seletedGroup[0].maxValue-3) ){
+        if ( seletedGroup[0].current++ === (seletedGroup[0].maxValue) ){
 
             console.log('모집완료시');
             // 위에서 count 증가 완료
@@ -448,6 +448,7 @@ export const participationGroup = async (groupId, orderData) => {
         }
     });
 
+    console.log(JSON.stringify(orderData,null,4));
     await addData('orderData', orderData);
     console.log('최종적인 배달참가완성');
 

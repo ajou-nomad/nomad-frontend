@@ -13,11 +13,12 @@ const WeeklyStack = createStackNavigator();
 
 const WeeklyNavigation = ({route, navigation}) => {
 
-
     useEffect( () => {
 
     }, []);
-
+    const groupData = route.params.groupData;
+    const storeData = route.params.storeData;
+    
     return (
         <WeeklyStack.Navigator
             screenOptions={{
@@ -25,7 +26,7 @@ const WeeklyNavigation = ({route, navigation}) => {
             }}
             initialRouteName={'WeeklyDelivery'}
         >
-            <WeeklyStack.Screen name="WeeklyDelivery" component={WeeklyDelivery} />
+            <WeeklyStack.Screen name="WeeklyDelivery" component={WeeklyDelivery} initialParams={{groupData: groupData, storeData: storeData}}/>
             <WeeklyStack.Screen name="TimeTable" component={TimeTable}/>
             <WeeklyStack.Screen name="WeeklyGroupListParent" component={WeeklyGroupListParent}/>
             <WeeklyStack.Screen name="WeeklyGroupListChild" component={WeeklyGroupListChild} />

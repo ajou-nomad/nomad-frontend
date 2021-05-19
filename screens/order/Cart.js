@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
     View,
     Text,
@@ -18,6 +18,23 @@ import OrderMenuItem from '../../components/item/OrderMenuItem';
 import { COLORS, FONTS2 } from '../../constants';
 
 const Cart = ({ navigation, route:{params} }) => {
+    // console.log(params);
+    const datePicker = params.datePicker;
+
+    // const [totalPrice, setTotalPrice] = useState(0);
+    let itemPrice = 0;
+    for(let indexOfCart = 0; indexOfCart<params.cartItems.length; indexOfCart++){
+        itemPrice += params.cartItems[indexOfCart].cost;
+    }
+    let deliveryTip = 0;
+    if (params.cartItems.length > 0){
+        deliveryTip = params.storeInfo.deliveryTip;
+    }
+    const totalPrice = itemPrice + deliveryTip;
+
+    const itemPriceString = itemPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const deliveryTipString = deliveryTip.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const totalPriceString = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     const renderBody = () => {
         return (
@@ -25,8 +42,12 @@ const Cart = ({ navigation, route:{params} }) => {
                 <View>
                     {/* 가게이름, 메뉴 */}
                     <View style={{ margin: 30, }}>
-                        <Text style={{ ...FONTS2.h2, marginBottom: 10, }}>배스킨라빈스 아주대점</Text>
-                        <OrderMenuItem isCart="true" />
+                        <Text style={{ ...FONTS2.h2, marginBottom: 10, }}>{params.storeInfo.storeName}</Text>
+                        {params.cartItems.map((items,index)=>{
+                            return <OrderMenuItem key={index} isCart="true" orderDetail = {items} />
+                        }
+                        )
+                        }
                     </View>
                     {/* 메뉴 추가 버튼 */}
                     <TouchableOpacity
@@ -57,23 +78,22 @@ const Cart = ({ navigation, route:{params} }) => {
                 <View style={{ marginHorizontal: 20, marginTop: 30, marginBottom: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                         <Text style={{ ...FONTS2.body2 }}>주문 금액</Text>
-                        <Text style={{ ...FONTS2.body2 }}>8,200원</Text>
+                        <Text style={{ ...FONTS2.body2 }}>{itemPriceString}원</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                         <Text style={{ ...FONTS2.body2 }}>배달비</Text>
-                        <Text style={{ ...FONTS2.body2 }}>0원</Text>
+                        <Text style={{ ...FONTS2.body2 }}>{deliveryTipString}원</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, paddingTop: 15, borderTopWidth: 0.5 }}>
                         <Text style={{ ...FONTS2.h2 }}>총 결제 금액</Text>
-                        <Text style={{ ...FONTS2.h2 }}>8,200원</Text>
+                        <Text style={{ ...FONTS2.h2 }}>{totalPriceString}원</Text>
                     </View>
                 </View>
             </View>
         );
     };
 
-    console.log(params)
 
     return (
         <View style={styles.container}>
@@ -84,9 +104,9 @@ const Cart = ({ navigation, route:{params} }) => {
                 {renderBody()}
                 {/* 그룹 생성하기 버튼 */}
                 {(params.location.buildingName && params.deliDate && params.time) ? (
-                    <BottomButton onPress={() => navigation.navigate('CheckOrder', { time: params.time, location: params.location, storeName: params.storeName })} title="결제하기" />
+                    <BottomButton onPress={() => !totalPrice ? alert('? 아무것도 사지 않으셨는데 결제는 어떻게 하시려고요??') : navigation.navigate('CheckOrder', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupId: params.groupId })} title="결제하기" />
                 ) : (
-                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', {items:params.items, location: params.location, storeName: params.storeName, deliDate: params.deliDate })} title="그룹 생성하기" />
+                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupId: params.groupId, datePicker:datePicker })} title="그룹 생성하기" />
                 )}
             </ScrollView>
         </View>

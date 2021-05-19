@@ -27,6 +27,8 @@
  
  export default function TimeTable(props) {
    const location = props.route.params.group.location;
+   const groupList = props.route.params.group.groupList;
+   const storeData = props.route.params.storeData;
    const todayFullDate = new Date();
    todayFullDate.setDate(todayFullDate.getDate() + 1);
    if (todayFullDate.getDay() === 0){
@@ -48,7 +50,7 @@
     return JSON.stringify(d.toJSON()).substr(1,10);
    };
 
-   const groupList = [
+   const timeTableList = [
      {
        id:'time1',
        time:'08~09',
@@ -195,15 +197,16 @@
              time={item.time}
              date={item.date}
              location={item.location}
-             currentGroup={item.currentGroup}
+             groupList={groupList}
              day={day}
+             storeData={storeData}
            />
      );
  
      const ListOfWeeklyGroup = () => (
        <SafeAreaView style={{marginBottom: 100}}>
          <FlatList
-           data={groupList}
+           data={timeTableList}
            renderItem={InfoOfWeeklyGroup}
            keyExtractor={item => item.id}
          />
@@ -215,7 +218,7 @@
        {Header()}
        {DayButtons()}
        {ListOfWeeklyGroup()}
-       <NewGroupButton initLocation={location} deliDate={null} items={{datePicker: [dayArrayKorFixed,dateDifference]}} />
+       <NewGroupButton storeData= {storeData} initLocation={location} deliDate={null} items={{datePicker: [dayArrayKorFixed,dateDifference]}} />
      </>
    );
  }

@@ -14,9 +14,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import { FONTS2, images, icons, COLORS } from '../../constants';
 
-const StoreItem = ({ deliveryPlace, deliDate, items, isLikeList }) => {
+const StoreItem = ({ deliveryPlace, deliDate, datePicker, storeData, isLikeList }) => {
 
     const navigation = useNavigation();
+    // console.log(JSON.stringify(storeData,null,4))
 
     return (
         <View style={styles.container}>
@@ -30,7 +31,7 @@ const StoreItem = ({ deliveryPlace, deliDate, items, isLikeList }) => {
             />
 
             <View style={{ flex: 1, alignSelf: 'center', marginLeft: 5, }}>
-                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>빽다방 아주대점</Text>
+                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>{storeData.storeName}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3, }}>
                     <Image
                         source={icons.star}
@@ -41,14 +42,13 @@ const StoreItem = ({ deliveryPlace, deliDate, items, isLikeList }) => {
                             marginRight: 5,
                         }}
                     />
-                    <Text style={{ ...FONTS2.body2, }}>4.2 </Text>
+                    <Text style={{ ...FONTS2.body2, }}>{storeData.rate} </Text>
                     <Text style={{ ...FONTS2.body2, }}>(50+)</Text>
                 </View>
             </View>
 
             <TouchableOpacity style={styles.selectButton}
-                // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점', location: location })}
-                onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점', deliveryPlace: deliveryPlace, deliDate: deliDate, items: items })}
+                onPress={() => navigation.navigate('StoreDetail', { time: null, storeName: storeData.storeName , deliveryPlace: deliveryPlace, deliDate: deliDate,storeInfo: storeData, datePicker: datePicker })}
             >
                 {!isLikeList ? (
                     <Text style={{ ...FONTS2.body3, color: COLORS.white }}>선택</Text>

@@ -67,8 +67,11 @@ const App = () => {
 
 
 
+    // setData('orderData', orderData);
 
+    // setData('storeData', storeData);
 
+    // addData('storeData', testData2);
 
     // Toast.show({
     //   type: 'success',
@@ -83,7 +86,11 @@ const App = () => {
 
 
 
+    // getData('groupData').then( data => console.log(JSON.stringify(data, null, 4)));
 
+    // getWeeklyGroupData().then( data => console.log(JSON.stringify(data, null, 4)));
+    // getDaliyGroupData().then( data => console.log(JSON.stringify(data, null, 4)));
+    // clearAll();
 
     // Foreground state messages
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
@@ -131,7 +138,7 @@ export default App;
 
 // dummy Data
 
-//get /storeList가 가능
+
 const storeData = [
   {
     storeId: 1,
@@ -145,6 +152,7 @@ const storeData = [
     openTime: '09:00',
     closeTime: '22:00',
     deliveryTip: 2000,
+    rate: 2.8,
     logoUrl: '',
     menu:[
       {
@@ -231,6 +239,7 @@ const storeData = [
     openTime: '07:00',
     closeTime: '22:00',
     deliveryTip: 2000,
+    rate: 4.2,
     logoUrl: '',
     menu:[
       {
@@ -275,6 +284,7 @@ const storeData = [
     openTime: '08:00',
     closeTime: '22:00',
     deliveryTip: 2000,
+    rate: 3.7,
     logoUrl: '',
     menu:[
       {
@@ -287,6 +297,8 @@ const storeData = [
     ],
   },
 ];
+
+
 
 const groupData = [
   {
@@ -431,7 +443,6 @@ const chatList = [
     chatIds: ['채팅방id1','채팅방id2'],
   },
 ];
-
 
 
 

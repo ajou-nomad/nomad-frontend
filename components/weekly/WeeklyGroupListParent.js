@@ -29,113 +29,33 @@ export default function WeeklyGroupListParent(props) {
 
     // }
     const navigation = useNavigation();
-    const time = props.time.slice(0,2);
-    const groupList = [
-        {
-        id: 'shop1',
-        logo:icons.donut,
-        shopName:'TempName1',
-        rate:3.5,
-        time: time+':00',
-        current:9,
-        max:10,
-        day:'monday',
-        },
-        {
-        id: 'shop2',
-        logo:icons.pizza,
-        shopName:'TempName2',
-        rate:4.5,
-        time: time+':05',
-        current:5,
-        max:10,
-        day:'tuesday',
-        },
-        {
-        id: 'shop3',
-        logo:icons.noodle,
-        shopName:'TempName3',
-        rate:4.0,
-        time: time+':10',
-        current:7,
-        max:10,
-        day:'wednesday',
-        },
-        {
-        id: 'shop4',
-        logo:icons.rice_bowl,
-        shopName:'TempName4',
-        rate:3.5,
-        time: time+':15',
-        current:9,
-        max:10,
-        day:'thursday',
-        },
-        {
-        id: 'shop5',
-        logo:icons.salad,
-        shopName:'TempName5',
-        rate:4.5,
-        time: time+':20',
-        current:5,
-        max:10,
-        day:'friday',
-        },
-        {
-        id: 'shop6',
-        logo:icons.sushi,
-        shopName:'TempName6',
-        rate:4.0,
-        time: time+':25',
-        current:7,
-        max:10,
-        day:'monday',
-        },
-        {
-        id: 'shop7',
-        logo:icons.drink,
-        shopName:'TempName7',
-        rate:3.5,
-        time: time+':30',
-        current:9,
-        max:10,
-        day:'tuesday',
-        },
-        {
-        id: 'shop8',
-        logo:icons.fries,
-        shopName:'TempName8',
-        rate:4.5,
-        time: time+':45',
-        current:5,
-        max:10,
-        day:'wednesday',
-        },
-        {
-        id: 'shop9',
-        logo:icons.hamburger,
-        shopName:'TempName9',
-        rate:4.0,
-        time: time+':50',
-        current:7,
-        max:10,
-        day:'thursday',
-        },
-    ].filter(
-        ({day}) => day === props.day
+    const tableTime = props.time.slice(0,2);
+    // const extractDate = (date) =>{
+    //     return JSON.stringify(new Date(date)).slice(1,10);
+    // }
+
+    // const compareDate = (itemDate,propsDate) =>{
+    //     console.log(itemDate + ' === ' + propsDate)
+    //     return extractDate(itemDate) === extractDate(propsDate);
+    // }
+    const groupList = props.groupList.filter(
+        ({date,time}) => (date === props.date) && (time.slice(0,2) === tableTime)
     );
 
-    const currentGroup = groupList.length
+    const storeData = props.storeData;
+
+    const currentGroup = groupList.length;
 
         return (
             <>
                 <TouchableOpacity
-                    onPress={()=>navigation.navigate("WeeklyGroupListChild",{
+                    onPress={()=>navigation.navigate('WeeklyGroupListChild',{
                         date: props.date,
                         time: props.time,
                         location: props.location,
                         currentGroup: currentGroup,
                         groupList: groupList,
+                        storeData: storeData,
                         back:'TimeTable',
                     })}
                 >
