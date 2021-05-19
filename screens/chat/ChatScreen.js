@@ -106,6 +106,7 @@ const ChatScreen = ({ route }) => {
     };
 
     const renderMessageImage = (props) => {
+        // console.log('사진:: ', props.currentMessage.image);
         return (
             <View style={{ padding: 5 }}>
                 <ImageModal

@@ -18,6 +18,7 @@ import CheckOrder from '../screens/order/CheckOrder';
 import Cart from '../screens/order/Cart';
 import PaymentNavigation from './PaymentNavigation';
 import ChatNavigation from './ChatNavigation';
+import MyReview from '../screens/review/MyReview';
 
 // store 관련
 import StoreTabs from './storeKeeperNavigations/Tabs';
@@ -121,6 +122,7 @@ const userStack = () => {
             <Stack.Screen name="PaymentNavigation" component={PaymentNavigation} />
             <Stack.Screen name="ChatNavigation" component={ChatNavigation} />
             <Stack.Screen name="CreateReview" component={CreateReview} />
+            <Stack.Screen name="MyReview" component={MyReview} />
             <Stack.Screen name="Receipt" component={Receipt} />
         </Stack.Navigator>
     );

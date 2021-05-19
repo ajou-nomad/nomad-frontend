@@ -2,39 +2,50 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, } from 'react-native';
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 
 import Header from '../components/layout/Header';
 import { FONTS2, COLORS } from '../constants';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+
+import { getData } from '../utils/helper';
 
 const OrderDetails = () => {
     const navigation = useNavigation();
+    const [orderData, setOrderData] = useState(null);
 
-    const ReviewButton = ({ isWriteReview, onPress }) => {
+    useEffect(() => {
+        getData('orderData').then(data => setOrderData(data));
+    }, []);
 
+    console.log('orderDetails ', orderData);
+    const ReviewButton = ({ item }) => {
         return (
-            <TouchableOpacity style={styles.reviewButton} onPress={onPress}>
-                {isWriteReview ? (
-                    <Text style={{ ...FONTS2.body2, color: COLORS.black }}>
-                        리뷰 쓰기
+            <View>
+                {item.review === null ? (
+                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('CreateReview', { item: item })}>
+                        <Text style={styles.ReviewButton}>
+                            리뷰 쓰기
                     </Text>
+                    </TouchableOpacity>
                 ) : (
-                    <Text style={{ ...FONTS2.body2, color: COLORS.black }}>
-                        작성한 리뷰 보기
-                    </Text>
+                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('MyReview', { item: item })}>
+                        <Text style={styles.ReviewButton}>
+                            작성한 리뷰 보기
+                        </Text>
+                    </TouchableOpacity>
                 )
                 }
-            </TouchableOpacity>
+            </View>
         );
     };
-
     const StoreButton = ({ onPress }) => {
         return (
             <TouchableOpacity style={styles.storeButton} onPress={onPress}>
-                <Text style={{ ...FONTS2.body2, color: COLORS.black }}>
+                <Text style={{ ...FONTS2.body3, color: COLORS.black,  fontSize: 18 }}>
                     영수증 보기
             </Text>
             </TouchableOpacity>
@@ -42,41 +53,78 @@ const OrderDetails = () => {
     };
 
     const DeliveryState = ({ deliveryComplete }) => {
-        return (
-            <View>
-                { deliveryComplete ? (
+
+        // 모집중 모집완료 배달 중 배달 완료
+        // recruiting   recruitmentDone  delivering deliveryDone
+
+        const status = () => {
+            if (deliveryComplete === 'recruiting') {
+                return (
+                    <View style={{ backgroundColor: '#228be6', padding: 3, borderRadius: 8 }}>
+                        <Text style={{ ...FONTS2.body3, color: COLORS.white }}>모집 중</Text>
+                    </View>
+                );
+            }
+            else if (deliveryComplete === 'recruitmentDone') {
+                return (
+                    <View style={{ backgroundColor: '#e67700', padding: 3, borderRadius: 8 }}>
+                        <Text style={{ ...FONTS2.body3, color: COLORS.white }}>모집 완료</Text>
+                    </View>
+                );
+            }
+            else if (deliveryComplete === 'delivering') {
+                return (
                     <View style={{ backgroundColor: '#f03e3e', padding: 3, borderRadius: 8 }}>
                         <Text style={{ ...FONTS2.body3, color: COLORS.white }}>배달 중</Text>
                     </View>
-                ) : (
-                    <View style={{ backgroundColor: '#2f9e44', padding: 3, borderRadius: 8 }}>
+                );
+            }
+            else {
+                return (
+                    <View style={{ backgroundColor: COLORS.darkgray, padding: 3, borderRadius: 8 }}>
                         <Text style={{ ...FONTS2.body3, color: COLORS.white }}>배달 완료</Text>
                     </View>
-                )}
+                );
+            }
+            // 배달 완료: #495057 배달 중: #f03e3e 모집 중: #228be6 모집 완료: #e67700
+        };
+
+        return (
+            <View>
+                {status()}
             </View>
         );
     };
 
-    const OrderDetailItem = ({ isWriteReview, deliveryComplete, onPress }) => {
+    const renderMenuItem = ({ item }) => {
+        return (
+            <View style={{ marginVertical: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Text style={styles.detailFont}>- {item.menuName}</Text>
+                <Text style={styles.detailFont}>{item.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+            </View>
+        );
+    };
+
+    const OrderDetailItem = ({ deliveryComplete, onPress, item }) => {
         return (
             <View style={styles.storeContainer}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30 }}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점' })}
+                        // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName: item.storeName })}
                     >
-                        <Text style={{ ...FONTS2.h2, fontSize: 30 }}>가게 이름 &gt;</Text>
-                        <Text style={{ ...FONTS2.body3 }}>2021-05-11 16:05</Text>
+                        <Text style={{ ...FONTS2.h2, fontSize: 25 }}>{item.storeName}</Text>
+                        <Text style={{ ...FONTS2.body3 }}>{item.orderTime}</Text>
                     </TouchableOpacity>
-                    <DeliveryState deliveryComplete={deliveryComplete} />
+                    <DeliveryState deliveryComplete={item.orderStatus} />
                 </View>
 
                 {/* 주문한 메뉴 */}
-                <View style={{ marginVertical: 20 }}>
-                    <Text style={{ ...FONTS2.body2 }}>- 주문한 메뉴</Text>
+                <View style={{ minHeight: 70 }}>
+                    <FlatList data={item.menu} keyExtractor={item => item.menuId.toString()} renderItem={renderMenuItem}/>
                 </View>
             
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-                    <ReviewButton isWriteReview={isWriteReview} onPress={() => navigation.navigate('CreateReview')} />
+                    <ReviewButton item={item}/>
                     <View style={{ width: 10 }} />
                     <StoreButton onPress={() => navigation.navigate('Receipt')} />
                 </View>
@@ -84,13 +132,17 @@ const OrderDetails = () => {
         );
     };
 
+    const renderItem = ({ item }) => {
+        return (
+            <OrderDetailItem item={item} />
+        );
+    };
+
     return (
         <ScrollView style={styles.container}>
             <Header title="주문 내역" small='true' />
             
-            <OrderDetailItem isWriteReview={true} deliveryComplete={true} />
-            <OrderDetailItem isWriteReview={true} deliveryComplete={true} />
-            <OrderDetailItem isWriteReview={false} deliveryComplete={false} />
+            <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={renderItem} />
         </ScrollView>
     );
 };
@@ -107,7 +159,7 @@ const styles = StyleSheet.create({
         padding: 20,
         borderRadius: 10,
     },
-    reviewButton: {
+    reviewButtonContainer: {
         // backgroundColor: '#1c7ed6',
         backgroundColor: COLORS.white,
         alignSelf: 'center',
@@ -116,6 +168,11 @@ const styles = StyleSheet.create({
         padding: 8,
         borderRadius: 8,
         width: 140,
+    },
+    ReviewButton: {
+        ...FONTS2.body3,
+        color: COLORS.black,
+        fontSize: 18,
     },
     storeButton: {
         backgroundColor: COLORS.white,
@@ -126,7 +183,21 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         width: 140,
     },
+    totalCost: {
+        marginTop: 20,
+        borderTopWidth: 0.5,
+        paddingTop: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    detailFont: {
+        ...FONTS2.body3,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 20,
+    },
 });
 
 export default OrderDetails;
-
