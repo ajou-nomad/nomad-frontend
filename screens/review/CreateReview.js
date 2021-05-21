@@ -172,8 +172,8 @@ const styles = StyleSheet.create({
     },
     addPhoto: {
         marginTop: 10,
-        // borderWidth: 0.6,
-        backgroundColor: COLORS.white,
+        borderWidth: 0.6,
+        // backgroundColor: COLORS.white,
         borderRadius: 8,
         width: 55,
         height: 55,

@@ -17,13 +17,7 @@ const Payment = ({route, navigation}) => {
   const paymentTermination = (response) => {
     console.log(response);
     if (response.imp_success === 'true') {
-
-
-
-    } else {
-
-
-      if (postData.groupData === undefined || postData.groupData === null){
+      if (postData.groupData === undefined || postData.groupData === null) {
         // const today = new Date();
         // const todayString = JSON.stringify(today).slice(1,10);
         const creationGroupData = {
@@ -48,9 +42,9 @@ const Payment = ({route, navigation}) => {
             orderTime: new Date(),
           },
         };
-        console.log(JSON.stringify(creationGroupData,null,4));
+        console.log(JSON.stringify(creationGroupData, null, 4));
 
-        createGroup(creationGroupData.groupData, creationGroupData.orderData).then( ()=>{
+        createGroup(creationGroupData.groupData, creationGroupData.orderData).then(() => {
           console.log("hi");
           navigation.popToTop();
 
@@ -67,17 +61,21 @@ const Payment = ({route, navigation}) => {
             orderTime: new Date(),
           },
         };
-        console.log(JSON.stringify(participationGroupData,null,4));
-        participationGroup(participationGroupData.groupId, participationGroupData.orderData).then((data)=>{
+        console.log(JSON.stringify(participationGroupData, null, 4));
+        participationGroup(participationGroupData.groupId, participationGroupData.orderData).then((data) => {
           console.log("hi");
           navigation.popToTop();
         });
         participationGroup(participationGroupData.groupId, participationGroupData.orderData);
       }
+     
+      //이미 결제완료
+    } else {
       
 
-      Alert.alert(response.error_msg);
-      navigation.goBack();
+
+      // Alert.alert(response.error_msg);
+      // navigation.goBack();
     }
   };
 

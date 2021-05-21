@@ -40,12 +40,12 @@
         location: props.location,
     });
    };
-   const Header = () =>{
+   const Header = () => {
      return (
        <View style={styles.headerText}>
          <TouchableOpacity
-           onPress={() => {goBack();}}
-           >
+           onPress={() => { goBack(); }}
+         >
            <Text style={styles.backButton}>&lt;</Text>
          </TouchableOpacity>
          <Text numberOfLines={1} style={styles.headerLocationText}>{location.buildingName}</Text>
@@ -81,21 +81,21 @@
            />
      );
  
-     const ListOfGroup = () => (
-       <SafeAreaView style={{marginBottom: 100}}>
-         <FlatList
-           data={groupList}
-           renderItem={InfoOfGroup}
-           keyExtractor={item => item.groupId.toString()}
-         />
-       </SafeAreaView>
-     );
+   const ListOfGroup = () => (
+     <SafeAreaView style={{ marginBottom: 100 }}>
+       <FlatList
+         data={groupList}
+         renderItem={InfoOfGroup}
+         keyExtractor={item => item.groupId.toString()}
+       />
+     </SafeAreaView>
+   );
    return (
-     <>
+     <View style={styles.container}>
        {Header()}
        {ListOfGroup()}
        <NewGroupButton initLocation={location} deliDate={date} storeData={storeData} />
-     </>
+     </View>
    );
 };
  
@@ -104,7 +104,11 @@
  // 진한 블루: #364FC7
  // 회색: #F1F3F5
  
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+   },
    headerText: {
      flexDirection: 'row',
      alignItems: 'center',

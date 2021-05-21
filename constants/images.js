@@ -31,6 +31,8 @@ const store_logo = require('../assets/images/store-logo.png');
 const people = require('../assets/images/people.png');
 const group = require('../assets/images/group.jpg');
 const people2 = require('../assets/images/people2.jpg');
+const main = require('../assets/images/main.jpg');
+const weeklygroup = require('../assets/images/weeklygroup.jpg');
 
 const bbacks = require('../assets/images/bbacks.gif');
 const starbucks = require('../assets/images/starbucks.jpg');
@@ -69,6 +71,8 @@ export default {
   people,
   group,
   people2,
+  main,
+  weeklygroup,
 
   store_logo,
   bbacks,

@@ -56,6 +56,10 @@ const completed = require("../assets/icons/completed.png");
 const plus2 = require("../assets/icons/plus2.png");
 const no = require("../assets/icons/no.png");
 const cancel = require("../assets/icons/cancel.png");
+const main_bg = require("../assets/icons/main_bg.png");
+const ko_logo = require("../assets/icons/ko_logo.png");
+const logo_big = require("../assets/icons/logo_big.png");
+const weekly_group = require("../assets/icons/weekly_group.png");
 
 
 export default {
@@ -114,4 +118,8 @@ export default {
     pencil,
     logout,
     picture,
+    main_bg,
+    ko_logo,
+    logo_big,
+    weekly_group
 }
