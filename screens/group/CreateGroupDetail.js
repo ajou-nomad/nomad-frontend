@@ -101,7 +101,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
 
     return (
         <KeyboardAvoidingView style={styles.container}>
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 {/* Header */}
                 <Header title="배달 그룹 생성" small="true" haveInput="true" />
 

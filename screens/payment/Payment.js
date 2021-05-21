@@ -3,62 +3,79 @@ import React from 'react';
 import { Alert } from 'react-native';
 import IMP from 'iamport-react-native';
 import Loading from '../../components/payment/Loading';
-import { participationGroup } from '../../utils/helper';
+import { createGroup, participationGroup } from '../../utils/helper';
 
 const Payment = ({route, navigation}) => {
 
   const { paymentInfo, postData } = route.params;
-  // console.log(postData);
-  if (postData.groupData === undefined || postData.groupData === null){
-    const today = new Date();
-    const todayString = JSON.stringify(today).slice(1,10);
-    const creationGroupData = {
-      storeId: postData.storeInfo.storeId,
-      time: postData.time,
-      date: postData.deliDate,
-      maxValue: postData.maxValue,
-      grouptype: (postData.deliDate === todayString) ? 'day' : 'weekly',
-      latitude: postData.location.latitude,
-      longitude: postData.location.longitude,
-      address: postData.location.address,
-      buildingName: postData.location.buildingName,
-      orderData: {
-        storeId: postData.storeInfo.storeId,
-        menu: postData.cartItems,
-        totalCost: postData.totalPrice,
-        payMethod: 'CreditCard',
-        orderTime: new Date(),
-      },
-    };
-    console.log(JSON.stringify(creationGroupData,null,4));
-  } else {
 
-    const participationGroupData = {
-      groupId: postData.groupData.groupId,
-      orderData: {
-        storeId: postData.storeInfo.storeId,
-        menu: postData.cartItems,
-        totalCost: postData.totalPrice,
-        payMethod: 'CreditCard',
-        orderTime: new Date(),
-      },
-    };
-
-    console.log(JSON.stringify(participationGroupData,null,4));
-    // participationGroup(participationGroupData.groupId, participationGroupData.orderData);
-  }
-
+  const today = new Date();
+  const todayString = JSON.stringify(today).substr(1,10);
 
 
 
   const paymentTermination = (response) => {
     console.log(response);
     if (response.imp_success === 'true') {
+      if (postData.groupData === undefined || postData.groupData === null) {
+        // const today = new Date();
+        // const todayString = JSON.stringify(today).slice(1,10);
+        const creationGroupData = {
+
+          groupData: {
+            storeId: postData.storeInfo.storeId,
+            time: postData.time,
+            date: postData.deliDate,
+            maxValue: postData.maxValue,
+            groupType: (postData.deliDate === todayString) ? 'day' : 'weekly',
+            latitude: postData.location.latitude,
+            longitude: postData.location.longitude,
+            address: postData.location.address,
+            buildingName: postData.location.buildingName,
+          },
+          orderData: {
+            storeId: postData.storeInfo.storeId,
+            storeName: postData.storeInfo.storeName,
+            menu: postData.cartItems,
+            totalCost: postData.totalPrice,
+            payMethod: 'Card',
+            orderTime: new Date(),
+          },
+        };
+        console.log(JSON.stringify(creationGroupData, null, 4));
+
+        createGroup(creationGroupData.groupData, creationGroupData.orderData).then(() => {
+          console.log("hi");
+          navigation.popToTop();
+
+        });
+      } else {
+        const participationGroupData = {
+          groupId: postData.groupData.groupId,
+          orderData: {
+            storeId: postData.storeInfo.storeId,
+            storeName: postData.storeInfo.storeName,
+            menu: postData.cartItems,
+            totalCost: postData.totalPrice,
+            payMethod: 'Card',
+            orderTime: new Date(),
+          },
+        };
+        console.log(JSON.stringify(participationGroupData, null, 4));
+        participationGroup(participationGroupData.groupId, participationGroupData.orderData).then((data) => {
+          console.log("hi");
+          navigation.popToTop();
+        });
+        participationGroup(participationGroupData.groupId, participationGroupData.orderData);
+      }
+     
       //이미 결제완료
     } else {
+      
 
-      Alert.alert(response.error_msg);
-      navigation.goBack();
+
+      // Alert.alert(response.error_msg);
+      // navigation.goBack();
     }
   };
 
@@ -67,7 +84,7 @@ const Payment = ({route, navigation}) => {
     pay_method: 'card',
     name: 'Dutch Delivery',
     merchant_uid: `mid_${new Date().getTime()}`,
-    amount: paymentInfo.amount,
+    amount: postData.totalPrice,
     buyer_name: paymentInfo.buyerName,
     buyer_tel: paymentInfo.buyerTel,
     buyer_email: paymentInfo.buyerEmail,

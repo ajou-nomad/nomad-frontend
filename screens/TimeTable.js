@@ -258,9 +258,9 @@ import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
      marginTop: 5,
    },
    headerButton: {
-     marginHorizontal: 15,
+     marginHorizontal: 8,
      padding: 5,
-     width: 35,
+     width: 55,
      borderColor: '#f1f3f5',
      borderWidth: 2,
      borderRadius: 70,

@@ -11,8 +11,8 @@
 */
 
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { icons, FONTS2, COLORS, images } from '../../constants';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ImageBackground, } from 'react-native';
+import { FONTS2, COLORS, images } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -60,7 +60,7 @@ export default function WeeklyGroupListParent(props) {
                 })}
             >
 
-                <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 10 }}>
+                <View style={styles.itemContainer}>
                     <View style={{ flex: 1, alignItems: 'center', }}>
                         <Text numberOfLines={1}
                             style={{
@@ -78,27 +78,20 @@ export default function WeeklyGroupListParent(props) {
                             style={{
                                 ...FONTS2.body3,
                             }}>{props.date}</Text>
-                        <View
-                        // style={{ backgroundColor: '#ffc078', borderRadius: 20, paddingHorizontal: 5 }}
-                        >
-                            <Text
-                                numberOfLines={1}
-                                style={{
-                                    ...FONTS2.body2,
-                                }}>{currentGroup}개 생성</Text>
-                        </View>
+                        
                     </View>
-                    {
-                        currentGroup === 0 ? (
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', marginRight: 20, opacity: 0.2 }}>
-                                <Image style={{ width: 140, height: 110, }} source={images.people2} resizeMode='cover' />
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', marginRight: 20 }}>
+                        <ImageBackground style={{ width: 140, height: 110, justifyContent: 'center', }} source={images.people2} resizeMode='cover'>
+                            <View style={styles.createNum}>
+                                <Text
+                                    numberOfLines={1}
+                                    style={{
+                                        ...FONTS2.body2,
+                                    }}
+                                >{currentGroup}개 생성</Text>
                             </View>
-                        ) : (
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', marginRight: 20 }}>
-                                <Image style={{ width: 140, height: 110, }} source={images.people2} resizeMode='cover' />
-                            </View>
-                        )
-                    }
+                        </ImageBackground>
+                    </View>
                     
                 </View>
             </TouchableOpacity>
@@ -110,5 +103,25 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.white,
+    },
+    itemContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10,
+        borderWidth: 1,
+        margin: 10,
+        borderRadius: 20,
+        borderTopStartRadius: 40,
+        paddingHorizontal: 10,
+        borderColor: '#dee2e6',
+    },
+    createNum: {
+        backgroundColor: COLORS.white, 
+        alignSelf: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+        marginTop: 20,
+        elevation: 3,
+        borderRadius: 10,
     },
 });

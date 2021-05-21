@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import StoreItem from '../../components/item/StoreItem';
 import Header from '../../components/layout/Header';
-import { FONTS2, SIZES } from '../../constants';
+import { COLORS, FONTS2, SIZES } from '../../constants';
 
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 import MiniMap from '../../components/map/MiniMap';
@@ -61,32 +61,22 @@ function CreateGroupList({navigation, route}) {
                         width: responsiveWidth(70),
                     }}
                     >
-                        <View style={{ marginRight: 15, }}>
-                            <Text style={{ color: 'red', ...FONTS2.h2 }}>위치:</Text>
-                        </View>
-                        <View>
-                            <Text style={{ ...FONTS2.body2 }}>{deliveryPlace?.address}</Text>
+                        <View style={styles.location}>
+                            <View style={{ marginRight: 15, }}>
+                                <Text style={{ color: 'red', ...FONTS2.h2 }}>내 위치</Text>
+                            </View>
+                            <View>
+                                <Text style={{ ...FONTS2.body2 }}>{deliveryPlace?.address}</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
                 <View style={{ flex: 5, backgroundColor: 'white' }}>
                     <ScrollView>
                         {/* FlatList 수정해야함. */}
-                        {storeData.map((storeItems,index)=>{
-                            return <StoreItem key={index} storeData={storeItems} deliveryPlace={deliveryPlace} deliDate={deliDate} datePicker={datePicker}/>;
+                        {storeData.map((storeItems, index) => {
+                            return <StoreItem key={index} storeData={storeItems} deliveryPlace={deliveryPlace} deliDate={deliDate} datePicker={datePicker} />;
                         })}
-                        {/* <StoreItem storeData={items} deliveryPlace={deliveryPlace} deliDate={deliDate} items={items} />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  />
-                        <StoreItem deliveryPlace={deliveryPlace} deliDate={deliDate} items={items}  /> */}
                     </ScrollView>
                 </View>
             </View>
@@ -107,6 +97,13 @@ function CreateGroupList({navigation, route}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    location: {
+        flexDirection: 'row',
+        backgroundColor: COLORS.lightGray,
+        padding: 10,
+        paddingHorizontal: 30,
+        borderRadius: 20,
     },
 });
 
