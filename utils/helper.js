@@ -410,8 +410,10 @@ export const participationGroup = async (groupId, orderData) => {
         // 나머지 그룹
         let exceptedGroup = data.filter((goal) => goal.groupId !== groupId);
 
+        let curr = seletedGroup[0].current + 1;
         //모집완료일 때
-        if ( seletedGroup[0].current++ === (seletedGroup[0].maxValue) ){
+        if ( (curr) == (seletedGroup[0].maxValue) ){
+            console.log('---', curr, seletedGroup[0].maxValue);
 
             console.log('모집완료시');
             // 위에서 count 증가 완료
@@ -434,6 +436,7 @@ export const participationGroup = async (groupId, orderData) => {
             // await setData('groupData',exceptedGroup);
             // console.log('추가완료');
         } else {
+            console.log('---', curr, seletedGroup[0].maxValue);
             console.log('아직 모집완료 x');
             // 위에서 count 증가 완료
             //참가하는 uid 추가
@@ -450,7 +453,7 @@ export const participationGroup = async (groupId, orderData) => {
         }
     });
 
-    // console.log(JSON.stringify(orderData,null,4));
+    console.log(JSON.stringify(orderData,null,4));
     await addData('orderData', orderData);
     console.log('최종적인 배달참가완성');
     Alert.alert("그룹에 참여가 완료되었습니다.");
@@ -489,4 +492,21 @@ export const participationGroup = async (groupId, orderData) => {
     //     payMethod: 'card',
     //     orderTime: '2021-05-15T15:30:00.480Z',
     //   },
+};
+
+export const createGroup = async (groupData, orderData) => {
+    groupData.groupId = 5;
+    groupData.current = 1;
+    groupData.orderStatus = 'recruiting';
+    orderData.orderId = 1000;
+    orderData.uid = '생성한사람의UID';
+    groupData.memberList = [
+        "생성한사람의UID",
+    ];
+
+    await addData('groupData', groupData);
+
+    await addData('orderData', orderData);
+
+    return 'success';
 };

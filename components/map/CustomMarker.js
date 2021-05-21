@@ -14,20 +14,20 @@ const CustomMarker = ({item, back, today, items, storeData}) => {
     return (
         back === 'DayDelivery' ? (
             <Marker
-                coordinate={{ latitude : item.location.latitude, longitude : item.location.longitude }}
-                onPress={() => navigation.navigate('GroupList',{back: back, group: item, today: today, storeData: storeData})}
+                coordinate={{ latitude: item.location.latitude, longitude: item.location.longitude }}
+                onPress={() => navigation.navigate('GroupList', { back: back, group: item, today: today, storeData: storeData })}
             >
                 <View style={styles.markerView}>
                     {/* marker 매장명 */}
                     <View style={styles.buildingName}>
-                        <View style={{ width: 25, height: 25,backgroundColor: 'white', borderRadius: SIZES.radius * 3, justifyContent: 'center', alignItems: 'center'}}>
+                        <View style={{ width: 25, height: 25, backgroundColor: 'white', borderRadius: SIZES.radius * 3, justifyContent: 'center', alignItems: 'center' }}>
 
                             <Image
                                 source={icons.cutlery}
                                 style={{
-                                width: 15,
-                                height: 15,
-                                tintColor: '#1c7ed6',
+                                    width: 15,
+                                    height: 15,
+                                    tintColor: '#1c7ed6',
                                 }}
 
                             />
@@ -35,61 +35,30 @@ const CustomMarker = ({item, back, today, items, storeData}) => {
                         <Text
                             numberOfLines={1}
                             style={{
-                            ...FONTS.body4,
-                            marginLeft: 10,
-                            color: 'white',
+                                ...FONTS.body4,
+                                marginLeft: 10,
+                                color: 'white',
                             }}
                         >
                             {item.location.buildingName}
                         </Text>
                     </View>
-                    {/* marker 배달그룹 상위 목록 */}
-                    {/* <View style={styles.groupList}>
-                        <View style={{flex: 1, paddingHorizontal: 5, justifyContent: 'center'}}>
-                            <Text
-                                numberOfLines={1}
-                                style={{
-                                    fontFamily: 'AirbnbCereal-Bold.ttfs',
-                                    fontSize: SIZES.body5,
-                                }}
-                            >
-                            9:00 스타벅스
-                            </Text>
-                            <Text
-                                numberOfLines={1}
-                                style={{
-                                    fontFamily: 'AirbnbCereal-Bold.ttfs',
-                                    fontSize: SIZES.body5,
-                                }}
-                            >
-                            9:00 할리스커피
-                            </Text>
-                            <Text
-                                numberOfLines={1}
-                                style={{
-                                    fontFamily: 'AirbnbCereal-Bold.ttfs',
-                                    fontSize: SIZES.body5,
-                                }}
-                            >
-                            9:00 파리바게트
-                            </Text>
-                        </View>
-                    </View> */}
                 </View>
             </Marker>
         ) : (
             <Marker
-                coordinate={{ latitude : item.location.latitude, longitude : item.location.longitude }}
-                onPress={() => navigation.navigate('TimeTable',{back:back, group: item, items: items, storeData: storeData})}
+                coordinate={{ latitude: item.location.latitude, longitude: item.location.longitude }}
+                onPress={() => navigation.navigate('TimeTable', { back: back, group: item, items: items, storeData: storeData })}
             >
-                <View style={styles.markerView}>
+                 <View style={styles.markerView}>
                     {/* marker 매장명 */}
-                    <View style={styles.buildingNameWeek}>
+                    <View style={styles.buildingName}>
                         <Text
                             numberOfLines={1}
                             style={{
-                            ...FONTS.body3,
-                            color: 'white',
+                                ...FONTS.body4,
+                                // marginLeft: 10,
+                                color: 'white',
                             }}
                         >
                             {item.location.buildingName}

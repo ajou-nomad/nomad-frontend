@@ -22,7 +22,9 @@ const BottomButton = ({ onPress, title, isGetLocation }) => {
         >
             <View style={{
                 flex: 1,
-                backgroundColor: COLORS.tertiary,
+                backgroundColor: '#339af0',
+                borderTopEndRadius: 20,
+                borderTopStartRadius: 20,
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexDirection: 'row',
@@ -30,19 +32,19 @@ const BottomButton = ({ onPress, title, isGetLocation }) => {
                 {/* 내위치 버튼일 경우 image 보임. */}
                 {isGetLocation ? (
                     <Image
-                    source={icons.gps}
-                    resizeMode='contain'
-                    style={{
-                        width: 35,
-                        height: 35,
-                        marginRight: 10,
-                    }}
+                        source={icons.gps}
+                        resizeMode='contain'
+                        style={{
+                            width: 35,
+                            height: 35,
+                            marginRight: 10,
+                        }}
                     />
                 ) : null}
-                <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>{title}</Text>
+                <Text style={{ ...FONTS2.body2, fontWeight: 'bold', color: COLORS.white }}>{title}</Text>
             </View>
         </TouchableOpacity>
     );
-}
+};
 
 export default BottomButton;

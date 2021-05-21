@@ -52,7 +52,7 @@ const StoreItem = ({ deliveryPlace, deliDate, datePicker, storeData, isLikeList 
                 {!isLikeList ? (
                     <Text style={{ ...FONTS2.body3, color: COLORS.black }}>선택</Text>
                 ) : (
-                    <Text style={{ ...FONTS2.body2, color: COLORS.black, fontSize: 19 }}>매장 보기</Text>
+                    <Text style={{ ...FONTS2.body3, color: COLORS.black, fontSize: 19 }}>매장 보기</Text>
                 )}
             </TouchableOpacity>
         </View>
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: 10,
         paddingLeft: 10,
+        // backgroundColor: COLORS.lightGray,
     },
     selectButton: {
         width: 80,
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
         marginRight: 15,
         alignSelf: 'center',
         // backgroundColor: '#1c7ed6',
-        backgroundColor: COLORS.lightGray
+        backgroundColor: COLORS.lightGray,
     },
 });
 
