@@ -450,7 +450,7 @@ export const participationGroup = async (groupId, orderData) => {
         }
     });
 
-    // console.log(JSON.stringify(orderData,null,4));
+    console.log(JSON.stringify(orderData,null,4));
     await addData('orderData', orderData);
     console.log('최종적인 배달참가완성');
     Alert.alert("그룹에 참여가 완료되었습니다.");
@@ -489,4 +489,21 @@ export const participationGroup = async (groupId, orderData) => {
     //     payMethod: 'card',
     //     orderTime: '2021-05-15T15:30:00.480Z',
     //   },
+};
+
+export const createGroup = async (groupData, orderData) => {
+    groupData.groupId = 5;
+    groupData.current = 1;
+    groupData.orderStatus = 'recruiting';
+    orderData.orderId = 1000;
+    orderData.uid = '생성한사람의UID';
+    groupData.memberList = [
+        "생성한사람의UID",
+    ];
+
+    await addData('groupData', groupData);
+
+    await addData('orderData', orderData);
+
+    return 'success';
 };

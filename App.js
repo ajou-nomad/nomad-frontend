@@ -45,11 +45,9 @@ const App = () => {
     // setData('orderData', orderData);
     // setData('groupData',groupData);
 
-
-
     // participationGroup(2,{orderata:1 });
 
-    // getData('storeData').then( data => console.log(JSON.stringify(data, null, 4)))
+    // getData('groupData').then( data => console.log(JSON.stringify(data, null, 4)))
 
 
 
@@ -67,8 +65,8 @@ const App = () => {
         type: 'success',
         position: 'top',
         text1: '모집 완료!',
-        text2: `[${remoteMessage.notification.body}] 배달모집이 완료되었습니다.를 입력해주세요.`,
-        visibilityTime: 4000,
+        text2: `[${remoteMessage.notification.body}] 배달모집이 완료되었습니다.`,
+        visibilityTime: 6000,
         autoHide: true,
         topOffset: 30,
         bottomOffset: 40,
@@ -272,8 +270,8 @@ const groupData = [
   {
     groupId: 1,
     storeId: 1, //빽다방 아주대점
-    time: '13:00',
-    date: '2021-05-18',
+    time: '20:00',
+    date: '2021-05-19',
     groupType: 'day',
     current: 2,
     maxValue: 3,
@@ -287,8 +285,8 @@ const groupData = [
   {
     groupId: 2,
     storeId: 2, //스타벅스 아주대점
-    time: '13:30',
-    date: '2021-05-18',
+    time: '20:30',
+    date: '2021-05-19',
     groupType: 'day',
     current: 2,
     maxValue: 5,
@@ -302,7 +300,7 @@ const groupData = [
   {
     groupId: 3,
     storeId: 1, //빽다방 아주대점
-    time: '15:00',
+    time: '12:30',
     date: '2021-05-20',
     groupType: 'weekly',
     current: 2,
@@ -317,8 +315,98 @@ const groupData = [
   {
     groupId: 4,
     storeId: 2, //스타벅스 아주대점
-    time: '15:30',
+    time: '12:30',
     date: '2021-05-20',
+    groupType: 'weekly',
+    current: 2,
+    maxValue: 5,
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
+    latitude: 37.284525,
+    longitude: 127.044113,
+    address: '수원시 원천동',
+    buildingName: '팔달관',
+    orderStatus:  'recruiting',
+  },
+  {
+    groupId: 555,
+    storeId: 1, //빽다방 아주대점
+    time: '09:00',
+    date: '2021-05-21',
+    groupType: 'weekly',
+    current: 2,
+    maxValue: 5,
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
+    latitude: 37.284525,
+    longitude: 127.044113,
+    address: '수원시 원천동',
+    buildingName: '팔달관',
+    orderStatus:  'recruiting',
+  },
+  {
+    groupId: 556,
+    storeId: 2, //스타벅스 아주대점
+    time: '10:00',
+    date: '2021-05-21',
+    groupType: 'weekly',
+    current: 2,
+    maxValue: 5,
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
+    latitude: 37.284525,
+    longitude: 127.044113,
+    address: '수원시 원천동',
+    buildingName: '팔달관',
+    orderStatus:  'recruiting',
+  },
+  {
+    groupId: 557,
+    storeId: 1, //빽다방 아주대점
+    time: '09:00',
+    date: '2021-05-24',
+    groupType: 'weekly',
+    current: 2,
+    maxValue: 5,
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
+    latitude: 37.284525,
+    longitude: 127.044113,
+    address: '수원시 원천동',
+    buildingName: '팔달관',
+    orderStatus:  'recruiting',
+  },
+  {
+    groupId: 558,
+    storeId: 2, //스타벅스 아주대점
+    time: '11:30',
+    date: '2021-05-25',
+    groupType: 'weekly',
+    current: 2,
+    maxValue: 5,
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
+    latitude: 37.284525,
+    longitude: 127.044113,
+    address: '수원시 원천동',
+    buildingName: '팔달관',
+    orderStatus:  'recruiting',
+  },
+  {
+    groupId: 559,
+    storeId: 1, //빽다방 아주대점
+    time: '11:00',
+    date: '2021-05-26',
+    groupType: 'weekly',
+    current: 2,
+    maxValue: 5,
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
+    latitude: 37.284525,
+    longitude: 127.044113,
+    address: '수원시 원천동',
+    buildingName: '팔달관',
+    orderStatus:  'recruiting',
+  },
+  {
+    groupId: 560,
+    storeId: 2, //스타벅스 아주대점
+    time: '12:30',
+    date: '2021-05-26',
     groupType: 'weekly',
     current: 2,
     maxValue: 5,
