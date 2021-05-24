@@ -28,6 +28,8 @@ import RegisterMenuDetail from '../screens/storeKeeperScreens/register/RegisterM
 import Receipt from '../screens/Receipt';
 import CreateReview from '../screens/review/CreateReview';
 
+import CarrierMain from '../screens/carrier/CarrierMain';
+
 
 const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
@@ -167,9 +169,9 @@ const carrierStack = () => {
         screenOptions={{
             headerShown: false,
         }}
-        initialRouteName={'Main'}
+        initialRouteName={'CarrierMain'}
         >
-            <Stack.Screen name="Main" component={Main} />
+            <Stack.Screen name="CarrierMain" component={CarrierMain} />
         </Stack.Navigator>
     );
 };

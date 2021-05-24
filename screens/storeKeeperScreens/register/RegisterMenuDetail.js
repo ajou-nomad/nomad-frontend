@@ -136,19 +136,19 @@ const RegisterMenuDetail = ({navigation, route}) => {
                 {/* Footer */}
                 <BottomButton
                     onPress={() => {
-                        // axiosApiInstance.post('/store', {
-                        //     storeInfo: storeInfo,
-                        //     menus: menus,
-                        // }).then(function (response) {
+                        axiosApiInstance.post('/store', {
+                            storeInfo: storeInfo,
+                            menus: menus,
+                        }).then(function (response) {
 
-                        //     //응답은 곧 생성완료이기 때문에 리렌더링하여 매장이 등록되어있을때의 화면으로 이동한다.
-                        //     // 1. context의 user property에 dispatch하여 리렌딩
+                            //응답은 곧 생성완료이기 때문에 리렌더링하여 매장이 등록되어있을때의 화면으로 이동한다.
+                            // 1. context의 user property에 dispatch하여 리렌딩
 
-                        //     console.log(response);
-                        // }).catch(function (error) {
+                            console.log(response);
+                        }).catch(function (error) {
 
-                        //     console.log(error);
-                        // });
+                            console.log(error);
+                        });
                         Alert.alert('매장 등록이 완료되었습니다.');
                         navigation.navigate('StoreTabs');
                     }}
