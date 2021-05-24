@@ -41,9 +41,9 @@ const App = () => {
     //서버 켜져있을 때
     // setTimeout(checkLogin, 2000);
 
-    // setData('storeData', storeData);
-    // setData('orderData', orderData);
-    // setData('groupData',groupData);
+    setData('storeData', storeData);
+    setData('orderData', orderData);
+    setData('groupData', groupData);
 
 
 
