@@ -268,6 +268,21 @@ const storeData = [
 
 const groupData = [
   {
+    groupId: 99,
+    storeId: 1, //빽다방 아주대점
+    time: '20:00',
+    date: '2021-05-19',
+    groupType: 'day',
+    current: 2,
+    maxValue: 3,
+    memberList: ['8MaepsFt67SrssZX1zxA8s96S0k1', 'Pa5C01f34nTbOJXNewvZy0APaio2'],
+    latitude: 37.282955072253145,
+    longitude: 127.045184325105,
+    address: '수원시 원천동',
+    buildingName: '성호관',
+    orderStatus:  'recruiting',
+  },
+  {
     groupId: 1,
     storeId: 1, //빽다방 아주대점
     time: '20:00',
@@ -458,6 +473,38 @@ const orderData = [
   },
   {
     orderId: 2,
+    uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+
+    storeId: 1,
+    storeName: '빽다방 아주대점',
+
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orderStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: null,
+
+    menu: [
+      {
+        menuId: 1,
+        menuName: '앗!메리카노(ICED)',
+        cost: 2000,
+        quantity: 1,
+      },
+      {
+        menuId: 9,
+        menuName: '완전아이스초코',
+        cost: 3500,
+        quantity: 1,
+      },
+    ],
+    totalCost: 5500,
+    payMethod: 'card',
+    orderTime: '2021-05-17T15:30:00.480Z',
+  },
+  {
+    orderId: 8,
     uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
 
     storeId: 1,

@@ -10,7 +10,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import {icons, COLORS, SIZES, FONTS} from '../constants';
+import {icons, COLORS, SIZES, FONTS, FONTS2} from '../constants';
 import GoogleMap from '../components/map/GoogleMap';
 import NewGroupButton from '../components/map/NewGroupButton';
 import GpsButton from '../components/map/GpsButton';
@@ -87,23 +87,26 @@ const WeeklyDelivery = ({ route, navigation }) => {
     return (
       <TouchableOpacity
         style={styles.destinationHeader}
-        onPress={() => navigation.navigate('SearchPlace', { prevScreen: 'WeeklyDelivery' })}
+        onPress={() => navigation.navigate('SearchPlace', {prevScreen: 'DayDelivery'})}
       >
         <View style={styles.destinationHeaderView}>
-          <Image
-            source={icons.search}
-            style={{
-              width: 20,
-              height: 20,
-              marginRight: SIZES.padding,
-            }}
-          />
+          <View style={{position: 'absolute',  left: 15}}>
+            <Image
+              source={icons.google_marker}
+              style={{
+                width: 25,
+                height: 25,
+                marginRight: SIZES.padding,
+              }}
+            />
+          </View>
           <View
             style={{
               flex: 1,
               alignItems: 'center',
+              marginHorizontal:  30,
             }}>
-            <Text style={{ ...FONTS.body3 }}>{location.address}</Text>
+            <Text numberOfLines={1} style={{...FONTS2.body4}}>{location.address}</Text>
           </View>
         </View>
       </TouchableOpacity>

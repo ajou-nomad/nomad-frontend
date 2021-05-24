@@ -143,15 +143,16 @@ const OrderDetails = () => {
     };
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <Header title="주문 내역" small='true' />
             <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={renderItem} inverted />
-        </ScrollView>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: COLORS.white,
     },
     storeContainer: {

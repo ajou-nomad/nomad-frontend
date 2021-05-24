@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -13,6 +13,7 @@ import {
     ScrollView,
     SafeAreaView,
     TouchableOpacity,
+    ToastAndroid,
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
@@ -37,7 +38,7 @@ const MenuRoute = ({ route }) => {
             <ScrollView>
                 {route.menu.map((items, index) => {
                     return (
-                        <Menu key={index} menu={items} time={route.time} location={route.location} storeName={route.storeName} setCartItems={route.setCartItems} />
+                        <Menu key={index} menu={items} time={route.time} location={route.location} storeName={route.storeName} />
                     );
                 })}
             </ScrollView>
@@ -84,6 +85,17 @@ function StoreDetail({route}) {
         { key: 'second', title: '매장 정보', storeInfo: storeInfo},
         { key: 'third', title: '리뷰' },
     ]);
+
+
+
+    useEffect(() => {
+        // MenuDetail에서 담긴 아이템 navigation props로 전달.
+        if (route.params?.post){
+
+            ToastAndroid.showWithGravity('카트에 담겼습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+            setCartItems((prevState)=>[...prevState, route.params?.post]);
+        }
+    }, [route.params?.post]);
 
 
 

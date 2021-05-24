@@ -36,8 +36,8 @@ const GpsButton = ({setLocation}) => {
           <Image
             source={icons.gps}
             style={{
-              width: 20,
-              height: 20,
+              width: 25,
+              height: 25,
             }}
           />
         </View>
@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
     gpsButtonView: {
       justifyContent: 'center',
       alignItems: 'center',
-      paddingVertical: SIZES.padding * 1.6,
-      paddingHorizontal: SIZES.padding * 1.6,
-      borderRadius: SIZES.radius,
+      paddingVertical: SIZES.padding * 1,
+      paddingHorizontal: SIZES.padding * 1,
+      borderRadius: SIZES.radius * 0.5,
       backgroundColor: COLORS.white,
       elevation: 5,
     },

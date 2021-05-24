@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: SIZES.padding,
         justifyContent: 'space-between',
+        opacity: 0.9,
     },
     button: {
         height: 40,
@@ -68,6 +69,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20,
+        opacity: 0.9,
+        elevation: 5,
     },
 });
 
