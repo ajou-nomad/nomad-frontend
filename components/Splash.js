@@ -1,34 +1,51 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
-import { View, Image, StyleSheet } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {icons, SIZES} from '../constants';
+import { Text, View, Image, StyleSheet, ImageBackground } from 'react-native';
+import {icons, SIZES, FONTS, FONTS2, COLORS} from '../constants';
 
 
 const Splash = () => {
     return (
-        <LinearGradient colors={['#6454F0','#6EE2F5']} style={styles.gradient}>
-            <View style={styles.logoFixed}>
-                <Image style={styles.logo} source={icons.logo_white} resizeMode="contain" />
+        <View style={styles.container}>
+            <View style={styles.logoContainer}>
+                <Image
+                    source={icons.ko_logo}
+                    // source={icons.logo_white}
+                    resizeMode="contain"
+                    style={{
+                        width: 250,
+                        height: 90,
+                        tintColor: COLORS.white,
+                    }}
+                />
+                <Text style={{ ...FONTS2.body4, color: COLORS.lightGray, }}>더치 딜리버리 서비스에 오신 것을 환영합니다. 🎉</Text>
             </View>
-        </LinearGradient>
+            <ImageBackground
+                source={icons.main_bg}
+                resizeMode="contain"
+                style={{
+                    height: 400,
+                    marginBottom: 300,
+                }}
+            >
+            </ImageBackground>
+        </View>
     );
 };
 
 
 const styles = StyleSheet.create({
-    gradient: {
+    container: {
         flex: 1,
-        backgroundColor: 'red',
-        justifyContent: 'center',
-        alignContent: 'center',
+        backgroundColor: '#3897f1',
     },
-    logoFixed: {
+    logoContainer: {
+        flex: 1,
+        marginBottom: SIZES.padding * 7,
+        marginTop: 100,
+        height: 80,
         alignItems: 'center',
-    },
-    logo: {
-        height: SIZES.height * 0.7,
-        width: SIZES.width * 0.7,
+        justifyContent: 'center',
     },
 });
 

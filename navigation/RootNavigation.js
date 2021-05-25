@@ -27,6 +27,7 @@ import RegisterStoreDetail from '../screens/storeKeeperScreens/register/Register
 import RegisterMenuDetail from '../screens/storeKeeperScreens/register/RegisterMenuDetail';
 import Receipt from '../screens/Receipt';
 import CreateReview from '../screens/review/CreateReview';
+import SearchPlace from '../screens/search/SearchPlace';
 import OrderDetailItem from '../components/item/OrderDetailItem';
 
 import CarrierMain from '../screens/carrier/CarrierMain';
@@ -115,6 +116,7 @@ const userStack = () => {
         >
             <Stack.Screen name="Main" component={Main} />
             <Stack.Screen name="Tabs" component={Tabs} />
+            <Stack.Screen name="SearchPlace" component={SearchPlace} />
             <Stack.Screen name="CreateGroupDetail" component={CreateGroupDetail} />
 
             <Stack.Screen name="CreateGroupList" component={CreateGroupList} />

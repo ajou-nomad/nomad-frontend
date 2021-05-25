@@ -20,8 +20,8 @@ import Counter from 'react-native-counters';
 import { ScrollView } from 'react-native-gesture-handler';
 import { DefaultTheme, Checkbox } from 'react-native-paper';
 
-import { LogBox } from 'react-native';
-LogBox.ignoreAllLogs();//Ignore all log notifications
+// import { LogBox } from 'react-native';
+// LogBox.ignoreAllLogs();//Ignore all log notifications
 
 // 옵션 선택 컴포넌트
 const Option = ({ item, userOption, setUserOption }) => {
@@ -184,14 +184,14 @@ function MenuDetail({ navigation, route:{params} }) {
 
     // console.log(params);
     const addCart = () => {
-        params.setCartItems((prevState)=>[...prevState,{
-            menuId: menuDetail.menuId, 
+
+        const addedItem = {
+            menuId: menuDetail.menuId,
             menuName: menuDetail.menuName,
-            quantity: totalPrice/menuDetail.price,
+            quantity: totalPrice / menuDetail.price,
             cost: totalPrice,
-        }]);
-        ToastAndroid.showWithGravity('카트에 담겼습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
-        navigation.navigate('StoreDetail', { storeName: params.storeName, time: params.time, location: params.location });
+        };
+        navigation.navigate('StoreDetail', { storeName: params.storeName, time: params.time, location: params.location, post: addedItem });
     };
 
     const renderBody = () => {

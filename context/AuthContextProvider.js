@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 const initialState = {
   isSignedIn: false,
   member: {
-    memberType: 'Carrier',
+    memberType: 'User',
     phoneNum: 0,
     nickName: '',
     email: '',
@@ -25,7 +25,7 @@ const AuthContextProvider = ({children}) => {
               return {
                 ...prevState,
                 member: {
-                  memberType: action.type,
+                  memberType: action.member.type,
                 },
               };
             case 'SIGN_IN':
@@ -61,7 +61,7 @@ const AuthContextProvider = ({children}) => {
     //         dispatch({ type: 'SIGN_IN', token: 'temp-token' });
     //     },
     //     signOut: () => dispatch({ type: 'SIGN_OUT' }),
-    //     }), 
+    //     }),
     //     []
     // );
 
@@ -69,7 +69,7 @@ const AuthContextProvider = ({children}) => {
         <AuthContext.Provider value={{ state, dispatch }}>
             { children }
         </AuthContext.Provider>
-    )
-}
+    );
+};
 
 export default AuthContextProvider;

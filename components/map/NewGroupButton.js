@@ -31,7 +31,7 @@ const NewGroupButton = ({ initLocation, deliLocation, deliDate, datePicker, stor
 const styles = StyleSheet.create({
     newGroup: {
       position: 'absolute',
-      bottom: 10,
+      bottom: 25,
       width: SIZES.width * 0.55,
       alignSelf: 'center'
     },

@@ -1,8 +1,9 @@
-/* eslint-disable no-undef */
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-undef */
 import React, {useState, useEffect} from 'react';
 import {Image, TouchableOpacity, Keyboard, Platform} from 'react-native';
-import {COLORS, FONTS2, icons, SIZES} from '../constants';
+import {COLORS, FONTS2, FONTS, icons, SIZES} from '../constants';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home, WeeklyDelivery, OrderDetails} from '../screens/index';
 import DayNavigation from './DayNavigation';
@@ -79,13 +80,14 @@ const Tabs = ({route}) => {
         showLabel: true,
         labelPosition: 'below-icon',
         labelStyle: {
-          color: 'black',
-          ...FONTS2.body6,
+          ...FONTS.body6,
         },
+        activeTintColor: '#228be6',
+
         style: {
-          borderTopWidth: 0.3,
+          borderTopWidth: 0.4,
           height: SIZES.height * 0.09,
-          borderTopColor: 'black',
+          borderTopColor: COLORS.secondary,
           elevation: 0, //그림자가 깔리는 입체적인 효과
         },
       }}>
@@ -98,10 +100,10 @@ const Tabs = ({route}) => {
               source={icons.home}
               resizeMode="contain"
               style={{
-                top: 5,
+                top: 4,
                 width: 22,
                 height: 22,
-                tintColor: focused ? COLORS.black : COLORS.secondary,
+                tintColor: focused ? '#228be6' : COLORS.secondary,
               }}
             />
           ),
@@ -114,13 +116,13 @@ const Tabs = ({route}) => {
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.cart}
+              source={icons.calendar}
               resizeMode="contain"
               style={{
-                top: 5,
-                width: 22,
-                height: 22,
-                tintColor: focused ? COLORS.black : COLORS.secondary,
+                top: 3,
+                width: 23,
+                height: 23,
+                tintColor: focused ? '#228be6' : COLORS.secondary,
               }}
             />
           ),
@@ -133,13 +135,13 @@ const Tabs = ({route}) => {
         options={{
           tabBarIcon: ({focused}) => (
             <Image
-              source={icons.recipe}
-              resizeMode="contain"
+              source={icons.receipt}
+              resizeMode= "contain"
               style={{
-                top: 5,
-                width: 22,
-                height: 22,
-                tintColor: focused ? COLORS.black : COLORS.secondary,
+                top: 3,
+                width: 23,
+                height: 23,
+                tintColor: focused ? '#228be6' : COLORS.secondary,
               }}
             />
           ),
@@ -155,10 +157,10 @@ const Tabs = ({route}) => {
               source={icons.user}
               resizeMode="contain"
               style={{
-                top: 5,
-                width: 22,
-                height: 22,
-                tintColor: focused ? COLORS.black : COLORS.secondary,
+                top: 3,
+                width: 23,
+                height: 23,
+                tintColor: focused ? '#228be6' : COLORS.secondary,
               }}
             />
           ),

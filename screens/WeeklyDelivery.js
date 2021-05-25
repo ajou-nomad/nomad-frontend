@@ -10,11 +10,13 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import {icons, COLORS, SIZES, FONTS} from '../constants';
+import {icons, COLORS, SIZES, FONTS, FONTS2} from '../constants';
 import GoogleMap from '../components/map/GoogleMap';
 import NewGroupButton from '../components/map/NewGroupButton';
 import GpsButton from '../components/map/GpsButton';
 import { currentLocation, getWeeklyGroupData, getData } from '../utils/helper';
+import PlusButton from '../components/map/PlusButton';
+import axiosApiInstance from '../utils/axios';
 
 const ItemsForCreateGroupDetailDayPicker = () => {
     const todayFullDate = new Date();
@@ -63,9 +65,9 @@ const WeeklyDelivery = ({ route, navigation }) => {
       // await getData('storeData').then( (response) =>
       //   setResponseStoreData(response)
       // );
-      // await axiosApiInstance.get("storeList").then((response) => {
-      //   console.log(response);
-      // });
+      await axiosApiInstance.get("storeList").then((response) => {
+        console.log(JSON.stringify(response.data.data[0],null, 4));
+      });
     };
 
     getAxiosData().then((data) => {
@@ -90,23 +92,36 @@ const WeeklyDelivery = ({ route, navigation }) => {
     return (
       <TouchableOpacity
         style={styles.destinationHeader}
-        onPress={() => navigation.navigate('SearchPlace', { prevScreen: 'WeeklyDelivery' })}
+        onPress={() => navigation.navigate('SearchPlace', {prevScreen: 'WeeklyDelivery'})}
       >
         <View style={styles.destinationHeaderView}>
-          <Image
-            source={icons.search}
-            style={{
-              width: 20,
-              height: 20,
-              marginRight: SIZES.padding,
-            }}
-          />
+          <View style={{position: 'absolute',  left: 15}}>
+            <Image
+              source={icons.google_marker}
+              style={{
+                width: 25,
+                height: 25,
+                marginRight: SIZES.padding,
+              }}
+            />
+          </View>
           <View
             style={{
               flex: 1,
               alignItems: 'center',
+              marginHorizontal:  30,
             }}>
-            <Text style={{ ...FONTS.body3 }}>{location.address}</Text>
+            <Text numberOfLines={1} style={{...FONTS2.body4}}>{location.address}</Text>
+          </View>
+          <View style={{position: 'absolute',  right: 10}}>
+            <Image
+              source={icons.mic}
+              style={{
+                width: 20,
+                height: 20,
+                marginRight: SIZES.padding,
+              }}
+            />
           </View>
         </View>
       </TouchableOpacity>
@@ -124,7 +139,14 @@ const WeeklyDelivery = ({ route, navigation }) => {
         <View style={{flex: 1}}>
           <GoogleMap initLocation={location} back="WeeklyDelivery" groupData={responseWeeklyData} storeData={responseStoreData} />
           { renderDestinationHeader() }
-          <GpsButton setLocation={setCurrentLocation} />
+          <PlusButton
+            style={{ bottom: SIZES.height * 0.08, right:  SIZES.width * 0.08 }}
+            setLocation={setCurrentLocation}
+            initLocation={location}
+            deliDate={null}
+            storeData={responseStoreData}
+            datePicker={[dayArrayKorFixed,dateDifference]}
+          />
           <NewGroupButton storeData={responseStoreData} initLocation={location} deliDate={null} datePicker={[dayArrayKorFixed,dateDifference]} />
         </View>
       ) : (

@@ -208,14 +208,12 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
                 latitudeDelta: 0.0045,
                 longitudeDelta: 0.0045,
             }}
+            showsUserLocation={true}
+            showsMyLocationButton={false}
         >
-            { filteredMarkers.map((item, idx) => (
-                <CustomMarker key={idx} item={item} back={back} today={today} storeData={storeData} />
-            ))}
-            <Marker
-                coordinate={initLocation}
-                zIndex={-1}
-            />
+          { filteredMarkers.map((item, idx) => (
+            <CustomMarker key={idx} item={item} back={back} today={today} storeData={storeData} />
+          ))}
         </MapView>
     );
 };
