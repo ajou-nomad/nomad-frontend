@@ -271,17 +271,18 @@ function MenuDetail({ navigation, route:{params} }) {
                 <View
                     style={{
                         flex: 1,
-                        // position: 'absolute',
-                        backgroundColor: COLORS.tertiary,
+                        backgroundColor: '#339af0',
+                        borderTopEndRadius: 20,
+                        borderTopStartRadius: 20,
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexDirection: 'row',
                     }}
                 >
                     <TouchableOpacity
-                        onPress={() => addCart()}    
+                        onPress={() => addCart()}
                     >
-                        <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>카트에 담기</Text>
+                        <Text style={{ ...FONTS2.body2, fontWeight: 'bold', color: COLORS.white }}>카트에 담기</Text>
                     </TouchableOpacity>
                 </View>
             </View>

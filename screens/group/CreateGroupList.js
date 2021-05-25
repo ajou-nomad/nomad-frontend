@@ -2,7 +2,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -16,12 +16,15 @@ import StoreItem from '../../components/item/StoreItem';
 import Header from '../../components/layout/Header';
 import { COLORS, FONTS2, SIZES, icons, FONTS } from '../../constants';
 
+import axiosApiInstance from '../../utils/axios';
+
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 import MiniMap from '../../components/map/MiniMap';
 import SelectButton from '../../components/layout/SelectButton';
 import BackButton from '../../components/layout/BackButton';
 
-function CreateGroupList({navigation, route}) {
+function CreateGroupList({ navigation, route }) {
+    
     //route.params.initLocation.buildingName존재 시 배달장소를 선택할 필요x
     const [isSelected, setIsSelected] = useState(route.params.initLocation.buildingName ? true : false);
     const [deliveryPlace, setDeliveryPlace] = useState(route.params.initLocation.buildingName ? route.params.initLocation : '');
@@ -51,7 +54,12 @@ function CreateGroupList({navigation, route}) {
             </View>
           </TouchableOpacity>
         );
-      };
+    };
+
+
+    useEffect(() => {
+        // axiosApiInstance.get("/")
+    }, []);
 
 
     const chooseDeliveryPlace = () => {
@@ -81,18 +89,13 @@ function CreateGroupList({navigation, route}) {
                     }}
                     >
                         <View style={styles.location}>
-                            <View style={{ marginRight: 15, }}>
-                                <Text style={{ color: 'red', ...FONTS2.h2 }}>내 위치</Text>
-                            </View>
-                            <View>
-                                <Text style={{ ...FONTS2.body2 }}>{deliveryPlace?.address}</Text>
-                            </View>
+                            <Image source={icons.pin3} resizeMode='contain' style={{ width: 23, height: 23, marginRight: SIZES.base, opacity: 0.3 }} />
+                            <Text style={{ ...FONTS2.body3 }}>{deliveryPlace?.address}</Text>
                         </View>
                     </View>
                 </View>
                 <View style={{ flex: 5, backgroundColor: 'white' }}>
                     <ScrollView>
-                        {/* FlatList 수정해야함. */}
                         {storeData.map((storeItems, index) => {
                             return <StoreItem key={index} storeData={storeItems} deliveryPlace={deliveryPlace} deliDate={deliDate} datePicker={datePicker} />;
                         })}
@@ -116,10 +119,25 @@ const styles = StyleSheet.create({
     },
     location: {
         flexDirection: 'row',
-        backgroundColor: COLORS.lightGray,
-        padding: 10,
+        // shadowColor: "#3897f1",
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 1,
+        // },
+        // shadowOpacity: 0.22,
+        // shadowRadius: 2.22,
+
+        // elevation: 3,
+
+        // borderColor: '#3897f1',
+        borderWidth: 0.4,
+        // backgroundColor: '#D6E3F2',
+        // opacity: 0.3,
+        padding: 5,
         paddingHorizontal: 30,
         borderRadius: 20,
+
+        alignItems: 'center',
     },
     destinationHeader: {
         position: 'absolute',

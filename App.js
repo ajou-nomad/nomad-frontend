@@ -38,8 +38,10 @@ const App = () => {
       offlineAccess: true, //if you want to access Google API on behalf of the user FROM YOUR SERVER
     });
 
+    
+
     //서버 켜져있을 때
-    // setTimeout(checkLogin, 2000);
+    setTimeout(checkLogin, 2000);
 
     setData('storeData', storeData);
     setData('orderData', orderData);

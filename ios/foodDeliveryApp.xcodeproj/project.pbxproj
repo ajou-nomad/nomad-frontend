@@ -45,6 +45,7 @@
 		EEC10900F86E4701A329B526 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7375B720F244D5DBCB65AF7 /* Octicons.ttf */; };
 		A15882B44FD6408EACA7D59B /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1562FD94B0624B7DB76A2FFB /* SimpleLineIcons.ttf */; };
 		5BBF02FCDC1D436988F95640 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D48CD11611B4F989965C011 /* Zocial.ttf */; };
+		D7F9260BFBAE4E27BA288EF2 /* 경기천년제목_Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4ED596DFAE484CC9A58EF71F /* 경기천년제목_Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		D7375B720F244D5DBCB65AF7 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1562FD94B0624B7DB76A2FFB /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		0D48CD11611B4F989965C011 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4ED596DFAE484CC9A58EF71F /* 경기천년제목_Medium.ttf */ = {isa = PBXFileReference; name = "경기천년제목_Medium.ttf"; path = "../assets/fonts/경기천년제목_Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +250,7 @@
 				D7375B720F244D5DBCB65AF7 /* Octicons.ttf */,
 				1562FD94B0624B7DB76A2FFB /* SimpleLineIcons.ttf */,
 				0D48CD11611B4F989965C011 /* Zocial.ttf */,
+				4ED596DFAE484CC9A58EF71F /* 경기천년제목_Medium.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				EEC10900F86E4701A329B526 /* Octicons.ttf in Resources */,
 				A15882B44FD6408EACA7D59B /* SimpleLineIcons.ttf in Resources */,
 				5BBF02FCDC1D436988F95640 /* Zocial.ttf in Resources */,
+				D7F9260BFBAE4E27BA288EF2 /* 경기천년제목_Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

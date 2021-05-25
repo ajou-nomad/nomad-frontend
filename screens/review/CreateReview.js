@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BottomButton from '../../components/layout/BottomButton';
 import Header from '../../components/layout/Header';
-import { FONTS2, COLORS, icons } from '../../constants';
+import { FONTS2, COLORS, icons, SIZES } from '../../constants';
 import { getData } from '../../utils/helper';
 
 const CreateReview = ({ route }) => {
@@ -64,8 +64,8 @@ const CreateReview = ({ route }) => {
                     source={icons.picture}
                     resizeMode='contain'
                     style={{
-                        width: 25,
-                        height: 25,
+                        width: SIZES.base * 5,
+                        height: SIZES.base * 3,
                     }}
                 />
                 <Text style={{ ...FONTS2.body3 }}>사진 추가</Text>
@@ -81,29 +81,22 @@ const CreateReview = ({ route }) => {
     const sendReview = async () => {
         // 리뷰 DB에 등록
 
-        console.log('바ddd ', item);
-        item = {
-            ...item,
-            review: {
-                reviewId: uuid.v4(),
-                text: text,
-            },
-        };
-        setItems(item);
-        // route.item.map(item_ => {
-        //     if (item_.orderId === item.orderId) {
-        //         item_.review = {
-        //             reviewId: uuid.v4(),
-        //             text: text,
-        //             // imgUrl: storageImage,
-        //         };
-        //     }
-        // });
+        if (text === '') {
+            ToastAndroid.showWithGravity('작성한 리뷰가 없습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+        }
+        else {
+            item = {
+                ...item,
+                review: {
+                    reviewId: uuid.v4(),
+                    text: text,
+                },
+            };
+            setItems(item);
 
-        console.log('바꼈나 ', item);
-
-        navigation.goBack();
-        ToastAndroid.showWithGravity('리뷰가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+            navigation.goBack();
+            ToastAndroid.showWithGravity('리뷰가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+        }
     };
 
     return (
@@ -155,15 +148,14 @@ const styles = StyleSheet.create({
     },
     reviewBox: {
         width: responsiveWidth(80),
-        // borderWidth: 0.6,
-        backgroundColor: '#f1f3f5',
+        borderWidth: 0.1,
+        // backgroundColor: '#f1f3f5',
         padding: 15,
         borderRadius: 8,
     },
     textInput: {
-        // borderWidth: 0.6,
         borderRadius: 8,
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.lightGray,
         minHeight: responsiveHeight(15),
         marginTop: 5,
         textAlignVertical: 'top',
@@ -172,14 +164,12 @@ const styles = StyleSheet.create({
     },
     addPhoto: {
         marginTop: 10,
-        borderWidth: 0.6,
-        // backgroundColor: COLORS.white,
+        borderWidth: 0.3,
         borderRadius: 8,
-        width: 55,
-        height: 55,
+        width: SIZES.base * 7,
+        height: SIZES.base * 7,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 3,
     },
 });
 

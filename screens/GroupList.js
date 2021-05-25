@@ -16,8 +16,9 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native';
-import {COLORS, SIZES, FONTS} from '../constants';
+import {COLORS, SIZES, FONTS, icons, FONTS2} from '../constants';
 
 import GroupInfo from '../components/GroupInfo';
 import NewGroupButton from '../components/map/NewGroupButton';
@@ -52,7 +53,8 @@ export default function GroupList({navigation, route}) {
         <TouchableOpacity
           onPress={() => {goBack();}}
           >
-          <Text style={styles.backButton}>&lt;</Text>
+          {/* <Text style={styles.backButton}>&lt;</Text> */}
+          <Image source={icons.goback} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 2.5, marginLeft: 5, }} />
         </TouchableOpacity>
         <Text numberOfLines={1} style={styles.headerLocationText}>{location.buildingName}</Text>
         <Text style={styles.headerDateText}>{today}</Text>
@@ -116,12 +118,12 @@ export default function GroupList({navigation, route}) {
     );
 
   return (
-    <>
+    <View style={styles.container}>
       {Header()}
       {SortButtons()}
       {ListOfGroup()}
       <NewGroupButton storeData={storeData} initLocation={location} deliDate={today}/>
-    </>
+    </View>
   );
 }
 
@@ -131,24 +133,30 @@ export default function GroupList({navigation, route}) {
 // 회색: #F1F3F5
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+  },
   headerText: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: SIZES.base,
+    paddingBottom: SIZES.base * 2.5,
+    // borderBottomWidth: 0.3
   },
   backButton: {
     marginLeft: 8,
     fontSize: 42,
   },
   headerLocationText: {
-    fontSize: 24,
     marginLeft: 50,
     width: '50%',
+    ...FONTS2.h2,
   },
   headerDateText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    position: 'absolute',
-    right: 10,
+    ...FONTS2.body2,
+    marginRight: 5,
+    alignSelf: 'center',
   },
   headerButtons: {
     flexDirection: 'row',
@@ -159,13 +167,13 @@ const styles = StyleSheet.create({
   headerButton: {
     marginHorizontal: 10,
     padding: 5,
+    paddingHorizontal: 10,
     borderColor: '#e5e5e5',
-    borderWidth: 5,
+    borderWidth: 1,
     borderRadius: 25,
   },
-  headerButtonText:{
-    fontSize: 14,
-    fontWeight: 'bold',
+  headerButtonText: {
+    ...FONTS2.body3,
   },
   mainView: {
     backgroundColor: '#eee',

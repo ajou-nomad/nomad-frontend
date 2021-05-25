@@ -17,29 +17,29 @@ import GpsButton from '../components/map/GpsButton';
 import { currentLocation, getWeeklyGroupData, getData } from '../utils/helper';
 
 const ItemsForCreateGroupDetailDayPicker = () => {
-  const todayFullDate = new Date();
-  todayFullDate.setDate(todayFullDate.getDate() + 1);
-  if (todayFullDate.getDay() === 0){
+    const todayFullDate = new Date();
     todayFullDate.setDate(todayFullDate.getDate() + 1);
-  } else if (todayFullDate.getDay() === 6){
-    todayFullDate.setDate(todayFullDate.getDate() + 2);
-  }
-  const todayDay = todayFullDate.getDay();
-  const dayArrayKor = ['월','화','수','목','금'];
-  const dateDifference = [1,2,3,4];
-  const lastIndex = dateDifference.length - 1;
-  let todayDayIndex = (todayDay%6)-1;
-  if (todayDayIndex < 0){
-   todayDayIndex = 0;
-  }
-  for(let i = 0; i < todayDayIndex; i++){
-   dateDifference[lastIndex-i] += 2;
-  }
-  const dayArrayKorFixed = [...dayArrayKor.slice(todayDayIndex),...dayArrayKor.slice(0,todayDayIndex)]
+    if (todayFullDate.getDay() === 0) {
+      todayFullDate.setDate(todayFullDate.getDate() + 1);
+    } else if (todayFullDate.getDay() === 6) {
+      todayFullDate.setDate(todayFullDate.getDate() + 2);
+    }
+    const todayDay = todayFullDate.getDay();
+    const dayArrayKor = ['월', '화', '수', '목', '금'];
+    const dateDifference = [1, 2, 3, 4];
+    const lastIndex = dateDifference.length - 1;
+    let todayDayIndex = (todayDay % 6) - 1;
+    if (todayDayIndex < 0) {
+      todayDayIndex = 0;
+    }
+    for (let i = 0; i < todayDayIndex; i++) {
+      dateDifference[lastIndex - i] += 2;
+    }
+    const dayArrayKorFixed = [...dayArrayKor.slice(todayDayIndex), ...dayArrayKor.slice(0, todayDayIndex)]
 
-  return [dayArrayKorFixed,dateDifference]
+    return [dayArrayKorFixed, dateDifference]
 
-}
+};
 
 const WeeklyDelivery = ({ route, navigation }) => {
 
@@ -60,9 +60,12 @@ const WeeklyDelivery = ({ route, navigation }) => {
       await getWeeklyGroupData().then((reponse)=>
         setResponseWeeklyData(reponse)
       );
-      await getData('storeData').then( (response) =>
-        setResponseStoreData(response)
-      );
+      // await getData('storeData').then( (response) =>
+      //   setResponseStoreData(response)
+      // );
+      // await axiosApiInstance.get("storeList").then((response) => {
+      //   console.log(response);
+      // });
     };
 
     getAxiosData().then((data) => {

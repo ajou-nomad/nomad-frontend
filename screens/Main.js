@@ -15,13 +15,13 @@ const Main = ({ navigation }) => {
             {/* <LinearGradient colors={['#7792FF','#516FFF']} style={styles.gradient}> */}
             <View style={styles.logoContainer}>
                 <Image
-                    // source={icons.ko_logo}
-                    source={icons.logo_white}
+                    source={icons.ko_logo}
+                    // source={icons.logo_white}
                     resizeMode="contain"
                     style={{
                         width: 250,
                         height: 90,
-                        // tintColor: COLORS.white,
+                        tintColor: COLORS.white,
                     }}
                 />
                 <Text style={{ ...FONTS2.body4, color: COLORS.lightGray, }}>더치 딜리버리 서비스에 오신 것을 환영합니다. 🎉</Text>

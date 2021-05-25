@@ -18,7 +18,7 @@ const master_card = require("../assets/icons/mastercard.png");
 const nearby = require("../assets/icons/nearby.png");
 const noodle = require("../assets/icons/noodle.png");
 const pin = require("../assets/icons/pin.png");
-const pin2 = require("../assets/icons/pin2.png");
+const pin3 = require("../assets/icons/pin3.png");
 const pizza = require("../assets/icons/pizza.png");
 const red_pin = require("../assets/icons/red-pin.png");
 const rice_bowl = require("../assets/icons/rice-bowl.png");
@@ -69,6 +69,13 @@ const calendar = require("../assets/icons/calendar.png");
 const google_marker = require("../assets/icons/google_marker.png");
 const receipt = require("../assets/icons/receipt.png");
 const mic = require("../assets/icons/mic.png");
+const coin = require("../assets/icons/coin.png");
+const next = require("../assets/icons/next.png");
+const highlight = require("../assets/icons/highlight.png");
+const close = require("../assets/icons/close.png");
+const goback = require("../assets/icons/goback.png");
+const clock = require("../assets/icons/clock.png");
+const pin2 = require("../assets/icons/pin2.png");
 
 export default {
     mic,
@@ -110,7 +117,6 @@ export default {
     nearby,
     noodle,
     pin,
-    pin2,
     pizza,
     red_pin,
     rice_bowl,
@@ -138,5 +144,13 @@ export default {
     ko_logo,
     logo_big,
     weekly_group,
-    logo_search
+    logo_search,
+    coin,
+    next,
+    highlight,
+    close,
+    goback,
+    clock,
+    pin2,
+    pin3,
 }

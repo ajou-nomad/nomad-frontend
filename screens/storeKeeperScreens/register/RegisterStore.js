@@ -33,22 +33,22 @@ const RegisterStore = ({navigation}) => {
         );
     } else {
         return (
-            <LinearGradient colors={['#6454F0','#6EE2F5']} style={styles.container}>
+            <LinearGradient colors={['#6454F0', '#6EE2F5']} style={styles.container}>
                 <View style={styles.header}>
                     <Image style={styles.logo} source={icons.logo_white} resizeMode="contain" />
                 </View>
                 <View style={styles.footer}>
-                    <Text style={{...FONTS2.h3,color: 'black'}}>DutchDelivery에 입점해주세요!</Text>
+                    <Text style={{ ...FONTS2.h3, color: 'black' }}>DutchDelivery에 입점해주세요!</Text>
                     <Text style={styles.text}>등록된 매장이 없습니다.</Text>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={()=> navigation.navigate('RegisterStoreDetail')}
+                        onPress={() => navigation.navigate('RegisterStoreDetail')}
                     >
                         <View style={styles.buttonView}>
                             <Text style={styles.buttonText}>매장 등록</Text>
                         </View>
                     </TouchableOpacity>
-            </View>
+                </View>
             </LinearGradient>
         );
     }
