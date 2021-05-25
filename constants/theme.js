@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+
 import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
@@ -75,6 +78,14 @@ export const FONTS2 = {
     body6: { fontFamily: "AppleSDGothicNeoL", fontSize: SIZES.body6, lineHeight: 22 },
 };
 
-const appTheme = { COLORS, SIZES, FONTS, FONTS2 };
+export const FONTS3 = {
+    h1: { fontFamily: "경기천년제목_Medium", fontSize: SIZES.h1, lineHeight: 32 },
+    h2: { fontFamily: "경기천년제목_Medium", fontSize: SIZES.h2, lineHeight: 30 },
+    h3: { fontFamily: "경기천년제목_Medium", fontSize: SIZES.h3, lineHeight: 22 },
+    h4: { fontFamily: "경기천년제목_Medium", fontSize: SIZES.h4, lineHeight: 22 },
+    h5: { fontFamily: "경기천년제목_Medium", fontSize: SIZES.h5, lineHeight: 22 },
+};
+
+const appTheme = { COLORS, SIZES, FONTS, FONTS2, FONTS3 };
 
 export default appTheme;

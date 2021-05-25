@@ -60,7 +60,13 @@ const main_bg = require("../assets/icons/main_bg.png");
 const ko_logo = require("../assets/icons/ko_logo.png");
 const logo_big = require("../assets/icons/logo_big.png");
 const weekly_group = require("../assets/icons/weekly_group.png");
-
+const coin = require("../assets/icons/coin.png");
+const next = require("../assets/icons/next.png");
+const highlight = require("../assets/icons/highlight.png");
+const close = require("../assets/icons/close.png");
+const goback = require("../assets/icons/goback.png");
+const clock = require("../assets/icons/clock.png");
+const pin2 = require("../assets/icons/pin2.png");
 
 export default {
     cancel,
@@ -121,5 +127,12 @@ export default {
     main_bg,
     ko_logo,
     logo_big,
-    weekly_group
+    weekly_group,
+    coin,
+    next,
+    highlight,
+    close,
+    goback,
+    clock,
+    pin2,
 }

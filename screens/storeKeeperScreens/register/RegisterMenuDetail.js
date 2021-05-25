@@ -51,10 +51,11 @@ const RegisterMenuDetail = ({navigation, route}) => {
         setMenus((prevMenus) => [
             ...prevMenus,
             {
-              id: uuid.v4(),
-              name: menu.name,
-              price: menu.price,
-              description: menu.description,
+                id: uuid.v4(),
+                menuName: menu.name,
+                cost: menu.price,
+                description: menu.description,
+                imgUrl: 'dd',
             },
         ]);
     };
@@ -72,8 +73,8 @@ const RegisterMenuDetail = ({navigation, route}) => {
         return (
             <View style={{ margin: 15, flexDirection: 'row' }}>
                 <View>
-                    <Text style={{ ...FONTS2.h2 }}>{item.name}</Text>
-                    <Text style={{ ...FONTS2.body2 }}>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                    <Text style={{ ...FONTS2.h2 }}>{item.menuName}</Text>
+                    <Text style={{ ...FONTS2.body2 }}>{item.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
                     <Text style={{ ...FONTS2.body4, color: '#707070' }}>{item.description}</Text>
                 </View>
                 <TouchableOpacity

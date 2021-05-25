@@ -5,25 +5,25 @@ import { icons, COLORS, SIZES, FONTS } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
 import {getData} from '../../utils/helper';
 
-const NewGroupButton = ({initLocation,deliLocation,deliDate,datePicker,storeData}) => {
+const NewGroupButton = ({ initLocation, deliLocation, deliDate, datePicker, storeData }) => {
 
   const navigation = useNavigation();
 
   return (
-      <TouchableOpacity
-        style={styles.newGroup}
-        onPress={()=> navigation.navigate('CreateGroupList', { initLocation: initLocation, deliLocation: deliLocation, deliDate: deliDate, datePicker: datePicker, storeData: storeData })}
-      >
-          <View style={styles.newGroupView}>
-              <Image
-                  source={icons.search}
-                  style={styles.logoStyle}
-              />
-              <View
-                  style={styles.newGroupTextView}>
-                  <Text style={styles.newGroupText}>원하는 조건이 없나요?</Text>
-              </View>
-          </View>
+    <TouchableOpacity
+      style={styles.newGroup}
+      onPress={() => navigation.navigate('CreateGroupList', { initLocation: initLocation, deliLocation: deliLocation, deliDate: deliDate, datePicker: datePicker, storeData: storeData })}
+    >
+      <View style={styles.newGroupView}>
+        <Image
+          source={icons.search}
+          style={styles.logoStyle}
+        />
+        <View
+          style={styles.newGroupTextView}>
+          <Text style={styles.newGroupText}>원하는 조건이 없나요?</Text>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 };

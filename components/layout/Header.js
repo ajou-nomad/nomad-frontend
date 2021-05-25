@@ -15,7 +15,7 @@ const Header = ({ title, small }) => {
         <View style={{
             height: responsiveHeight(8),
             backgroundColor: 'white',
-            borderBottomWidth: 0.5,
+            borderBottomWidth: 0.3,
             borderBottomColor: COLORS.darkgray,
             alignItems: 'center',
             justifyContent: 'center',

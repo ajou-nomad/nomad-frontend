@@ -42,20 +42,20 @@ function StoreInfo(props) {
       <Text style={{ ...FONTS2.h2, marginBottom: 5 }}>&lt; 영업 정보 &gt;</Text>
       {/* 영업시간 */}
       <View style={{ flexDirection: 'row' }}>
-        <Text style={{ ...FONTS2.body2, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>영업시간</Text>
-        <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>월요일 ~ 일요일: {storeInfo.openTime} ~ {storeInfo.closeTime}</Text>
+        <Text style={{ ...FONTS2.body3, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>영업시간</Text>
+        <Text style={{ ...FONTS2.body3, alignSelf: 'center' }}>월요일 ~ 일요일: {storeInfo.openTime} ~ {storeInfo.closeTime}</Text>
       </View>
 
       {/* 전화변호 */}
       <View style={{ flexDirection: 'row' }}>
-        <Text style={{ ...FONTS2.body2, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>전화번호</Text>
-        <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>{storeInfo.phoneNumber}</Text>
+        <Text style={{ ...FONTS2.body3, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>전화번호</Text>
+        <Text style={{ ...FONTS2.body3, alignSelf: 'center' }}>{storeInfo.phoneNumber}</Text>
       </View>
 
       {/* 주소 */}
       <View style={{ flexDirection: 'row' }}>
-        <Text style={{ ...FONTS2.body2, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>주소</Text>
-        <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>{storeInfo.address}</Text>
+        <Text style={{ ...FONTS2.body3, fontWeight: 'bold', marginRight: 5, alignSelf: 'center' }}>주소</Text>
+        <Text style={{ ...FONTS2.body3, alignSelf: 'center' }}>{storeInfo.address}</Text>
       </View>
       </View>
 
@@ -63,7 +63,7 @@ function StoreInfo(props) {
       <View style={{ marginBottom: 20 }}>
       <Text style={{ ...FONTS2.h2, marginBottom: 5 }}>&lt; 공지사항 &gt;</Text>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
-        <Text style={{ ...FONTS2.body2 }}>
+        <Text style={{ ...FONTS2.body3 }}>
           {`5/22부터 일주일간 앗!메리카노 1+1 행사!
       (* 1인당 한 번만 참여 가능합니다)`}
           </Text>
@@ -75,11 +75,11 @@ function StoreInfo(props) {
       <Text style={{ ...FONTS2.h2, marginBottom: 5 }}>&lt; 가게 통계 &gt;</Text>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
         <Text style={{ ...FONTS2.h3 }}>주문 수</Text>
-        <Text style={{ ...FONTS2.body2 }}>85건</Text>
+        <Text style={{ ...FONTS2.body3 }}>85건</Text>
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <Text style={{ ...FONTS2.h3 }}>리뷰 수</Text>
-        <Text style={{ ...FONTS2.body2 }}>78개</Text>
+        <Text style={{ ...FONTS2.body3 }}>78개</Text>
       </View>
       </View>
 

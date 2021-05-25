@@ -41,6 +41,9 @@ Geocoder.init(GOOGLE_API_KEY, {language: 'ko'});
 
 const setMemberInfo = async (dispatch, memberInfo) => {
 
+
+    console.log(memberInfo);
+
     Alert.alert(memberInfo.data.data.nickName + '님 반갑습니다.');
 
     const memberData = {
@@ -105,12 +108,15 @@ export const googleLogin = async (response, dispatch) => {
 
 export const emailPasswordLogin = (data, dispatch) => {
 
+
     auth()
         .signInWithEmailAndPassword(data.email, data.pw)
         .then( async () => {
             axiosApiInstance
                 .get('/member')
-                .then( async (response) => {
+                .then(async (response) => {
+        
+                
 
                     if (response.data.data === 400){
                         Alert.alert('해당하는 멤버정보가 없습니다.');

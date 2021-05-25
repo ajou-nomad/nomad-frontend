@@ -27,6 +27,7 @@ import RegisterStoreDetail from '../screens/storeKeeperScreens/register/Register
 import RegisterMenuDetail from '../screens/storeKeeperScreens/register/RegisterMenuDetail';
 import Receipt from '../screens/Receipt';
 import CreateReview from '../screens/review/CreateReview';
+import OrderDetailItem from '../components/item/OrderDetailItem';
 
 import CarrierMain from '../screens/carrier/CarrierMain';
 
@@ -58,7 +59,7 @@ const RootNavigation = () => {
 
     console.log(state);
 
-    if (true) { //로그인시 state.isSignedIn
+    if (state.isSignedIn) { //로그인시 state.isSignedIn
         if (state.member.memberType === 'User'){
             return (
                 <RootStack.Navigator>
@@ -132,7 +133,7 @@ const userStack = () => {
 
 const storeKeeperStack = () => {
 
-    if (false){ //점주가 매장등록 했을 때, 안했을 때
+    if (!false){ //점주가 매장등록 했을 때, 안했을 때
         return (
             <Stack.Navigator
             screenOptions={{
@@ -141,6 +142,7 @@ const storeKeeperStack = () => {
             initialRouteName={'StoreTabs'}
             >
                 <Stack.Screen name="StoreTabs" component={StoreTabs} />
+                <Stack.Screen name="OrderDetailItem" component={OrderDetailItem} />
             </Stack.Navigator>
         );
     } else {

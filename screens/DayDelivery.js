@@ -15,6 +15,7 @@ import GoogleMap from '../components/map/GoogleMap';
 import NewGroupButton from '../components/map/NewGroupButton';
 import GpsButton from '../components/map/GpsButton';
 import { currentLocation, getDaliyGroupData, getData } from '../utils/helper';
+import axiosApiInstance from '../utils/axios';
 
 
 
@@ -30,16 +31,20 @@ const DayDelivery = ({ route, navigation }) => {
     setLocation(result);
   };
 
-  useEffect( () => {
+  useEffect(() => {
 
     const getAxiosData = async () => {
 
-      await getDaliyGroupData().then((reponse)=>
+      await getDaliyGroupData().then((reponse) =>
         setResponseDailyData(reponse)
       );
       await getData('storeData').then( (response) =>
         setResponseStoreData(response)
       );
+      // await axiosApiInstance.get("/storeList").then((response) => {
+      //   console.log('storeList 요청');
+      //   console.log(JSON.stringify(response.data.data, null, 4));
+      // });
     };
 
     getAxiosData().then((data) => {
