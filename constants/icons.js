@@ -2,6 +2,7 @@
 /* eslint-disable prettier/prettier */
 
 const back = require("../assets/icons/back.png");
+const back2 = require("../assets/icons/back2.png");
 const car = require("../assets/icons/car.png");
 const cutlery = require("../assets/icons/cutlery.png");
 const donut = require("../assets/icons/donut.png");
@@ -17,6 +18,7 @@ const master_card = require("../assets/icons/mastercard.png");
 const nearby = require("../assets/icons/nearby.png");
 const noodle = require("../assets/icons/noodle.png");
 const pin = require("../assets/icons/pin.png");
+const pin3 = require("../assets/icons/pin3.png");
 const pizza = require("../assets/icons/pizza.png");
 const red_pin = require("../assets/icons/red-pin.png");
 const rice_bowl = require("../assets/icons/rice-bowl.png");
@@ -54,12 +56,19 @@ const statistics = require("../assets/icons/statistics.png");
 const store = require("../assets/icons/store.png");
 const completed = require("../assets/icons/completed.png");
 const plus2 = require("../assets/icons/plus2.png");
+const plus3 = require("../assets/icons/plus3.png");
 const no = require("../assets/icons/no.png");
 const cancel = require("../assets/icons/cancel.png");
 const main_bg = require("../assets/icons/main_bg.png");
 const ko_logo = require("../assets/icons/ko_logo.png");
 const logo_big = require("../assets/icons/logo_big.png");
+const logo_search = require("../assets/icons/logo_search.jpg");
 const weekly_group = require("../assets/icons/weekly_group.png");
+const flag = require("../assets/icons/flag.png");
+const calendar = require("../assets/icons/calendar.png");
+const google_marker = require("../assets/icons/google_marker.png");
+const receipt = require("../assets/icons/receipt.png");
+const mic = require("../assets/icons/mic.png");
 const coin = require("../assets/icons/coin.png");
 const next = require("../assets/icons/next.png");
 const highlight = require("../assets/icons/highlight.png");
@@ -69,8 +78,14 @@ const clock = require("../assets/icons/clock.png");
 const pin2 = require("../assets/icons/pin2.png");
 
 export default {
+    mic,
+    receipt,
+    google_marker,
+    calendar,
+    flag,
     cancel,
     no,
+    plus3,
     plus2,
     completed,
     store,
@@ -85,6 +100,7 @@ export default {
     logo_white,
     logo,
     building,
+    back2,
     back,
     car,
     cutlery,
@@ -128,6 +144,7 @@ export default {
     ko_logo,
     logo_big,
     weekly_group,
+    logo_search,
     coin,
     next,
     highlight,
@@ -135,4 +152,5 @@ export default {
     goback,
     clock,
     pin2,
+    pin3,
 }

@@ -20,7 +20,7 @@ function Menu(props) {
         <View>
             <TouchableOpacity
                 style={{ margin: 15 }}
-                onPress={() => navigation.navigate('MenuDetail',{setCartItems: props.setCartItems ,menu: props.menu, time:props.time, location:props.location, storeName:props.storeName})}
+                onPress={() => navigation.navigate('MenuDetail',{menu: props.menu, time:props.time, location:props.location, storeName:props.storeName})}
             >
                 <Text style={{ ...FONTS2.h2 }}>{props.menu.menuName}</Text>
                 <Text style={{ ...FONTS2.body2 }}>{props.menu.cost}원</Text>
