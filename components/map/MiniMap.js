@@ -33,7 +33,7 @@ const MiniMap = ({location, onPlaceChange, prevScreen}) => {
                 <View style={styles.markerFixed}>
                     <Image
                         style={[styles.marker, {tintColor: '#228be6'}]}
-                        source={icons.pin2}
+                        source={icons.pin3}
                     />
                 </View>
             </View>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     marker: {
         height: 50,
         width: 50,
-        opacity: 0.8,
+        opacity: 0.9,
     },
 });
 

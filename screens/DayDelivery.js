@@ -15,6 +15,8 @@ import GoogleMap from '../components/map/GoogleMap';
 import { currentLocation, getDaliyGroupData, getData } from '../utils/helper';
 import PlusButton from '../components/map/PlusButton';
 import axiosApiInstance from '../utils/axios';
+import GpsButton from '../components/map/GpsButton';
+import NewGroupButton from '../components/map/NewGroupButton';
 
 
 
@@ -120,14 +122,15 @@ const DayDelivery = ({ route, navigation }) => {
         <View style={{flex: 1}}>
           <GoogleMap initLocation={location} back="DayDelivery" today={today} groupData = {responseDailyData} storeData= {responseStoreData} />
           { renderDestinationHeader() }
+          {/* <GpsButton setLocation={setCurrentLocation} /> */}
+          <NewGroupButton initLocation={location} deliDate={today} storeData={responseStoreData} />
           <PlusButton
-            style={{ bottom: SIZES.height * 0.1, right:  SIZES.width * 0.1 }}
+            style={{ bottom: SIZES.height * 0.08, right:  SIZES.width * 0.08 }}
             setLocation={setCurrentLocation}
             initLocation={location}
             deliDate={today}
             storeData={responseStoreData}
           />
-          {/* <NewGroupButton initLocation={location} deliDate={today} storeData={responseStoreData} /> */}
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

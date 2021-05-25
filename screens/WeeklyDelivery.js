@@ -15,6 +15,8 @@ import GoogleMap from '../components/map/GoogleMap';
 import NewGroupButton from '../components/map/NewGroupButton';
 import GpsButton from '../components/map/GpsButton';
 import { currentLocation, getWeeklyGroupData, getData } from '../utils/helper';
+import PlusButton from '../components/map/PlusButton';
+import axiosApiInstance from '../utils/axios';
 
 const ItemsForCreateGroupDetailDayPicker = () => {
     const todayFullDate = new Date();
@@ -63,9 +65,9 @@ const WeeklyDelivery = ({ route, navigation }) => {
       // await getData('storeData').then( (response) =>
       //   setResponseStoreData(response)
       // );
-      // await axiosApiInstance.get("storeList").then((response) => {
-      //   console.log(response);
-      // });
+      await axiosApiInstance.get("storeList").then((response) => {
+        console.log(JSON.stringify(response.data.data[0],null, 4));
+      });
     };
 
     getAxiosData().then((data) => {
@@ -90,7 +92,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
     return (
       <TouchableOpacity
         style={styles.destinationHeader}
-        onPress={() => navigation.navigate('SearchPlace', {prevScreen: 'DayDelivery'})}
+        onPress={() => navigation.navigate('SearchPlace', {prevScreen: 'WeeklyDelivery'})}
       >
         <View style={styles.destinationHeaderView}>
           <View style={{position: 'absolute',  left: 15}}>
@@ -111,6 +113,16 @@ const WeeklyDelivery = ({ route, navigation }) => {
             }}>
             <Text numberOfLines={1} style={{...FONTS2.body4}}>{location.address}</Text>
           </View>
+          <View style={{position: 'absolute',  right: 10}}>
+            <Image
+              source={icons.mic}
+              style={{
+                width: 20,
+                height: 20,
+                marginRight: SIZES.padding,
+              }}
+            />
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -127,7 +139,14 @@ const WeeklyDelivery = ({ route, navigation }) => {
         <View style={{flex: 1}}>
           <GoogleMap initLocation={location} back="WeeklyDelivery" groupData={responseWeeklyData} storeData={responseStoreData} />
           { renderDestinationHeader() }
-          <GpsButton setLocation={setCurrentLocation} />
+          <PlusButton
+            style={{ bottom: SIZES.height * 0.08, right:  SIZES.width * 0.08 }}
+            setLocation={setCurrentLocation}
+            initLocation={location}
+            deliDate={null}
+            storeData={responseStoreData}
+            datePicker={[dayArrayKorFixed,dateDifference]}
+          />
           <NewGroupButton storeData={responseStoreData} initLocation={location} deliDate={null} datePicker={[dayArrayKorFixed,dateDifference]} />
         </View>
       ) : (

@@ -27,8 +27,8 @@ const App = () => {
 
   const checkLogin = () => {
     autoLogin(dispatch)
-      .then(() => setIsLoading(true) )
-      .catch(() => setIsLoading(true));
+      .then(() => setIsLoading(false) )
+      .catch(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -81,14 +81,14 @@ const App = () => {
   return (
     <>
         {isLoading ? (
+          <Splash />
+        ) : (
           <>
             <NavigationContainer>
               <RootNavigation />
             </NavigationContainer>
             <Toast ref={(ref) => Toast.setRef(ref)} />
           </>
-        ) : (
-          <Splash />
         )}
     </>
   );

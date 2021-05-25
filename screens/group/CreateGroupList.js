@@ -89,7 +89,7 @@ function CreateGroupList({ navigation, route }) {
                     }}
                     >
                         <View style={styles.location}>
-                            <Image source={icons.pin3} resizeMode='contain' style={{ width: 23, height: 23, marginRight: SIZES.base, opacity: 0.3 }} />
+                            <Image source={icons.pin2} resizeMode='contain' style={{ width: 23, height: 23, marginRight: SIZES.base, opacity: 0.3 }} />
                             <Text style={{ ...FONTS2.body3 }}>{deliveryPlace?.address}</Text>
                         </View>
                     </View>

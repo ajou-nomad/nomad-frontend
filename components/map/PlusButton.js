@@ -112,7 +112,7 @@ const PlusButton = (props) => {
                         style={{
                             width: 17,
                             height: 17,
-                            tintColor: COLORS.white,
+                            tintColor: '#1c7ed6',
                         }}
                     />
                 </Animated.View>
@@ -129,16 +129,16 @@ const styles = StyleSheet.create({
     },
     button: {
         position: 'absolute',
-        width: 50,
-        height: 50,
-        borderRadius: 50 / 2,
+        width: 45,
+        height: 45,
+        borderRadius: 15,
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.9,
         elevation: 5,
     },
     menu: {
-        backgroundColor: '#1c7ed6',
+        backgroundColor: 'white',
     },
     secondary: {
         width: 40,
