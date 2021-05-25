@@ -4,17 +4,20 @@
 
 import React, { useEffect, useContext } from 'react';
 
-import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { Svg, Path } from 'react-native-svg';
 import { moderateScale } from 'react-native-size-matters';
 
-import { animations, icons, COLORS, SIZES, FONTS2 } from "../../constants";
+import { animations, icons, COLORS, SIZES, FONTS2, images, FONTS3 } from "../../constants";
 import MyPageButton from '../../components/MyPageButton';
 import auth from '@react-native-firebase/auth';
 import { AuthContext } from '../../context/AuthContextProvider';
 import { logout } from '../../utils/helper';
+import Header from '../../components/layout/Header';
+import axiosApiInstance from '../../utils/axios';
+import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 
 
 
@@ -35,8 +38,61 @@ const MyPage = ({ navigation }) => {
               
     })
 
+    const getAxiosData = async () => {
 
-  }, [navigation]);
+      // 배달 그룹 생성
+      // await axiosApiInstance.post("/groupData", {
+      //   storeId: 5004, //빽다방 아주대점
+      //   time: '20:00',
+      //   date: '2021-05-19',
+      //   groupType: 'day',
+      //   maxValue: 3,
+      //   latitude: 37.284525,
+      //   longitude: 127.044113,
+      //   address: '수원시 원천동',
+      //   building: '팔달관',
+      //   menu: [
+      //     {
+      //       menuName: 'ㅋㄱㅂ',
+      //       cost: 858383,
+      //       quantity: 1,
+      //     },
+      //   ],
+      //   totalCost: 2000,
+      //   payMethod: 'card',
+      //   orderTime: '2021-05-15T15:30:00.480Z',
+      // }).then((response) => {
+      //   console.log('dddd');
+      //   console.log(JSON.stringify(response.data, null, 4));
+      //   // setResponseStoreData(response.data);
+      // });
+
+      // 배달 참여
+      // await axiosApiInstance.post('/participationGroup', {
+      //   groupId: 6007,
+      //   storeId: 5004,
+      //   menuName: 'ㅋㄱㅂ',
+      //   quantity: 2,
+      //   paymethod: 'card',
+      //   orderTime: '2021-05-15T15:45:00.480Z'
+      // }).then((res) => {
+      //   console.log('체크 ', JSON.stringify(res.data, null, 4));
+      // });
+
+      // 당일 그룹 생성된 그룹 (NULL값 때문에 에러뜸)
+      // await axiosApiInstance.get('/dailyGroupData')
+      //   .then((res) => {
+      //     console.log('체크:: ', JSON.stringify(res.data, null, 4));
+      //   }).catch(e => {
+      //     console.log('에러:: ', e);
+      //   });
+
+      
+    };
+
+    
+    getAxiosData();
+  }, []);
 
 
 
@@ -49,51 +105,41 @@ const MyPage = ({ navigation }) => {
   return (
 
     <ScrollView style={styles.container}>
-      <View style={styles.userInfoContainer}>
-        <View style={styles.userInfoHeader}>
-          <Image
-            source={icons.avatar}
-            style={{
-              width: 55,
-              height: 55,
-              marginRight: 10,
-            }}
-            resizeMode='contain'
-          />
-          <Text style={styles.largeFont}>{state.member.nickName}</Text>
+      <Header title="마이 페이지" small='true' />
+      
+      <View style={{ paddingVertical: 20, paddingHorizontal: 15 }}>
+        <View style={{ flexDirection: 'row' }}>
+          <ImageBackground source={icons.highlight} style={{ minWidth: SIZES.padding * 2.5, alignItems: 'center' }} imageStyle={{ tintColor: '#339af0', opacity: 0.5}}>
+            <Text style={{ ...FONTS2.h2, }}>스윙스</Text>
+          </ImageBackground>
+          {/* {state.member.nickName} */}
+          <Text style={{ ...FONTS2.body2, color: COLORS.darkgray }}>님 환영합니다.</Text>
         </View>
-        
       </View>
-
-      <View style={[styles.item, styles.itemOut]}>
-        <View style={[styles.balloon, { backgroundColor: '#1084ff' }]}>
-          <Text style={{ paddingTop: 5, color: 'white' }}>Hey! I am good. How are you?</Text>
-          <View
-            style={[
-              styles.arrowContainer,
-              styles.arrowRightContainer,
-            ]}
-          >
-            <Svg style={styles.arrowRight} width={moderateScale(15.5, 0.6)} height={moderateScale(17.5, 0.6)} viewBox="32.485 17.5 15.515 17.5" enable-background="new 32.485 17.5 15.515 17.5">
-              <Path
-                d="M48,35c-7-4-6-8.75-6-17.5C28,17.5,29,35,48,35z"
-                fill="#1084ff"
-                x="0"
-                y="0"
-              />
-            </Svg>
-          </View>
+      
+      <View style={styles.orderAndPointContainer}>
+        <View style={[styles.orderAndPointBox]}>
+          <Text style={{ ...FONTS2.body3 }}>최근 주문</Text>
+          <Text style={{ ...FONTS2.h2, color: '#339af0' }}>0</Text>
+        </View>
+        <View style={styles.orderAndPointBox}>
+          <Text style={{ ...FONTS2.body3 }}>포인트</Text>
+          <Text style={{ ...FONTS2.h2, color: '#339af0' }}>0</Text>
         </View>
       </View>
 
-
-
-
+      <View style={{ height: SIZES.padding * 8, backgroundColor: 'skyblue', flexDirection: 'row' }}>
+        <Image source={images.banner} resizeMode='contain' style={{ width: 180, height: SIZES.padding * 8, }} />
+        <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+          <Image source={icons.ko_logo} resizeMode='contain' style={{ width: 130, height: 40, }} />
+          <Text style={{ ...FONTS3.h5, marginLeft: 20 }}>로 먹고 싶은 것만 주문하세요!</Text>
+        </View>
+      </View>
 
       <MyPageButton title='채팅방' img={icons.chat} onPress={() => navigation.navigate('ChatNavigation')} />
       <MyPageButton title='리뷰 관리' img={icons.review} onPress={() => navigation.navigate('ReviewPage')} />
       <MyPageButton title='찜한 목록' img={icons.like2} onPress={() => navigation.navigate('LikeList')} />
-      <MyPageButton title='포인트' img={icons.point} onPress={() => navigation.navigate('MyPointPage')} />
+      <MyPageButton title='포인트 충전' img={icons.coin} onPress={() => navigation.navigate('MyPointPage')} />
       <MyPageButton title='정보수정' img={icons.pencil} />
       <MyPageButton title='로그아웃' img={icons.logout} onPress={signOutGoogle} />
       
@@ -122,9 +168,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomColor: '#adb5bd',
   },
-  userInfoBody: {
-
-  },
   loginButton: {
     alignItems: 'center',
     backgroundColor: '#3897f1',
@@ -134,50 +177,19 @@ const styles = StyleSheet.create({
   largeFont: {
     ...FONTS2.h2,
   },
-  item: {
-       marginVertical: moderateScale(7, 2),
-       flexDirection: 'row'
-    },
-    itemIn: {
-        marginLeft: 20
-    },
-    itemOut: {
-       alignSelf: 'flex-end',
-       marginRight: 20
-    },
-    balloon: {
-       maxWidth: moderateScale(250, 2),
-       paddingHorizontal: moderateScale(10, 2),
-       paddingTop: moderateScale(5, 2),
-       paddingBottom: moderateScale(7, 2),
-       borderRadius: 20,
-    },
-    arrowContainer: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: -1,
-        flex: 1
-    },
-    arrowLeftContainer: {
-        justifyContent: 'flex-end',
-        alignItems: 'flex-start'
-    },
-
-    arrowRightContainer: {
-        justifyContent: 'flex-end',
-        alignItems: 'flex-end',
-    },
-
-    arrowLeft: {
-        left: moderateScale(-6, 0.5),
-    },
-
-    arrowRight: {
-        right:moderateScale(-6, 0.5),
-    }
+  orderAndPointContainer: {
+    height: SIZES.padding * 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: SIZES.padding * 5,
+    paddingTop: 5,
+    borderTopWidth: 0.3,
+    borderTopColor: '#ced4da',
+  },
+  orderAndPointBox: {
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
 });
 
 export default MyPage;

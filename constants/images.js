@@ -33,6 +33,7 @@ const group = require('../assets/images/group.jpg');
 const people2 = require('../assets/images/people2.jpg');
 const main = require('../assets/images/main.jpg');
 const weeklygroup = require('../assets/images/weeklygroup.jpg');
+const banner = require('../assets/images/banner.png');
 
 const bbacks = require('../assets/images/bbacks.gif');
 const starbucks = require('../assets/images/starbucks.jpg');
@@ -73,6 +74,7 @@ export default {
   people2,
   main,
   weeklygroup,
+  banner,
 
   store_logo,
   bbacks,

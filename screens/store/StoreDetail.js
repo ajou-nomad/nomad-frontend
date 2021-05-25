@@ -3,7 +3,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useState } from 'react';
+import React, { useState, useRef, } from 'react';
 import {
     StyleSheet,
     View,
@@ -12,7 +12,7 @@ import {
     useWindowDimensions,
     ScrollView,
     SafeAreaView,
-    TouchableOpacity,
+    Animated,
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
@@ -85,55 +85,57 @@ function StoreDetail({route}) {
         { key: 'third', title: '리뷰' },
     ]);
 
-
+    const offset = useRef(new Animated.Value(0)).current;
 
     const renderTabBar = props => (
         <TabBar
             {...props}
             indicatorStyle={{
-                backgroundColor: COLORS.tertiary,
-                height: '80%',
-                borderRadius: 20,
+                // backgroundColor: '#339af0',
+                // opacity: 0.6,
+                backgroundColor: COLORS.black,
             }}
-            style={{ backgroundColor: COLORS.white }}
+            style={{ backgroundColor: COLORS.white, elevation: 0, borderBottomWidth: 0.3, }}
             inactiveColor={COLORS.darkgray}
             activeColor={COLORS.black}
-            labelStyle={{ ...FONTS2.body2 }}
+            labelStyle={{ ...FONTS2.body3 }}
+            pressColor='white'
+            // ref={}
         />
     );
 
     const renderHeader = () => {
         return (
-            <View
+            <Animated.View
                 style={{
                     backgroundColor: COLORS.white,
                     paddingTop: 30,
                 }}
             >
-                <View style={styles.headerLogo}>
+                <View style={styles.headerContainer}>
                     <Text style={{ ...FONTS2.h1 }}>{storeInfo.storeName}</Text>
-                    <View style={{ flexDirection: 'row', marginTop: 3, alignSelf: 'center' }}>
+                    <View style={{ flexDirection: 'row', marginTop: 10, alignSelf: 'center', }}>
                         <Image
                             source={icons.star}
                             resizeMode="contain"
                             style={{
-                                width: 23,
-                                height: 23,
+                                width: 20,
+                                height: 20,
                                 marginRight: 5,
                             }}
                         />
-                        <Text style={{ ...FONTS2.body2 }}>{storeInfo.rate} / 5.0</Text>
-                        <Text style={{ ...FONTS2.body2 }}>(50+)</Text>
+                        <Text style={{ ...FONTS2.body3 }}>{storeInfo.rate} / 5.0</Text>
+                        <Text style={{ ...FONTS2.body3 }}>(50+)</Text>
                     </View>
                 </View>
 
                 <View style={{ width: '60%', backgroundColor: 'white', alignSelf: 'center', marginBottom: 10 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ ...FONTS2.body2 }}>배달팁</Text>
-                        <Text style={{ ...FONTS2.body2 }}>{storeInfo.deliveryTip}원</Text>
+                        <Text style={{ ...FONTS2.body3 }}>배달팁</Text>
+                        <Text style={{ ...FONTS2.body3 }}>{storeInfo.deliveryTip}원</Text>
                     </View>
                 </View>
-            </View>
+            </Animated.View>
         );
     };
 
@@ -144,10 +146,8 @@ function StoreDetail({route}) {
             <View
                 style={{
                     flex: 2,
-                    backgroundColor: COLORS.secondary,
                 }}
             >
-                {/* TabView 들어갈 곳 */}
                 <TabView
                     navigationState={{ index, routes }}
                     renderScene={renderScene}
@@ -166,13 +166,23 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    headerLogo: {
+    headerContainer: {
         alignSelf: 'center',
         padding: 15,
-        borderWidth: 1,
+        // borderWidth: 1,
+        backgroundColor: "#ffffff",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 20,
+        elevation: 5,
         borderColor: '#adb5bd',
-        borderBottomRightRadius: 20,
-        marginBottom: 10,
+        // borderBottomRightRadius: 20,
+        borderRadius: 10,
+        marginBottom: 15,
         width: responsiveWidth(70),
         alignItems: 'center',
     },

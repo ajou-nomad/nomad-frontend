@@ -7,6 +7,8 @@ import {FONTS2, SIZES, COLORS, icons} from '../../constants';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { launchImageLibrary } from 'react-native-image-picker';
 
+import axiosApiInstance from '../../utils/axios';
+
 const AddMenu = ({modalVisible, closeModal, addMenu}) => {
 
     const [menuName, setMenuName] = useState('');
@@ -25,6 +27,7 @@ const AddMenu = ({modalVisible, closeModal, addMenu}) => {
         launchImageLibrary({}, (res) => {
             const source = { uri: res.uri };
             setUploadImage(res.uri);
+            console.log(res.uri);
         })
     }
 
@@ -126,10 +129,12 @@ const AddMenu = ({modalVisible, closeModal, addMenu}) => {
                                         name: menuName,
                                         price: menuPrice,
                                         description: menuDescription,
+                                        imageUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fhollys.jpg?alt=media&token=1dd864d1-1446-4707-a9e4-6117b28efd72', //uploadImage
                                     });
                                     resetMenuInfo();
                                     closeModal();
                                     addMenu(menuInfo);
+
                                 }}
                             >
                                 <View style={styles.buttonView}>
