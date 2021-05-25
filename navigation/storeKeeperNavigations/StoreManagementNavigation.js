@@ -17,11 +17,11 @@ const StoreManagementNavigation = ({ route, navigation }) => {
             }}
             initialRouteName={'StoreManagementMain'}
         >
-        <StoreManagementStack.Screen name="StoreManagementMain" component={StoreManagementMain} />
-        <StoreManagementStack.Screen name="StoreManagementDetail" component={StoreManagementDetail} />
-        <StoreManagementStack.Screen name="StoreManagementMenu" component={StoreManagementMenu} />
-        <StoreManagementStack.Screen name="StoreManagementStore" component={StoreManagementStore} />
-        <StoreManagementStack.Screen name="StoreManagementReview" component={StoreManagementReview} />
+            <StoreManagementStack.Screen name="StoreManagementMain" component={StoreManagementMain} />
+            <StoreManagementStack.Screen name="StoreManagementDetail" component={StoreManagementDetail} />
+            <StoreManagementStack.Screen name="StoreManagementMenu" component={StoreManagementMenu} />
+            <StoreManagementStack.Screen name="StoreManagementStore" component={StoreManagementStore} />
+            <StoreManagementStack.Screen name="StoreManagementReview" component={StoreManagementReview} />
         </StoreManagementStack.Navigator>
     );
 };

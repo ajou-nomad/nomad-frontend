@@ -2,16 +2,27 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
-import { COLORS, FONTS2 } from '../../constants';
+import { COLORS, FONTS2, SIZES } from '../../constants';
 
 import Header from '../layout/Header';
+import StoreButton from '../StoreButton';
 
 const OrderDetailItem = ({ route }) => {
-    const status = route.params.status;
-    const { menu, orderStatus, place, time } = route.params.data;
+    console.log(JSON.stringify(route.params.item, 4, null));
+
+    const { item } = route.params;
+
+    const renderItem = ({ item }) => {
+        return (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingBottom: SIZES.base * 2 }}>
+                <Text style={{ ...FONTS2.h2 }}>{item.menuName} {item.quantity}개</Text>
+                <Text style={{ ...FONTS2.h2 }}>{(item.cost * item.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Text>
+            </View>
+        );
+    };
 
     return (
         <View style={styles.container}>
@@ -19,37 +30,37 @@ const OrderDetailItem = ({ route }) => {
 
             <View style={[styles.itemContainer, { marginTop: 20, }]}>
                 <View>
-                    <Text style={{ ...FONTS2.body2 }}>{time} 주문</Text>
-                    <Text style={{ ...FONTS2.h2 }}>{place}</Text>
+                    <Text style={{ ...FONTS2.body2 }}>{item.date} {item.time} 주문</Text>
+                    <Text style={{ ...FONTS2.h2, color: COLORS.darkgray }}>{item.address} {item.buildingName}</Text>
                 </View>
 
-                {!status ? (
-                    <TouchableOpacity
-                        style={[styles.orderButton, { backgroundColor: '#CED4DA' }]}
-                        onPress={() => alert('백엔드에 주문상태 업데이트 및 버튼 색깔 바꾸기')}
-                    >
-                        <Text style={{ ...FONTS2.h3, color: COLORS.white }}>접수하기</Text>
-                    </TouchableOpacity>
+                {item.orderStatus === '모집 완료' ? (
+                    <StoreButton title='접수하기' color='#CED4DA' fontColor='white'/>
                 ) : (
-                    <TouchableOpacity
-                        style={styles.orderButton}
-                    >
-                        <Text style={{ ...FONTS2.h3, color: COLORS.white }}>접수완료</Text>
-                    </TouchableOpacity>
+                    <StoreButton title='접수완료' color='#364FC7' fontColor='white'/>
                 )}
             </View>
 
             <View style={{ padding: 20 }}>
-                <Text style={{ color: 'red', ...FONTS2.body2 }}>점주에게 보내는 요청사항</Text>
-
-                {!status ? (null) : (
-                    <View style={{ width: responsiveWidth(90), backgroundColor: '#F1F3F5', padding: 30, borderRadius: 8, }}>
-                        <Text>ㅇㄴㄹ</Text>
+                <Text style={{ color: 'red', ...FONTS2.body2, marginBottom: SIZES.base * 3 }}>점주에게 보내는 요청사항있을 경우에만 표시</Text>
+                
+                <FlatList
+                    data={item.menu}
+                    keyExtractor={item => item.menuId.toString()}
+                    renderItem={renderItem}
+                />
+                {item.orderStatus === '접수 완료' ? (
+                    <View>
+                        <View style={styles.cookStatusContainer}>
+                            <View style={{ alignItems: 'center' }}>
+                                <Text style={{ ...FONTS2.body3 }}>남은 준비 시간</Text>
+                                <Text style={{ ...FONTS2.h1 }}>27분</Text>
+                            </View>
+                            <StoreButton title='조리 완료' color='#CED4DA' fontColor='white' onPress={() => alert('DB에 조리 완료되었다고 post')}/>
+                        </View>
                     </View>
-                )}
+                ) : (null)}
             </View>
-
-
         </View>
     );
 };
@@ -65,15 +76,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    orderButton: {
-        justifyContent: 'center',
-        backgroundColor: '#364FC7',
-        paddingHorizontal: 20,
-        marginTop: 10,
+    cookStatusContainer: {
+        flexDirection: 'row',
+        width: responsiveWidth(90),
+        backgroundColor: '#F1F3F5',
+        padding: 20,
         borderRadius: 8,
-        height: 35,
-        borderBottomRightRadius: 25,
-    },
+        justifyContent: 'space-between',
+        marginTop: SIZES.base * 2
+    }
 });
 
 export default OrderDetailItem;

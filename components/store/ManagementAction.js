@@ -31,16 +31,16 @@ export default function ManagementAction(props) {
                 ActionName = '리뷰 답변'
                 break;
         }
-        return (
-            <TouchableOpacity
-                onPress={()=>navigation.navigate(props.ActionType,{back:'StoreManagementDetail'})}
-            >
-                <View style={{borderRadius:15, borderColor:'#000', borderWidth:3, alignItems:'center', marginVertical:10, width:'75%', alignSelf:'center',}}>
-                    <Text style={{fontSize:34,fontWeight: 'bold',}}>
-                        {ActionName}
-                    </Text>
-                </View>
-            </TouchableOpacity>
+    return (
+        <TouchableOpacity
+            onPress={() => navigation.navigate(props.ActionType, { back: 'StoreManagementDetail' })}
+        >
+            <View style={{ borderRadius: 15, borderColor: '#000', borderWidth: 3, alignItems: 'center', marginVertical: 10, width: '75%', alignSelf: 'center', }}>
+                <Text style={{ fontSize: 34, fontWeight: 'bold', }}>
+                    {ActionName}
+                </Text>
+            </View>
+        </TouchableOpacity>
 
-        );
-}
+    );
+};

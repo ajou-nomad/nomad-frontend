@@ -84,15 +84,9 @@ const RequestList = () => {
             longitude: 127.04435940777411,
             address: '수원시 원천동',
             buildingName: '성호관',
-            orderStatus: '모집 완료',
+            orderStatus: '접수 완료',
         },
     ];
-
-    const renderItem = ({ item }) => {
-        return (
-            <OrderItem item={item} />
-        );
-    };
 
     return (
         <View style={styles.container}>
@@ -108,7 +102,11 @@ const RequestList = () => {
                 <Text style={{ ...FONTS2.body1, color: '#707070', alignSelf: 'center' }}> 아직 주문이 없습니다.</Text>
             </View> */}
 
-            <FlatList data={data} keyExtractor={item => item.orderId.toString()} renderItem={renderItem}/>
+            <FlatList
+                data={data}
+                keyExtractor={item => item.orderId.toString()}
+                renderItem={({ item }) => <OrderItem item={item} />}
+            />
         </View>
     );
 };

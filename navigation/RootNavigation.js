@@ -27,7 +27,6 @@ import RegisterStoreDetail from '../screens/storeKeeperScreens/register/Register
 import RegisterMenuDetail from '../screens/storeKeeperScreens/register/RegisterMenuDetail';
 import Receipt from '../screens/Receipt';
 import CreateReview from '../screens/review/CreateReview';
-import OrderDetailItem from '../components/item/OrderDetailItem';
 
 import CarrierMain from '../screens/carrier/CarrierMain';
 
@@ -142,7 +141,6 @@ const storeKeeperStack = () => {
             initialRouteName={'StoreTabs'}
             >
                 <Stack.Screen name="StoreTabs" component={StoreTabs} />
-                <Stack.Screen name="OrderDetailItem" component={OrderDetailItem} />
             </Stack.Navigator>
         );
     } else {
