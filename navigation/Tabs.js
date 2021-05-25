@@ -3,7 +3,7 @@
 /* eslint-disable no-undef */
 import React, {useState, useEffect} from 'react';
 import {Image, TouchableOpacity, Keyboard, Platform} from 'react-native';
-import {COLORS, FONTS2, icons, SIZES} from '../constants';
+import {COLORS, FONTS2, FONTS, icons, SIZES} from '../constants';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Home, WeeklyDelivery, OrderDetails} from '../screens/index';
 import DayNavigation from './DayNavigation';
@@ -80,7 +80,7 @@ const Tabs = ({route}) => {
         showLabel: true,
         labelPosition: 'below-icon',
         labelStyle: {
-          ...FONTS2.body6,
+          ...FONTS.body6,
         },
         activeTintColor: '#228be6',
 
@@ -100,7 +100,7 @@ const Tabs = ({route}) => {
               source={icons.home}
               resizeMode="contain"
               style={{
-                top: 3,
+                top: 4,
                 width: 22,
                 height: 22,
                 tintColor: focused ? '#228be6' : COLORS.secondary,

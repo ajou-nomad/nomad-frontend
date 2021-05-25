@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import React, { useState } from 'react';
-import { TouchableOpacity, Image, Alert, View, Text, ImageBackground } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity, Image, View, Text, ImageBackground, Platform, Keyboard } from 'react-native';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {COLORS, FONTS, FONTS2, icons, SIZES} from '../../constants';
@@ -11,8 +11,27 @@ import { GOOGLE_API_KEY } from '@env';
 
 const SearchPlace = ({route, navigation}) => {
 
-    const [place, setPlace] = useState(undefined);
     const [isSearch, setIsSearch] = useState(false);
+
+    //키보드에 따라 show & hide
+    useEffect(() => {
+        let keyboardEventListeners;
+        if (Platform.OS === 'android') {
+            keyboardEventListeners = [
+                Keyboard.addListener('keyboardDidShow', () => setIsSearch(true)),
+                Keyboard.addListener('keyboardDidHide', () => setIsSearch(false)),
+            ];
+        }
+
+        return () => {
+            if (Platform.OS === 'android') {
+                keyboardEventListeners &&
+                keyboardEventListeners.forEach((eventListener) =>
+                    eventListener.remove(),
+                );
+            }
+        };
+    }, []);
 
 
     const reftButton = () => {
@@ -21,42 +40,23 @@ const SearchPlace = ({route, navigation}) => {
                 style={{
                     paddingHorizontal: SIZES.padding,
                     justifyContent: 'center',
+                    alignItems: 'center',
                 }}
                 onPress={() => navigation.goBack()}
             >
-                <Image
-                    source={icons.back}
-                    resizeMode = "contain"
-                    style= {{
-                        width: 17,
-                        height: 17,
-                    }}
-                />
+                <View style={{flex: 1, alignSelf: 'center', justifyContent: 'center'}}>
+                    <Image
+                        source={icons.back2}
+                        resizeMode = "contain"
+                        style= {{
+                            width: 17,
+                            height: 17,
+                        }}
+                    />
+                </View>
             </TouchableOpacity>
         );
     };
-
-    const rightButton = () => {
-        return (
-            <TouchableOpacity
-                style={{
-                    paddingHorizontal: SIZES.padding,
-                    justifyContent: 'center',
-                }}
-                onPress={() => Alert.alert('장소나 주소를 입력해주세요.')}
-            >
-                <Image
-                    source={icons.search}
-                    resizeMode="contain"
-                    style= {{
-                        width: 20,
-                        height: 20,
-                    }}
-                />
-            </TouchableOpacity>
-        );
-    };
-
 
     return (
         <View style={{flex: 1, backgroundColor: 'white' }}>
@@ -76,7 +76,7 @@ const SearchPlace = ({route, navigation}) => {
                                 merge: true,
                             });
                         });
-                        // setPlace(data.description);
+
                     }}
                     query={{
                         key: GOOGLE_API_KEY,
@@ -85,12 +85,12 @@ const SearchPlace = ({route, navigation}) => {
                     }}
                     renderLeftButton={reftButton}
                     // renderRightButton={rightButton}
-                    textInputProps={{ 
-                        onFocus: () => setIsSearch(true),
-                    }}
+                    // textInputProps={{
+                    //     onFocus: () => setIsSearch(true),
+                    // }}
                     styles={{
                         textInputContainer: {
-                            marginTop: 10,
+                            marginTop: SIZES.height * 0.03,
                             marginRight: SIZES.padding,
                             alignSelf: 'center',
                             width: '95%',
@@ -120,9 +120,9 @@ const SearchPlace = ({route, navigation}) => {
                                 width: 350,
                             }}
                     />
-                    {/* <Text style={{...FONTS2.body2}}>
+                    <Text style={{...FONTS.h2}}>
                         장소를 검색해주세요.
-                    </Text> */}
+                    </Text>
                 </View>
             )}
         </View>

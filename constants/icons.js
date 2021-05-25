@@ -2,6 +2,7 @@
 /* eslint-disable prettier/prettier */
 
 const back = require("../assets/icons/back.png");
+const back2 = require("../assets/icons/back2.png");
 const car = require("../assets/icons/car.png");
 const cutlery = require("../assets/icons/cutlery.png");
 const donut = require("../assets/icons/donut.png");
@@ -92,6 +93,7 @@ export default {
     logo_white,
     logo,
     building,
+    back2,
     back,
     car,
     cutlery,

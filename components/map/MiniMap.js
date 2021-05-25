@@ -31,7 +31,10 @@ const MiniMap = ({location, onPlaceChange, prevScreen}) => {
                     }}
                 />
                 <View style={styles.markerFixed}>
-                    <Image style={styles.marker} source={icons.pin2} />
+                    <Image
+                        style={[styles.marker, {tintColor: '#228be6'}]}
+                        source={icons.pin2}
+                    />
                 </View>
             </View>
 

@@ -9,14 +9,17 @@ import {
     Text,
     SafeAreaView,
     ScrollView,
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import StoreItem from '../../components/item/StoreItem';
 import Header from '../../components/layout/Header';
-import { COLORS, FONTS2, SIZES } from '../../constants';
+import { COLORS, FONTS2, SIZES, icons, FONTS } from '../../constants';
 
 import { responsiveWidth } from 'react-native-responsive-dimensions';
 import MiniMap from '../../components/map/MiniMap';
 import SelectButton from '../../components/layout/SelectButton';
+import BackButton from '../../components/layout/BackButton';
 
 function CreateGroupList({navigation, route}) {
     //route.params.initLocation.buildingName존재 시 배달장소를 선택할 필요x
@@ -25,26 +28,41 @@ function CreateGroupList({navigation, route}) {
     const deliDate = route.params.deliDate;
     const datePicker = route.params.datePicker;
     const storeData = route.params.storeData;
-    
+
     const onPlaceChange = (region) => {
         setDeliveryPlace(region);
     };
 
+    const renderDestinationHeader = () => {
+        return (
+          <TouchableOpacity
+            disable
+            style={styles.destinationHeader}
+          >
+            <View style={styles.destinationHeaderView}>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  marginHorizontal:  30,
+                }}>
+                <Text style={{...FONTS2.body5}}>{'배달 받을 위치를 설정하세요.'}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        );
+      };
+
 
     const chooseDeliveryPlace = () => {
         return (
-            <View style={{ flex: 1, alignItems: 'center' }}>
-                <Text style={{ ...FONTS2.body2, color: '#495057', marginVertical: SIZES.height * 0.02 }}>배달 장소를 선택해주세요.</Text>
-                <View
-                    style={{
-                        width: SIZES.width * 0.9,
-                        height: SIZES.height * 0.6,
-                        borderColor: 'black',
-                        borderWidth: 0.4,
-                    }}
-                >
-                    <MiniMap location={route.params.initLocation} onPlaceChange={onPlaceChange} />
-                </View>
+            <View style={{ flex: 1 }}>
+                <MiniMap location={route.params.initLocation} onPlaceChange={onPlaceChange} />
+                {/* Header */}
+                { renderDestinationHeader() }
+                {/* back button */}
+                <BackButton imageStyle={{ opacity: 0.8, height: 17, width: 17}} position={{left: SIZES.width * 0.04, top: SIZES.height * 0.03}} />
+                {/* selectButton */}
                 <SelectButton navigation={navigation} deliveryPlace={deliveryPlace} setDeliveryPlace={setDeliveryPlace} setIsSelected={setIsSelected} />
             </View>
         );
@@ -53,6 +71,7 @@ function CreateGroupList({navigation, route}) {
     const haveLocation = () => {
         return (
             <View style={{ flex: 4, backgroundColor: 'white' }}>
+                <Header title="배달 그룹 생성" small="true" />
                 <View style={{ flex: 0.8, alignItems: 'center', justifyContent: 'center' }}>
                     <View style={{
                         alignItems: 'center',
@@ -85,9 +104,6 @@ function CreateGroupList({navigation, route}) {
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* Header */}
-            <Header title="배달 그룹 생성" small="true" />
-
             {/* Body */}
             { isSelected ? haveLocation() : chooseDeliveryPlace()  }
         </SafeAreaView>
@@ -105,6 +121,26 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         borderRadius: 20,
     },
+    destinationHeader: {
+        position: 'absolute',
+        top: SIZES.height * 0.05,
+        left: 0,
+        right: 0,
+        height: 50,
+        alignItems: 'center',
+        flex: 1,
+      },
+      destinationHeaderView: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: SIZES.width * 0.65,
+        paddingVertical: SIZES.padding * 0.5,
+        borderRadius: SIZES.radius,
+        backgroundColor: COLORS.white,
+        elevation: 5,
+        opacity: 0.9,
+      },
 });
 
 export default CreateGroupList;
