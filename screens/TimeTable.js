@@ -129,7 +129,7 @@ import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
    const todayDay = todayDate.getDay();
    const dayArrayEng = ['monday','tuesday','wednesday','thursday','friday'];
    const dayArrayKor = ['월','화','수','목','금'];
-   const dateDifference = [1,2,3,4];
+   const dateDifference = [0,1,2,3,4];
    const lastIndex = dateDifference.length - 1;
 
    let todayDayIndex = (todayDay % 6) - 1;
@@ -149,7 +149,7 @@ import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
         <TouchableOpacity
           onPress={() => {
             setDay(dayArrayEngFixed[0]);
-            setGroupDate(setGroupDateValue(0));
+            setGroupDate(setGroupDateValue(dateDifference[0]));
           }}
           style={styles.headerButton}
           >
@@ -158,7 +158,7 @@ import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
         <TouchableOpacity
           onPress={() => {
             setDay(dayArrayEngFixed[1]);
-            setGroupDate(setGroupDateValue(dateDifference[0]));
+            setGroupDate(setGroupDateValue(dateDifference[1]));
           }}
           style={styles.headerButton}
           >
@@ -167,7 +167,7 @@ import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
         <TouchableOpacity
           onPress={() => {
             setDay(dayArrayEngFixed[2]);
-            setGroupDate(setGroupDateValue(dateDifference[1]));
+            setGroupDate(setGroupDateValue(dateDifference[2]));
           }}
           style={styles.headerButton}
           >
@@ -176,7 +176,7 @@ import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
         <TouchableOpacity
           onPress={() => {
             setDay(dayArrayEngFixed[3]);
-            setGroupDate(setGroupDateValue(dateDifference[2]));
+            setGroupDate(setGroupDateValue(dateDifference[3]));
           }}
           style={styles.headerButton}
           >
@@ -185,7 +185,7 @@ import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
         <TouchableOpacity
           onPress={() => {
             setDay(dayArrayEngFixed[4]);
-            setGroupDate(setGroupDateValue(dateDifference[3]));
+            setGroupDate(setGroupDateValue(dateDifference[4]));
           }}
           style={styles.headerButton}
           >
@@ -220,7 +220,7 @@ import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
        {Header()}
        {DayButtons()}
        {ListOfWeeklyGroup()}
-       <NewGroupButton storeData= {storeData} initLocation={location} deliDate={null} items={{datePicker: [dayArrayKorFixed,dateDifference]}} />
+       <NewGroupButton storeData= {storeData} initLocation={location} deliDate={null} datePicker= {[dayArrayKorFixed,dateDifference]} />
      </View>
    );
  }

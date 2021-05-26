@@ -12,14 +12,16 @@ import {
     ScrollView,
     ProgressViewIOSComponent,
     TouchableOpacity,
+    Pressable
 } from 'react-native';
 
 import Counter from 'react-native-counters';
 import DatePicker from 'react-native-date-picker';
 
-import { FONTS2 } from '../../constants';
+import { FONTS, FONTS2, SIZES } from '../../constants';
 import Header from '../../components/layout/Header';
 import BottomButton from '../../components/layout/BottomButton';
+
 
 function CreateGroupDetail({ navigation, route: { params } }) {
 
@@ -50,49 +52,60 @@ function CreateGroupDetail({ navigation, route: { params } }) {
         return JSON.stringify(d.toJSON()).substr(1,10);
    };
 
+    const setGroupDayValue = (dateDifference) => {
+      const d = new Date(todayForWeekly);
+      d.setDate(d.getDate() + dateDifference);
+
+      return ('00' + JSON.stringify(d.getDate())).slice(-2);
+    };
+
+   const weeklyDate = [
+     setGroupDayValue(dateDifference[0]),
+     setGroupDayValue(dateDifference[1]),
+     setGroupDayValue(dateDifference[2]),
+     setGroupDayValue(dateDifference[3]),
+     setGroupDayValue(dateDifference[4]),
+   ];
+
+
+   const initalSelected = [false, false, false, false, false];
+   const [selected, setSelected] = useState(initalSelected);
+
     const DayPicking = () =>{
         return (
-          <View style={styles.headerButtons}>
-            <TouchableOpacity
-              onPress={() => {
-                setGroupDate(setGroupDateValue(0));
-              }}
-              style={styles.headerButton}
-              >
-              <Text style={styles.headerButtonText}>{dayArrayKorFixed[0]}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setGroupDate(setGroupDateValue(dateDifference[0]));
-              }}
-              style={styles.headerButton}
-              >
-              <Text style={styles.headerButtonText}>{dayArrayKorFixed[1]}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setGroupDate(setGroupDateValue(dateDifference[1]));
-              }}
-              style={styles.headerButton}
-              >
-              <Text style={styles.headerButtonText}>{dayArrayKorFixed[2]}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setGroupDate(setGroupDateValue(dateDifference[2]));
-              }}
-              style={styles.headerButton}
-              >
-              <Text style={styles.headerButtonText}>{dayArrayKorFixed[3]}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setGroupDate(setGroupDateValue(dateDifference[3]));
-              }}
-              style={styles.headerButton}
-              >
-              <Text style={styles.headerButtonText}>{dayArrayKorFixed[4]}</Text>
-            </TouchableOpacity>
+          <View style={styles.calendarView}>
+            {/* 날짜 버튼 */}
+            {weeklyDate.map( (item, index) => (
+              <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{color: 'black', ...FONTS2.body6, fontWeight: 'bold'}}>{dayArrayKorFixed[index]}</Text>
+                <Pressable
+                  key={index}
+                  onPress={() => {
+                    setSelected([
+                      ...initalSelected.slice(0, index),
+                      !selected[index],
+                      ...initalSelected.slice(index + 1),
+                    ]);
+                    setGroupDate(setGroupDateValue(dateDifference[index]));
+                  }}
+                  style={ [
+                    {
+                      backgroundColor: selected[index]
+                        ? '#6E99F0'
+                        : 'white',
+                        // opacity: selected[index]
+                        // ? 0.9
+                        // : 0.5,
+                    },
+                    styles.dateButton,
+                  ]}
+                  >
+                  <View style={{ width: 50, height: 50, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{color: selected[index] ? 'white' : 'black', ...FONTS2.h5}}>{weeklyDate[index]}</Text>
+                  </View>
+                </Pressable>
+              </View>
+            ))}
           </View>
         );
       };
@@ -124,7 +137,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
                         {
                             !params.deliDate ?
                             <View style={{ marginVertical: 15,}}>
-                                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>날짜</Text>
+                                <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>날짜</Text>
                                 {DayPicking()}
                             </View>
                             :
@@ -134,8 +147,8 @@ function CreateGroupDetail({ navigation, route: { params } }) {
 
                         {
                             !params.time ?
-                            <View style={{ marginVertical: 15,}}>
-                                <Text style={{ ...FONTS2.h2, fontWeight: 'bold', }}>시간</Text>
+                            <View style={{ marginBottom: 10,}}>
+                                <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>시간</Text>
                                 <DatePicker date={date} onDateChange={(data)=>{data.setHours(data.getHours()+9);setTime(data);}} mode="time" minuteInterval={5}/>
                             </View>
                             :
@@ -181,22 +194,16 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
-    headerButtons: {
+    calendarView: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent:'center',
-      marginBottom: 5,
+      marginVertical: SIZES.height * 0.02,
     },
-    headerButton: {
+    dateButton: {
       marginHorizontal: 10,
-      padding: 5,
-      borderColor: '#e5e5e5',
-      borderWidth: 5,
-      borderRadius: 25,
-    },
-    headerButtonText:{
-      fontSize: 14,
-      fontWeight: 'bold',
+      marginTop: 5,
+      borderRadius: 50,
     },
 });
 
