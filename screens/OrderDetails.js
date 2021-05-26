@@ -105,7 +105,7 @@ const OrderDetails = () => {
         };
         
         
-    const date = new Date(item.orderTime);
+        const date = new Date(item.orderTime);
         return (
             <View style={styles.storeContainer}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30 }}>
@@ -151,7 +151,7 @@ const OrderDetails = () => {
     return (
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />
-            <View style={{ padding: 15 }}>
+            <View style={{ padding: 15, flex: 1 }}>
                 <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={renderItem} inverted />
             </View>
         </View>
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white,
     },
     storeContainer: {
+        flex: 1,
         marginVertical: 10,
         width: responsiveScreenWidth(90),
         // backgroundColor: '#f1f3f5',

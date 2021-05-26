@@ -96,7 +96,7 @@ export const autoLogin = async (dispatch) => {
             });
     } else {
         console.log('현재 로그인한 유저가 없음.');
-        return Promise.reject('Not Found User');
+        // return Promise.reject('Not Found User');
     }
 };
 
