@@ -48,7 +48,7 @@ export default function WeeklyGroupListParent(props) {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 onPress={() => navigation.navigate('WeeklyGroupListChild', {
                     date: props.date,
                     time: props.time,
@@ -94,7 +94,7 @@ export default function WeeklyGroupListParent(props) {
                     </View>
                     
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     );
 }

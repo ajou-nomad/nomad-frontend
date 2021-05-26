@@ -16,13 +16,18 @@ import Receipt from '../screens/Receipt';
 LogBox.ignoreAllLogs();
 
 import { getData } from '../utils/helper';
+import axiosApiInstance from '../utils/axios';
 
 const OrderDetails = () => {
     const navigation = useNavigation();
     const [orderData, setOrderData] = useState(null);
 
     useEffect(() => {
-        getData('orderData').then(data => setOrderData(data));
+        // getData('orderData').then(data => setOrderData(data));
+        // axiosApiInstance.get('/review')
+        //     .then(function (response) {
+        //         console.log('리뷰 데이터 요청: ', response.data);
+        //     });
     }, []);
 
     const ReviewButton = ({ item }) => {
@@ -103,9 +108,8 @@ const OrderDetails = () => {
         const closeModal = () => {
             setModalVisible(!modalVisible);
         };
-        
-        
-    const date = new Date(item.orderTime);
+
+        const date = new Date(item.orderTime);
         return (
             <View style={styles.storeContainer}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30 }}>
