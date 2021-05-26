@@ -71,7 +71,9 @@ const SignIn = ({router, navigation}) => {
 
             axiosApiInstance
                 .get('/member')
-                .then( async (response) => {
+                .then(async (response) => {
+                    
+                    console.log(JSON.stringify(response.data, null, 4));
 
                     // 멤버정보가 없을 때
                     if (response.data.data === 400){

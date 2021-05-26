@@ -151,7 +151,7 @@ const OrderDetails = () => {
     return (
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />
-            <View style={{ padding: 15 }}>
+            <View style={{ padding: 15, flex: 1 }}>
                 <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={renderItem} inverted />
             </View>
         </View>

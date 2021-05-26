@@ -52,6 +52,7 @@ const setMemberInfo = async (dispatch, memberInfo) => {
         nickName: memberInfo.data.data.nickName,
         phoneNum: memberInfo.data.data.phoneNum,
         point: memberInfo.data.data.point,
+        storeId: memberInfo.data.data.storeId ? memberInfo.data.data.storeId : null,
     };
 
     //전역 변수에 member정보 저장

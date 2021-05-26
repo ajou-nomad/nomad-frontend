@@ -110,7 +110,7 @@ const MyPage = ({ navigation }) => {
       <View style={{ paddingVertical: 20, paddingHorizontal: 15 }}>
         <View style={{ flexDirection: 'row' }}>
           <ImageBackground source={icons.highlight} style={{ minWidth: SIZES.padding * 2.5, alignItems: 'center' }} imageStyle={{ tintColor: '#339af0', opacity: 0.5}}>
-            <Text style={{ ...FONTS2.h2, }}>스윙스</Text>
+            <Text style={{ ...FONTS2.h2, }}>{state.member.nickName}</Text>
           </ImageBackground>
           {/* {state.member.nickName} */}
           <Text style={{ ...FONTS2.body2, color: COLORS.darkgray }}>님 환영합니다.</Text>
@@ -132,7 +132,7 @@ const MyPage = ({ navigation }) => {
         <Image source={images.banner} resizeMode='contain' style={{ width: 180, height: SIZES.padding * 8, }} />
         <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
           <Image source={icons.ko_logo} resizeMode='contain' style={{ width: 130, height: 40, }} />
-          <Text style={{ ...FONTS3.h5, marginLeft: 20 }}>로 먹고 싶은 것만 주문하세요!</Text>
+          <Text style={{ ...FONTS3.h5, marginLeft: SIZES.padding }}>로 먹고 싶은 것만 주문하세요!</Text>
         </View>
       </View>
 

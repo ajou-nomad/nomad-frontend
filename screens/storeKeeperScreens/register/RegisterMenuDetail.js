@@ -55,7 +55,8 @@ const RegisterMenuDetail = ({navigation, route}) => {
                 menuName: menu.name,
                 cost: menu.price,
                 description: menu.description,
-                imgUrl: 'dd',
+                imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fhollys.jpg?alt=media&token=1dd864d1-1446-4707-a9e4-6117b28efd72',
+                //imgUrl: menu.imgUrl
             },
         ]);
     };
@@ -95,7 +96,7 @@ const RegisterMenuDetail = ({navigation, route}) => {
 
     return (
         <KeyboardAvoidingView style={styles.container}>
-            <View style={{flex: 1}} >
+            <View style={{ flex: 1 }} >
                 {/* Header */}
                 <View style={{
                     height: responsiveHeight(8),
@@ -108,7 +109,7 @@ const RegisterMenuDetail = ({navigation, route}) => {
                     <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>메뉴 정보</Text>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={()=> setModalVisible(!modalVisible)}
+                        onPress={() => setModalVisible(!modalVisible)}
                     >
                         <Image
                             source={icons.plus2}
@@ -137,20 +138,23 @@ const RegisterMenuDetail = ({navigation, route}) => {
                 {/* Footer */}
                 <BottomButton
                     onPress={() => {
-                        axiosApiInstance.post('/store', {
-                            storeInfo: storeInfo,
-                            menus: menus,
-                        }).then(function (response) {
+                        axiosApiInstance.post('/menu', menus).then(function (response) {
 
+                            //     //응답은 곧 생성완료이기 때문에 리렌더링하여 매장이 등록되어있을때의 화면으로 이동한다.
+                            //     // 1. context의 user property에 dispatch하여 리렌딩
                             //응답은 곧 생성완료이기 때문에 리렌더링하여 매장이 등록되어있을때의 화면으로 이동한다.
                             // 1. context의 user property에 dispatch하여 리렌딩
 
+                            //     console.log(response);
+                            // }).catch(function (error) {
                             console.log(response);
                         }).catch(function (error) {
 
+                            //     console.log(error);
+                            // });
                             console.log(error);
                         });
-                        Alert.alert('매장 등록이 완료되었습니다.');
+                        Alert.alert('메뉴 등록이 완료되었습니다.');
                         navigation.navigate('StoreTabs');
                     }}
                     title="매장 등록하기"

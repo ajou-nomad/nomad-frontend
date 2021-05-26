@@ -59,14 +59,44 @@ const WeeklyDelivery = ({ route, navigation }) => {
 
     const getAxiosData = async () => {
 
-      await getWeeklyGroupData().then((reponse)=>
-        setResponseWeeklyData(reponse)
-      );
+      await getWeeklyGroupData().then((response) => {
+        
+        // console.log(JSON.stringify(response, null, 4));
+        setResponseWeeklyData(response)
+      });
       // await getData('storeData').then( (response) =>
       //   setResponseStoreData(response)
       // );
+
+      await axiosApiInstance.get('/weeklyGroupData')
+        .then((res) => {
+
+          if (res.data.dailyGroupData.length !== 0) {
+
+            let groupData = res.data.dailyGroupData.map((group) => {
+              // 해당 group안에 storeData insert
+              let storeData = res.data.storeData.filter((store) => store.storeId === group.storeId);
+              group.store = storeData[0];
+
+              return group;
+            });
+
+            console.log('체크:: ', JSON.stringify(groupData, null, 4));
+
+            setResponseWeeklyData(groupData);
+          } else {
+            console.log('get weeklyGroupData error');
+          }
+
+          // console.log('체크:: ', JSON.stringify(res.data, null, 4));
+        }).catch(e => {
+          console.log('에러:: ', e);
+        });
+      
       await axiosApiInstance.get("storeList").then((response) => {
-        console.log(JSON.stringify(response.data.data[0],null, 4));
+
+        // console.log(JSON.stringify(response.data.data, null, 4));
+        setResponseStoreData(response.data.data);
       });
     };
 
