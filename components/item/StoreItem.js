@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { FONTS2, images, icons, COLORS } from '../../constants';
+import { FONTS2, images, icons, COLORS, SIZES } from '../../constants';
 
 const StoreItem = ({ deliveryPlace, deliDate, datePicker, storeData, isLikeList }) => {
 
@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 20,
         borderColor: '#ced4da',
-        width: 70,
-        height: 70,
+        width: SIZES.width * 0.18,
+        height: SIZES.height * 0.1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#f8f9fa',

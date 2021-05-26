@@ -3,8 +3,10 @@
 
 import React,{ useState } from 'react';
 import { View, Text, Switch, StyleSheet, Image } from 'react-native';
-import { icons } from '../../constants';
+import { FONTS2, images } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
+import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 const Store = (props) => {
     const storeData = props.storeData;
@@ -16,14 +18,23 @@ const Store = (props) => {
     return (
         <View style={styles.mainView} >
             <View style={styles.storeNameView}>
-                <Image style={styles.storeNameImg} source={icons.hotdog} />
-                <Text style={styles.storeNameTxt}>{storeData.storeName}</Text>
+                <Image style={styles.storeNameImg} source={images.store_logo} />
+                <Text style={{ ...FONTS2.h3 }}>{storeData.storeName}</Text>
             </View>
             <View style={styles.storeStatusView}>
                 <Text style={styles.storeStatusTxt}>영업 시작</Text>
-                <Switch
+                {/* <Switch
                     onValueChange={toggleSwitch}
                     value={isStoreOpen}
+                /> */}
+                <ToggleSwitch
+                    isOn={false}
+                    onColor="green"
+                    offColor="red"
+                    label="Example label"
+                    labelStyle={{ color: "black", fontWeight: "900" }}
+                    size="large"
+                    onToggle={isOn => console.log("changed to : ", isOn)}
                 />
             </View>
             <View style={styles.storeOrderStatusMainView} >
@@ -50,30 +61,26 @@ const Store = (props) => {
 
 const styles = StyleSheet.create({
     mainView: {
-        width: '90%',
-        backgroundColor: '#e1e1e1',
+        marginTop: 20,
+        width: responsiveWidth(90),
+        backgroundColor: '#F1F3F5',
         borderRadius: 5,
         borderColor: '#d8d8d8',
-        borderWidth: 2,
+        borderWidth: 0.3,
         padding: 4,
         paddingLeft: 10,
         alignSelf: 'center',
-
+        marginHorizontal: 10,
     },
     storeNameView: {
         flexDirection: 'row',
         marginVertical: 15,
-        marginHorizontal: 10,
+        alignItems: 'center',
     },
     storeNameImg: {
         marginHorizontal: 5,
         width: 65,
         height: 65,
-    },
-    storeNameTxt: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlignVertical: 'center',
     },
     storeStatusView: {
         flexDirection: 'row',
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
     },
     storeOrderStatusSubView: {
         flexDirection: 'row',
-        backgroundColor: '#f8f8f8',
+        backgroundColor: '#ffffff',
         borderRadius: 10,
         justifyContent: 'center',
         alignSelf: 'center',

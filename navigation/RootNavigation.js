@@ -37,6 +37,7 @@ const RootStack = createStackNavigator();
 const Stack = createStackNavigator();
 
 
+
 const RootNavigation = () => {
 
     const {state, dispatch} = useContext(AuthContext);
@@ -76,7 +77,7 @@ const RootNavigation = () => {
                 <RootStack.Navigator>
                     <RootStack.Screen
                         name="storeKeeperStack"
-                        component={storeKeeperStack}
+                        component={StoreKeeperStack}
                         options={{ headerShown: false }}
                     />
                 </RootStack.Navigator>
@@ -133,9 +134,11 @@ const userStack = () => {
     );
 };
 
-const storeKeeperStack = () => {
+const StoreKeeperStack = () => {
 
-    if (!false){ //점주가 매장등록 했을 때, 안했을 때
+    const {state, dispatch} = useContext(AuthContext);
+
+    if (state.member.storeId){ //점주가 매장등록 했을 때, 안했을 때
         return (
             <Stack.Navigator
             screenOptions={{
