@@ -180,24 +180,24 @@ const RegisterStoreDetail = ({navigation}) => {
                     <BottomButton onPress={() => {
                         // !isEmpty(storeName) && !isEmpty(storeCallNumber) && !isEmpty(storeLocation) && !isEmpty(storeTip)
                         if (true) {
-                            // axiosApiInstance.post('/store', {
-                            //     storeName: storeName,
-                            //     // storeLocation: storeLocation,
-                            //     address: storeLocation.address,
-                            //     latitude: storeLocation.latitude,
-                            //     longitude: storeLocation.longitude,
-                            //     phoneNumber: storeCallNumber,
-                            //     deliveryTip: storeTip,
-                            //     openTime: ('0' + openTime.getHours()).slice(-2) + ':' + ('0' + openTime.getMinutes()).slice(-2),
-                            //     closeTime: ('0' + closeTime.getHours()).slice(-2) + ':' + ('0' + closeTime.getMinutes()).slice(-2),
-                            //     logoUrl: uploadImage,
-                            // }).then(function (response) {
+                            axiosApiInstance.post('/store', {
+                                storeName: storeName,
+                                // storeLocation: storeLocation,
+                                address: storeLocation.address,
+                                latitude: storeLocation.latitude,
+                                longitude: storeLocation.longitude,
+                                phoneNumber: storeCallNumber,
+                                deliveryTip: storeTip,
+                                openTime: ('0' + openTime.getHours()).slice(-2) + ':' + ('0' + openTime.getMinutes()).slice(-2),
+                                closeTime: ('0' + closeTime.getHours()).slice(-2) + ':' + ('0' + closeTime.getMinutes()).slice(-2),
+                                logoUrl: uploadImage,
+                            }).then(function (response) {
 
-                            //     console.log(response);
-                            //     navigation.navigate('RegisterMenuDetail');
-                            // }).catch(function (error) {
-                            //     console.log(error);
-                            // });
+                                console.log(response);
+                                navigation.navigate('RegisterMenuDetail');
+                            }).catch(function (error) {
+                                console.log(error);
+                            });
                             navigation.navigate('RegisterMenuDetail');
                             
                         } else {

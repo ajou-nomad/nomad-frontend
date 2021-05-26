@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 import IMP from 'iamport-react-native';
 import Loading from '../../components/payment/Loading';
 import { createGroup, participationGroup } from '../../utils/helper';
+import axiosApiInstance from '../../utils/axios';
 
 const Payment = ({route, navigation}) => {
 
@@ -16,7 +17,7 @@ const Payment = ({route, navigation}) => {
 
   const paymentTermination = (response) => {
     console.log(response);
-    if (response.imp_success === 'true') {
+    if (response.imp_success === 'false') {
       if (postData.groupData === undefined || postData.groupData === null) {
         // const today = new Date();
         // const todayString = JSON.stringify(today).slice(1,10);
@@ -44,29 +45,71 @@ const Payment = ({route, navigation}) => {
         };
         console.log(JSON.stringify(creationGroupData, null, 4));
 
-        createGroup(creationGroupData.groupData, creationGroupData.orderData).then(() => {
-          console.log("hi");
-          navigation.popToTop();
+        // 배달 그룹 생성
+      axiosApiInstance.post("/groupData", {
+        storeId: creationGroupData.groupData.storeId, //빽다방 아주대점
+        time: creationGroupData.groupData.time,
+        date: creationGroupData.groupData.date,
+        groupType: creationGroupData.groupData.groupType,
+        maxValue: creationGroupData.groupData.maxValue,
+        latitude: creationGroupData.groupData.latitude,
+        longitude: creationGroupData.groupData.longitude,
+        address: creationGroupData.groupData.address,
+        buildingName: creationGroupData.groupData.buildingName,
+        menu: creationGroupData.orderData.menu,
+        totalCost: creationGroupData.orderData.totalCost,
+        payMethod: creationGroupData.orderData.payMethod,
+        orderTime: creationGroupData.orderData.orderTime,
+      }).then((response) => {
+        console.log('배달그룹생성완료');
+        console.log(JSON.stringify(response.data, null, 4));
+        navigation.popToTop();
+        // setResponseStoreData(response.data);
+      });
 
-        });
+        // createGroup(creationGroupData.groupData, creationGroupData.orderData).then(() => {
+        //   console.log("hi");
+        //   navigation.popToTop();
+
+        // });
       } else {
-        const participationGroupData = {
+        // participationGroup(participationGroupData.groupId, participationGroupData.orderData).then((data) => {
+        //   console.log("hi");
+        //   navigation.popToTop();
+        // });
+
+        let cartItems = postData.cartItems.map((item) => {
+          
+          delete item.menuId;
+
+          return item;
+        });
+
+        // const temp = {
+        //   groupId: postData.groupData.groupId,
+
+        //   // order detail
+        //   menu: cartItems,
+        //   totalCost: postData.totalPrice,
+        //   payMethod: 'Card',
+        //   orderTime: new Date(),
+        // };
+
+        // console.log(temp);
+
+        axiosApiInstance.post("/participationGroup", {
           groupId: postData.groupData.groupId,
-          orderData: {
-            storeId: postData.storeInfo.storeId,
-            storeName: postData.storeInfo.storeName,
-            menu: postData.cartItems,
-            totalCost: postData.totalPrice,
-            payMethod: 'Card',
-            orderTime: new Date(),
-          },
-        };
-        console.log(JSON.stringify(participationGroupData, null, 4));
-        participationGroup(participationGroupData.groupId, participationGroupData.orderData).then((data) => {
-          console.log("hi");
+
+          // order detail
+          menu: cartItems,
+          totalCost: postData.totalPrice,
+          payMethod: 'Card',
+          orderTime: new Date(),
+        }).then((response) => {
+          console.log('배달그룹생성완료');
+          console.log(JSON.stringify(response.data, null, 4));
           navigation.popToTop();
         });
-        participationGroup(participationGroupData.groupId, participationGroupData.orderData);
       }
      
       //이미 결제완료

@@ -66,8 +66,8 @@ const App = () => {
       Toast.show({
         type: 'success',
         position: 'top',
-        text1: '모집 완료!',
-        text2: `[${remoteMessage.notification.body}] 배달모집이 완료되었습니다.`,
+        text1: remoteMessage.notification.title,
+        text2: remoteMessage.notification.body,
         visibilityTime: 6000,
         autoHide: true,
         topOffset: 30,

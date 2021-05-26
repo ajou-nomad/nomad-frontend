@@ -71,7 +71,9 @@ const SignIn = ({router, navigation}) => {
 
             axiosApiInstance
                 .get('/member')
-                .then( async (response) => {
+                .then(async (response) => {
+                    
+                    console.log(JSON.stringify(response.data, null, 4));
 
                     console.log(response.data)
 

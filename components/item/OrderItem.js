@@ -6,6 +6,7 @@ import { View, Text, StyleSheet, TouchableOpacity, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { COLORS, FONTS2, SIZES } from '../../constants';
+import StoreButton from '../StoreButton';
 
 const OrderItem = ({ item }) => {
     const navigation = useNavigation();
@@ -19,21 +20,16 @@ const OrderItem = ({ item }) => {
                 <Text style={{ ...FONTS2.h3, marginBottom: 3 }}>{item.menu[0].menuName} 외 {quantity}개</Text>
                 <Text style={{ ...FONTS2.h3, color: '#818181', }}>{item.address} {item.buildingName}</Text>
             </View>
-
-            {/* {!orderStatus ? (
-                <TouchableOpacity
-                    style={[styles.orderButton, { backgroundColor: '#CED4DA' }]}
-                    // onPress={() => navigation.navigate('OrderDetailItem', { status: false })}
-                >
-                    <Text style={{ ...FONTS2.h4, color: COLORS.white }}>접수하기</Text>
-                </TouchableOpacity>
+            
+            {item.orderStatus === '모집 완료' ? (
+                <StoreButton title='접수하기' color='#CED4DA' fontColor='white'
+                    onPress={() => navigation.navigate('OrderDetailItem', { item: item })}
+                />
             ) : (
-                <TouchableOpacity style={styles.orderButton}
-                    // onPress={() => navigation.navigate('OrderDetailItem', { status: true })}
-                >
-                    <Text style={{ ...FONTS2.h4, color: COLORS.white }}>접수완료</Text>
-                </TouchableOpacity>
-            )} */}
+                <StoreButton title='접수완료' color='#364FC7' fontColor='white'
+                    onPress={() => navigation.navigate('OrderDetailItem', { item: item })}
+                />
+            )}
         </View>
     );
 };
@@ -48,15 +44,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
-    },
-    orderButton: {
-        justifyContent: 'center',
-        backgroundColor: '#364FC7',
-        paddingHorizontal: 20,
-        marginTop: 10,
-        borderRadius: 8,
-        height: SIZES.padding * 3,
-        // borderBottomRightRadius: 25,
     },
 });
 

@@ -9,7 +9,8 @@ import { SIZES, icons } from '../../constants';
 
 
 
-const PaymentMethods = ({navigation,route:{params}}) => {
+const PaymentMethods = ({ navigation, route: { params } }) => {
+    
     // console.log('PaymentMethods: ' + JSON.stringify(params,null,4));
     const totalData = params.totalData;
     const data = {

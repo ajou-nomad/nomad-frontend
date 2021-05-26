@@ -6,7 +6,7 @@ import {Image, TouchableOpacity, Keyboard, Platform} from 'react-native';
 import {COLORS, FONTS2, icons, SIZES} from '../../constants';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import RequestList from '../../screens/storeKeeperScreens/RequestList';
+import RequestListNavigation from './RequestListNavigation';
 import CompletedList from '../../screens/storeKeeperScreens/CompletedList';
 import SalesStatus from '../../screens/storeKeeperScreens/SalesStatus';
 import StoreManagementNavigation from './StoreManagementNavigation';
@@ -95,7 +95,7 @@ const Tabs = () => {
       }}>
       <Tab.Screen
         name="주문 접수"
-        component={RequestList}
+        component={RequestListNavigation}
         options={{
           tabBarIcon: ({focused}) => (
             <Image
