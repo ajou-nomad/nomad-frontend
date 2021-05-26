@@ -28,7 +28,7 @@ const ItemsForCreateGroupDetailDayPicker = () => {
     }
     const todayDay = todayFullDate.getDay();
     const dayArrayKor = ['월', '화', '수', '목', '금'];
-    const dateDifference = [1, 2, 3, 4];
+    const dateDifference = [0, 1, 2, 3, 4];
     const lastIndex = dateDifference.length - 1;
     let todayDayIndex = (todayDay % 6) - 1;
     if (todayDayIndex < 0) {
@@ -47,8 +47,8 @@ const WeeklyDelivery = ({ route, navigation }) => {
 
   const [location, setLocation] = useState();
 
-  const [responseWeeklyData,setResponseWeeklyData] = useState();
-  const [responseStoreData,setResponseStoreData] = useState();
+  const [responseWeeklyData,setResponseWeeklyData] = useState([]);
+  const [responseStoreData,setResponseStoreData] = useState([]);
 
 
   const setCurrentLocation = (result) => {
@@ -59,11 +59,11 @@ const WeeklyDelivery = ({ route, navigation }) => {
 
     const getAxiosData = async () => {
 
-      await getWeeklyGroupData().then((response) => {
+      // await getWeeklyGroupData().then((response) => {
         
-        // console.log(JSON.stringify(response, null, 4));
-        setResponseWeeklyData(response)
-      });
+      //   // console.log(JSON.stringify(response, null, 4));
+      //   setResponseWeeklyData(response)
+      // });
       // await getData('storeData').then( (response) =>
       //   setResponseStoreData(response)
       // );
@@ -71,9 +71,9 @@ const WeeklyDelivery = ({ route, navigation }) => {
       await axiosApiInstance.get('/weeklyGroupData')
         .then((res) => {
 
-          if (res.data.dailyGroupData.length !== 0) {
+          if (res.data.groupData.length !== 0) {
 
-            let groupData = res.data.dailyGroupData.map((group) => {
+            let groupData = res.data.groupData.map((group) => {
               // 해당 group안에 storeData insert
               let storeData = res.data.storeData.filter((store) => store.storeId === group.storeId);
               group.store = storeData[0];
@@ -81,19 +81,17 @@ const WeeklyDelivery = ({ route, navigation }) => {
               return group;
             });
 
-            console.log('체크:: ', JSON.stringify(groupData, null, 4));
-
             setResponseWeeklyData(groupData);
           } else {
-            console.log('get weeklyGroupData error');
+            console.log('get weeklyGroupData가 아직 없습니다.');
           }
 
           // console.log('체크:: ', JSON.stringify(res.data, null, 4));
         }).catch(e => {
           console.log('에러:: ', e);
         });
-      
-      await axiosApiInstance.get("storeList").then((response) => {
+
+      await axiosApiInstance.get('storeList').then((response) => {
 
         // console.log(JSON.stringify(response.data.data, null, 4));
         setResponseStoreData(response.data.data);
@@ -101,7 +99,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
     };
 
     getAxiosData().then((data) => {
-      console.log("axiosData들은 받아왔고");
+      console.log('axiosData들은 받아왔고');
       // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
       if (route.params?.post) {
         setLocation(route.params.post);

@@ -75,6 +75,8 @@ const SignIn = ({router, navigation}) => {
                     
                     console.log(JSON.stringify(response.data, null, 4));
 
+                    console.log(response.data)
+
                     // 멤버정보가 없을 때
                     if (response.data.data === 400){
                         Alert.alert('구글계정으로 회원가입합니다.');

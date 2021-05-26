@@ -15,7 +15,7 @@ import Header from '../../components/layout/Header';
 import BottomButton from '../../components/layout/BottomButton';
 import OrderMenuItem from '../../components/item/OrderMenuItem';
 
-import { COLORS, FONTS2 } from '../../constants';
+import { COLORS, FONTS2, SIZES } from '../../constants';
 
 const Cart = ({ navigation, route:{params} }) => {
     // console.log(params);
@@ -97,17 +97,21 @@ const Cart = ({ navigation, route:{params} }) => {
 
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.container}>
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+            >
                 {/* 카트 */}
                 <Header title="카트" haveInput="true" />
                 {/* 메뉴, 주문 금액, 요청사항 */}
                 {renderBody()}
                 {/* 그룹 생성하기 버튼 */}
-                {(params.location.buildingName && params.deliDate && params.time) ? (
-                    <BottomButton onPress={() => !totalPrice ? alert('? 아무것도 사지 않으셨는데 결제는 어떻게 하시려고요??') : navigation.navigate('CheckOrder', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupData: params.groupData })} title="결제하기" />
-                ) : (
-                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupData: params.groupData, datePicker:datePicker })} title="그룹 생성하기" />
-                )}
+                <View style={{position: 'absolute', bottom: 0, width: SIZES.width}}>
+                    {(params.location.buildingName && params.deliDate && params.time) ? (
+                        <BottomButton onPress={() => !totalPrice ? alert('? 아무것도 사지 않으셨는데 결제는 어떻게 하시려고요??') : navigation.navigate('CheckOrder', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupData: params.groupData })} title="결제하기" />
+                    ) : (
+                        <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupData: params.groupData, datePicker:datePicker })} title="그룹 생성하기" />
+                    )}
+                </View>
             </ScrollView>
         </View>
     );

@@ -22,8 +22,8 @@ import NewGroupButton from '../components/map/NewGroupButton';
 
 const DayDelivery = ({ route, navigation }) => {
 
-  const [responseDailyData,setResponseDailyData] = useState();
-  const [responseStoreData,setResponseStoreData] = useState();
+  const [responseDailyData,setResponseDailyData] = useState([]);
+  const [responseStoreData,setResponseStoreData] = useState([]);
 
   const [location, setLocation] = useState(null);
 
@@ -33,19 +33,47 @@ const DayDelivery = ({ route, navigation }) => {
 
   useEffect(() => {
 
+
     const getAxiosData = async () => {
 
-      await getDaliyGroupData().then((reponse) =>
-        setResponseDailyData(reponse)
-      );
-      await getData('storeData').then( (response) =>
-        setResponseStoreData(response)
-      );
-      // await axiosApiInstance.get("/storeList").then((response) => {
-      //   console.log('storeList 요청');
-      //   console.log(JSON.stringify(response.data.data, null, 4));
-      // });
+
+      //  async Data
+      // await getDaliyGroupData().then((reponse) =>
+      //   setResponseDailyData(reponse)
+      // );
+      // await getData('storeData').then( (response) =>
+      //   setResponseStoreData(response)
+      // );
+
+      await axiosApiInstance.get('/dailyGroupData')
+        .then((res) => {
+
+          if (res.data.groupData.length !== 0) {
+
+            let groupData = res.data.groupData.map((group) => {
+              // 해당 group안에 storeData insert
+              let storeData = res.data.storeData.filter((store) => store.storeId === group.storeId);
+              group.store = storeData[0];
+
+              return group;
+            });
+            setResponseDailyData(groupData);
+          } else {
+            console.log('get /dailyGroupData가 아직 없습니다.');
+          }
+
+          // console.log('체크:: ', JSON.stringify(res.data, null, 4));
+        }).catch(e => {
+          console.log('에러:: ', e);
+        });
+
+      await axiosApiInstance.get('storeList').then((response) => {
+
+        // console.log(JSON.stringify(response.data.data, null, 4));
+        setResponseStoreData(response.data.data);
+      });
     };
+
 
     getAxiosData().then((data) => {
       console.log("axiosData들은 받아왔고");
@@ -122,8 +150,6 @@ const DayDelivery = ({ route, navigation }) => {
         <View style={{flex: 1}}>
           <GoogleMap initLocation={location} back="DayDelivery" today={today} groupData = {responseDailyData} storeData= {responseStoreData} />
           { renderDestinationHeader() }
-          {/* <GpsButton setLocation={setCurrentLocation} /> */}
-          <NewGroupButton initLocation={location} deliDate={today} storeData={responseStoreData} />
           <PlusButton
             style={{ bottom: SIZES.height * 0.08, right:  SIZES.width * 0.08 }}
             setLocation={setCurrentLocation}
@@ -131,6 +157,7 @@ const DayDelivery = ({ route, navigation }) => {
             deliDate={today}
             storeData={responseStoreData}
           />
+          <NewGroupButton initLocation={location} deliDate={today} storeData={responseStoreData} />
         </View>
       ) : (
         <View style={{flex: 1, justifyContent: 'center'}}>

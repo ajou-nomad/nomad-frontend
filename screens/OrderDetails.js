@@ -105,7 +105,7 @@ const OrderDetails = () => {
         };
         
         
-    const date = new Date(item.orderTime);
+        const date = new Date(item.orderTime);
         return (
             <View style={styles.storeContainer}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30 }}>
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white,
     },
     storeContainer: {
+        flex: 1,
         marginVertical: 10,
         width: responsiveScreenWidth(90),
         // backgroundColor: '#f1f3f5',

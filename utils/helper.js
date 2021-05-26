@@ -42,8 +42,6 @@ Geocoder.init(GOOGLE_API_KEY, {language: 'ko'});
 const setMemberInfo = async (dispatch, memberInfo) => {
 
 
-    console.log(memberInfo);
-
     Alert.alert(memberInfo.data.data.nickName + '님 반갑습니다.');
 
     const memberData = {
@@ -97,7 +95,7 @@ export const autoLogin = async (dispatch) => {
             });
     } else {
         console.log('현재 로그인한 유저가 없음.');
-        return Promise.reject('Not Found User');
+        // return Promise.reject('Not Found User');
     }
 };
 

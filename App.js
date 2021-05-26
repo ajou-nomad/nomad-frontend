@@ -38,9 +38,9 @@ const App = () => {
       offlineAccess: true, //if you want to access Google API on behalf of the user FROM YOUR SERVER
     });
 
-    
 
-    //서버 켜져있을 때
+
+    //서버 켜져있을 때 자동로그인
     setTimeout(checkLogin, 2000);
 
     setData('storeData', storeData);

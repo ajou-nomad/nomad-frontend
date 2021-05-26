@@ -100,7 +100,7 @@ const CreateReview = ({ route }) => {
     };
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
             <Header title='리뷰 작성' small='true' />
 
             <View style={styles.body}>
@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white,
     },
     body: {
+        flex: 1,
         height: responsiveHeight(72),
         alignItems: 'center',
         marginTop: 40,
@@ -163,11 +164,11 @@ const styles = StyleSheet.create({
         ...FONTS2.body3,
     },
     addPhoto: {
-        marginTop: 10,
+        marginTop: SIZES.padding,
         borderWidth: 0.3,
         borderRadius: 8,
-        width: SIZES.base * 7,
-        height: SIZES.base * 7,
+        width: SIZES.width * 0.19,
+        height: SIZES.height * 0.1,
         justifyContent: 'center',
         alignItems: 'center',
     },
