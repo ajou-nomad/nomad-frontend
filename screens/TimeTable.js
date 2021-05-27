@@ -123,9 +123,9 @@ import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
      );
    };
 
-   
 
    const todayDate = new Date(today);
+   todayDate.setTime(todayDate.getTime() + 9);
    const todayDay = todayDate.getDay();
    const dayArrayEng = ['monday','tuesday','wednesday','thursday','friday'];
    const dayArrayKor = ['월','화','수','목','금'];

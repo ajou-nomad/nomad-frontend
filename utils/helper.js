@@ -515,3 +515,25 @@ export const createGroup = async (groupData, orderData) => {
 
     return 'success';
 };
+
+export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, navigation) => {
+
+    console.log('createChatRoom: ', storeName, deliveryTime, deliveryPlace, navigation);
+    firestore()
+        .collection('THREADS')
+        .add({
+            name: storeName + ' ' + deliveryPlace + ' ' + deliveryTime,
+            latestMessage: {
+                text: '주문 생성이 성공되었습니다. 👏',
+                createdAt: new Date().getTime(),
+            },
+        })
+        .then(docRef => {
+            docRef.collection('MESSAGES').add({
+                text: '주문 생성이 성공되었습니다. 👏',
+                createdAt: new Date().getTime(),
+                system: true,
+            });
+            navigation.navigate('ChatList');
+        });
+};

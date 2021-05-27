@@ -11,8 +11,10 @@ import storage from '@react-native-firebase/storage';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import uuid from 'react-native-uuid';
 import ImageModal from 'react-native-image-modal';
+import { useNavigation } from '@react-navigation/native';
 
 import { COLORS, FONTS2, icons } from '../../constants';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const ChatScreen = ({ route }) => {
 
@@ -106,7 +108,7 @@ const ChatScreen = ({ route }) => {
     };
 
     const renderMessageImage = (props) => {
-        console.log('사진:: ', props.currentMessage.image);
+        // console.log('사진:: ', props.currentMessage.image);
         return (
             <View style={{ padding: 5 }}>
                 <ImageModal
@@ -327,17 +329,20 @@ const ChatScreen = ({ route }) => {
             />
         );
     };
+    
+    const navigation = useNavigation();
+
 
     return (
         <View style={{ flex: 1, backgroundColor: '#dee2e6' }}>
             <GiftedChat
                 messages={messages}
                 onSend={handleSend}
-                user={{ 
+                user={{
                     _id: user.uid,
                     name: user.displayName,
                 }}
-                placeholder='메시지 입력'
+                placeholder="메시지 입력"
                 alwaysShowSend
                 showUserAvatar
                 renderSend={renderSendButton}
@@ -345,6 +350,19 @@ const ChatScreen = ({ route }) => {
                 renderMessage={renderMessage}
                 renderActions={renderActions}
             />
+            { user.email === 'wjsxorjs@naver.com' ?
+            <TouchableOpacity
+                onPress={()=>{
+                    alert('post: change to 배달 완료');
+                    navigation.navigate('CarrierMain');
+                }}
+            >
+                <View style={{justifyContent:'center', alignItems: 'center', backgroundColor:'#25ee25'}}>
+                    <Text style={{fontSize:24, fontWeight:'bold', color:'#fff'}} >
+                        배달 완료
+                    </Text>
+                </View>
+            </TouchableOpacity> : <></>}
         </View>
     );
 };
