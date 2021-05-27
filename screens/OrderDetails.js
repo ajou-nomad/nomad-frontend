@@ -21,12 +21,17 @@ import axiosApiInstance from '../utils/axios';
 const OrderDetails = () => {
     const navigation = useNavigation();
     const [orderData, setOrderData] = useState(null);
+    const [memberOrderList, setMemberOrderList] = useState(null);
 
     useEffect(() => {
-        // getData('orderData').then(data => setOrderData(data));
-        // axiosApiInstance.get('/review')
+        getData('orderData').then(data => setOrderData(data));
+
+        console.log(JSON.stringify(orderData, null, 4));
+
+        // axiosApiInstance.get('/memberOrderList')
         //     .then(function (response) {
-        //         console.log('리뷰 데이터 요청: ', response.data);
+        //         console.log('주문 내역 데이터 요청: ', JSON.stringify(response.data, null, 4));
+        //         setMemberOrderList(response.data.data);
         //     });
     }, []);
 
@@ -146,17 +151,11 @@ const OrderDetails = () => {
         );
     };
 
-    const renderItem = ({ item }) => {
-        return (
-            <OrderDetailItem item={item} />
-        );
-    };
-
     return (
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />
             <View style={{ padding: 15, flex: 1 }}>
-                <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={renderItem} inverted />
+                <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={({ item }) => <OrderDetailItem item={item} />} inverted />
             </View>
         </View>
     );

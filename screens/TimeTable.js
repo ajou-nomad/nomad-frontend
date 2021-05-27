@@ -72,11 +72,11 @@ const FridayRoute = ({ route }) => (
 );
 
 const renderScene = SceneMap({
-  first: MondayRoute,
-  second: TuesdayRoute,
-  third: WednesdayRoute,
-  fourth: ThursdayRoute,
-  fifth: FridayRoute,
+	first: MondayRoute,
+	second: TuesdayRoute,
+	third: WednesdayRoute,
+	fourth: ThursdayRoute,
+	fifth: FridayRoute,
 });
  
 const TimeTable = (props) => {
@@ -99,11 +99,11 @@ const TimeTable = (props) => {
 
   const [groupDate, setGroupDate] = useState(today);
 
-  const setGroupDateValue = (dateDifference) => {
-    const d = new Date(today);
-    d.setDate(d.getDate() + dateDifference);
-    return JSON.stringify(d.toJSON()).substr(1, 10);
-  };
+	const setGroupDateValue = (dateDifference) => {
+		const d = new Date(today);
+		d.setDate(d.getDate() + dateDifference);
+		return JSON.stringify(d.toJSON()).substr(1, 10);
+	};
 
   const timeTableList = [
     {
@@ -163,26 +163,26 @@ const TimeTable = (props) => {
     },
   ];
 
-  const Header = () => {
-    return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: SIZES.base, backgroundColor: 'white' }}>
-        <TouchableOpacity
-          onPress={() => { goBack(); }}
-        >
-          <Image source={icons.goback} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 2.5, marginLeft: SIZES.base, }} />
-        </TouchableOpacity>
-			<Text numberOfLines={1} style={{ ...FONTS2.h2, }}>{location.buildingName}</Text>
-        <Text style={{ ...FONTS2.body2, alignSelf: 'center', position: 'absolute', right: SIZES.base * 2 }}>{todayHeader}</Text>
-      </View>
-    );
-  };
+	const Header = () => {
+		return (
+			<View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: SIZES.base, backgroundColor: 'white' }}>
+				<TouchableOpacity
+					onPress={() => { goBack(); }}
+				>
+					<Image source={icons.goback} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 2.5, marginLeft: SIZES.base, }} />
+				</TouchableOpacity>
+				<Text numberOfLines={1} style={{ ...FONTS2.h2, }}>{location.buildingName}</Text>
+				<Text style={{ ...FONTS2.body2, alignSelf: 'center', position: 'absolute', right: SIZES.base * 2 }}>{todayHeader}</Text>
+			</View>
+		);
+	};
 
-  const todayDate = new Date(today);
-  const todayDay = todayDate.getDay();
-  const dayArrayEng = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
-  const dayArrayKor = ['월', '화', '수', '목', '금'];
-  const dateDifference = [1, 2, 3, 4];
-  const lastIndex = dateDifference.length - 1;
+   const todayDate = new Date(today);
+   const todayDay = todayDate.getDay();
+   const dayArrayEng = ['monday','tuesday','wednesday','thursday','friday'];
+   const dayArrayKor = ['월','화','수','목','금'];
+   const dateDifference = [0,1,2,3,4];
+	const lastIndex = dateDifference.length - 1;
 
   let todayDayIndex = (todayDay % 6) - 1;
   if (todayDayIndex < 0) {
@@ -201,7 +201,7 @@ const TimeTable = (props) => {
         <TouchableOpacity
           onPress={() => {
             setDay(dayArrayEngFixed[0]);
-            setGroupDate(setGroupDateValue(0));
+            setGroupDate(setGroupDateValue(dateDifference[0]));
           }}
           style={styles.headerButton}
         >
@@ -210,7 +210,7 @@ const TimeTable = (props) => {
         <TouchableOpacity
           onPress={() => {
             setDay(dayArrayEngFixed[1]);
-            setGroupDate(setGroupDateValue(dateDifference[0]));
+            setGroupDate(setGroupDateValue(dateDifference[1]));
           }}
           style={styles.headerButton}
         >
@@ -219,7 +219,7 @@ const TimeTable = (props) => {
         <TouchableOpacity
           onPress={() => {
             setDay(dayArrayEngFixed[2]);
-            setGroupDate(setGroupDateValue(dateDifference[1]));
+            setGroupDate(setGroupDateValue(dateDifference[2]));
           }}
           style={styles.headerButton}
         >
@@ -228,7 +228,7 @@ const TimeTable = (props) => {
         <TouchableOpacity
           onPress={() => {
             setDay(dayArrayEngFixed[3]);
-            setGroupDate(setGroupDateValue(dateDifference[2]));
+            setGroupDate(setGroupDateValue(dateDifference[3]));
           }}
           style={styles.headerButton}
         >
@@ -237,7 +237,7 @@ const TimeTable = (props) => {
         <TouchableOpacity
           onPress={() => {
             setDay(dayArrayEngFixed[4]);
-            setGroupDate(setGroupDateValue(dateDifference[3]));
+            setGroupDate(setGroupDateValue(dateDifference[4]));
           }}
           style={styles.headerButton}
         >
@@ -321,7 +321,7 @@ const TimeTable = (props) => {
         />
       </View>
       {/* {ListOfWeeklyGroup()} */}
-      {/* <NewGroupButton storeData={storeData} initLocation={location} deliDate={null} items={{ datePicker: [dayArrayKorFixed, dateDifference] }} /> */}
+      {/* <NewGroupButton storeData= {storeData} initLocation={location} deliDate={null} datePicker= {[dayArrayKorFixed,dateDifference]} /> */}
     </View>
   );
 };

@@ -79,6 +79,7 @@ const pin2 = require("../assets/icons/pin2.png");
 const check = require("../assets/icons/check.png");
 const doddle = require("../assets/icons/doddle.png");
 const notice = require("../assets/icons/notice.png");
+const more = require("../assets/icons/more.png");
 
 export default {
     mic,
@@ -159,4 +160,5 @@ export default {
     check,
     doddle,
     notice,
+    more,
 }

@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     arrowTop: {
         flex: 1,
         height: SIZES.height * 0.05,
-        width: 90,
+        width: 100,
         opacity: 0.95,
         elevation: 5,
     },
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         top: 0,
         height: SIZES.height * 0.05,
-        width: 90,
+        width: 100,
         borderRadius: SIZES.radius * 2,
         alignItems: 'center',
         justifyContent: 'center',

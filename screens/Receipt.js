@@ -47,15 +47,15 @@ const Receipt = ({ modalVisible, closeModal, item }) => {
         >
             <View style={[styles.container, modalBackgroundStyle]}>
                 <View style={styles.modal}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', borderBottomWidth: 0.3 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', borderBottomWidth: 0.3, justifyContent: 'center', paddingVertical: SIZES.height * 0.02 }}>
                         <TouchableOpacity
                             onPress={() => closeModal()}
-                            style={{ padding: 15 }}
+                            style={{ position: 'absolute', left: SIZES.width * 0.03 }}
                         >
                             <Image source={icons.close} resizeMode='contain' style={styles.closeButton} />
                         </TouchableOpacity>
 
-                        <Text style={{ ...FONTS2.h3, marginLeft: SIZES.padding * 8, }}>영수증</Text>
+                        <Text style={{ ...FONTS2.h3, }}>영수증</Text>
                     </View>
 
                     <View style={{ alignItems: 'center', marginBottom: SIZES.base * 3 }}>

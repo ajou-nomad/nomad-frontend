@@ -138,7 +138,7 @@ const StoreKeeperStack = () => {
 
     const {state, dispatch} = useContext(AuthContext);
 
-    if (state.member.storeId){ //점주가 매장등록 했을 때, 안했을 때
+    if (state.member.storeId){ //점주가 매장등록 했을 때, 안했을 때 state.member.storeId
         return (
             <Stack.Navigator
             screenOptions={{

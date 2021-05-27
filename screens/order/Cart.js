@@ -10,24 +10,25 @@ import {
     TouchableOpacity,
     ScrollView,
     TextInput,
+    ToastAndroid,
 } from 'react-native';
 import Header from '../../components/layout/Header';
 import BottomButton from '../../components/layout/BottomButton';
 import OrderMenuItem from '../../components/item/OrderMenuItem';
 
-import { COLORS, FONTS2 } from '../../constants';
+import { COLORS, FONTS2, SIZES } from '../../constants';
 
-const Cart = ({ navigation, route:{params} }) => {
+const Cart = ({ navigation, route: { params } }) => {
     // console.log(params);
     const datePicker = params.datePicker;
 
     // const [totalPrice, setTotalPrice] = useState(0);
     let itemPrice = 0;
-    for(let indexOfCart = 0; indexOfCart<params.cartItems.length; indexOfCart++){
+    for (let indexOfCart = 0; indexOfCart < params.cartItems.length; indexOfCart++) {
         itemPrice += params.cartItems[indexOfCart].cost;
     }
     let deliveryTip = 0;
-    if (params.cartItems.length > 0){
+    if (params.cartItems.length > 0) {
         deliveryTip = params.storeInfo.deliveryTip;
     }
     const totalPrice = itemPrice + deliveryTip;
@@ -40,7 +41,7 @@ const Cart = ({ navigation, route:{params} }) => {
         return (
             <View style={{ backgroundColor: COLORS.white, }}>
                 <View>
-                    {/* 가게이름, 메뉴 */}
+                    
                     <View style={{ margin: 30, }}>
                         <Text style={{ ...FONTS2.h2, marginBottom: 10, }}>{params.storeInfo.storeName}</Text>
                         {
@@ -49,7 +50,7 @@ const Cart = ({ navigation, route:{params} }) => {
                             })
                         }
                     </View>
-                    {/* 메뉴 추가 버튼 */}
+                    
                     <TouchableOpacity
                         style={{ alignItems: 'center', }}
                         onPress={() => navigation.navigate('StoreDetail')}
@@ -58,23 +59,23 @@ const Cart = ({ navigation, route:{params} }) => {
                         <Text style={{ ...FONTS2.body2, color: '#4dabf7' }}>+ 메뉴 추가</Text>
                     </TouchableOpacity>
                 </View>
-                {/* 요청 사항(가게 사장님, 배달 기사님?) */}
+                
                 <View style={{ marginHorizontal: 20, marginTop: 20 }}>
                     <Text style={{ ...FONTS2.h2, marginBottom: 10 }}>요청사항</Text>
-                    <View>
+                    <View style={{ marginBottom: SIZES.base * 2 }}>
                         <Text style={{ ...FONTS2.body2, marginBottom: 5 }}>가게 사장님에게</Text>
                         <TextInput
-                            style={{ ...FONTS2.body2, borderWidth: 0.5, color: COLORS.lightGray, marginBottom: 10 }} placeholder="가게 사장님에게" />
+                            style={styles.textInput} placeholder="가게 사장님에게" />
                     </View>
 
                     <View>
                         <Text style={{ ...FONTS2.body2, marginBottom: 5, }}>배달원에게</Text>
                         <TextInput
-                            style={{ ...FONTS2.body2, borderWidth: 0.5, color: COLORS.lightGray, }} placeholder="배달원에게" />
+                            style={styles.textInput} placeholder="배달원에게" />
                     </View>
                 </View>
 
-                {/* 주문 금액 */}
+                
                 <View style={{ marginHorizontal: 20, marginTop: 30, marginBottom: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                         <Text style={{ ...FONTS2.body2 }}>주문 금액</Text>
@@ -93,21 +94,41 @@ const Cart = ({ navigation, route:{params} }) => {
             </View>
         );
     };
-    // console.log(params.groupData);
 
     return (
         <View style={styles.container}>
-            <ScrollView style={styles.container}>
-                {/* 카트 */}
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+            >
                 <Header title="카트" haveInput="true" />
-                {/* 메뉴, 주문 금액, 요청사항 */}
                 {renderBody()}
-                {/* 그룹 생성하기 버튼 */}
-                {(params.location.buildingName && params.deliDate && params.time) ? (
-                    <BottomButton onPress={() => !totalPrice ? alert('? 아무것도 사지 않으셨는데 결제는 어떻게 하시려고요??') : navigation.navigate('CheckOrder', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupData: params.groupData })} title="결제하기" />
-                ) : (
-                    <BottomButton onPress={() => navigation.navigate('CreateGroupDetail', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupData: params.groupData, datePicker:datePicker })} title="그룹 생성하기" />
-                )}
+                <View>
+                    {(params.location.buildingName && params.deliDate && params.time) ? (
+                        <BottomButton onPress={() => totalPrice === 0 ? ToastAndroid.showWithGravity('메뉴를 선택해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER) : navigation.navigate('CheckOrder',
+                            {
+                                totalPrice: totalPrice,
+                                cartItems: params.cartItems,
+                                time: params.time,
+                                location: params.location,
+                                storeInfo: params.storeInfo,
+                                deliDate: params.deliDate,
+                                groupData: params.groupData,
+                            })} title="결제하기" />
+                    ) : (
+                        <BottomButton onPress={() => totalPrice === 0 ? ToastAndroid.showWithGravity('메뉴를 선택해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER) : navigation.navigate('CreateGroupDetail',
+                            {
+                                totalPrice: totalPrice,
+                                cartItems: params.cartItems,
+                                time: params.time,
+                                location: params.location,
+                                storeInfo: params.storeInfo,
+                                deliDate: params.deliDate,
+                                groupData: params.groupData,
+                                datePicker: datePicker,
+                            }
+                        )} title="그룹 생성하기" />
+                    )}
+                </View>
             </ScrollView>
         </View>
     );
@@ -117,6 +138,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.white,
+    },
+    textInput: {
+        borderRadius: 8,
+        borderWidth: 0.3,
+        borderColor: '#adb5bd',
+        padding: 10,
+        ...FONTS2.body3,
     },
 });
 
