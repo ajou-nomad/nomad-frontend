@@ -13,6 +13,10 @@ const Payment = ({route, navigation}) => {
   const today = new Date();
   const todayString = JSON.stringify(today).substr(1,10);
 
+  const tempDay = new Date(postData.deliDate);
+  tempDay.setHours(postData.time.substr(0,2) * 1 + 9);
+  tempDay.setMinutes(postData.time.substr(3,4) * 1);
+  console.log(tempDay);
 
   const paymentTermination = (response) => {
     console.log(response);
@@ -20,12 +24,12 @@ const Payment = ({route, navigation}) => {
 
       // 배달 생성시 groupData는 존재x
       if (!postData.groupData) {
-
         axiosApiInstance.post('/groupData', {
           // groupData
           storeId: postData.storeInfo.storeId,
-          time: postData.time,
-          date: postData.deliDate,
+          // time: postData.time,
+          // date: postData.deliDate,
+          deliveryDateTime: tempDay,
           maxValue: postData.maxValue,
           groupType: (postData.deliDate === todayString) ? 'day' : 'weekly',
           latitude: postData.location.latitude,

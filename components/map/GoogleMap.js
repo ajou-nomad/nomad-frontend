@@ -16,6 +16,8 @@ import {getDaliyGroupData, getWeeklyGroupData} from '../../utils/helper';
 const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
     
     const mapView = useRef();
+
+    
     //------------------------------
     //넘어온 location값은 단지 지도에 표현할려고 하는 값일뿐 실제 그룹 데이터는 아래 데이터 내부에
     //axios를 통해 백엔드에서 생성된 배달그룹을 가져옴.
@@ -95,7 +97,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
             {
               groupId: items.groupId,
               logo: items.store.logoUrl,
-              time: items.time,
+              time: items/*.deliveryDateTime.substr(12,4)*/.time,
               current: items.current,
               max: items.maxValue,
               store: items.store,
@@ -114,7 +116,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
           {
             groupId: items.groupId,
             logo: items.store.logoUrl,
-            time: items.time,
+            time: items/*.deliveryDateTime.substr(12,4)*/.time,
             current: items.current,
             max: items.maxValue,
             store: items.store,
@@ -148,8 +150,8 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
             {
               groupId: items.groupId,
               logo: items.store.logoUrl,
-              time: items.time,
-              date: items.date,
+              time: items/*.deliveryDateTime.substr(12,4)*/.time,
+              date: items/*.deliveryDateTime.substr(0,11)*/.date,
               current: items.current,
               max: items.maxValue,
               store: items.store,
@@ -168,8 +170,8 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
           {
             groupId: items.groupId,
             logo: items.store.logoUrl,
-            time: items.time,
-            date: items.date,
+            time: items/*.deliveryDateTime.substr(12,4)*/.time,
+            date: items/*.deliveryDateTime.substr(0,11)*/.date,
             current: items.current,
             max: items.maxValue,
             store: items.store,
