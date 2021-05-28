@@ -28,12 +28,14 @@ const OrderDetails = () => {
 
         console.log(JSON.stringify(orderData, null, 4));
 
-        // axiosApiInstance.get('/memberOrderList')
-        //     .then(function (response) {
-        //         console.log('주문 내역 데이터 요청: ', JSON.stringify(response.data, null, 4));
-        //         setMemberOrderList(response.data.data);
-        //     });
+        axiosApiInstance.get('/memberOrderList')
+            .then(function (response) {
+                console.log('주문 내역 데이터 요청: ', JSON.stringify(response.data, null, 4));
+                setMemberOrderList(response.data.data);
+            });
     }, []);
+
+    console.log(memberOrderList);
 
     const ReviewButton = ({ item }) => {
         const [items, setItems] = useState(item);
@@ -110,6 +112,7 @@ const OrderDetails = () => {
     const OrderDetailItem = ({ deliveryComplete, onPress, item }) => {
         const [modalVisible, setModalVisible] = useState(false);
 
+
         const closeModal = () => {
             setModalVisible(!modalVisible);
         };
@@ -129,7 +132,7 @@ const OrderDetails = () => {
 
                 {/* 주문한 메뉴 */}
                 <View style={{ minHeight: 70 }}>
-                    <FlatList data={item.menu} keyExtractor={item => item.menuId.toString()} renderItem={renderMenuItem} />
+                    <FlatList data={item.menu} keyExtractor={item => item.menuId} renderItem={renderMenuItem} />
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
@@ -155,7 +158,7 @@ const OrderDetails = () => {
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />
             <View style={{ padding: 15, flex: 1 }}>
-                <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={({ item }) => <OrderDetailItem item={item} />} inverted />
+                <FlatList data={memberOrderList} keyExtractor={item => item.orderId} renderItem={({ item }) => <OrderDetailItem item={item} />} inverted />
             </View>
         </View>
     );
