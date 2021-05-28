@@ -47,7 +47,7 @@ const OrderDetailItem = ({ route }) => {
 
             <View style={{ padding: 20 }}>
                 <Text style={{ color: 'red', ...FONTS2.body2, marginBottom: SIZES.base * 3 }}>점주에게 보내는 요청사항있을 경우에만 표시</Text>
-                
+
                 <FlatList
                     data={item.menu}
                     keyExtractor={item => item.menuId.toString()}

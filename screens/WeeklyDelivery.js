@@ -68,7 +68,6 @@ const WeeklyDelivery = ({ route, navigation }) => {
 
     await axiosApiInstance.get('/weeklyGroupData')
       .then((res) => {
-
         if (res.data.groupData.length !== 0) {
 
           let groupData = res.data.groupData.map((group) => {

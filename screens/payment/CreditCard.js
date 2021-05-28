@@ -26,15 +26,19 @@ const CreditCard = ({route, navigation}) => {
       if (!postData.groupData) {
 
         console.log('배달그룹 생성완료');
+        console.log(postData.deliDate === todayString);
 
-        // // 결제성공 페이지로 이동 후
+        // 결제성공 페이지로 이동 후
         // navigation.replace('PaymentCompleted',{
         //     paymentMethod: '카드',
         //     totalCost: postData.totalPrice,
         // });
 
-        const temp ={
-          storeId: postData.storeInfo.storeId,
+        axiosApiInstance.post('/groupData', {
+            // groupData
+            storeId: postData.storeInfo.storeId,
+            // time: postData.time,
+            // date: postData.deliDate,
             deliveryDateTime: tempDay,
             maxValue: postData.maxValue,
             groupType: (postData.deliDate === todayString) ? 'day' : 'weekly',
@@ -48,37 +52,16 @@ const CreditCard = ({route, navigation}) => {
             totalCost: postData.totalPrice,
             payMethod: 'card',
             orderTime: new Date(),
-        }
+        }).then( (response) => {
 
-        console.log(JSON.stringify(temp,null,4));
+            console.log('배달그룹 생성완료');
 
-        // axiosApiInstance.post('/groupData', {
-        //     // groupData
-        //     storeId: postData.storeInfo.storeId,
-        //     // time: postData.time,
-        //     // date: postData.deliDate,
-        //     deliveryDateTime: tempDay,
-        //     maxValue: postData.maxValue,
-        //     groupType: (postData.deliDate === todayString) ? 'day' : 'weekly',
-        //     latitude: postData.location.latitude,
-        //     longitude: postData.location.longitude,
-        //     address: postData.location.address,
-        //     buildingName: postData.location.buildingName,
-
-        //     // order Data
-        //     menu: postData.cartItems,
-        //     totalCost: postData.totalPrice,
-        //     payMethod: 'card',
-        //     orderTime: new Date(),
-        // }).then( (response) => {
-
-        //     console.log('배달그룹 생성완료');
-
-        //     // 결제성공 페이지로 이동 후
-        //     navigation.replace('PaymentCompleted',{
-        //         paymentMethod: '카드',
-        //     });
-        // });
+            // 결제성공 페이지로 이동 후
+            navigation.replace('PaymentCompleted',{
+                paymentMethod: '카드',
+                totalCost: postData.totalPrice,
+            });
+        });
 
 
 
