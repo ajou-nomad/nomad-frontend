@@ -13,6 +13,7 @@ import { FIREBASE_WEBCLIENTID } from '@env';
 // ----test-----
 import { participationGroup, clearAll, setData, getData, addData, getDaliyGroupData, getWeeklyGroupData, autoLogin} from './utils/helper';
 import Splash from './components/Splash';
+import { timeConversion } from 'geolib';
 // ----test-----
 
 
@@ -62,7 +63,7 @@ const App = () => {
 
     // Foreground state messages
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.log(JSON.stringify(remoteMessage));
+      // console.log(JSON.stringify(remoteMessage));
       Toast.show({
         type: 'success',
         position: 'top',
@@ -98,7 +99,9 @@ export default App;
 
 
 
-
+// const today = new Date();
+// today.setHours(today.getHours() + 9);
+// console.log(today);
 
 
 
@@ -377,8 +380,8 @@ const groupData = [
   {
     groupId: 557,
     storeId: 1, //빽다방 아주대점
-    time: '09:00',
-    date: '2021-05-24',
+    time: '09:30',
+    date: '2021-05-21',
     groupType: 'weekly',
     current: 2,
     maxValue: 5,
@@ -393,7 +396,7 @@ const groupData = [
     groupId: 558,
     storeId: 2, //스타벅스 아주대점
     time: '11:30',
-    date: '2021-05-25',
+    date: '2021-05-21',
     groupType: 'weekly',
     current: 2,
     maxValue: 5,
@@ -449,6 +452,8 @@ const orderData = [
     storeId: 1,
     storeName: '빽다방 아주대점',
 
+    groupId: 555,
+
 
     // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
     orderStatus: 'deliveryDone',
@@ -478,7 +483,10 @@ const orderData = [
     uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
 
     storeId: 1,
-    storeName: '빽다방 아주대점',
+    storeName: '스타벅스 아주대점',
+
+    groupId: 556,
+
 
     // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
     orderStatus: 'deliveryDone',
@@ -490,13 +498,13 @@ const orderData = [
     menu: [
       {
         menuId: 1,
-        menuName: '앗!메리카노(ICED)',
+        menuName: '아메리카노(ICED)',
         cost: 2000,
         quantity: 1,
       },
       {
         menuId: 9,
-        menuName: '완전아이스초코',
+        menuName: '쇼콜라라떼(HOT)',
         cost: 3500,
         quantity: 1,
       },
@@ -512,6 +520,8 @@ const orderData = [
     storeId: 1,
     storeName: '빽다방 아주대점',
 
+    groupId: 555,
+
     // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
     orderStatus: 'deliveryDone',
 
@@ -537,6 +547,236 @@ const orderData = [
     payMethod: 'card',
     orderTime: '2021-05-17T15:30:00.480Z',
   },
+  {
+    orderId: 4,
+    uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+
+    storeId: 1,
+    storeName: '스타벅스 아주대점',
+
+    groupId: 556,
+
+
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orderStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: null,
+
+    menu: [
+      {
+        menuId: 1,
+        menuName: '아메리카노(ICED)',
+        cost: 2000,
+        quantity: 1,
+      },
+    ],
+    totalCost: 4000,
+    payMethod: 'card',
+    orderTime: '2021-05-17T15:30:00.480Z',
+  },
+  {
+    orderId: 9,
+    uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+
+    storeId: 1,
+    storeName: '스타벅스 아주대점',
+
+    groupId: 556,
+
+
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orderStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: null,
+
+    menu: [
+      {
+        menuId: 9,
+        menuName: '쇼콜라라떼(HOT)',
+        cost: 3500,
+        quantity: 1,
+      },
+    ],
+    totalCost: 4500,
+    payMethod: 'card',
+    orderTime: '2021-05-17T15:30:00.480Z',
+  },
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+  {
+    orderId: 111,
+    uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+
+    storeId: 1,
+    storeName: '빽다방 아주대점',
+
+    groupId: 557,
+
+
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orderStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: {
+      uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+      text: '가성비가 좋아요.!!',
+      imgUrl: '',
+    },
+
+    menu: [
+      {
+        menuId: 1,
+        menuName: '앗!메리카노(ICED)',
+        cost: 2000,
+        quantity: 1,
+      }
+    ],
+    totalCost: 2000,
+    payMethod: 'card',
+    orderTime: '2021-05-15T15:30:00.480Z',
+  },
+  {
+    orderId: 222,
+    uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+
+    storeId: 1,
+    storeName: '스타벅스 아주대점',
+
+    groupId: 558,
+
+
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orderStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: null,
+
+    menu: [
+      {
+        menuId: 1,
+        menuName: '아메리카노(ICED)',
+        cost: 2000,
+        quantity: 1,
+      },
+      {
+        menuId: 9,
+        menuName: '쇼콜라라떼(HOT)',
+        cost: 3500,
+        quantity: 1,
+      },
+    ],
+    totalCost: 5500,
+    payMethod: 'card',
+    orderTime: '2021-05-17T15:30:00.480Z',
+  },
+  {
+    orderId: 888,
+    uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+
+    storeId: 1,
+    storeName: '빽다방 아주대점',
+
+    groupId: 557,
+
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orderStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: null,
+
+    menu: [
+      {
+        menuId: 1,
+        menuName: '앗!메리카노(ICED)',
+        cost: 2000,
+        quantity: 1,
+      },
+      {
+        menuId: 9,
+        menuName: '완전아이스초코',
+        cost: 3500,
+        quantity: 1,
+      },
+    ],
+    totalCost: 5500,
+    payMethod: 'card',
+    orderTime: '2021-05-17T15:30:00.480Z',
+  },
+  {
+    orderId: 444,
+    uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+
+    storeId: 1,
+    storeName: '스타벅스 아주대점',
+
+    groupId: 558,
+
+
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orderStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: null,
+
+    menu: [
+      {
+        menuId: 1,
+        menuName: '아메리카노(ICED)',
+        cost: 2000,
+        quantity: 1,
+      },
+    ],
+    totalCost: 4000,
+    payMethod: 'card',
+    orderTime: '2021-05-17T15:30:00.480Z',
+  },
+  {
+    orderId: 999,
+    uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
+
+    storeId: 1,
+    storeName: '스타벅스 아주대점',
+
+    groupId: 558,
+
+
+    // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
+    orderStatus: 'deliveryDone',
+
+    // 실제로는 storeId를 통해서 해당 storeId로 이동 후
+    //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
+    review: null,
+
+    menu: [
+      {
+        menuId: 9,
+        menuName: '쇼콜라라떼(HOT)',
+        cost: 3500,
+        quantity: 1,
+      },
+    ],
+    totalCost: 4500,
+    payMethod: 'card',
+    orderTime: '2021-05-17T15:30:00.480Z',
+  },
 ];
 
 
@@ -548,10 +788,6 @@ const chatList = [
     chatIds: ['채팅방id1','채팅방id2'],
   },
 ];
-
-
-
-
 
 
 

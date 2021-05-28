@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 
 import {
   View,
@@ -12,29 +12,45 @@ import {
 } from 'react-native';
 import {icons, COLORS, SIZES, FONTS} from '../../constants';
 
+import { logout } from '../../utils/helper';
+
 import AvailableDeliveryListComponent from '../../components/carrier/AvailableDeliveryListComponent'
+import { AuthContext } from '../../context/AuthContextProvider';
 
 
 const CarrierDetail = (props) => {
-    
+
+  const { state, dispatch } = useContext(AuthContext);
+
     let deliveryInfo = [];
     const today = props.today;
 
-    props.location === null ? console.log('Getting Location...') : props.availableGroup.map((groupInfo,groupIndex)=>{
-        props.availableStore.map((storeInfo,storeIndex)=>{
-            if (groupInfo.storeId === storeInfo.storeId){
-                // console.log(groupIndex + ' ' + storeIndex + ': groupInfo.storeId:' + groupInfo.storeId + ' === ' + 'storeInfo.stoerId: ' + storeInfo.storeId);
-                deliveryInfo = [...deliveryInfo, {index:groupIndex,...groupInfo,...storeInfo}]
-            }
-        });
-    });
+    props.location === null ? console.log('Getting Location...') :
+      props.availableGroup.map((groupInfo,groupIndex)=>{
+          props.availableStore.map((storeInfo,storeIndex)=>{
+            let newOne = 0;
+            props.availableOrder.map((orderInfo,orderIndex)=>{
+              if (groupInfo.storeId === storeInfo.storeId){
+                  if (groupInfo.groupId === orderInfo.groupId ){
+                    if (!newOne){
+                      deliveryInfo = [...deliveryInfo, {index: groupIndex + storeIndex + orderIndex, groupData:groupInfo, storeData:storeInfo, orderArray: [orderInfo]}]
+                      newOne = 1;
+                    } else {
+                      deliveryInfo[deliveryInfo.length - 1].orderArray = [...deliveryInfo[deliveryInfo.length-1].orderArray,orderInfo]
+                    }
+                }
+              }
+            });
+          });
+      });
+
 
     const Header = () =>{
         return (
           <View style={{  marginVertical: 5 , flexDirection: 'row', alignItems: 'center' }}>
             <View style={{flex:1}} >
               <TouchableOpacity
-                onPress={() => {alert('logout');}}
+                onPress={() => {logout(dispatch);}}
                 >
                 <Text style={{ borderRadius: 15 ,borderWidth: 3, textAlign:'center', textAlignVertical:'center' , fontSize:17, fontWeight:'bold',width:'145%'}}>logout</Text>
               </TouchableOpacity>
@@ -56,15 +72,15 @@ const CarrierDetail = (props) => {
     );
 
 
-    return props.location === null
-    ? <Text>현 위치를 불러오는 중 입니다...</Text>
+    return !props.availableOrder
+    ? <Text style={{flex:1, textAlign:'center', textAlignVertical:'center'}} >현 위치를 불러오는 중 입니다...</Text>
     :
         <View>
             {Header()}
             <FlatList
                 data={deliveryInfo}
                 renderItem={renderAvailableGroup}
-                keyExtractor={item => item.groupId.toString()}
+                keyExtractor={item => item.index.toString()}
             />
         </View>
     ;

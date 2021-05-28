@@ -177,7 +177,9 @@ const TimeTable = (props) => {
 		);
 	};
 
+
    const todayDate = new Date(today);
+   todayDate.setTime(todayDate.getTime() + 9);
    const todayDay = todayDate.getDay();
    const dayArrayEng = ['monday','tuesday','wednesday','thursday','friday'];
    const dayArrayKor = ['월','화','수','목','금'];

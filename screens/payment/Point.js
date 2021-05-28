@@ -10,13 +10,17 @@ const Point = ({ route, navigation }) => {
     const today = new Date();
     const todayString = JSON.stringify(today).substr(1,10);
 
+    const tempDay = new Date(postData.deliDate);
+    tempDay.setHours(postData.time.substr(0,2) * 1 + 9);
+    tempDay.setMinutes(postData.time.substr(3,4) * 1);
+    console.log(tempDay);
+
     if (postData.groupData === undefined || postData.groupData === null){
-      // const today = new Date();
-      // const todayString = JSON.stringify(today).slice(1,10);
       const creationGroupData = {
         storeId: postData.storeInfo.storeId,
-        time: postData.time,
-        date: postData.deliDate,
+        // time: postData.time,
+        // date: postData.deliDate,
+        deliveryDateTime: tempDay,
         maxValue: postData.maxValue,
         grouptype: (postData.deliDate === todayString) ? 'day' : 'weekly',
         latitude: postData.location.latitude,
@@ -32,7 +36,7 @@ const Point = ({ route, navigation }) => {
           orderTime: new Date(),
         },
       };
-      console.log(JSON.stringify(creationGroupData,null,4));
+      // console.log(JSON.stringify(creationGroupData,null,4));
     } else {
       const participationGroupData = {
         groupId: postData.groupData.groupId,
@@ -45,9 +49,9 @@ const Point = ({ route, navigation }) => {
           orderTime: new Date(),
         },
       };
-      console.log(JSON.stringify(participationGroupData,null,4));
+      // console.log(JSON.stringify(participationGroupData,null,4));
       participationGroup(participationGroupData.groupId, participationGroupData.orderData).then((data)=>{
-        console.log("hi");
+        // console.log("hi");
         navigation.popToTop();
       });
       // participationGroup(participationGroupData.groupId, participationGroupData.orderData);
