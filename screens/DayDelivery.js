@@ -57,6 +57,7 @@ const DayDelivery = ({ route, navigation }) => {
 
               return group;
             });
+
             setResponseDailyData(groupData);
           } else {
             console.log('get /dailyGroupData가 아직 없습니다.');
@@ -69,7 +70,7 @@ const DayDelivery = ({ route, navigation }) => {
 
       await axiosApiInstance.get('storeList').then((response) => {
 
-        // console.log(JSON.stringify(response.data.data, null, 4));
+        console.log(JSON.stringify(response.data.data, null, 4));
         setResponseStoreData(response.data.data);
       });
     };

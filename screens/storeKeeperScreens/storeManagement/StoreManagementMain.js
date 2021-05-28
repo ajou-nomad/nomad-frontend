@@ -1,14 +1,14 @@
 /* eslint-disable prettier/prettier */
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Store from '../../../components/store/Store';
-import StoreManagementDetail from './StoreManagementDetail';
 import { logout } from '../../../utils/helper';
 import { AuthContext } from '../../../context/AuthContextProvider';
 import Header from '../../../components/layout/Header';
-import { COLORS, FONTS2 } from '../../../constants';
+import { COLORS, FONTS2, icons, SIZES } from '../../../constants';
+import MyPageButton from '../../../components/MyPageButton';
 
-const StoreManagementMain = () => {
+const StoreManagementMain = ({ navigation }) => {
     /*FlatList로 변경 필요 */
     /* .Get("/storeData") */
     
@@ -20,7 +20,7 @@ const StoreManagementMain = () => {
     };
 
     const storeData = {
-        storeName: '빽다방 아주대점',
+        storeName: state.member.nickName,
         storeOpen: false,
         storeOrderStatus: {
             Todo: 10,
@@ -30,17 +30,16 @@ const StoreManagementMain = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Header title='매장관리' small='true'/>
             <Store storeData={storeData} />
-            <StoreManagementDetail />
-            <TouchableOpacity
-                onPress={signOutGoogle}
-                style={{ width: '100%', height: 40, backgroundColor: "yellow", justifyContent: 'center', alignItems: 'center'}}
-            >
-                <Text style={{ ...FONTS2.h3 }}>로그아웃</Text>
-            </TouchableOpacity>
-        </View>
+            {/* <StoreManagementDetail /> */}
+            <View style={{ marginBottom: SIZES.base * 4 }} />
+            <MyPageButton title='공지사항 관리' img={icons.notice} onPress={() => navigation.navigate('StoreManagementNotice')} />
+            <MyPageButton title='메뉴관리' img={icons.pencil} onPress={() => navigation.navigate('StoreManagementMenu')} />
+            <MyPageButton title='리뷰관리' img={icons.review} onPress={() => navigation.navigate('StoreManagementReview')} />
+            <MyPageButton title='로그아웃' img={icons.logout} onPress={signOutGoogle} />
+        </ScrollView>
     );
 };
 

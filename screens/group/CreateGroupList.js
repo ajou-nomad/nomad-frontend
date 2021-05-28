@@ -32,8 +32,6 @@ function CreateGroupList({ navigation, route }) {
     const datePicker = route.params.datePicker;
     const storeData = route.params.storeData;
 
-    // console.log('params: '+ JSON.stringify(route.params,null,4) );
-
     const onPlaceChange = (region) => {
         setDeliveryPlace(region);
     };

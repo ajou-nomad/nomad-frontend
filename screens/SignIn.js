@@ -2,7 +2,7 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Keyboard, Text, View, Image, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Button } from 'react-native';
+import { StyleSheet, Keyboard, Text, View, Image, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Button, ImageBackground } from 'react-native';
 import { icons, SIZES, FONTS, COLORS } from '../constants';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { emailPasswordLogin, googleLogin, logout } from '../utils/helper';
@@ -71,9 +71,7 @@ const SignIn = ({router, navigation}) => {
 
             axiosApiInstance
                 .get('/member')
-                .then(async (response) => {
-                    
-                    console.log(JSON.stringify(response.data, null, 4));
+                .then( async (response) => {
 
                     console.log(response.data)
 
@@ -105,14 +103,30 @@ const SignIn = ({router, navigation}) => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.loginScreenContainer}>
                     <View style={styles.logoContainer}>
+                        {/* <ImageBackground source={icons.doddle} resizeMode='contain' style={{ width: 260, height: 95, }} imageStyle={{ tintColor: '#868e96'}}>
+                            <Image
+                                source={icons.ko_logo}
+                                resizeMode="contain"
+                                style={{
+                                    // width: 400,
+                                    // height: 120,
+                                    width: 240,
+                                    height: 90,
+                                    tintColor: '#f8f9fa',
+                                    alignSelf: 'center',
+                                }}
+                                />
+                        </ImageBackground> */}
                         <Image
-                            source={icons.logo}
-                            resizeMode="contain"
-                            style={{
-                                width: 400,
-                                height: 120,
-                            }}
-                        />
+                                source={icons.logo}
+                                resizeMode="contain"
+                                style={{
+                                    // width: 400,
+                                    // height: 120,
+                                    width: 240,
+                                    height: 90,
+                                }}
+                                />
                     </View>
                     <ScrollView style={styles.loginFormView}>
 

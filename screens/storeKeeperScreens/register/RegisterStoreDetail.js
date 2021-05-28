@@ -70,6 +70,8 @@ const RegisterStoreDetail = ({navigation}) => {
     };
 
 
+    console.log(category)
+
 
 
 
@@ -113,7 +115,7 @@ const RegisterStoreDetail = ({navigation}) => {
                             selectionColor="#000000"
                             onChangeText={(text) => setStoreName(text)}
                         />
-
+                        
                         {/* 카테고리 */}
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>카테고리</Text>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}  >

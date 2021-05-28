@@ -14,6 +14,7 @@ import BottomButton from '../../components/layout/BottomButton';
 import Header from '../../components/layout/Header';
 import { FONTS2, COLORS, icons, SIZES } from '../../constants';
 import { getData } from '../../utils/helper';
+import axiosApiInstance from '../../utils/axios';
 
 const CreateReview = ({ route }) => {
     const navigation = useNavigation();
@@ -21,14 +22,15 @@ const CreateReview = ({ route }) => {
     const [text, setText] = useState('');
 
     // let [orderData, setOrderData] = useState();
-    let { item,setItems } = route.params;
+    let { item, setItems } = route.params;
+    
+
 
 
     // console.log('hhhh: ', item);
     // console.log('CreateReview ', item); // item.orderId
 
     // getData('orderData').then(data => setOrderData(data));
-
 
     const renderRating = () => {
         return (
@@ -85,14 +87,28 @@ const CreateReview = ({ route }) => {
             ToastAndroid.showWithGravity('작성한 리뷰가 없습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
         }
         else {
-            item = {
-                ...item,
-                review: {
-                    reviewId: uuid.v4(),
-                    text: text,
-                },
-            };
-            setItems(item);
+            // item = {
+            //     ...item,
+            //     review: {
+            //         reviewId: uuid.v4(),
+            //         text: text,
+            //     },
+            // };
+            // setItems(item);
+
+            // 리뷰 axios
+
+            const currentTime = new Date();
+            currentTime.setHours(currentTime.getHours() + 9);
+
+            await axiosApiInstance.post('/review', {
+                contents: text,
+                rate: 5,
+                localDateTime: currentTime,
+                imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/reviewimage%2F1c2b5839-0760-485c-817a-780d68c924a8.jpg?alt=media&token=295fe92f-316c-44cb-aef1-d57e308f8f4b'
+            }).then(function (response) {
+				console.log('리뷰 등록: ', response.data);
+            });
 
             navigation.goBack();
             ToastAndroid.showWithGravity('리뷰가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);

@@ -76,6 +76,10 @@ const close = require("../assets/icons/close.png");
 const goback = require("../assets/icons/goback.png");
 const clock = require("../assets/icons/clock.png");
 const pin2 = require("../assets/icons/pin2.png");
+const check = require("../assets/icons/check.png");
+const doddle = require("../assets/icons/doddle.png");
+const notice = require("../assets/icons/notice.png");
+const more = require("../assets/icons/more.png");
 
 export default {
     mic,
@@ -153,4 +157,8 @@ export default {
     clock,
     pin2,
     pin3,
+    check,
+    doddle,
+    notice,
+    more,
 }
