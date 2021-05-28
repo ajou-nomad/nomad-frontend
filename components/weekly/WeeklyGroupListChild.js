@@ -97,12 +97,7 @@
        <NewGroupButton initLocation={location} deliDate={date} storeData={storeData} />
      </View>
    );
-};
- 
- // react-native-linear-gradient
- // 연한 블루: #EDF2FF
- // 진한 블루: #364FC7
- // 회색: #F1F3F5
+ }
  
 const styles = StyleSheet.create({
   container: {

@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
       position: 'absolute',
       bottom: 25,
       width: SIZES.width * 0.55,
-      alignSelf: 'center'
+      alignSelf: 'center',
     },
     newGroupView:{
       flexDirection: 'row',

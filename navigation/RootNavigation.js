@@ -30,7 +30,7 @@ import CreateReview from '../screens/review/CreateReview';
 import SearchPlace from '../screens/search/SearchPlace';
 import OrderDetailItem from '../components/item/OrderDetailItem';
 
-import CarrierMain from '../screens/carrier/CarrierMain';
+import DeliveryNavigation from './DeliveryNavigation';
 
 
 const RootStack = createStackNavigator();
@@ -138,7 +138,7 @@ const StoreKeeperStack = () => {
 
     const {state, dispatch} = useContext(AuthContext);
 
-    if (state.member.storeId){ //점주가 매장등록 했을 때, 안했을 때
+    if (state.member.storeId){ //점주가 매장등록 했을 때, 안했을 때 state.member.storeId
         return (
             <Stack.Navigator
             screenOptions={{
@@ -175,9 +175,9 @@ const carrierStack = () => {
         screenOptions={{
             headerShown: false,
         }}
-        initialRouteName={'CarrierMain'}
+        initialRouteName={'DeliveryNavigation'}
         >
-            <Stack.Screen name="CarrierMain" component={CarrierMain} />
+            <Stack.Screen name="DeliveryNavigation" component={DeliveryNavigation} />
         </Stack.Navigator>
     );
 };

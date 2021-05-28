@@ -32,9 +32,7 @@ import StoreInfo from './StoreInfo';
 
 // 메뉴 (flatlist로 바꾸기)
 const MenuRoute = ({ route }) => {
-    
     return (
-    
         <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
             <ScrollView>
                 {route.menu.map((items, index) => {
@@ -44,7 +42,7 @@ const MenuRoute = ({ route }) => {
                 })}
             </ScrollView>
         </SafeAreaView>
-    )
+    );
 };
 
 // 매장 정보

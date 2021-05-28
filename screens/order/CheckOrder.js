@@ -10,38 +10,11 @@ import {
 } from 'react-native';
 import OrderMenuItem from '../../components/item/OrderMenuItem';
 import BottomButton from '../../components/layout/BottomButton';
-import { FONTS2 } from '../../constants';
+import { FONTS2, SIZES } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
 
 const CheckOrder = ({route:{params}}) => {
-
-    // console.log(`CheckOrder's params: ${JSON.stringify(params,null,4)}`);
-
     const navigation = useNavigation();
-    // const orderInfo = {
-    //     storeName: params.storeInfo.storeName,
-    //     delPlace: params.location.buildingName,
-    //     delTime: params.time,
-    //     peopleNum: 1,
-    //     totalNum: 4,
-    //     foods: [
-    //         {
-    //             name: '파인트(플레이버 3가지)',
-    //             total: 1,
-    //             price: 8200,
-    //             options: [
-    //                 {
-    //                     name: '31요거트',
-    //                     total: 2,
-    //                 },
-    //                 {
-    //                     name: '엄마는 외계인',
-    //                     total: 1,
-    //                 },
-    //             ],
-    //         }
-    //     ]
-    // };
 
     const totalPrice = params.totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     const current = (params.groupData === undefined || params.groupData === null) ? 1 : params.groupData.current;
@@ -50,7 +23,7 @@ const CheckOrder = ({route:{params}}) => {
     return (
         <View style={styles.container}>
             <View style={{ flex: 4.5 }}>
-                <View style={{ flex: 1.8, alignItems: 'center', marginTop: 15, borderBottomWidth: 0.5, }}>
+                <View style={{ flex: 1.8, alignItems: 'center', marginTop: 15, borderBottomWidth: 0.3, paddingBottom: SIZES.base * 3 }}>
                     <Text style={{ ...FONTS2.h2 }}>주문 내용</Text>
                     <Text style={{ ...FONTS2.h1, marginTop: 20, marginBottom: 10, }}>{params.storeInfo.storeName}</Text>
 

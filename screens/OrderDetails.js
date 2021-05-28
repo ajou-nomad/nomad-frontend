@@ -16,13 +16,23 @@ import Receipt from '../screens/Receipt';
 LogBox.ignoreAllLogs();
 
 import { getData } from '../utils/helper';
+import axiosApiInstance from '../utils/axios';
 
 const OrderDetails = () => {
     const navigation = useNavigation();
     const [orderData, setOrderData] = useState(null);
+    const [memberOrderList, setMemberOrderList] = useState(null);
 
     useEffect(() => {
         getData('orderData').then(data => setOrderData(data));
+
+        console.log(JSON.stringify(orderData, null, 4));
+
+        // axiosApiInstance.get('/memberOrderList')
+        //     .then(function (response) {
+        //         console.log('주문 내역 데이터 요청: ', JSON.stringify(response.data, null, 4));
+        //         setMemberOrderList(response.data.data);
+        //     });
     }, []);
 
     const ReviewButton = ({ item }) => {
@@ -103,8 +113,7 @@ const OrderDetails = () => {
         const closeModal = () => {
             setModalVisible(!modalVisible);
         };
-        
-        
+
         const date = new Date(item.orderTime);
         return (
             <View style={styles.storeContainer}>
@@ -142,17 +151,11 @@ const OrderDetails = () => {
         );
     };
 
-    const renderItem = ({ item }) => {
-        return (
-            <OrderDetailItem item={item} />
-        );
-    };
-
     return (
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />
             <View style={{ padding: 15, flex: 1 }}>
-                <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={renderItem} inverted />
+                <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={({ item }) => <OrderDetailItem item={item} />} inverted />
             </View>
         </View>
     );
@@ -164,7 +167,6 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white,
     },
     storeContainer: {
-        flex: 1,
         marginVertical: 10,
         width: responsiveScreenWidth(90),
         // backgroundColor: '#f1f3f5',

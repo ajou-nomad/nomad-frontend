@@ -19,12 +19,12 @@ const ReviewPage = () => {
             </View>
 
             <View style={{ width: responsiveWidth(90), alignSelf: 'center' }}>
-                <ReviewItem isMypage='true'/>
-                <ReviewItem isMypage='true'/>
+                <ReviewItem isMypage='true' />
+                <ReviewItem isMypage='true' />
             </View>
         </ScrollView>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
