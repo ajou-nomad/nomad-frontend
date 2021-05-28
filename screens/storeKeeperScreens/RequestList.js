@@ -45,7 +45,7 @@ const RequestList = () => {
                     cost: 2000,
                 },
                 {
-                    menuId: 2,
+                    menuId: 3,
                     menuName: '바닐라라떼',
                     quantity: 1,
                     cost: 3500,

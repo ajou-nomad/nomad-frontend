@@ -79,6 +79,10 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
     //   }
     // };
 
+  // "2021-05-28T19:45:00Z"
+  // console.log(JSON.stringify(deliveryDateTime).substr(1,10)); //2021-05-28
+  // console.log(JSON.stringify(deliveryDateTime).substr(12,5)); //19:45
+
     const DayDeliveryData = ()=>{
       let tempGroupData_Day = [];
 
@@ -97,7 +101,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
             {
               groupId: items.groupId,
               logo: items.store.logoUrl,
-              time: items/*.deliveryDateTime.substr(12,4)*/.time,
+              time: JSON.stringify(items.deliveryDateTime).substr(12,5),
               current: items.current,
               max: items.maxValue,
               store: items.store,
@@ -116,7 +120,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
           {
             groupId: items.groupId,
             logo: items.store.logoUrl,
-            time: items/*.deliveryDateTime.substr(12,4)*/.time,
+            time: JSON.stringify(items.deliveryDateTime).substr(12,5),
             current: items.current,
             max: items.maxValue,
             store: items.store,
@@ -150,8 +154,8 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
             {
               groupId: items.groupId,
               logo: items.store.logoUrl,
-              time: items/*.deliveryDateTime.substr(12,4)*/.time,
-              date: items/*.deliveryDateTime.substr(0,11)*/.date,
+              time: JSON.stringify(items.deliveryDateTime).substr(12,4),
+              date: JSON.stringify(items.deliveryDateTime).substr(1,10),
               current: items.current,
               max: items.maxValue,
               store: items.store,
@@ -170,8 +174,8 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
           {
             groupId: items.groupId,
             logo: items.store.logoUrl,
-            time: items/*.deliveryDateTime.substr(12,4)*/.time,
-            date: items/*.deliveryDateTime.substr(0,11)*/.date,
+            time: JSON.stringify(items.deliveryDateTime).substr(12,4),
+            date: JSON.stringify(items.deliveryDateTime).substr(1,10),
             current: items.current,
             max: items.maxValue,
             store: items.store,
