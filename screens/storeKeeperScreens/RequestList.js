@@ -1,12 +1,27 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 
 import { FONTS2, icons, COLORS } from '../../constants';
 import Header from '../../components/layout/Header';
 import OrderItem from '../../components/item/OrderItem';
+import axiosApiInstance from '../../utils/axios';
 
-const RequestList = () => {
+const RequestList = ({navigation}) => {
+
+
+
+    // useEffect(() => {
+    //     // navigation에서 올때마다 최신데이터 호출( 리렌더링은 제외 )
+    //     const unsubscribe = navigation.addListener('focus', async () => {
+
+    //         axiosApiInstance.get('상점의 주문목록들 받아오기').then((data) => console.log('저장할 setState'));
+    //     });
+
+    //     return unsubscribe;
+    // }, []);
+
+
     const data = [
         {
             // order data
@@ -32,14 +47,14 @@ const RequestList = () => {
             longitude: 127.04435940777411,
             address: '수원시 원천동',
             buildingName: '팔달관',
-            orderStatus: '모집 완료',
+            orderStatus: 'recruitmentDone',
         },
         {
             // order data
             orderId: 2,
             menu: [
                 {
-                    menuId: 2,
+                    menuId: 1,
                     menuName: '복숭아 아이스티',
                     quantity: 2,
                     cost: 2000,
@@ -58,7 +73,7 @@ const RequestList = () => {
             longitude: 127.04435940777411,
             address: '수원시 원천동',
             buildingName: '원천관',
-            orderStatus: '모집 완료',
+            orderStatus: 'recruitmentDone',
         },
         {
             // order data
@@ -84,7 +99,7 @@ const RequestList = () => {
             longitude: 127.04435940777411,
             address: '수원시 원천동',
             buildingName: '성호관',
-            orderStatus: '접수 완료',
+            orderStatus: 'waitingForDelivery',
         },
     ];
 
