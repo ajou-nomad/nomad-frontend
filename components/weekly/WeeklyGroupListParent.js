@@ -11,7 +11,7 @@
 */
 
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ImageBackground, } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, ImageBackground, } from 'react-native';
 import { FONTS2, COLORS, images } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
 
@@ -28,8 +28,11 @@ export default function WeeklyGroupListParent(props) {
     //     case 'gps': logo = require('../assets/icons/noodle.png'); break;
 
     // }
-    const navigation = useNavigation();
-    const tableTime = props.time.slice(0,2);
+    // const navigation = useNavigation();
+    // const tableTime = props.time.slice(0,2);
+    // const groupList = props.groupList.filter(
+    //     ({date,time}) => (date === props.date) && (time.slice(0,2) === tableTime)
+    // );
     // const extractDate = (date) =>{
     //     return JSON.stringify(new Date(date)).slice(1,10);
     // }
@@ -38,22 +41,22 @@ export default function WeeklyGroupListParent(props) {
     //     console.log(itemDate + ' === ' + propsDate)
     //     return extractDate(itemDate) === extractDate(propsDate);
     // }
-    const groupList = props.groupList.filter(
-        ({date,time}) => (date === props.date) && (time.slice(0,2) === tableTime)
-    );
 
-    const storeData = props.storeData;
+    // const storeData = props.storeData;
 
-    const currentGroup = groupList.length;
-
+    // const currentGroup = groupList.length;
+    console.log(JSON.stringify(props.route.params,null,4));
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
+            <Text>
+                {JSON.stringify(props.route.params,null,4)}
+            </Text>
             {/* <TouchableOpacity
                 onPress={() => navigation.navigate('WeeklyGroupListChild', {
-                    date: props.date,
-                    time: props.time,
-                    location: props.location,
-                    currentGroup: currentGroup,
+                    date: date,
+                    time: time,
+                    location: location,
+                    currentGroup: groupList.length,
                     groupList: groupList,
                     storeData: storeData,
                     back: 'TimeTable',
@@ -95,7 +98,7 @@ export default function WeeklyGroupListParent(props) {
                     
                 </View>
             </TouchableOpacity> */}
-        </View>
+        </ScrollView>
     );
 }
 

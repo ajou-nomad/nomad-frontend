@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Image, StyleSheet, Alert } from 'react-native';
 import { Bubble, GiftedChat, Send, SystemMessage, Actions, } from 'react-native-gifted-chat';
 import auth from '@react-native-firebase/auth';
@@ -16,7 +16,12 @@ import { useNavigation } from '@react-navigation/native';
 import { COLORS, FONTS2, icons } from '../../constants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import {AuthContext} from '../../context/AuthContextProvider';
+
+
 const ChatScreen = ({ route }) => {
+    
+    const {state} = useContext(AuthContext);
 
     const user = auth().currentUser;
 
@@ -350,7 +355,7 @@ const ChatScreen = ({ route }) => {
                 renderMessage={renderMessage}
                 renderActions={renderActions}
             />
-            { user.email === 'wjsxorjs@naver.com' ?
+            { state.member.memberType === 'Deli' ?
             <TouchableOpacity
                 onPress={()=>{
                     alert('post: change to 배달 완료');
