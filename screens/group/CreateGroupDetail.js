@@ -26,7 +26,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
 
     const [buildingName, setBuildingName] = useState(params.location.buildingName);
 	const todayFullDate = new Date();
-	
+
 	todayFullDate.setDate(todayFullDate.getDate() + 1);
 	
     if (todayFullDate.getDay() === 0) {
@@ -44,7 +44,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
     // console.log(today)
     const [groupDate,setGroupDate] = useState(today);
     const [time,setTime] = useState(today);
-    const [maxValue,setMax] = useState(1);
+    const [maxValue,setMax] = useState(2);
 
     const setGroupDateValue = (dateDifference) =>{
         const d = new Date(todayForWeekly);
@@ -76,7 +76,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
           <View style={styles.calendarView}>
             {/* 날짜 버튼 */}
             {weeklyDate.map( (item, index) => (
-              <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+              <View key={index} style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{color: 'black', ...FONTS2.body6, fontWeight: 'bold'}}>{dayArrayKorFixed[index]}</Text>
                 <Pressable
                   key={index}
@@ -190,7 +190,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
 							width: 300,
 							paddingBottom: 10,
 						}} />
-						<Text style={{ ...FONTS2.body3, marginVertical: SIZES.base, marginBottom: SIZES.base * 3, color: '#f03e3e' }}>* 최대 2명 이상을 선택하셔야 합니다.</Text>
+						<Text style={{ ...FONTS2.body3, marginVertical: SIZES.base, marginBottom: SIZES.base * 3, color: '#f03e3e' }}>* 최소 2명 이상을 선택하셔야 합니다.</Text>
 					</View>
 				</View>
 
