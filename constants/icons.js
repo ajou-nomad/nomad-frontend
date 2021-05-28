@@ -76,8 +76,14 @@ const close = require("../assets/icons/close.png");
 const goback = require("../assets/icons/goback.png");
 const clock = require("../assets/icons/clock.png");
 const pin2 = require("../assets/icons/pin2.png");
+const credit_card2 = require("../assets/icons/credit_card2.png");
+const check = require("../assets/icons/check.png");
+const check2 = require("../assets/icons/check2.png");
 
 export default {
+    check2,
+    check,
+    credit_card2,
     mic,
     receipt,
     google_marker,

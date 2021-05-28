@@ -10,7 +10,7 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 import { Svg, Path } from 'react-native-svg';
 import { moderateScale } from 'react-native-size-matters';
 
-import { animations, icons, COLORS, SIZES, FONTS2, images, FONTS3 } from "../../constants";
+import { animations, icons, COLORS, SIZES, FONTS2, images, FONTS3 } from '../../constants';
 import MyPageButton from '../../components/MyPageButton';
 import auth from '@react-native-firebase/auth';
 import { AuthContext } from '../../context/AuthContextProvider';
@@ -25,18 +25,18 @@ const MyPage = ({ navigation }) => {
 
 
   const { state, dispatch } = useContext(AuthContext);
-  
+
   // {"isSignedIn": true, "member": {"email": "ajouajou@gmail.com", "memberType": "User", "nickName": "아주아주", "phoneNum": "010-1111-1111", "point": 0}}
   console.log('mypage:: ', state);
-  
+
   useEffect(() => {
-    console.log("Mypage 불릴때");
+    console.log('Mypage 불릴때');
 
     // navigation에서 올때마다 호출( 리렌더링은 제외 )
-    navigation.addListener('focus', async () => {
-      console.log("Mypage 올떄마다 호출")
-              
-    })
+    const unsubscribe = navigation.addListener('focus', async () => {
+      console.log('Mypage 올떄마다 호출');
+    });
+
 
     const getAxiosData = async () => {
 
@@ -87,11 +87,13 @@ const MyPage = ({ navigation }) => {
       //     console.log('에러:: ', e);
       //   });
 
-      
+
     };
 
-    
     getAxiosData();
+
+
+    return unsubscribe;
   }, []);
 
 

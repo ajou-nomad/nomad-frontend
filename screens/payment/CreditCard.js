@@ -6,7 +6,7 @@ import { createGroup, participationGroup } from '../../utils/helper';
 import axiosApiInstance from '../../utils/axios';
 import { Alert } from 'react-native';
 
-const Payment = ({route, navigation}) => {
+const CreditCard = ({route, navigation}) => {
 
   const { paymentInfo, postData } = route.params;
 
@@ -21,29 +21,35 @@ const Payment = ({route, navigation}) => {
       // 배달 생성시 groupData는 존재x
       if (!postData.groupData) {
 
-        axiosApiInstance.post('/groupData', {
-          // groupData
-          storeId: postData.storeInfo.storeId,
-          time: postData.time,
-          date: postData.deliDate,
-          maxValue: postData.maxValue,
-          groupType: (postData.deliDate === todayString) ? 'day' : 'weekly',
-          latitude: postData.location.latitude,
-          longitude: postData.location.longitude,
-          address: postData.location.address,
-          buildingName: postData.location.buildingName,
-
-          // order Data
-          menu: postData.cartItems,
+        // 결제성공 페이지로 이동 후
+        navigation.replace('PaymentCompleted',{
+          paymentMethod: '카드',
           totalCost: postData.totalPrice,
-          payMethod: 'Card',
-          orderTime: new Date(),
-        }).then( (response) => {
-
-          console.log('배달그룹생성완료');
-          console.log(JSON.stringify(response.data, null, 4));
-          navigation.popToTop();
         });
+
+        // axiosApiInstance.post('/groupData', {
+        //   // groupData
+        //   storeId: postData.storeInfo.storeId,
+        //   time: postData.time,
+        //   date: postData.deliDate,
+        //   maxValue: postData.maxValue,
+        //   groupType: (postData.deliDate === todayString) ? 'day' : 'weekly',
+        //   latitude: postData.location.latitude,
+        //   longitude: postData.location.longitude,
+        //   address: postData.location.address,
+        //   buildingName: postData.location.buildingName,
+
+        //   // order Data
+        //   menu: postData.cartItems,
+        //   totalCost: postData.totalPrice,
+        //   payMethod: 'card',
+        //   orderTime: new Date(),
+        // }).then( (response) => {
+
+        //   console.log('배달그룹생성완료');
+        //   console.log(JSON.stringify(response.data, null, 4));
+        //   navigation.popToTop();
+        // });
 
         // createGroup(creationGroupData.groupData, creationGroupData.orderData).then(() => {
         //   console.log("hi");
@@ -104,4 +110,4 @@ const Payment = ({route, navigation}) => {
   );
 };
 
-export default Payment;
+export default CreditCard;

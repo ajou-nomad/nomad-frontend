@@ -5,9 +5,9 @@ export const AuthContext = createContext();
 
 // state의 초기 값을 설정한다
 const initialState = {
-  isSignedIn: true,
+  isSignedIn: false,
   member: {
-    memberType: 'Shop',
+    memberType: 'User',
     phoneNum: 0,
     nickName: '',
     email: '',

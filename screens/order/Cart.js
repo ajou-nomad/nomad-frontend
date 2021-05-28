@@ -105,7 +105,7 @@ const Cart = ({ navigation, route:{params} }) => {
                 {/* 메뉴, 주문 금액, 요청사항 */}
                 {renderBody()}
                 {/* 그룹 생성하기 버튼 */}
-                <View style={{position: 'absolute', bottom: 0, width: SIZES.width}}>
+                <View style={{ width: SIZES.width}}>
                     {(params.location.buildingName && params.deliDate && params.time) ? (
                         <BottomButton onPress={() => !totalPrice ? alert('? 아무것도 사지 않으셨는데 결제는 어떻게 하시려고요??') : navigation.navigate('CheckOrder', { totalPrice: totalPrice, cartItems: params.cartItems, time: params.time, location: params.location, storeInfo: params.storeInfo, deliDate: params.deliDate, groupData: params.groupData })} title="결제하기" />
                     ) : (

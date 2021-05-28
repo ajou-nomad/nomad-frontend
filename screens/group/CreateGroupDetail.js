@@ -76,7 +76,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
           <View style={styles.calendarView}>
             {/* 날짜 버튼 */}
             {weeklyDate.map( (item, index) => (
-              <View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+              <View key={index} style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{color: 'black', ...FONTS2.body6, fontWeight: 'bold'}}>{dayArrayKorFixed[index]}</Text>
                 <Pressable
                   key={index}
