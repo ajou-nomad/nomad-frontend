@@ -24,6 +24,7 @@ const PaymentCompleted = ({ navigation, route: { params } }) => {
                             })
                         }
                         style={{ position: 'absolute', left: SIZES.width * 0.045, top: SIZES.height * 0.025 }}
+                        hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }} //터치영역 확장
                     >
                         <Image
                             source={icons.close}
