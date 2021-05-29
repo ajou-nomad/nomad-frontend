@@ -15,7 +15,14 @@ const PaymentCompleted = ({ navigation, route: { params } }) => {
                 {/* Header */}
                 <View style={styles.title}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Tabs',{routeName: ''})}
+                        onPress={() =>
+                            navigation.navigate('Tabs', {
+                                screen: (params.groupType === 'day') ? '당일 모집' : '주간 모집',
+                                params: {
+                                    screen: (params.groupType === 'day') ? 'DayDelivery' : 'WeeklyDelivery',
+                                },
+                            })
+                        }
                         style={{ position: 'absolute', left: SIZES.width * 0.045, top: SIZES.height * 0.025 }}
                     >
                         <Image
@@ -44,7 +51,7 @@ const PaymentCompleted = ({ navigation, route: { params } }) => {
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 5}}>
                         <Text style={{ ...FONTS2.h4 }}>결제 금액</Text>
-                        <Text style={{ ...FONTS2.h4, color: '#339af0' }}>{params.totalCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
+                        <Text style={{ ...FONTS2.h4, color: '#339af0' }}>{params.totalCost?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
                     </View>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: SIZES.base * 3 }}>
@@ -65,7 +72,14 @@ const PaymentCompleted = ({ navigation, route: { params } }) => {
                 {/* Bottom */}
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Tabs',{routeName: ''})}
+                        onPress={() =>
+                            navigation.navigate('Tabs', {
+                                screen: (params.groupType === 'day') ? '당일 모집' : '주간 모집',
+                                params: {
+                                    screen: (params.groupType === 'day') ? 'DayDelivery' : 'WeeklyDelivery',
+                                },
+                            })
+                        }
                         style={{width: '100%', height: '50%', backgroundColor: '#339af0'}}
                     >
                         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
