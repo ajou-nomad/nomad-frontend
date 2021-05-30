@@ -229,21 +229,21 @@ const ChatScreen = ({ route }) => {
             </View>
         );
     };
-    
-    const uploadImage = (source, imageUri) => {
-        if(imageUri){
-            const ext = imageUri.split('.').pop(); // Extract image extension (jpg)
 
-            const filename = `${uuid.v4()}.${ext}`; // Generate unique name
+    const uploadImage = (source, imageUri) => {
+        if (imageUri) {
+            const ext = imageUri.split('.').pop();
+
+            const filename = `${uuid.v4()}.${ext}`;
             //    setImgLoading(true);
             const imgRef = storage().ref(`chatimage/${filename}`);
-            const unsubscribe = imgRef.putFile(imageUri) // putFile: image Storage에 저장
+            const unsubscribe = imgRef.putFile(imageUri)
                 .on(
                     storage.TaskEvent.STATE_CHANGED,
                     async snapshot => {
                         var state = {
                             ...state,
-                            progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100, // Calculate progress percentage
+                            progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
                         };
                         if (snapshot.state === storage.TaskState.SUCCESS) {
                             console.log('upload success');
@@ -259,7 +259,7 @@ const ChatScreen = ({ route }) => {
                                 .catch(error => {
                                     console.log('Failed to get url', error);
                                 });
-                            
+
                             firestore()
                                 .collection('THREADS')
                                 .doc(thread._id)
@@ -288,20 +288,7 @@ const ChatScreen = ({ route }) => {
                                 );
 
                         }
-                    },
-                    error => {
-                        console.log('AccountEditScreen uploading error', error);
-                        // alert for failure to upload avatar
-                        Alert.alert(
-                            ('AccountEditScreen.updateErrorTitle'),
-                            ('AccountEditScreen.updateError'),
-                            [
-                                { text: ('confirm') }
-                            ],
-                            { cancelable: true },
-                        );
-                    }
-                );
+                    });
         }
     };
 
