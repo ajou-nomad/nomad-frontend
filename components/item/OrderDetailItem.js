@@ -11,7 +11,6 @@ import Header from '../layout/Header';
 import StoreButton from '../StoreButton';
 
 const OrderDetailItem = ({ route }) => {
-    console.log(JSON.stringify(route.params.item, 4, null));
 
     const { item } = route.params;
 
@@ -24,21 +23,26 @@ const OrderDetailItem = ({ route }) => {
         );
     };
 
+    // orderStatus에 따른 버튼
+    let button;
+    if (item.orderStatus === 'recruitmentDone') {
+        button = <StoreButton title="접수하기" color="#CED4DA" fontColor="white"/>;
+    } else if (item.orderStatus === 'waitingForDelivery') {
+        button = <StoreButton title="접수완료" color="#364FC7" fontColor="white"/>;
+    } else if (item.orderStatus === 'deliveryDone') {
+        button = <StoreButton title="배달완료" color="#364FC7" fontColor="white"/>;
+    }
+
     return (
         <View style={styles.container}>
-            <Header title='진행 주문' small='true' />
+            <Header title="진행 주문" small="true" />
 
             <View style={[styles.itemContainer, { marginTop: 20, }]}>
                 <View>
                     <Text style={{ ...FONTS2.body2 }}>{item.date} {item.time} 주문</Text>
                     <Text style={{ ...FONTS2.h2, color: COLORS.darkgray }}>{item.address} {item.buildingName}</Text>
                 </View>
-
-                {item.orderStatus === '모집 완료' ? (
-                    <StoreButton title='접수하기' color='#CED4DA' fontColor='white'/>
-                ) : (
-                    <StoreButton title='접수완료' color='#364FC7' fontColor='white'/>
-                )}
+                {button}
             </View>
 
             <View style={{ padding: 20 }}>
@@ -56,7 +60,7 @@ const OrderDetailItem = ({ route }) => {
                                 <Text style={{ ...FONTS2.body3 }}>남은 준비 시간</Text>
                                 <Text style={{ ...FONTS2.h1 }}>27분</Text>
                             </View>
-                            <StoreButton title='조리 완료' color='#CED4DA' fontColor='white' onPress={() => alert('DB에 조리 완료되었다고 post')}/>
+                            <StoreButton title="조리 완료" color="#CED4DA" fontColor="white" onPress={() => alert('DB에 조리 완료되었다고 post')}/>
                         </View>
                     </View>
                 ) : (null)}
