@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { FONTS2, icons, COLORS } from '../../constants';
 import Header from '../../components/layout/Header';
@@ -11,19 +12,27 @@ import axiosApiInstance from '../../utils/axios';
 const RequestList = () => {
 
     const [groupOrder, setGroupOrder] = useState([]);
+    const navigation = useNavigation();
 
     useEffect(() => {
-        axiosApiInstance.get('/groupOrder')
-            .then(function (response) {
-                console.log('점주 주문 리스트 요청: ', JSON.stringify(response.data.data, null, 4));
-                // setGroupOrder(response.data.data);
-            }).catch((e) => console.log(e));
+        // navigation에서 올때마다 최신데이터 호출( 리렌더링은 제외 )
+        const unsubscribe = navigation.addListener('focus', async () => {
 
-        // axiosApiInstance.post('/groupOrder', {
-        //     groupId: 10,
-        // }).then((res) => {
-        //     console.log('점주 접수하기: ', JSON.stringify(res.data, null, 4));
-        // }).catch((e) => console.log(e));
+            axiosApiInstance.get('/groupOrder')
+                .then(function (response) {
+                    console.log('점주 주문 리스트 요청: ', JSON.stringify(response.data.data, null, 4));
+                    setGroupOrder(response.data.data);
+                }).catch((e) => console.log(e));
+
+            // axiosApiInstance.post('/groupOrder', {
+            //     groupId: 10,
+            // }).then((res) => {
+            //     console.log('점주 접수하기: ', JSON.stringify(res.data, null, 4));
+            // }).catch((e) => console.log(e));
+        });
+
+        //unmount 시 리스너 삭제
+        return unsubscribe;
     }, []);
 
     const data = [
@@ -110,20 +119,9 @@ const RequestList = () => {
     return (
         <View style={styles.container}>
             <Header title="주문 리스트" small="true" />
-            {/* <View style={{justifyContent: 'center', alignSelf: 'center', alignItems:'center', flex: 1, flexDirection: 'row'}}>
-                    <Image
-                        source={icons.no}
-                        style={{
-                            width: 30,
-                            height: 30,
-                        }}
-                    />
-                <Text style={{ ...FONTS2.body1, color: '#707070', alignSelf: 'center' }}> 아직 주문이 없습니다.</Text>
-            </View> */}
-
             <FlatList
-                data={data}
-                keyExtractor={item => item.orderId.toString()}
+                data={groupOrder}
+                keyExtractor={item => item.groupId}
                 renderItem={({ item }) => <OrderItem item={item} />}
             />
         </View>

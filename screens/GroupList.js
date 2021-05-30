@@ -33,105 +33,105 @@ export default function GroupList({navigation, route}) {
   const [groupList, setGroupList] = useState(route.params.group.groupList);
   const storeData = route.params.storeData;
   
-  // groupList.sort((prev,next)=>(parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : (parseInt(prev.time.replace(':',''))) === (parseInt(next.time.replace(':',''))) ? (prev.max-prev.current) > (next.max-next.current) ? 1 : -1 : -1)
+//   groupList.sort((prev,next)=>(parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : (parseInt(prev.time.replace(':',''))) === (parseInt(next.time.replace(':',''))) ? (prev.max-prev.current) > (next.max-next.current) ? 1 : -1 : -1)
 
 
-  const goBack = () => {
-    navigation.navigate(back);
-  };
+	const goBack = () => {
+		navigation.navigate(back);
+	};
 
-  const sortPeople = () => {
-    groupList.sort((prev,next)=>(prev.max-prev.current)>(next.max-next.current) ? 1 : (prev.max-prev.current) === (next.max-next.current) ? (parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : -1 : -1)
-    setGroupList([...groupList]);
-    console.log('인원순:' + JSON.stringify(groupList,null,4));
+	const sortPeople = () => {
+		groupList.sort((prev, next) => (prev.max - prev.current) > (next.max - next.current) ? 1 : (prev.max - prev.current) === (next.max - next.current) ? (parseInt(prev.time.replace(':', ''))) > (parseInt(next.time.replace(':', ''))) ? 1 : -1 : -1)
+		setGroupList([...groupList]);
+		console.log('인원순:' + JSON.stringify(groupList, null, 4));
 
-  };
+	};
 
-  const sortTime = () => {
-    groupList.sort((prev,next)=>(parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : (parseInt(prev.time.replace(':',''))) === (parseInt(next.time.replace(':',''))) ? (prev.max-prev.current) > (next.max-next.current) ? 1 : -1 : -1)
-    setGroupList([...groupList]);
-    console.log('시간순:' + JSON.stringify(groupList,null,4));
+	const sortTime = () => {
+		groupList.sort((prev, next) => (parseInt(prev.time.replace(':', ''))) > (parseInt(next.time.replace(':', ''))) ? 1 : (parseInt(prev.time.replace(':', ''))) === (parseInt(next.time.replace(':', ''))) ? (prev.max - prev.current) > (next.max - next.current) ? 1 : -1 : -1)
+		setGroupList([...groupList]);
+		console.log('시간순:' + JSON.stringify(groupList, null, 4));
 
-  };
+	};
 
-  const Header = () =>{
-    return (
-      <View style={styles.headerText}>
-        <TouchableOpacity
-          onPress={() => {goBack();}}
-          >
-          {/* <Text style={styles.backButton}>&lt;</Text> */}
-          <Image source={icons.goback} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 2.5, marginLeft: 5, }} />
-        </TouchableOpacity>
-        <Text numberOfLines={1} style={styles.headerLocationText}>{location.buildingName}</Text>
-        <Text style={styles.headerDateText}>{today}</Text>
-      </View>
-    );
-  };
+	const Header = () => {
+		return (
+			<View style={styles.headerText}>
+				<TouchableOpacity
+					onPress={() => { goBack(); }}
+				>
+					{/* <Text style={styles.backButton}>&lt;</Text> */}
+					<Image source={icons.goback} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 2.5, marginLeft: 5, }} />
+				</TouchableOpacity>
+				<Text numberOfLines={1} style={styles.headerLocationText}>{location.buildingName}</Text>
+				<Text style={styles.headerDateText}>{today}</Text>
+			</View>
+		);
+	};
 
-  const SortButtons = () =>{
-    return (
-      <View style={styles.headerButtons}>
-        <TouchableOpacity
-          onPress={() => {sortPeople();}}
-          style={styles.headerButton}
-          >
-          <Text style={styles.headerButtonText}>인원순</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {sortTime();}}
-          style={styles.headerButton}
-        >
-          <Text style={styles.headerButtonText}>시간순</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+	const SortButtons = () => {
+		return (
+			<View style={styles.headerButtons}>
+				<TouchableOpacity
+					onPress={() => { sortPeople(); }}
+					style={styles.headerButton}
+				>
+					<Text style={styles.headerButtonText}>인원순</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					onPress={() => { sortTime(); }}
+					style={styles.headerButton}
+				>
+					<Text style={styles.headerButtonText}>시간순</Text>
+				</TouchableOpacity>
+			</View>
+		);
+	};
 
-  const InfoOfGroup = ({item}) =>(
-          <GroupInfo
-            groupData={item}
-            logo={item.logo}
-            rate={item.rate}
-            time={item.time}
-            current={item.current}
-            max={item.max}
-            storeInfo={item.store}
-            deliDate={today}
-            location={location}
-            styleGroupInfo={styles.groupInfo}
-            styleLogoImage={styles.logoImage}
-            styleShopText={styles.shopText}
-            styleRating={styles.rating}
-            styleStarImage={styles.starImage}
-            styleRateText={styles.rateText}
-            styleDeliveryTime={styles.deliveryTime}
-            styleTimeImage={styles.timeImage}
-            styleDeliveryTimeText={styles.deliveryTimeText}
-            styleGroupNumber={styles.groupNumber}
-            styleUserImage={styles.userImage}
-            groupNumberText={styles.groupNumberText}
-          />
-    );
+	const InfoOfGroup = ({ item }) => (
+		<GroupInfo
+			groupData={item}
+			logo={item.logo}
+			rate={item.rate}
+			time={item.time}
+			current={item.current}
+			max={item.max}
+			storeInfo={item.store}
+			deliDate={today}
+			location={location}
+			styleGroupInfo={styles.groupInfo}
+			styleLogoImage={styles.logoImage}
+			styleShopText={styles.shopText}
+			styleRating={styles.rating}
+			styleStarImage={styles.starImage}
+			styleRateText={styles.rateText}
+			styleDeliveryTime={styles.deliveryTime}
+			styleTimeImage={styles.timeImage}
+			styleDeliveryTimeText={styles.deliveryTimeText}
+			styleGroupNumber={styles.groupNumber}
+			styleUserImage={styles.userImage}
+			groupNumberText={styles.groupNumberText}
+		/>
+	);
 
-    const ListOfGroup = () => (
-      <View style={{marginBottom: 100}}>
-        <FlatList
-          data={groupList}
-          renderItem={InfoOfGroup}
-          keyExtractor={item => item.groupId.toString()}
-        />
-      </View>
-    );
+	const ListOfGroup = () => (
+		<View style={{ marginBottom: 100 }}>
+			<FlatList
+				data={groupList}
+				renderItem={InfoOfGroup}
+				keyExtractor={item => item.groupId.toString()}
+			/>
+		</View>
+	);
 
-  return (
-    <View style={styles.container}>
-      {Header()}
-      {SortButtons()}
-      {ListOfGroup()}
-      <NewGroupButton storeData={storeData} initLocation={location} deliDate={today}/>
-    </View>
-  );
+	return (
+		<View style={styles.container}>
+			{Header()}
+			{SortButtons()}
+			{ListOfGroup()}
+			<NewGroupButton storeData={storeData} initLocation={location} deliDate={today} />
+		</View>
+	);
 }
 
 // react-native-linear-gradient

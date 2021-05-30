@@ -17,10 +17,10 @@ import {
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 
-import { FONTS, FONTS2, icons } from '../../constants';
+import { FONTS, FONTS2, icons, SIZES } from '../../constants';
 
 
-const ReviewItem = ({ isMypage }) => {
+const ReviewItem = ({ isMypage, item }) => {
 
     const navigation = useNavigation();
 
@@ -38,6 +38,11 @@ const ReviewItem = ({ isMypage }) => {
     };
 
     const renderRatingAndDate = () => {
+
+        const tempDate = new Date(item.localDateTime);
+
+        const date = `${tempDate.getFullYear()}-${tempDate.getMonth()}-${tempDate.getDay()}`;
+
         return (
             <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                 {/* 별점 함수 */}
@@ -50,7 +55,7 @@ const ReviewItem = ({ isMypage }) => {
                     }}
                 />
                 {/* 날짜 */}
-                <Text style={{ ...FONTS2.body3, marginLeft: 5 }}>지난 주</Text>
+                <Text style={{ ...FONTS2.body3, marginLeft: 5 }}>{date}</Text>
             </View>
         );
     }
@@ -98,13 +103,10 @@ const ReviewItem = ({ isMypage }) => {
             )}
 
             {/* 사진 */}
-            <View
-                style={styles.photo}>
-                <Text style={{ ...FONTS2.h1, }}>사진</Text>
-            </View>
+            <Image source={{ uri: item.imgUrl }} resizeMode='contain' style={{ width: SIZES.width * 0.8, height: SIZES.height * 0.5, }} />
             {/* 글 */}
             <View style={styles.content}>
-                <Text style={{ ...FONTS2.body3 }}>맛있어요</Text>
+                <Text style={{ ...FONTS2.body3 }}>{item.contents}</Text>
             </View>
             <View style={{
                 flex: 1,
@@ -121,7 +123,6 @@ const ReviewItem = ({ isMypage }) => {
                     </View>
                 )}
             </View>
-            
         </View>
     );
 };
@@ -129,6 +130,7 @@ const ReviewItem = ({ isMypage }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
+        paddingHorizontal: SIZES.base,
     },
     avatar: {
         width: 40,
@@ -143,17 +145,8 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         alignItems: 'center',
     },
-    photo: {
-        width: '100%',
-        height: 200,
-        borderWidth: 2,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10,
-    },
     content: {
         minHeight: 50,
-        paddingTop: 10,
         paddingHorizontal: 5,
     },
     deleteButton: {
