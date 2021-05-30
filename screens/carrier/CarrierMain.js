@@ -59,14 +59,9 @@ const CarrierMain = ({ route, navigation }) => {
 
 	const today = JSON.stringify(new Date('2021-05-21').toJSON()).substr(1, 10);
 
-
 	useEffect(() => {
-		// axiosApiInstance.get('/deliveringGroupData')
-		// 	.then((res) => {
-		// 		console.log('배달원: ', JSON.stringify(res.data.data, null, 4));
-		// 	}).catch(e => console.log(e));
-		
-		// axiosApiInstance.post('/deliveringGroupData', {
+				
+		// axiosApiInstance.post('/delivery', {
 		// 	groupId: 10,
 		// }).then((res) => {
 		// 	console.log('배달 중 post', JSON.stringify(res.data.data, null, 4));
@@ -77,29 +72,54 @@ const CarrierMain = ({ route, navigation }) => {
 		// }).then((res) => {
 		// 	console.log('배달 완료 post', JSON.stringify(res.data.data, null, 4));
 		// }).catch(e => console.log(e));
-		
-		currentLocation().then((currentLoction) => {
-			getData('storeData').then((storeData) => {
-				getData('groupData').then((groupData) => {
-					getData('orderData').then((orderData) => { // orderData에 groupId가 필요함
-						// console.log(JSON.stringify(orderData,null,4));
-						const filteredStore = storeData.filter((storeInfo) => {
-							return calculateDistance(currentLoction.latitude, currentLoction.longitude, storeInfo.latitude, storeInfo.longitude) <= 1000;
-						});
-						setAvailableStore(filteredStore);
-						const filteredGroup = groupData.filter((groupInfo) => {
-							return (checkStoreId(groupInfo.storeId, filteredStore) && groupInfo.orderStatus === 'recruiting' && groupInfo.date === today);
-						});
-						setAvailableGroup(filteredGroup);
-						const filteredOrder = orderData.filter((orderInfo) => {
-							return checkGroupId(orderInfo.groupId, filteredGroup);
-						})
-						setAvailableOrder(filteredOrder);
-						setCurrentLocation(currentLoction);
+
+		currentLocation().then((currentLocation) => {
+			axiosApiInstance.get('/delivery')
+				.then((res) => {
+					console.log('배달원: ', JSON.stringify(res.data.data, null, 4));
+					setAvailableGroup(res.data.data);
+
+					const filteredStore = availableGroup.filter((storeInfo) => {
+						return calculateDistance(currentLocation.latitude, currentLocation.longitude, storeInfo.latitude, storeInfo.longitude) <= 1000;
 					});
-				});
-			});
+
+					setAvailableStore(filteredStore);
+
+					
+					// console.log('ddd', JSON.stringify(filteredStore, null, 4));
+				}).catch(e => console.log(e));
+			
+			
+
+			// const filteredGroup = groupData.filter((groupInfo) => {
+			// 	return (checkStoreId(groupInfo.storeId, filteredStore) && groupInfo.orderStatus === 'recruiting' && groupInfo.date === today);
+			// });
 		});
+
+		// currentLocation().then((currentLoction) => {
+		// 	axiosApiInstance.get('storeData').then((storeData) => {
+		// 		axiosApiInstance.get('/groupData').then((groupData) => {
+		// 			console.log(JSON.stringify(groupData, null, 4));
+		// 			axiosApiInstance.get('orderData').then((orderData) => { // orderData에 groupId가 필요함
+		// 				// console.log(JSON.stringify(orderData,null,4));
+		// 				const filteredStore = storeData.filter((storeInfo) => {
+		// 					return calculateDistance(currentLoction.latitude, currentLoction.longitude, storeInfo.latitude, storeInfo.longitude) <= 1000;
+		// 				});
+		// 				setAvailableStore(filteredStore);
+		// 				const filteredGroup = groupData.filter((groupInfo) => {
+		// 					return (checkStoreId(groupInfo.storeId, filteredStore) && groupInfo.orderStatus === 'recruiting' && groupInfo.date === today);
+		// 				});
+		// 				setAvailableGroup(filteredGroup);
+		// 				const filteredOrder = orderData.filter((orderInfo) => {
+		// 					return checkGroupId(orderInfo.groupId, filteredGroup);
+		// 				})
+		// 				setAvailableOrder(filteredOrder);
+		// 				setCurrentLocation(currentLoction);
+		// 			});
+		// 		});
+		// 	});
+		// });
+
 
 	}, [route.params?.post]);
 
