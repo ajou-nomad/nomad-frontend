@@ -18,8 +18,6 @@ const StoreItem = ({ deliveryPlace, deliDate, datePicker, storeData, isLikeList 
 
     const navigation = useNavigation();
 
-    console.log('StoreItem: ', JSON.stringify(storeData, null, 4));
-
     return (
         <TouchableOpacity
             style={styles.container}

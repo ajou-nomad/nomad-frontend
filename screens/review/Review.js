@@ -13,10 +13,12 @@ import { FONTS2, } from '../../constants';
 
 import ReviewItem from '../../components/item/ReviewItem';
 
-const Review = () => {
+const Review = ({ storeReivew }) => {
+
+    console.log('Review: ', JSON.stringify(storeReivew, null, 4));
     return (
         <View>
-            <Text style={{ ...FONTS2.h2, margin: 20, }}>리뷰 85개</Text>
+            <Text style={{ ...FONTS2.h2, margin: 20, }}>리뷰 {storeReivew.length}개</Text>
             <ReviewItem />
             <ReviewItem />
             <ReviewItem />

@@ -36,8 +36,6 @@ function CreateGroupList({ navigation, route }) {
         setDeliveryPlace(region);
     };
 
-    console.log('CreateGroupList: ', JSON.stringify(route.params, null, 4));
-
     const renderDestinationHeader = () => {
         return (
           <TouchableOpacity
@@ -98,7 +96,7 @@ function CreateGroupList({ navigation, route }) {
                 </View>
                 <View style={{ flex: 5, backgroundColor: 'white' }}>
                     <ScrollView>
-                        {storeData.map((storeItems, index) => {
+                        {storeData.map((storeItems, index) => { // 오류 안나는 부분
                             return <StoreItem key={index} storeData={storeItems} deliveryPlace={deliveryPlace} deliDate={deliDate} datePicker={datePicker} />;
                         })}
                     </ScrollView>
