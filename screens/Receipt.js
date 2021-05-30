@@ -8,6 +8,9 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 import { COLORS, FONTS2, icons, SIZES } from '../constants';
 
 const Receipt = ({ modalVisible, closeModal, item }) => {
+
+
+
     const modalBackgroundStyle = {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     };
@@ -20,6 +23,12 @@ const Receipt = ({ modalVisible, closeModal, item }) => {
         }
     };
 
+
+    // 5 -> 05분, 15 -> 15분 등등 두 자리수 맞추기.
+    const digitTwo = (digit) => {
+        return ('00' + JSON.stringify(digit)).slice(-2);
+    };
+
     const date = new Date(item.orderTime);
 
     const renderItem = ({ item }) => {
@@ -30,7 +39,7 @@ const Receipt = ({ modalVisible, closeModal, item }) => {
                     <Text style={{ ...FONTS2.body3, marginLeft: 20, marginTop: 5 }}>{item.quantity}개</Text>
                 </View>
                 <View style={{ flexDirection: 'row-reverse', marginTop: SIZES.base }}>
-                    <Text style={{ ...FONTS2.body3 }}>{(item.cost * item.quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                    <Text style={{ ...FONTS2.body3 }}>{(item.cost).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
                 </View>
             </View>
         );
@@ -51,6 +60,7 @@ const Receipt = ({ modalVisible, closeModal, item }) => {
                         <TouchableOpacity
                             onPress={() => closeModal()}
                             style={{ position: 'absolute', left: SIZES.width * 0.03 }}
+                            hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }} //터치영역 확장
                         >
                             <Image source={icons.close} resizeMode='contain' style={styles.closeButton} />
                         </TouchableOpacity>
@@ -60,9 +70,9 @@ const Receipt = ({ modalVisible, closeModal, item }) => {
 
                     <View style={{ alignItems: 'center', marginBottom: SIZES.base * 3 }}>
                         <Text style={{ ...FONTS2.h3, marginTop: SIZES.base * 2, marginBottom: SIZES.base }}>{item.storeName}</Text>
-                        <Text style={{ ...FONTS2.body3 }}>{date.getFullYear()}년 {date.getMonth()}월 {date.getDay()}일 {date.getUTCHours()}시 {date.getUTCMinutes()}분</Text>
+                        <Text style={{ ...FONTS2.body3 }}>{date.getFullYear()}년 {digitTwo(date.getMonth())}월 {digitTwo(date.getDay())}일 {digitTwo(date.getUTCHours())}시 {digitTwo(date.getUTCMinutes())}분</Text>
                     </View>
-                    <FlatList data={item.menu} keyExtractor={item => item.menuId.toString()} renderItem={renderItem} />
+                    <FlatList data={item.orderItemList} keyExtractor={item => item.orderItemId.toString()} renderItem={renderItem} />
 
                     <View style={{ marginHorizontal: SIZES.base * 3, borderTopWidth: 0.3, paddingVertical: 15, flexDirection: 'row', justifyContent: 'space-between', }}>
                         <Text style={{ ...FONTS2.h4 }}>합계</Text>

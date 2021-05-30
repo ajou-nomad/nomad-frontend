@@ -13,11 +13,11 @@ const RequestList = () => {
     const [groupOrder, setGroupOrder] = useState([]);
 
     useEffect(() => {
-        // axiosApiInstance.get('/groupOrder')
-        //     .then(function (response) {
-        //         console.log('점주 주문 리스트 요청: ', JSON.stringify(response.data.data, null, 4));
-        //         setGroupOrder(response.data.data);
-        //     }).catch((e) => console.log(e));
+        axiosApiInstance.get('/groupOrder')
+            .then(function (response) {
+                console.log('점주 주문 리스트 요청: ', JSON.stringify(response.data.data, null, 4));
+                // setGroupOrder(response.data.data);
+            }).catch((e) => console.log(e));
 
         // axiosApiInstance.post('/groupOrder', {
         //     groupId: 10,
