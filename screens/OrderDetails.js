@@ -51,6 +51,7 @@ const OrderDetails = () => {
 
     const DeliveryState = ({ deliveryComplete }) => {
 
+
         const status = () => {
             if (deliveryComplete === 'recruiting') {
                 return (
@@ -73,7 +74,7 @@ const OrderDetails = () => {
                     </View>
                 );
             }
-            else if (deliveryComplete === 'delivering' || 'waitingForDelivery') {
+            else if ((deliveryComplete === 'delivering' ) || (deliveryComplete === 'waitingForDelivery')) {
                 return (
                     <View style={{ backgroundColor: '#f03e3e', padding: SIZES.padding * 0.25, borderRadius: 8 }}>
                         <Text style={{ ...FONTS2.body4, color: COLORS.white }}>배달 중</Text>
