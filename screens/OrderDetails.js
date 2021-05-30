@@ -3,7 +3,7 @@
 /* eslint-disable no-alert */
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, LogBox, Image, } from 'react-native';
+import { View, Text, StyleSheet, } from 'react-native';
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
@@ -12,21 +12,13 @@ import { FONTS2, COLORS, SIZES } from '../constants';
 import Header from '../components/layout/Header';
 import Receipt from '../screens/Receipt';
 
-
-LogBox.ignoreAllLogs();
-
-import { getData } from '../utils/helper';
 import axiosApiInstance from '../utils/axios';
 
 const OrderDetails = () => {
     const navigation = useNavigation();
-    const [orderData, setOrderData] = useState([]);
     const [memberOrderList, setMemberOrderList] = useState([]);
 
     useEffect(() => {
-        // getData('orderData').then(data => setOrderData(data));
-
-        // console.log(JSON.stringify("dddd"+orderData, null, 4));
 
         axiosApiInstance.get('/memberOrderList')
             .then(function (response) {
@@ -36,20 +28,17 @@ const OrderDetails = () => {
     }, []);
 
 
-
     const ReviewButton = ({ item }) => {
-        const [items, setItems] = useState(item);
-
         return (
             <View>
-                {items.reviewList.length === 0 ? (
-                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('CreateReview', { item: items, setItems: setItems })}>
+                {item.reviewList.reviewId === null ? (
+                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('CreateReview', { item: item })}>
                         <Text style={styles.buttonText}>
                             리뷰 쓰기
                         </Text>
                     </TouchableOpacity>
                 ) : (
-                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('MyReview', { item: items })}>
+                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('MyReview', { item: item })}>
                         <Text style={styles.buttonText}>
                             작성한 리뷰 보기
                         </Text>
@@ -61,6 +50,7 @@ const OrderDetails = () => {
     };
 
     const DeliveryState = ({ deliveryComplete }) => {
+
 
         const status = () => {
             if (deliveryComplete === 'recruiting') {
@@ -84,7 +74,7 @@ const OrderDetails = () => {
                     </View>
                 );
             }
-            else if ((deliveryComplete === 'delivering') ||  (deliveryComplete === 'waitingForDelivery')) {
+            else if ((deliveryComplete === 'delivering' ) || (deliveryComplete === 'waitingForDelivery')) {
                 return (
                     <View style={{ backgroundColor: '#f03e3e', padding: SIZES.padding * 0.25, borderRadius: 8 }}>
                         <Text style={{ ...FONTS2.body4, color: COLORS.white }}>배달 중</Text>
@@ -137,7 +127,7 @@ const OrderDetails = () => {
 
         return (
             <View style={styles.storeContainer}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SIZES.base }}>
                     <TouchableOpacity
                     // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName: item.storeName })}
                     >
@@ -148,13 +138,13 @@ const OrderDetails = () => {
                 </View>
 
                 {/* 주문한 메뉴 */}
-                <View style={{ minHeight: 70 }}>
+                <View style={{ marginVertical: SIZES.base * 1.5 }}>
                     <FlatList data={item.orderItemList} keyExtractor={item => item.orderItemId.toString()} renderItem={renderMenuItem} />
                 </View>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-                    <ReviewButton item={item} />
-                    <View style={{ width: 10 }} />
+                <View style={{ justifyContent: 'space-between', flex: 1 }}>
+
+                    {item.orderStatus === 'deliveryDone' ? (<ReviewButton item={item} />) : (null)}
 
                     <TouchableOpacity
                         style={styles.receiptButton}
@@ -164,9 +154,8 @@ const OrderDetails = () => {
                             영수증 보기
                         </Text>
                     </TouchableOpacity>
-
-                    <Receipt item={item} modalVisible={modalVisible} closeModal={closeModal} />
                 </View>
+                <Receipt item={item} modalVisible={modalVisible} closeModal={closeModal} />
             </View>
         );
     };
@@ -198,28 +187,24 @@ const styles = StyleSheet.create({
     },
     reviewButtonContainer: {
         backgroundColor: '#339af0',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 8,
+        padding: SIZES.padding,
         borderRadius: 8,
-        width: 140,
         opacity: 0.9,
     },
     receiptButton: {
-        backgroundColor: '#339af0',
-        alignSelf: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#ced4da',
         alignItems: 'center',
-        padding: 8,
         borderRadius: 8,
-        width: 140,
         opacity: 0.9,
+        padding: SIZES.padding,
+        flex: 1,
+        marginTop: SIZES.base,
     },
     buttonText: {
         ...FONTS2.body3,
         color: COLORS.white,
         fontSize: 18,
+        alignSelf: 'center',
     },
     totalCost: {
         marginTop: 20,
