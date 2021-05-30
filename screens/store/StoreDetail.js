@@ -27,7 +27,6 @@ import { responsiveWidth } from 'react-native-responsive-dimensions';
 
 import Menu from '../../components/item/Menu';
 import CartButton from '../../components/CartButton';
-import Review from '../../screens/review/Review';
 import StoreInfo from './StoreInfo';
 import ReviewItem from '../../components/item/ReviewItem';
 

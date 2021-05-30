@@ -24,9 +24,6 @@ const CreateReview = ({ route }) => {
     // let [orderData, setOrderData] = useState();
     let { item, setItems } = route.params;
     
-
-
-
     // console.log('hhhh: ', item);
     // console.log('CreateReview ', item); // item.orderId
 
@@ -101,8 +98,10 @@ const CreateReview = ({ route }) => {
             const currentTime = new Date();
             currentTime.setHours(currentTime.getHours() + 9);
 
+            //currentTime.getFullYear()}-${('00' + JSON.stringify(currentTime.getUTCMonth() + 1)).slice(-2)}-${('00' + JSON.stringify(currentTime.getUTCDate())).slice(-2)} ${('00' + JSON.stringify(currentTime.getUTCHours())).slice(-2)}:${('00' + JSON.stringify(currentTime.getUTCMinutes())).slice(-2)}:${('00' + JSON.stringify(currentTime.getUTCSeconds())).slice(-2)}
+
             await axiosApiInstance.post('/review', {
-                storeId: 2,
+                storeId: item.storeId,
                 contents: text,
                 rate: 5,
                 localDateTime: currentTime,
