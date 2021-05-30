@@ -45,7 +45,7 @@ export default function SignUpScreen(props) {
   const [nickname, setNickname] = useState(props.route.params.nickname);
   const [IsUser, setIsUser] = useState(true);
   const [IsShop, setIsShop] = useState(false);
-  const [IsCarrier, setIsCarrier] = useState(false);
+  const [IsDeli, setIsDeli] = useState(false);
   const [ShopIdNumber,setShopIdNumber] = useState();
   const [DeliIdNumber,setDeliIdNumber] = useState();
   const [term1, setTerm1] = useState(false);
@@ -79,7 +79,7 @@ export default function SignUpScreen(props) {
     setNickname('');
     setIsUser(true);
     setIsShop(false);
-    setIsCarrier(false);
+    setIsDeli(false);
     setTerm1(false);
     setTerm2(false);
     setConfirm(null);
@@ -161,19 +161,19 @@ export default function SignUpScreen(props) {
         setUserType('User');
         setIsUser(true);
         setIsShop(false);
-        setIsCarrier(false);
+        setIsDeli(false);
         break;
       case 'Shop':
         setUserType('Shop');
         setIsUser(false);
         setIsShop(true);
-        setIsCarrier(false);
+        setIsDeli(false);
         break;
-      case 'Carrier':
-        setUserType('Carrier');
+      case 'Deli':
+        setUserType('Deli');
         setIsUser(false);
         setIsShop(false);
-        setIsCarrier(true);
+        setIsDeli(true);
         break;
     }
   };
@@ -231,7 +231,7 @@ export default function SignUpScreen(props) {
       password.length > 0 &&
       nickname.length > 0 &&
       term1 &&
-      ((IsUser) || (IsShop && ShopIdNumber) || (IsCarrier && DeliIdNumber))
+      ((IsUser) || (IsShop && ShopIdNumber) || (IsDeli && DeliIdNumber))
     ) {
 
       SignUpMember();
@@ -278,7 +278,7 @@ export default function SignUpScreen(props) {
             setNickname('');
             setIsUser(true);
             setIsShop(false);
-            setIsCarrier(false);
+            setIsDeli(false);
             setTerm1(false);
             setTerm2(false);
             setConfirm(null);
@@ -315,7 +315,7 @@ export default function SignUpScreen(props) {
           email={email}
           password={password}
           nickname={nickname}
-          userType={{IsUser:IsUser,IsShop:IsShop,IsCarrier:IsCarrier}}
+          userType={{IsUser:IsUser,IsShop:IsShop,IsDeli:IsDeli}}
           term1={term1}
           term2={term2}
           inputStyle={styles.input}

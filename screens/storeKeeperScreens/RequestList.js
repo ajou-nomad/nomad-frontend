@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect} from 'react';
+
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 
 import { FONTS2, icons, COLORS } from '../../constants';
@@ -7,20 +8,23 @@ import Header from '../../components/layout/Header';
 import OrderItem from '../../components/item/OrderItem';
 import axiosApiInstance from '../../utils/axios';
 
-const RequestList = ({navigation}) => {
+const RequestList = () => {
 
+    const [groupOrder, setGroupOrder] = useState([]);
 
+    useEffect(() => {
+        // axiosApiInstance.get('/groupOrder')
+        //     .then(function (response) {
+        //         console.log('점주 주문 리스트 요청: ', JSON.stringify(response.data.data, null, 4));
+        //         setGroupOrder(response.data.data);
+        //     }).catch((e) => console.log(e));
 
-    // useEffect(() => {
-    //     // navigation에서 올때마다 최신데이터 호출( 리렌더링은 제외 )
-    //     const unsubscribe = navigation.addListener('focus', async () => {
-
-    //         axiosApiInstance.get('상점의 주문목록들 받아오기').then((data) => console.log('저장할 setState'));
-    //     });
-
-    //     return unsubscribe;
-    // }, []);
-
+        // axiosApiInstance.post('/groupOrder', {
+        //     groupId: 10,
+        // }).then((res) => {
+        //     console.log('점주 접수하기: ', JSON.stringify(res.data, null, 4));
+        // }).catch((e) => console.log(e));
+    }, []);
 
     const data = [
         {

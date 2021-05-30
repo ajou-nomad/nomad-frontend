@@ -18,7 +18,7 @@ import GpsButton from '../../components/map/GpsButton';
 import { calculateDistance, currentLocation, getDaliyGroupData, getData } from '../../utils/helper';
 
 import CarrierDetail from './CarrierDetail';
-
+import axiosApiInstance from '../../utils/axios';
 
 
 const CarrierMain = ({ route, navigation }) => {
@@ -35,63 +35,86 @@ const CarrierMain = ({ route, navigation }) => {
         setLocation(result);
     };
 
-    const checkStoreId = (groupStoreId,filteredStore) =>{
-        let answer = 0;
-        for (let i = 0; i < filteredStore.length; i++){
-            if (filteredStore[i].storeId === groupStoreId){
-                answer = 1;
-                break;
-            }
-        }
-        return answer;
-    }
+	const checkStoreId = (groupStoreId, filteredStore) => {
+		let answer = 0;
+		for (let i = 0; i < filteredStore.length; i++) {
+			if (filteredStore[i].storeId === groupStoreId) {
+				answer = 1;
+				break;
+			}
+		}
+		return answer;
+	};
 
-    const checkGroupId = (orderGroupId,filteredGroup) =>{
-        let answer = 0;
-        for (let i = 0; i < filteredGroup.length; i++){
-            if (filteredGroup[i].groupId === orderGroupId){
-                answer = 1;
-                break;
-            }
-        }
-        return answer;
-    }
+	const checkGroupId = (orderGroupId, filteredGroup) => {
+		let answer = 0;
+		for (let i = 0; i < filteredGroup.length; i++) {
+			if (filteredGroup[i].groupId === orderGroupId) {
+				answer = 1;
+				break;
+			}
+		}
+		return answer;
+	};
 
-    const today = JSON.stringify(new Date('2021-05-21').toJSON()).substr(1,10);
+	const today = JSON.stringify(new Date('2021-05-21').toJSON()).substr(1, 10);
 
 
-    useEffect( () => {
-        currentLocation().then((currentLoction)=>{
-            getData('storeData').then((storeData)=>{
-                getData('groupData').then((groupData)=>{
-                  getData('orderData').then((orderData)=>{ // orderData에 groupId가 필요함
-                      // console.log(JSON.stringify(orderData,null,4));
-                      const filteredStore = storeData.filter( (storeInfo) => {
-                          return calculateDistance(currentLoction.latitude, currentLoction.longitude, storeInfo.latitude, storeInfo.longitude) <= 1000;
-                      });
-                      setAvailableStore(filteredStore);
-                      const filteredGroup = groupData.filter( (groupInfo) => {
-                          return (checkStoreId(groupInfo.storeId,filteredStore) && groupInfo.orderStatus === 'recruiting' && groupInfo.date  === today);
-                      });
-                      setAvailableGroup(filteredGroup);
-                      const filteredOrder = orderData.filter( (orderInfo) =>{
-                        return checkGroupId(orderInfo.groupId,filteredGroup);
-                      })
-                      setAvailableOrder(filteredOrder);
-                      setCurrentLocation(currentLoction);
-                    });
-                  });
-              });
-          });
+	useEffect(() => {
+		// axiosApiInstance.get('/deliveringGroupData')
+		// 	.then((res) => {
+		// 		console.log('배달원: ', JSON.stringify(res.data.data, null, 4));
+		// 	}).catch(e => console.log(e));
+		
+		// axiosApiInstance.post('/deliveringGroupData', {
+		// 	groupId: 10,
+		// }).then((res) => {
+		// 	console.log('배달 중 post', JSON.stringify(res.data.data, null, 4));
+		// }).catch(e => console.log(e));
 
-    }, [route.params?.post] );
+		// axiosApiInstance.post('/deliveryComplete', {
+		// 	groupId: 10,
+		// }).then((res) => {
+		// 	console.log('배달 완료 post', JSON.stringify(res.data.data, null, 4));
+		// }).catch(e => console.log(e));
+		
+		currentLocation().then((currentLoction) => {
+			getData('storeData').then((storeData) => {
+				getData('groupData').then((groupData) => {
+					getData('orderData').then((orderData) => { // orderData에 groupId가 필요함
+						// console.log(JSON.stringify(orderData,null,4));
+						const filteredStore = storeData.filter((storeInfo) => {
+							return calculateDistance(currentLoction.latitude, currentLoction.longitude, storeInfo.latitude, storeInfo.longitude) <= 1000;
+						});
+						setAvailableStore(filteredStore);
+						const filteredGroup = groupData.filter((groupInfo) => {
+							return (checkStoreId(groupInfo.storeId, filteredStore) && groupInfo.orderStatus === 'recruiting' && groupInfo.date === today);
+						});
+						setAvailableGroup(filteredGroup);
+						const filteredOrder = orderData.filter((orderInfo) => {
+							return checkGroupId(orderInfo.groupId, filteredGroup);
+						})
+						setAvailableOrder(filteredOrder);
+						setCurrentLocation(currentLoction);
+					});
+				});
+			});
+		});
+
+	}, [route.params?.post]);
 
 
     
 
-    return(
-        <CarrierDetail availableGroup={availableGroup} availableStore={availableStore} availableOrder={availableOrder} location={location} today={today} />
-    )
+	return (
+		<CarrierDetail
+			availableGroup={availableGroup}
+			availableStore={availableStore}
+			availableOrder={availableOrder}
+			location={location}
+			today={today}
+		/>
+	);
 
 };
 

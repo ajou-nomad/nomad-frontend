@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
-import { FONTS2, icons, COLORS } from '../../constants';
+import { FONTS2, icons, COLORS, SIZES } from '../../constants';
 
 
 import { responsiveWidth } from 'react-native-responsive-dimensions';
@@ -72,9 +72,12 @@ function StoreDetail({route}) {
     const storeInfo = route.params.storeInfo;
     const datePicker = route.params.datePicker;
 
+    const storeData = route.params.storeData;
+
+    console.log('StoreDetail ', JSON.stringify(storeData, null, 4));
+    // storeName, phoneNumber, address, openTime, closeTime, deliveryTip, 
     const [cartItems, setCartItems] = useState([]);
 
-    // console.log(route.params);
     
     const menu = storeInfo.menu;
     const layout = useWindowDimensions();
@@ -124,7 +127,7 @@ function StoreDetail({route}) {
                 }}
             >
                 <View style={styles.headerContainer}>
-                    <Text style={{ ...FONTS2.h1 }}>{storeInfo.storeName}</Text>
+                    <Text style={{ ...FONTS2.h1 }}>{storeData.storeName}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 10, alignSelf: 'center', }}>
                         <Image
                             source={icons.star}
@@ -135,15 +138,20 @@ function StoreDetail({route}) {
                                 marginRight: 5,
                             }}
                         />
-                        <Text style={{ ...FONTS2.body3 }}>{storeInfo.rate} / 5.0</Text>
+                        <Text style={{ ...FONTS2.body3 }}>{storeData.rate} / 5.0</Text>
                         <Text style={{ ...FONTS2.body3 }}>(50+)</Text>
+                    </View>
+                    <Text style={{ ...FONTS2.body3 }}>리뷰 {storeData.reviewList.length} 개</Text>
+                    <View style={{ borderWidth: 0.3, borderRadius: 8, flexDirection: 'row', paddingHorizontal: SIZES.base, backgroundColor: COLORS.darkgray }}>
+                        <Image source={icons.cutlery} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#fff', alignSelf: 'center' }} />
+                        <Text style={{ ...FONTS2.body4, color: '#fff' }}>{storeData.category}</Text>
                     </View>
                 </View>
 
                 <View style={{ width: '60%', backgroundColor: 'white', alignSelf: 'center', marginBottom: 10 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ ...FONTS2.body3 }}>배달팁</Text>
-                        <Text style={{ ...FONTS2.body3 }}>{storeInfo.deliveryTip}원</Text>
+                        <Text style={{ ...FONTS2.body3 }}>{storeData.deliveryTip.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
                     </View>
                 </View>
             </Animated.View>

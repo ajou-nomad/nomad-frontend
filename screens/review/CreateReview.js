@@ -102,6 +102,7 @@ const CreateReview = ({ route }) => {
             currentTime.setHours(currentTime.getHours() + 9);
 
             await axiosApiInstance.post('/review', {
+                storeId: 2,
                 contents: text,
                 rate: 5,
                 localDateTime: currentTime,

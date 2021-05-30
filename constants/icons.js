@@ -82,6 +82,10 @@ const check = require("../assets/icons/check.png");
 const doddle = require("../assets/icons/doddle.png");
 const notice = require("../assets/icons/notice.png");
 const more = require("../assets/icons/more.png");
+const menu = require("../assets/icons/menu.png");
+const circle = require("../assets/icons/circle.png");
+const checklist = require("../assets/icons/checklist.png");
+const bell = require("../assets/icons/bell.png");
 
 export default {
     check2,
@@ -165,4 +169,8 @@ export default {
     doddle,
     notice,
     more,
+    menu,
+    circle,
+    checklist,
+    bell,
 }

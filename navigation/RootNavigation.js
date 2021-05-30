@@ -28,7 +28,6 @@ import RegisterMenuDetail from '../screens/storeKeeperScreens/register/RegisterM
 import Receipt from '../screens/Receipt';
 import CreateReview from '../screens/review/CreateReview';
 import SearchPlace from '../screens/search/SearchPlace';
-import OrderDetailItem from '../components/item/OrderDetailItem';
 
 import DeliveryNavigation from './DeliveryNavigation';
 
@@ -57,7 +56,7 @@ const RootNavigation = () => {
         };
 
         bootstrapAsync();
-    }, []);
+    }, [dispatch]);
 
     console.log(state);
 
