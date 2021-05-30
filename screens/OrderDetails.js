@@ -77,7 +77,14 @@ const OrderDetails = () => {
                     </View>
                 );
             }
-            else if (deliveryComplete === 'delivering') {
+            else if (deliveryComplete === 'recruitmentAccept') {
+                return (
+                    <View style={{ backgroundColor: '#f03e3e', padding: SIZES.padding * 0.25, borderRadius: 8 }}>
+                        <Text style={{ ...FONTS2.body4, color: COLORS.white }}>접수 완료</Text>
+                    </View>
+                );
+            }
+            else if (deliveryComplete === 'delivering' || 'waitingForDelivery') {
                 return (
                     <View style={{ backgroundColor: '#f03e3e', padding: SIZES.padding * 0.25, borderRadius: 8 }}>
                         <Text style={{ ...FONTS2.body4, color: COLORS.white }}>배달 중</Text>
@@ -105,7 +112,10 @@ const OrderDetails = () => {
         return (
             <View style={{ marginVertical: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.detailFont}>- {item.menuName}</Text>
-                <Text style={styles.detailFont}>{item.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.detailFont}>{item.quantity}개 </Text>
+                    <Text style={styles.detailFont}>{item.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                </View>
             </View>
         );
     };
@@ -113,7 +123,7 @@ const OrderDetails = () => {
     const OrderDetailItem = ({ deliveryComplete, onPress, item }) => {
         const [modalVisible, setModalVisible] = useState(false);
 
-        console.log('OrderDetailItem: ', JSON.stringify(item, null, 4));
+        // console.log('OrderDetailItem: ', JSON.stringify(item, null, 4));
 
         const closeModal = () => {
             setModalVisible(!modalVisible);
@@ -134,7 +144,7 @@ const OrderDetails = () => {
 
                 {/* 주문한 메뉴 */}
                 <View style={{ minHeight: 70 }}>
-                    <FlatList data={item.orderItemList} keyExtractor={item => item.orderItemId} renderItem={renderMenuItem} />
+                    <FlatList data={item.orderItemList} keyExtractor={item => item.orderItemId.toString()} renderItem={renderMenuItem} />
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
@@ -160,7 +170,7 @@ const OrderDetails = () => {
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />
             <View style={{ padding: 15, flex: 1 }}>
-                <FlatList data={memberOrderList} keyExtractor={item => item.orderId} renderItem={({ item }) => <OrderDetailItem item={item} />} />
+                <FlatList data={memberOrderList} keyExtractor={item => item.memberOrderId.toString()} renderItem={({ item }) => <OrderDetailItem item={item} />} />
             </View>
         </View>
     );

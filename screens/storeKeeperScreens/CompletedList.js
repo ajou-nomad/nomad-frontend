@@ -8,16 +8,16 @@ import axiosApiInstance from '../../utils/axios';
 
 const CompletedList = ({navigation}) => {
 
+    useEffect(() => {
+        // navigation에서 올때마다 최신데이터 호출( 리렌더링은 제외 )
+        const unsubscribe = navigation.addListener('focus', async () => {
 
-    // useEffect(() => {
-    //     // navigation에서 올때마다 최신데이터 호출( 리렌더링은 제외 )
-    //     const unsubscribe = navigation.addListener('focus', async () => {
+            // axiosApiInstance.get('받아올 URL').then((data) => console.log('저장할 데이터를 setState로'));
+        });
 
-    //         axiosApiInstance.get('상점의 주문목록들 받아오기').then((data) => console.log('저장할 setState'));
-    //     });
-
-    //     return unsubscribe;
-    // }, []);
+        //unmount 시 리스너 삭제
+        return unsubscribe;
+    }, []);
 
     const data = [
         {
@@ -101,7 +101,7 @@ const CompletedList = ({navigation}) => {
     ];
     return (
         <View style={styles.container}>
-            <Header title='완료된 주문' small='true'/>
+            <Header title="완료된 주문" small="true"/>
 
             <FlatList
                 data={data}

@@ -8,6 +8,7 @@ import { COLORS, FONTS2, icons, SIZES } from '../../constants';
 const PaymentCompleted = ({ navigation, route: { params } }) => {
 
     const currentTime = new Date();
+    currentTime.setHours(currentTime.getHours() + 9);
 
     return (
         <View style={styles.container}>
