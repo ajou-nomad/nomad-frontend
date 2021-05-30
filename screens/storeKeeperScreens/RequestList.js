@@ -119,11 +119,11 @@ const RequestList = () => {
     return (
         <View style={styles.container}>
             <Header title="주문 리스트" small="true" />
-            <FlatList
+            {/* <FlatList
                 data={groupOrder}
                 keyExtractor={item => item.groupId}
                 renderItem={({ item }) => <OrderItem item={item} />}
-            />
+            /> */}
         </View>
     );
 };
