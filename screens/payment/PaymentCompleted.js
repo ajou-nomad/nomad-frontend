@@ -15,8 +15,16 @@ const PaymentCompleted = ({ navigation, route: { params } }) => {
                 {/* Header */}
                 <View style={styles.title}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Tabs',{routeName: ''})}
+                        onPress={() =>
+                            navigation.navigate('Tabs', {
+                                screen: (params.groupType === 'day') ? '당일 모집' : '주간 모집',
+                                params: {
+                                    screen: (params.groupType === 'day') ? 'DayDelivery' : 'WeeklyDelivery',
+                                },
+                            })
+                        }
                         style={{ position: 'absolute', left: SIZES.width * 0.045, top: SIZES.height * 0.025 }}
+                        hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }} //터치영역 확장
                     >
                         <Image
                             source={icons.close}
@@ -65,7 +73,14 @@ const PaymentCompleted = ({ navigation, route: { params } }) => {
                 {/* Bottom */}
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Tabs',{routeName: ''})}
+                        onPress={() =>
+                            navigation.navigate('Tabs', {
+                                screen: (params.groupType === 'day') ? '당일 모집' : '주간 모집',
+                                params: {
+                                    screen: (params.groupType === 'day') ? 'DayDelivery' : 'WeeklyDelivery',
+                                },
+                            })
+                        }
                         style={{width: '100%', height: '50%', backgroundColor: '#339af0'}}
                     >
                         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>

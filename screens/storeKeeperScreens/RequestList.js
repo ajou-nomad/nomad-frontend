@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 
@@ -50,14 +51,14 @@ const RequestList = () => {
             longitude: 127.04435940777411,
             address: '수원시 원천동',
             buildingName: '팔달관',
-            orderStatus: '모집 완료',
+            orderStatus: 'recruitmentDone',
         },
         {
             // order data
             orderId: 2,
             menu: [
                 {
-                    menuId: 2,
+                    menuId: 1,
                     menuName: '복숭아 아이스티',
                     quantity: 2,
                     cost: 2000,
@@ -76,7 +77,7 @@ const RequestList = () => {
             longitude: 127.04435940777411,
             address: '수원시 원천동',
             buildingName: '원천관',
-            orderStatus: '모집 완료',
+            orderStatus: 'recruitmentDone',
         },
         {
             // order data
@@ -102,7 +103,7 @@ const RequestList = () => {
             longitude: 127.04435940777411,
             address: '수원시 원천동',
             buildingName: '성호관',
-            orderStatus: '접수 완료',
+            orderStatus: 'waitingForDelivery',
         },
     ];
 

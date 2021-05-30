@@ -17,7 +17,6 @@ const WeeklyNavigation = ({route, navigation}) => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName={'WeeklyDelivery'}
         >
             <WeeklyStack.Screen name="WeeklyDelivery" component={WeeklyDelivery} />
             <WeeklyStack.Screen name="TimeTable" component={TimeTable}/>

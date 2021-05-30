@@ -1,111 +1,103 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import IMP from 'iamport-react-native';
-import Loading from '../../components/payment/Loading';
 import { createGroup, participationGroup } from '../../utils/helper';
 import axiosApiInstance from '../../utils/axios';
 import { Alert } from 'react-native';
 
 const CreditCard = ({route, navigation}) => {
 
-  const { paymentInfo, postData } = route.params;
+    const { paymentInfo, postData } = route.params;
 
-  const today = new Date();
-  const todayString = JSON.stringify(today).substr(1,10);
+    const today = new Date();
+    const todayString = JSON.stringify(today).substr(1,10);
 
-  const tempDay = new Date(postData.deliDate);
-  tempDay.setHours(postData.time.substr(0,2) * 1 + 9);
-  tempDay.setMinutes(postData.time.substr(3,4) * 1);
-  console.log(tempDay);
+    const groupType = postData.deliDate === todayString ? 'day' : 'weekly';
 
-  const paymentTermination = (response) => {
-    console.log(response);
-    if (response.imp_success === 'false') {
-
-      // 배달 생성시 groupData는 존재x
-      if (!postData.groupData) {
-
-        console.log('배달그룹 생성완료');
-        console.log(postData.deliDate === todayString);
-
-        // 결제성공 페이지로 이동 후
-        // navigation.replace('PaymentCompleted',{
-        //     paymentMethod: '카드',
-        //     totalCost: postData.totalPrice,
-        // });
-
-        axiosApiInstance.post('/groupData', {
-            // groupData
-            storeId: postData.storeInfo.storeId,
-            // time: postData.time,
-            // date: postData.deliDate,
-            deliveryDateTime: tempDay,
-            maxValue: postData.maxValue,
-            groupType: (postData.deliDate === todayString) ? 'day' : 'weekly',
-            latitude: postData.location.latitude,
-            longitude: postData.location.longitude,
-            address: postData.location.address,
-            buildingName: postData.location.buildingName,
-
-            // order Data
-            menu: postData.cartItems,
-            totalCost: postData.totalPrice,
-            payMethod: 'card',
-            orderTime: new Date(),
-        }).then( (response) => {
-
-            console.log('배달그룹 생성완료');
-
-            // 결제성공 페이지로 이동 후
-            navigation.replace('PaymentCompleted',{
-                paymentMethod: '카드',
-                totalCost: postData.totalPrice,
-            });
-        });
+    const tempDay = new Date(postData.deliDate);
+    tempDay.setHours(postData.time.substr(0,2) * 1 + 9);
+    tempDay.setMinutes(postData.time.substr(3,4) * 1);
 
 
+    const paymentTermination = (response) => {
 
-        // createGroup(creationGroupData.groupData, creationGroupData.orderData).then(() => {
-        //   console.log("hi");
-        //   navigation.popToTop();
-        // });
-      } else {
-        // participationGroup(participationGroupData.groupId, participationGroupData.orderData).then((data) => {
-        //   console.log("hi");
-        //   navigation.popToTop();
-        // });
+        // 추후 실제 결제는 true로
+        if (response.imp_success === 'false') {
 
-        let cartItems = postData.cartItems.map((item) => {
-          delete item.menuId;
+            if (!postData.groupData) {
+                // 그룹 생성 결제성공 페이지로 이동 후
+                // navigation.replace('PaymentCompleted',{
+                //     paymentMethod: '카드',
+                //     totalCost: postData.totalPrice,
+                //     groupType: groupType,
+                // });
 
-          return item;
-        });
+                axiosApiInstance.post('/groupData', {
+                    // groupData
+                    storeId: postData.storeInfo.storeId,
+                    // time: postData.time,
+                    // date: postData.deliDate,
+                    deliveryDateTime: tempDay,
+                    maxValue: postData.maxValue,
+                    groupType: groupType,
+                    latitude: postData.location.latitude,
+                    longitude: postData.location.longitude,
+                    address: postData.location.address,
+                    buildingName: postData.location.buildingName,
 
+                    // order Data
+                    menu: postData.cartItems,
+                    totalCost: postData.totalPrice,
+                    payMethod: 'card',
+                    orderTime: new Date(),
+                }).then( (response) => {
 
-        axiosApiInstance.post('/participationGroup', {
-          groupId: postData.groupData.groupId,
+                    console.log('배달그룹 생성완료');
 
-          // order detail
-          menu: cartItems,
-          totalCost: postData.totalPrice,
-          payMethod: 'card',
-          orderTime: new Date(),
-        }).then( (response) => {
+                    // 결제성공 페이지로 이동 후
+                    navigation.replace('PaymentCompleted',{
+                        paymentMethod: '카드',
+                        totalCost: postData.totalPrice,
+                        groupType: groupType,
+                    });
+                });
+            } else {
+                // 그룹 참여 결제성공 페이지로 이동 후
+                // navigation.replace('PaymentCompleted',{
+                //     totalCost: postData.totalPrice,
+                //     paymentMethod: '카드',
+                //     groupType: groupType,
+                // });
 
-            console.log('배달그룹 참여완료');
+                let cartItems = postData.cartItems.map((item) => {
+                  delete item.menuId;
+                  return item;
+                });
+                axiosApiInstance.post('/participationGroup', {
+                  groupId: postData.groupData.groupId,
 
-            // 결제성공 페이지로 이동 후
-            navigation.replace('PaymentCompleted',{
-                paymentMethod: '카드',
-                totalCost: postData.totalPrice,
-            });
-        });
-      }
-    } else {
-        Alert.alert(response.error_msg);
-        navigation.goBack();
-    }
-  };
+                  // order detail
+                  menu: cartItems,
+                  totalCost: postData.totalPrice,
+                  payMethod: 'card',
+                  orderTime: new Date(),
+                }).then( (response) => {
+
+                    console.log('배달그룹 참여완료');
+
+                    // 결제성공 페이지로 이동 후
+                    navigation.replace('PaymentCompleted',{
+                        totalCost: postData.totalPrice,
+                        paymentMethod: '카드',
+                        groupType: groupType,
+                    });
+                });
+            }
+        } else {
+            Alert.alert(response.error_msg);
+            navigation.goBack();
+        }
+    };
 
   const data = {
     pg: 'inicis',
@@ -129,3 +121,14 @@ const CreditCard = ({route, navigation}) => {
 };
 
 export default CreditCard;
+
+// dummy Data로 테스트 할 때,
+// createGroup(creationGroupData.groupData, creationGroupData.orderData).then(() => {
+//   console.log("hi");
+//   navigation.popToTop();
+// });
+
+// participationGroup(participationGroupData.groupId, participationGroupData.orderData).then((data) => {
+//   console.log("hi");
+//   navigation.popToTop();
+// });
