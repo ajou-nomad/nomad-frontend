@@ -70,7 +70,7 @@ const Receipt = ({ modalVisible, closeModal, item }) => {
 
                     <View style={{ alignItems: 'center', marginBottom: SIZES.base * 3 }}>
                         <Text style={{ ...FONTS2.h3, marginTop: SIZES.base * 2, marginBottom: SIZES.base }}>{item.storeName}</Text>
-                        <Text style={{ ...FONTS2.body3 }}>{date.getFullYear()}년 {digitTwo(date.getMonth())}월 {digitTwo(date.getDay())}일 {digitTwo(date.getUTCHours())}시 {digitTwo(date.getUTCMinutes())}분</Text>
+                        <Text style={{ ...FONTS2.body3 }}>{date.getFullYear()}년 {digitTwo(date.getMonth()+1)}월 {digitTwo(date.getUTCDate())}일 {digitTwo(date.getUTCHours())}시 {digitTwo(date.getUTCMinutes())}분</Text>
                     </View>
                     <FlatList data={item.orderItemList} keyExtractor={item => item.orderItemId.toString()} renderItem={renderItem} />
 

@@ -27,6 +27,10 @@ const DayDelivery = ({ route, navigation }) => {
 
   const [location, setLocation] = useState(null);
 
+  let today = new Date();
+  today.setHours(today.getHours() + 9);
+  today = JSON.stringify(today).substr(1,10);
+
 
   const setCurrentLocation = (result) => {
     setLocation(result);
@@ -146,8 +150,6 @@ const DayDelivery = ({ route, navigation }) => {
     );
   };
 
-  const today = JSON.stringify(new Date().toJSON()).substr(1,10);
-  // console.log(today)
 
   return (
     <View style={{flex: 1}}>

@@ -3,16 +3,17 @@ import React from 'react';
 import IMP from 'iamport-react-native';
 import { createGroup, participationGroup } from '../../utils/helper';
 import axiosApiInstance from '../../utils/axios';
-import { Alert } from 'react-native';
+import { Alert, View, Text } from 'react-native';
 
 const CreditCard = ({route, navigation}) => {
 
     const { paymentInfo, postData } = route.params;
 
-    const today = new Date();
-    const todayString = JSON.stringify(today).substr(1,10);
+    let today = new Date();
+    today.setHours(today.getHours() + 9);
+    today = JSON.stringify(today).substr(1,10);
 
-    const groupType = postData.deliDate === todayString ? 'day' : 'weekly';
+    const groupType = postData.deliDate === today ? 'day' : 'weekly';
 
     const tempDay = new Date(postData.deliDate);
     tempDay.setHours(postData.time.substr(0,2) * 1 + 9);
