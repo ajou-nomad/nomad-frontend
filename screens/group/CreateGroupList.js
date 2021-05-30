@@ -56,12 +56,6 @@ function CreateGroupList({ navigation, route }) {
         );
     };
 
-
-    useEffect(() => {
-        // axiosApiInstance.get("/")
-    }, []);
-
-
     const chooseDeliveryPlace = () => {
         return (
             <View style={{ flex: 1 }}>
@@ -80,23 +74,20 @@ function CreateGroupList({ navigation, route }) {
         return (
             <View style={{ flex: 4, backgroundColor: 'white' }}>
                 <Header title="배달 그룹 생성" small="true" />
-                <View style={{ flex: 0.8, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={styles.location}>
                     <View style={{
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexDirection: 'row',
-                        width: responsiveWidth(70),
                     }}
                     >
-                        <View style={styles.location}>
-                            <Image source={icons.pin2} resizeMode='contain' style={{ width: 23, height: 23, marginRight: SIZES.base, opacity: 0.3 }} />
-                            <Text style={{ ...FONTS2.body3 }}>{deliveryPlace?.address}</Text>
-                        </View>
+                        <Image source={icons.pin} resizeMode='contain' style={{ width: 24, height: 24, marginRight: SIZES.base, }} />
+                        <Text style={{ ...FONTS2.body3, color: 'black' }}>{deliveryPlace?.address}</Text>
                     </View>
                 </View>
                 <View style={{ flex: 5, backgroundColor: 'white' }}>
                     <ScrollView>
-                        {storeData.map((storeItems, index) => { // 오류 안나는 부분
+                        {storeData.map((storeItems, index) => {
                             return <StoreItem key={index} storeData={storeItems} deliveryPlace={deliveryPlace} deliDate={deliDate} datePicker={datePicker} />;
                         })}
                     </ScrollView>
@@ -118,26 +109,15 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     location: {
-        flexDirection: 'row',
-        // shadowColor: "#3897f1",
-        // shadowOffset: {
-        //     width: 0,
-        //     height: 1,
-        // },
-        // shadowOpacity: 0.22,
-        // shadowRadius: 2.22,
-
-        // elevation: 3,
-
-        // borderColor: '#3897f1',
-        borderWidth: 0.4,
-        // backgroundColor: '#D6E3F2',
-        // opacity: 0.3,
-        padding: 5,
-        paddingHorizontal: 30,
-        borderRadius: 20,
-
         alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: SIZES.base * 1.5,
+        borderWidth: 0.3,
+        borderRadius: 20,
+        marginHorizontal: SIZES.width * 0.06,
+        paddingVertical: SIZES.base * 0.5,
+        borderColor: '#adb5bd',
+        // backgroundColor: '#c1c1c1'
     },
     destinationHeader: {
         position: 'absolute',

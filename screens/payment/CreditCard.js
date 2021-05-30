@@ -24,6 +24,9 @@ const CreditCard = ({route, navigation}) => {
         // 추후 실제 결제는 true로
         if (response.imp_success === 'false') {
 
+            const currentTime = new Date();
+            currentTime.setHours(currentTime.getHours() + 9);
+
             if (!postData.groupData) {
                 // 그룹 생성 결제성공 페이지로 이동 후
                 // navigation.replace('PaymentCompleted',{
@@ -49,7 +52,7 @@ const CreditCard = ({route, navigation}) => {
                     menu: postData.cartItems,
                     totalCost: postData.totalPrice,
                     payMethod: 'card',
-                    orderTime: new Date(),
+                    orderTime: currentTime,
                 }).then( (response) => {
 
                     console.log('배달그룹 생성완료');
@@ -80,7 +83,7 @@ const CreditCard = ({route, navigation}) => {
                   menu: cartItems,
                   totalCost: postData.totalPrice,
                   payMethod: 'card',
-                  orderTime: new Date(),
+                  orderTime: currentTime,
                 }).then( (response) => {
 
                     console.log('배달그룹 참여완료');
