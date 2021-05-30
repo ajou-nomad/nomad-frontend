@@ -36,6 +36,8 @@ function CreateGroupList({ navigation, route }) {
         setDeliveryPlace(region);
     };
 
+    console.log('CreateGroupList: ', JSON.stringify(route.params, null, 4));
+
     const renderDestinationHeader = () => {
         return (
           <TouchableOpacity

@@ -10,7 +10,7 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 import { Svg, Path } from 'react-native-svg';
 import { moderateScale } from 'react-native-size-matters';
 
-import { icons, COLORS, SIZES, FONTS2, images, FONTS3 } from "../../constants";
+import { animations, icons, COLORS, SIZES, FONTS2, images, FONTS3 } from '../../constants';
 import MyPageButton from '../../components/MyPageButton';
 import { AuthContext } from '../../context/AuthContextProvider';
 import { logout } from '../../utils/helper';
@@ -22,73 +22,78 @@ import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 
 const MyPage = ({ navigation }) => {
 
-	const { state, dispatch } = useContext(AuthContext);
-  
-  
-	useEffect(() => {
-		console.log("Mypage 불릴때");
 
-		// navigation에서 올때마다 호출( 리렌더링은 제외 )
-		navigation.addListener('focus', async () => {
-			console.log("Mypage 올떄마다 호출")
-              
-		})
+  const { state, dispatch } = useContext(AuthContext);
 
-		const getAxiosData = async () => {
+  // {"isSignedIn": true, "member": {"email": "ajouajou@gmail.com", "memberType": "User", "nickName": "아주아주", "phoneNum": "010-1111-1111", "point": 0}}
+  console.log('mypage:: ', state);
 
-			// 배달 그룹 생성
-			// await axiosApiInstance.post("/groupData", {
-			//   storeId: 5004, //빽다방 아주대점
-			//   time: '20:00',
-			//   date: '2021-05-19',
-			//   groupType: 'day',
-			//   maxValue: 3,
-			//   latitude: 37.284525,
-			//   longitude: 127.044113,
-			//   address: '수원시 원천동',
-			//   building: '팔달관',
-			//   menu: [
-			//     {
-			//       menuName: 'ㅋㄱㅂ',
-			//       cost: 858383,
-			//       quantity: 1,
-			//     },
-			//   ],
-			//   totalCost: 2000,
-			//   payMethod: 'card',
-			//   orderTime: '2021-05-15T15:30:00.480Z',
-			// }).then((response) => {
-			//   console.log('dddd');
-			//   console.log(JSON.stringify(response.data, null, 4));
-			//   // setResponseStoreData(response.data);
-			// });
+  useEffect(() => {
+    console.log('Mypage 불릴때');
 
-			// 배달 참여
-			// await axiosApiInstance.post('/participationGroup', {
-			//   groupId: 6007,
-			//   storeId: 5004,
-			//   menuName: 'ㅋㄱㅂ',
-			//   quantity: 2,
-			//   paymethod: 'card',
-			//   orderTime: '2021-05-15T15:45:00.480Z'
-			// }).then((res) => {
-			//   console.log('체크 ', JSON.stringify(res.data, null, 4));
-			// });
+    // navigation에서 올때마다 호출( 리렌더링은 제외 )
+    const unsubscribe = navigation.addListener('focus', async () => {
+      console.log('Mypage 올떄마다 호출');
+    });
 
-			// 당일 그룹 생성된 그룹 (NULL값 때문에 에러뜸)
-			// await axiosApiInstance.get('/dailyGroupData')
-			//   .then((res) => {
-			//     console.log('체크:: ', JSON.stringify(res.data, null, 4));
-			//   }).catch(e => {
-			//     console.log('에러:: ', e);
-			//   });
 
-      
-		};
+    const getAxiosData = async () => {
 
-    
-		getAxiosData();
-	}, []);
+      // 배달 그룹 생성
+      // await axiosApiInstance.post("/groupData", {
+      //   storeId: 5004, //빽다방 아주대점
+      //   time: '20:00',
+      //   date: '2021-05-19',
+      //   groupType: 'day',
+      //   maxValue: 3,
+      //   latitude: 37.284525,
+      //   longitude: 127.044113,
+      //   address: '수원시 원천동',
+      //   building: '팔달관',
+      //   menu: [
+      //     {
+      //       menuName: 'ㅋㄱㅂ',
+      //       cost: 858383,
+      //       quantity: 1,
+      //     },
+      //   ],
+      //   totalCost: 2000,
+      //   payMethod: 'card',
+      //   orderTime: '2021-05-15T15:30:00.480Z',
+      // }).then((response) => {
+      //   console.log('dddd');
+      //   console.log(JSON.stringify(response.data, null, 4));
+      //   // setResponseStoreData(response.data);
+      // });
+
+      // 배달 참여
+      // await axiosApiInstance.post('/participationGroup', {
+      //   groupId: 6007,
+      //   storeId: 5004,
+      //   menuName: 'ㅋㄱㅂ',
+      //   quantity: 2,
+      //   paymethod: 'card',
+      //   orderTime: '2021-05-15T15:45:00.480Z'
+      // }).then((res) => {
+      //   console.log('체크 ', JSON.stringify(res.data, null, 4));
+      // });
+
+      // 당일 그룹 생성된 그룹 (NULL값 때문에 에러뜸)
+      // await axiosApiInstance.get('/dailyGroupData')
+      //   .then((res) => {
+      //     console.log('체크:: ', JSON.stringify(res.data, null, 4));
+      //   }).catch(e => {
+      //     console.log('에러:: ', e);
+      //   });
+
+
+    };
+
+    getAxiosData();
+
+
+    return unsubscribe;
+  }, []);
 
 
 

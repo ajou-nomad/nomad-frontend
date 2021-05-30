@@ -18,6 +18,7 @@ import GpsButton from '../../components/map/GpsButton';
 import { calculateDistance, currentLocation, getDaliyGroupData, getData } from '../../utils/helper';
 
 import CarrierDetail from './CarrierDetail';
+import axiosApiInstance from '../../utils/axios';
 
 
 const CarrierMain = ({ route, navigation }) => {
@@ -60,6 +61,23 @@ const CarrierMain = ({ route, navigation }) => {
 
 
 	useEffect(() => {
+		// axiosApiInstance.get('/deliveringGroupData')
+		// 	.then((res) => {
+		// 		console.log('배달원: ', JSON.stringify(res.data.data, null, 4));
+		// 	}).catch(e => console.log(e));
+		
+		// axiosApiInstance.post('/deliveringGroupData', {
+		// 	groupId: 10,
+		// }).then((res) => {
+		// 	console.log('배달 중 post', JSON.stringify(res.data.data, null, 4));
+		// }).catch(e => console.log(e));
+
+		// axiosApiInstance.post('/deliveryComplete', {
+		// 	groupId: 10,
+		// }).then((res) => {
+		// 	console.log('배달 완료 post', JSON.stringify(res.data.data, null, 4));
+		// }).catch(e => console.log(e));
+		
 		currentLocation().then((currentLoction) => {
 			getData('storeData').then((storeData) => {
 				getData('groupData').then((groupData) => {

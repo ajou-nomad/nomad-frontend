@@ -1,12 +1,30 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
 
 import { FONTS2, icons, COLORS } from '../../constants';
 import Header from '../../components/layout/Header';
 import OrderItem from '../../components/item/OrderItem';
+import axiosApiInstance from '../../utils/axios';
 
 const RequestList = () => {
+
+    const [groupOrder, setGroupOrder] = useState([]);
+
+    useEffect(() => {
+        // axiosApiInstance.get('/groupOrder')
+        //     .then(function (response) {
+        //         console.log('점주 주문 리스트 요청: ', JSON.stringify(response.data.data, null, 4));
+        //         setGroupOrder(response.data.data);
+        //     }).catch((e) => console.log(e));
+
+        // axiosApiInstance.post('/groupOrder', {
+        //     groupId: 10,
+        // }).then((res) => {
+        //     console.log('점주 접수하기: ', JSON.stringify(res.data, null, 4));
+        // }).catch((e) => console.log(e));
+    }, []);
+
     const data = [
         {
             // order data
@@ -45,7 +63,7 @@ const RequestList = () => {
                     cost: 2000,
                 },
                 {
-                    menuId: 2,
+                    menuId: 3,
                     menuName: '바닐라라떼',
                     quantity: 1,
                     cost: 3500,

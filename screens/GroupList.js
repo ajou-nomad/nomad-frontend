@@ -29,10 +29,11 @@ export default function GroupList({navigation, route}) {
   const location = route.params.group.location;
   const back = route.params.back;
   const today = route.params.today;
-  const groupList = route.params.group.groupList;
+  // const groupList = route.params.group.groupList;
+  const [groupList, setGroupList] = useState(route.params.group.groupList);
   const storeData = route.params.storeData;
-
-
+  
+  // groupList.sort((prev,next)=>(parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : (parseInt(prev.time.replace(':',''))) === (parseInt(next.time.replace(':',''))) ? (prev.max-prev.current) > (next.max-next.current) ? 1 : -1 : -1)
 
 
   const goBack = () => {
@@ -41,10 +42,16 @@ export default function GroupList({navigation, route}) {
 
   const sortPeople = () => {
     groupList.sort((prev,next)=>(prev.max-prev.current)>(next.max-next.current) ? 1 : (prev.max-prev.current) === (next.max-next.current) ? (parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : -1 : -1)
+    setGroupList([...groupList]);
+    console.log('인원순:' + JSON.stringify(groupList,null,4));
+
   };
 
   const sortTime = () => {
     groupList.sort((prev,next)=>(parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : (parseInt(prev.time.replace(':',''))) === (parseInt(next.time.replace(':',''))) ? (prev.max-prev.current) > (next.max-next.current) ? 1 : -1 : -1)
+    setGroupList([...groupList]);
+    console.log('시간순:' + JSON.stringify(groupList,null,4));
+
   };
 
   const Header = () =>{

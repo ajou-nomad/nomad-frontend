@@ -55,64 +55,68 @@ const WeeklyDelivery = ({ route, navigation }) => {
     setLocation(result);
   };
 
+  const getAxiosData = async () => {
+
+    // await getWeeklyGroupData().then((response) => {
+      
+    //   // console.log(JSON.stringify(response, null, 4));
+    //   setResponseWeeklyData(response)
+    // });
+    // await getData('storeData').then( (response) =>
+    //   setResponseStoreData(response)
+    // );
+
+    await axiosApiInstance.get('/weeklyGroupData')
+      .then((res) => {
+        if (res.data.groupData.length !== 0) {
+
+          let groupData = res.data.groupData.map((group) => {
+            // 해당 group안에 storeData insert
+            let storeData = res.data.storeData.filter((store) => store.storeId === group.storeId);
+            group.store = storeData[0];
+
+            return group;
+          });
+
+          setResponseWeeklyData(groupData);
+        } else {
+          console.log('get weeklyGroupData가 아직 없습니다.');
+        }
+
+        // console.log('체크:: ', JSON.stringify(res.data, null, 4));
+      }).catch( e => {
+        console.log('에러:: ', e);
+      });
+
+    await axiosApiInstance.get('storeList').then((response) => {
+
+      // console.log(JSON.stringify(response.data.data, null, 4));
+      setResponseStoreData(response.data.data);
+    });
+  };
+
   useEffect(() => {
 
-    const getAxiosData = async () => {
-
-      // await getWeeklyGroupData().then((response) => {
-        
-      //   // console.log(JSON.stringify(response, null, 4));
-      //   setResponseWeeklyData(response)
-      // });
-      // await getData('storeData').then( (response) =>
-      //   setResponseStoreData(response)
-      // );
-
-      await axiosApiInstance.get('/weeklyGroupData')
-        .then((res) => {
-
-          if (res.data.groupData.length !== 0) {
-
-            let groupData = res.data.groupData.map((group) => {
-              // 해당 group안에 storeData insert
-              let storeData = res.data.storeData.filter((store) => store.storeId === group.storeId);
-              group.store = storeData[0];
-
-              return group;
-            });
-
-            setResponseWeeklyData(groupData);
-          } else {
-            console.log('get weeklyGroupData가 아직 없습니다.');
-          }
-
-          // console.log('체크:: ', JSON.stringify(res.data, null, 4));
-        }).catch(e => {
-          console.log('에러:: ', e);
+    // 해당 화면 올때마다 최신 데이터 불러오기
+    const unsubscribe = navigation.addListener('focus', async () => {
+        getAxiosData().then((data) => {
+            console.log('axiosData들은 받아왔고');
         });
-
-      await axiosApiInstance.get('storeList').then((response) => {
-
-        // console.log(JSON.stringify(response.data.data, null, 4));
-        setResponseStoreData(response.data.data);
-      });
-    };
-
-    getAxiosData().then((data) => {
-      console.log('axiosData들은 받아왔고');
-      // navigation.goBack()에서 params 넘길 때 안넘길 때 구분
-      if (route.params?.post) {
-        setLocation(route.params.post);
-      } else {
-
-        currentLocation()
-        .then((result)=> {
-          setCurrentLocation(result);
-          console.log('현재위치 저장 완료');
-        })
-        .catch(e => console.log(e));
-      }
     });
+
+    if (route.params?.post) {
+        console.log('검색한 위치 저장 완료');
+        setLocation(route.params.post);
+    } else {
+        currentLocation().then((result)=> {
+            console.log('현재위치 저장 완료');
+            setCurrentLocation(result);
+        }).catch(
+            e => console.log(e)
+        );
+    }
+
+    return unsubscribe;
   }, [route.params?.post]);
 
   // 검색 창 헤더
