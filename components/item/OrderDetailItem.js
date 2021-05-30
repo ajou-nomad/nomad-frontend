@@ -33,14 +33,19 @@ const OrderDetailItem = ({ route }) => {
         button = <StoreButton title="배달완료" color="#364FC7" fontColor="white"/>;
     }
 
+    const tempDate = new Date(item.deliveryDateTime);
+
+    const date = `${tempDate.getFullYear()}년 ${tempDate.getMonth()}월 ${tempDate.getDay()}일 ${tempDate.getUTCHours()}시 ${tempDate.getUTCMinutes()}분`;
+
     return (
         <View style={styles.container}>
             <Header title="진행 주문" small="true" />
 
             <View style={[styles.itemContainer, { marginTop: 20, }]}>
                 <View>
-                    <Text style={{ ...FONTS2.body2 }}>{item.date} {item.time} 주문</Text>
-                    <Text style={{ ...FONTS2.h2, color: COLORS.darkgray }}>{item.address} {item.buildingName}</Text>
+                    <Text style={{ ...FONTS2.body2 }}>{date} 주문</Text>
+                    <Text style={{ ...FONTS2.h2, color: COLORS.darkgray, marginVertical: SIZES.base * 0.5 }}>{item.buildingName}</Text>
+                    <Text style={{ ...FONTS2.body3 }}>{item.address}</Text>
                 </View>
                 {button}
             </View>
@@ -53,7 +58,7 @@ const OrderDetailItem = ({ route }) => {
                     keyExtractor={item => item.menuId.toString()}
                     renderItem={renderItem}
                 />
-                {item.orderStatus === '접수 완료' ? (
+                {item.orderStatus === 'waitingForDelivery' ? (
                     <View>
                         <View style={styles.cookStatusContainer}>
                             <View style={{ alignItems: 'center' }}>
