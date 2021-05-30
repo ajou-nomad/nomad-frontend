@@ -129,7 +129,12 @@ const OrderDetails = () => {
             setModalVisible(!modalVisible);
         };
 
+
+        // console.log(JSON.stringify(item.orderTime).substr(1,10));
+        // console.log(JSON.stringify(item.orderTime).substr(12,5));
+
         const date = new Date(item.orderTime);
+
         return (
             <View style={styles.storeContainer}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30 }}>
@@ -137,7 +142,7 @@ const OrderDetails = () => {
                     // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName: item.storeName })}
                     >
                         <Text style={{ ...FONTS2.h2, fontSize: 25 }}>{item.storeName}</Text>
-                        <Text style={{ ...FONTS2.body3 }}>{date.getFullYear()}년 {date.getMonth()}월 {date.getDay()}일 {date.getUTCHours()}시 {date.getUTCMinutes()}분</Text>
+                        <Text style={{ ...FONTS2.body3 }}>{date.getFullYear()}년 {date.getMonth() + 1}월 {date.getUTCDate()}일 {date.getUTCHours()}시 {date.getUTCMinutes()}분</Text>
                     </TouchableOpacity>
                     <DeliveryState deliveryComplete={item.orderStatus} />
                 </View>

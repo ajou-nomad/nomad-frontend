@@ -11,9 +11,7 @@ import StoreButton from '../StoreButton';
 const OrderItem = ({ item }) => {
     const navigation = useNavigation();
 
-    console.log('OrderItem: ', JSON.stringify(item, null, 4));
-
-    // const quantity = item.menu.reduce((sum, cur) => sum + cur.quantity, 0) - 1;
+    const quantity = item.menu.reduce((sum, cur) => sum + cur.quantity, 0) - 1;
 
 
     // orderStatus에 따른 버튼
@@ -32,18 +30,12 @@ const OrderItem = ({ item }) => {
                 />;
     }
 
-    const tempDate = new Date(item.deliveryDateTime);
-
-    const date = `${tempDate.getFullYear()}년 ${tempDate.getMonth()}월 ${tempDate.getDay()}일 ${tempDate.getUTCHours()}시 ${tempDate.getUTCMinutes()}분`;
-
-
     return (
         <View style={styles.itemContainer}>
-            <View style={{ justifyContent: 'space-between' }}>
-                <Text style={{ ...FONTS2.body3 }}>{date}</Text>
-                {/* <Text style={{ ...FONTS2.h3, marginBottom: 3 }}>{item.menu[0].menuName} 외 {quantity}개</Text> */}
-                <Text style={{ ...FONTS2.h3, color: '#818181', marginVertical: SIZES.base * 0.7 }}>{item.buildingName}</Text>
-                <Text style={{ ...FONTS2.body3 }}>{item.address} </Text>
+            <View>
+                <Text style={{ ...FONTS2.body3 }}>{item.date} {item.time}</Text>
+                <Text style={{ ...FONTS2.h3, marginBottom: 3 }}>{item.menu[0].menuName} 외 {quantity}개</Text>
+                <Text style={{ ...FONTS2.h3, color: '#818181' }}>{item.address} {item.buildingName}</Text>
             </View>
             {button}
         </View>
@@ -60,8 +52,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderBottomWidth: 0.3,
-        borderBottomColor: '#ced4da',
     },
 });
 
