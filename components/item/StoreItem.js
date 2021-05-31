@@ -39,9 +39,9 @@ const StoreItem = ({ deliveryPlace, deliDate, datePicker, storeData, isLikeList 
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginRight: SIZES.base }}>{storeData.storeName}</Text>
                     <View style={{ borderWidth: 0.3, borderRadius: 8, flexDirection: 'row', paddingHorizontal: SIZES.base, backgroundColor: COLORS.darkgray }}>
-                        <Image source={icons.cutlery} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#fff', alignSelf: 'center' }} />
-                        <Text style={{ ...FONTS2.body4, color: '#fff' }}>{storeData.category}</Text>
-                    </View>
+                            <Image source={icons.cutlery} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#fff', alignSelf: 'center' }} />
+                            <Text style={{ ...FONTS2.body4, color: '#fff' }}>{storeData.category}</Text>
+                        </View>
                 </View>
 
                 

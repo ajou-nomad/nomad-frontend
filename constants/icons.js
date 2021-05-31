@@ -86,6 +86,7 @@ const menu = require("../assets/icons/menu.png");
 const circle = require("../assets/icons/circle.png");
 const checklist = require("../assets/icons/checklist.png");
 const bell = require("../assets/icons/bell.png");
+const promotion = require("../assets/icons/promotion.png");
 
 export default {
     check2,
@@ -173,4 +174,5 @@ export default {
     circle,
     checklist,
     bell,
+    promotion,
 }

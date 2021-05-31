@@ -24,6 +24,8 @@ const CarrierDetail = (props) => {
 	const { state, dispatch } = useContext(AuthContext);
 	const navigation = useNavigation();
 
+	console.log('object, ', JSON.stringify(props, null, 4));
+
 	let deliveryInfo = [];
 	const today = props.today;
 
@@ -58,8 +60,11 @@ const CarrierDetail = (props) => {
 		);
 	};
 
+	console.log('ㅏㅏㅏ: ', );
+
 	return (
-		!props.availableOrder
+		// !props.availableOrder
+		false
 			? <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }} >현 위치를 불러오는 중 입니다...</Text>
 			:
 			<View style={styles.container}>
