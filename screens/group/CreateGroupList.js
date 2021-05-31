@@ -40,6 +40,7 @@ function CreateGroupList({ navigation, route }) {
         setDeliveryPlace(region);
     };
 
+    // console.log(JSON.stringify(storeData, null, 4));
     
     const FirstRoute = ({ route }) => {
         return (
@@ -52,14 +53,24 @@ function CreateGroupList({ navigation, route }) {
     };
 
     const SecondRoute = ({ route }) => {
+
+        // const filteredData = route.storeData.filter(store => {
+        //     // console.log('sssss', JSON.stringify(store.promotion, null, 4));
+        //     // console.log(store.promotion === 'On');
+        //     return store.promotion === 'On';
+        // });
+
+        const filteredData = route.storeData.filter(store => (store.promotion === 'On'));
+
+        console.log('확인', JSON.stringify(filteredData, null, 4));
         return (
             <ScrollView>
-                {route.storeData.map((storeItems, index) => {
+                {filteredData.map((storeItem, index) => {
                     return (
-                        <TouchableOpacity style={styles.promotionContainer} onPress={() => navigation.navigate('Promotion', { storeData: route.storeData })}>
+                        <TouchableOpacity key={index} style={styles.promotionContainer} onPress={() => navigation.navigate('Promotion', { storeData: route.storeData })}>
                             <View style={styles.logoImageContainer}>
                                 <Image
-                                    source={{ uri: storeItems.logoUrl }}
+                                    source={{ uri: storeItem.logoUrl }}
                                     resizeMode='contain'
                                     style={{
                                         width: 55,
@@ -71,39 +82,16 @@ function CreateGroupList({ navigation, route }) {
 
                             <View style={{ alignSelf: 'center', marginLeft: 5, }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginRight: SIZES.base }}>{storeItems.storeName}</Text>
+                                    <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginRight: SIZES.base }}>{storeItem.storeName}</Text>
                                     <View style={{ borderWidth: 0.3, borderColor: '#e03131', borderRadius: 8, flexDirection: 'row', paddingHorizontal: SIZES.base, backgroundColor: '#e03131' }}>
                                         <Image source={icons.promotion} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#fff', alignSelf: 'center' }} />
                                         <Text style={{ ...FONTS2.body4, color: '#fff' }}>프로모션</Text>
                                     </View>
                                 </View>
 
-                
-                                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 3, }}>
-                                    <Image
-                                        source={icons.star}
-                                        resizeMode='contain'
-                                        style={{
-                                            width: SIZES.base * 1.6,
-                                            height: SIZES.base * 1.6,
-                                            marginRight: SIZES.base * 0.5,
-                                        }}
-                                    />
-                                    <Text style={{ ...FONTS2.body3, }}>{storeItems.rate} </Text>
-                                    <Text style={{ ...FONTS2.body3, marginRight: SIZES.base * 0.5 }}>(50+), </Text>
-
-                                    <Text style={{ ...FONTS2.body3, color: '#000000' }}>배달팁 {storeItems.deliveryTip.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
-                                </View>
-
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <Image source={icons.clock} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#000000' }} />
-                                    <Text style={{ ...FONTS2.body3, color: '#000000' }}>운영시간 {storeItems.openTime} ~ {storeItems.closeTime}</Text>
-                                </View>
-                
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <Image source={icons.bell} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#000000', }} />
-                                    <Text style={{ ...FONTS2.body3, color: '#000000' }}>{storeItems.storeIntro}</Text>
-                                </View>
+                                <Text style={{ ...FONTS2.body3 }}>{storeItem.promotionMenuDto.promotionMenuName}</Text>
+                                <Text style={{ ...FONTS2.body3 }}>{storeItem.promotionMenuDto.promotionDescription}</Text>
+                                <Text style={{ ...FONTS2.body3 }}>{storeItem.promotionMenuDto.cost}원</Text>
                             </View>
                         </TouchableOpacity>
                     );
