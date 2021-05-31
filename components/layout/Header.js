@@ -3,19 +3,19 @@
 /* eslint-disable no-alert */
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image, } from 'react-native';
 
-import { COLORS, FONTS2 } from '../../constants';
+import { COLORS, FONTS2, icons, SIZES } from '../../constants';
 
 import { responsiveHeight, } from "react-native-responsive-dimensions";
 
-const Header = ({ title, small }) => {
+const Header = ({ title, small, createGroupList }) => {
 
     return (
         <View style={{
             height: responsiveHeight(8),
             backgroundColor: 'white',
-            borderBottomWidth: 0.3,
+            borderBottomWidth: createGroupList ? 0 : 0.3,
             borderBottomColor: COLORS.darkgray,
             alignItems: 'center',
             justifyContent: 'center',

@@ -30,6 +30,7 @@ import CreateReview from '../screens/review/CreateReview';
 import SearchPlace from '../screens/search/SearchPlace';
 
 import DeliveryNavigation from './DeliveryNavigation';
+import Promotion from '../screens/Promotion';
 
 
 const RootStack = createStackNavigator();
@@ -129,6 +130,7 @@ const userStack = () => {
             <Stack.Screen name="CreateReview" component={CreateReview} />
             <Stack.Screen name="MyReview" component={MyReview} />
             <Stack.Screen name="Receipt" component={Receipt} />
+            <Stack.Screen name="Promotion" component={Promotion} />
         </Stack.Navigator>
     );
 };
