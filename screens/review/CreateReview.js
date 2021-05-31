@@ -7,30 +7,20 @@ import { View, Text, StyleSheet, Image, TextInput, ScrollView, TouchableOpacity,
 import { useNavigation } from '@react-navigation/native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { launchImageLibrary } from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
 import uuid from 'react-native-uuid';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BottomButton from '../../components/layout/BottomButton';
 import Header from '../../components/layout/Header';
 import { FONTS2, COLORS, icons, SIZES } from '../../constants';
-import { getData } from '../../utils/helper';
 import axiosApiInstance from '../../utils/axios';
 
 const CreateReview = ({ route }) => {
     const navigation = useNavigation();
-    const [uploadImage, setUploadImage] = useState('');
+    const [image, setImage] = useState('');
     const [text, setText] = useState('');
 
-    // let [orderData, setOrderData] = useState();
-    let { item, setItems } = route.params;
-    
-
-
-
-    // console.log('hhhh: ', item);
-    // console.log('CreateReview ', item); // item.orderId
-
-    // getData('orderData').then(data => setOrderData(data));
+    let { item } = route.params;
 
     const renderRating = () => {
         return (
@@ -38,13 +28,13 @@ const CreateReview = ({ route }) => {
                 marginVertical: 10,
             }}>
                 <Image
-                source={icons.star}
-                resizeMode='contain'
-                style={{
-                    width: 20,
-                    height: 20,
-                }}
-            />
+                    source={icons.star}
+                    resizeMode='contain'
+                    style={{
+                        width: 20,
+                        height: 20,
+                    }}
+                />
             </View>
         );
     };
@@ -53,11 +43,10 @@ const CreateReview = ({ route }) => {
         launchImageLibrary({}, (res) => {
             const source = { uri: res.uri };
 
-            // uploadImage(source, res.uri);
             console.log(source);
-            setUploadImage(res.uri);
+            setImage(res.uri);
         });
-    }
+    };
 
     const renderAddPhoto = () => {
         return (
@@ -87,31 +76,62 @@ const CreateReview = ({ route }) => {
             ToastAndroid.showWithGravity('작성한 리뷰가 없습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
         }
         else {
-            // item = {
-            //     ...item,
-            //     review: {
-            //         reviewId: uuid.v4(),
-            //         text: text,
-            //     },
-            // };
-            // setItems(item);
 
-            // 리뷰 axios
+            const uploadImage = (imageUri) => {
+                if (imageUri) {
+                    const ext = imageUri.split('.').pop();
+                    const filename = `${uuid.v4()}.${ext}`;
+                    const imgRef = storage().ref(`reviewimage/${filename}`);
 
-            const currentTime = new Date();
-            currentTime.setHours(currentTime.getHours() + 9);
+                    const unsubscribe = imgRef.putFile(imageUri)
+                        .on(
+                            storage.TaskEvent.STATE_CHANGED,
+                            async snapshot => {
+                                var state = {
+                                    ...state,
+                                    progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100, // Calculate progress percentage
+                                };
+                                if (snapshot.state === storage.TaskState.SUCCESS) {
+                                    console.log('upload success');
+                                    // unsubscribe the event
+                                    unsubscribe();
+                                    // update the image url
+                                    let url;
+                                    await imgRef.getDownloadURL()
+                                        .then((response) => {
+                                            console.log('get url response', response);
+                                            url = response;
+                                        })
+                                        .catch(error => {
+                                            console.log('Failed to get url', error);
+                                        });
 
-            await axiosApiInstance.post('/review', {
-                contents: text,
-                rate: 5,
-                localDateTime: currentTime,
-                imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/reviewimage%2F1c2b5839-0760-485c-817a-780d68c924a8.jpg?alt=media&token=295fe92f-316c-44cb-aef1-d57e308f8f4b'
-            }).then(function (response) {
-				console.log('리뷰 등록: ', response.data);
-            });
+                                    console.log('파이어베이스 URL 체크: ', url);
 
-            navigation.goBack();
-            ToastAndroid.showWithGravity('리뷰가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+                                    // 리뷰 axios
+
+                                    const currentTime = new Date();
+                                    currentTime.setHours(currentTime.getHours() + 9);
+
+                                    await axiosApiInstance.post('/review', {
+                                        memberOrderId: item.memberOrderId,
+                                        storeId: item.storeId, // memberOrderId, memberOrderList
+                                        contents: text,
+                                        rate: 5,
+                                        localDateTime: currentTime,
+                                        imgUrl: url,
+                                    }).then(function (response) {
+                                        console.log('리뷰 등록: ', response.data);
+                                    });
+
+                                    navigation.goBack();
+                                    ToastAndroid.showWithGravity('리뷰가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+                                }
+                            });
+                }
+            };
+
+            uploadImage(image);
         }
     };
 
@@ -130,10 +150,10 @@ const CreateReview = ({ route }) => {
                         style={styles.textInput}
                         onChangeText={(e) => onChange(e)}
                     />
-                    {uploadImage ? (
+                    {image ? (
                         <View style={{ paddingTop: 10, }}>
                             <Image
-                                source={{ uri: uploadImage }}
+                                source={{ uri: image }}
                                 resizeMode='contain'
                                 style={{
                                     borderRadius: 8,

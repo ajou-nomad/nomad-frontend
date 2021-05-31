@@ -216,6 +216,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
             }}
             showsUserLocation={true}
             showsMyLocationButton={false}
+            toolbarEnabled={false}
         >
           { filteredMarkers.map((item, idx) => (
             <CustomMarker key={idx} item={item} back={back} today={today} storeData={storeData} />

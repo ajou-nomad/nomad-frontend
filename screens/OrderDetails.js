@@ -3,7 +3,7 @@
 /* eslint-disable no-alert */
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, LogBox, Image, } from 'react-native';
+import { View, Text, StyleSheet, } from 'react-native';
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
@@ -12,41 +12,33 @@ import { FONTS2, COLORS, SIZES } from '../constants';
 import Header from '../components/layout/Header';
 import Receipt from '../screens/Receipt';
 
-
-LogBox.ignoreAllLogs();
-
-import { getData } from '../utils/helper';
 import axiosApiInstance from '../utils/axios';
 
 const OrderDetails = () => {
     const navigation = useNavigation();
-    const [orderData, setOrderData] = useState(null);
-    const [memberOrderList, setMemberOrderList] = useState(null);
+    const [memberOrderList, setMemberOrderList] = useState([]);
 
     useEffect(() => {
-        getData('orderData').then(data => setOrderData(data));
 
-        console.log(JSON.stringify(orderData, null, 4));
-
-        // axiosApiInstance.get('/memberOrderList')
-        //     .then(function (response) {
-        //         console.log('주문 내역 데이터 요청: ', JSON.stringify(response.data, null, 4));
-        //         setMemberOrderList(response.data.data);
-        //     });
+        axiosApiInstance.get('/memberOrderList')
+            .then(function (response) {
+                console.log('주문 내역 데이터 요청: ', JSON.stringify(response.data.data, null, 4));
+                setMemberOrderList(response.data.data);
+            }).catch((e) => console.log(e));
     }, []);
 
+
     const ReviewButton = ({ item }) => {
-        const [items, setItems] = useState(item);
         return (
             <View>
-                {items.review === null ? (
-                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('CreateReview', { item: items, setItems: setItems })}>
+                {item.reviewList.reviewId === null ? (
+                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('CreateReview', { item: item })}>
                         <Text style={styles.buttonText}>
                             리뷰 쓰기
                         </Text>
                     </TouchableOpacity>
                 ) : (
-                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('MyReview', { item: items })}>
+                    <TouchableOpacity style={styles.reviewButtonContainer} onPress={() => navigation.navigate('MyReview', { item: item })}>
                         <Text style={styles.buttonText}>
                             작성한 리뷰 보기
                         </Text>
@@ -58,6 +50,7 @@ const OrderDetails = () => {
     };
 
     const DeliveryState = ({ deliveryComplete }) => {
+
 
         const status = () => {
             if (deliveryComplete === 'recruiting') {
@@ -74,7 +67,14 @@ const OrderDetails = () => {
                     </View>
                 );
             }
-            else if (deliveryComplete === 'delivering') {
+            else if (deliveryComplete === 'recruitmentAccept') {
+                return (
+                    <View style={{ backgroundColor: '#f03e3e', padding: SIZES.padding * 0.25, borderRadius: 8 }}>
+                        <Text style={{ ...FONTS2.body4, color: COLORS.white }}>접수 완료</Text>
+                    </View>
+                );
+            }
+            else if ((deliveryComplete === 'delivering' ) || (deliveryComplete === 'waitingForDelivery')) {
                 return (
                     <View style={{ backgroundColor: '#f03e3e', padding: SIZES.padding * 0.25, borderRadius: 8 }}>
                         <Text style={{ ...FONTS2.body4, color: COLORS.white }}>배달 중</Text>
@@ -102,7 +102,10 @@ const OrderDetails = () => {
         return (
             <View style={{ marginVertical: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.detailFont}>- {item.menuName}</Text>
-                <Text style={styles.detailFont}>{item.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.detailFont}>{item.quantity}개 </Text>
+                    <Text style={styles.detailFont}>{item.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                </View>
             </View>
         );
     };
@@ -110,31 +113,38 @@ const OrderDetails = () => {
     const OrderDetailItem = ({ deliveryComplete, onPress, item }) => {
         const [modalVisible, setModalVisible] = useState(false);
 
+        // console.log('OrderDetailItem: ', JSON.stringify(item, null, 4));
+
         const closeModal = () => {
             setModalVisible(!modalVisible);
         };
 
+
+        // console.log(JSON.stringify(item.orderTime).substr(1,10));
+        // console.log(JSON.stringify(item.orderTime).substr(12,5));
+
         const date = new Date(item.orderTime);
+
         return (
             <View style={styles.storeContainer}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 30 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SIZES.base }}>
                     <TouchableOpacity
                     // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName: item.storeName })}
                     >
                         <Text style={{ ...FONTS2.h2, fontSize: 25 }}>{item.storeName}</Text>
-                        <Text style={{ ...FONTS2.body3 }}>{date.getFullYear()}년 {date.getMonth()}월 {date.getDay()}일 {date.getUTCHours()}시 {date.getUTCMinutes()}분</Text>
+                        <Text style={{ ...FONTS2.body3 }}>{date.getFullYear()}년 {date.getMonth() + 1}월 {date.getUTCDate()}일 {date.getUTCHours()}시 {date.getUTCMinutes()}분</Text>
                     </TouchableOpacity>
                     <DeliveryState deliveryComplete={item.orderStatus} />
                 </View>
 
                 {/* 주문한 메뉴 */}
-                <View style={{ minHeight: 70 }}>
-                    <FlatList data={item.menu} keyExtractor={item => item.menuId.toString()} renderItem={renderMenuItem} />
+                <View style={{ marginVertical: SIZES.base * 1.5 }}>
+                    <FlatList data={item.orderItemList} keyExtractor={item => item.orderItemId.toString()} renderItem={renderMenuItem} />
                 </View>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-                    <ReviewButton item={item} />
-                    <View style={{ width: 10 }} />
+                <View style={{ justifyContent: 'space-between', flex: 1 }}>
+
+                    {item.orderStatus === 'deliveryDone' ? (<ReviewButton item={item} />) : (null)}
 
                     <TouchableOpacity
                         style={styles.receiptButton}
@@ -144,9 +154,8 @@ const OrderDetails = () => {
                             영수증 보기
                         </Text>
                     </TouchableOpacity>
-
-                    <Receipt item={item} modalVisible={modalVisible} closeModal={closeModal} />
                 </View>
+                <Receipt item={item} modalVisible={modalVisible} closeModal={closeModal} />
             </View>
         );
     };
@@ -155,7 +164,7 @@ const OrderDetails = () => {
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />
             <View style={{ padding: 15, flex: 1 }}>
-                <FlatList data={orderData} keyExtractor={item => item.orderId.toString()} renderItem={({ item }) => <OrderDetailItem item={item} />} inverted />
+                <FlatList data={memberOrderList} keyExtractor={item => item.memberOrderId.toString()} renderItem={({ item }) => <OrderDetailItem item={item} />} />
             </View>
         </View>
     );
@@ -178,28 +187,24 @@ const styles = StyleSheet.create({
     },
     reviewButtonContainer: {
         backgroundColor: '#339af0',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 8,
+        padding: SIZES.padding,
         borderRadius: 8,
-        width: 140,
         opacity: 0.9,
     },
     receiptButton: {
-        backgroundColor: '#339af0',
-        alignSelf: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#ced4da',
         alignItems: 'center',
-        padding: 8,
         borderRadius: 8,
-        width: 140,
         opacity: 0.9,
+        padding: SIZES.padding,
+        flex: 1,
+        marginTop: SIZES.base,
     },
     buttonText: {
         ...FONTS2.body3,
         color: COLORS.white,
         fontSize: 18,
+        alignSelf: 'center',
     },
     totalCost: {
         marginTop: 20,

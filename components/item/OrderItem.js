@@ -11,25 +11,40 @@ import StoreButton from '../StoreButton';
 const OrderItem = ({ item }) => {
     const navigation = useNavigation();
 
-    const quantity = item.menu.reduce((sum, cur) => sum + cur.quantity, 0) - 1;
+
+    const totalItemListNum = item.orderItemList.reduce((acc, cur, i) =>{
+        return acc + cur.length;
+    }, 0);
+
+
+    // orderStatus에 따른 버튼
+    let button;
+    if (item.orderStatus === 'recruitmentDone') {
+        button = <StoreButton title="접수하기" color="#CED4DA" fontColor="white"
+                    onPress={() => navigation.navigate('OrderDetailItem', { item: item })}
+                />;
+    } else if ((item.orderStatus ===  'recruitmentAccept') || (item.orderStatus === 'waitingForDelivery')) {
+        button = <StoreButton title="접수완료" color="#364FC7" fontColor="white"
+                    onPress={() => navigation.navigate('OrderDetailItem', { item: item })}
+                />;
+    } else if (item.orderStatus ===  'delivering') {
+        button = <StoreButton title="배달중" color="#364FC7" fontColor="white"
+                    onPress={() => navigation.navigate('OrderDetailItem', { item: item })}
+                />;
+    } else if (item.orderStatus ===  'deliveryDone') {
+        button = <StoreButton title="배달완료" color="#364FC7" fontColor="white"
+                    onPress={() => navigation.navigate('OrderDetailItem', { item: item })}
+                />;
+    }
 
     return (
         <View style={styles.itemContainer}>
             <View>
-                <Text style={{ ...FONTS2.body3 }}>{item.date} {item.time}</Text>
-                <Text style={{ ...FONTS2.h3, marginBottom: 3 }}>{item.menu[0].menuName} 외 {quantity}개</Text>
-                <Text style={{ ...FONTS2.h3, color: '#818181', }}>{item.address} {item.buildingName}</Text>
+                <Text style={{ ...FONTS2.body3 }}>{JSON.stringify(item.deliveryDateTime).substr(1,10)} {JSON.stringify(item.deliveryDateTime).substr(12,5)}</Text>
+                <Text style={{ ...FONTS2.h3, marginBottom: 3 }}>{item.orderItemList[0][0].menuName} 외 {totalItemListNum}개</Text>
+                <Text style={{ ...FONTS2.h3, color: '#818181' }}>{item.address} {item.buildingName}</Text>
             </View>
-            
-            {item.orderStatus === '모집 완료' ? (
-                <StoreButton title='접수하기' color='#CED4DA' fontColor='white'
-                    onPress={() => navigation.navigate('OrderDetailItem', { item: item })}
-                />
-            ) : (
-                <StoreButton title='접수완료' color='#364FC7' fontColor='white'
-                    onPress={() => navigation.navigate('OrderDetailItem', { item: item })}
-                />
-            )}
+            {button}
         </View>
     );
 };

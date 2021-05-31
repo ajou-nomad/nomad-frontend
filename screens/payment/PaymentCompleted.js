@@ -8,6 +8,9 @@ import { COLORS, FONTS2, icons, SIZES } from '../../constants';
 const PaymentCompleted = ({ navigation, route: { params } }) => {
 
     const currentTime = new Date();
+    currentTime.setHours(currentTime.getHours() + 9);
+
+    console.log(currentTime);
 
     return (
         <View style={styles.container}>
@@ -15,8 +18,16 @@ const PaymentCompleted = ({ navigation, route: { params } }) => {
                 {/* Header */}
                 <View style={styles.title}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Tabs',{routeName: ''})}
+                        onPress={() =>
+                            navigation.navigate('Tabs', {
+                                screen: (params.groupType === 'day') ? '당일 모집' : '주간 모집',
+                                params: {
+                                    screen: (params.groupType === 'day') ? 'DayDelivery' : 'WeeklyDelivery',
+                                },
+                            })
+                        }
                         style={{ position: 'absolute', left: SIZES.width * 0.045, top: SIZES.height * 0.025 }}
+                        hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }} //터치영역 확장
                     >
                         <Image
                             source={icons.close}
@@ -50,7 +61,7 @@ const PaymentCompleted = ({ navigation, route: { params } }) => {
                 <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: SIZES.base * 3 }}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 }}>
                         <Text style={{ ...FONTS2.h4 }}>결제 일시</Text>
-                        <Text style={{ ...FONTS2.body3 }}>{`${currentTime.getFullYear()}-${('00' + JSON.stringify(currentTime.getMonth())).slice(-2)}-${('00' + JSON.stringify(currentTime.getDay())).slice(-2)} ${('00' + JSON.stringify(currentTime.getHours())).slice(-2)}:${('00' + JSON.stringify(currentTime.getMinutes())).slice(-2)}:${('00' + JSON.stringify(currentTime.getSeconds())).slice(-2)}`}</Text>
+                        <Text style={{ ...FONTS2.body3 }}>{`${currentTime.getFullYear()}-${('00' + JSON.stringify(currentTime.getUTCMonth() + 1)).slice(-2)}-${('00' + JSON.stringify(currentTime.getUTCDate())).slice(-2)} ${('00' + JSON.stringify(currentTime.getUTCHours())).slice(-2)}:${('00' + JSON.stringify(currentTime.getUTCMinutes())).slice(-2)}:${('00' + JSON.stringify(currentTime.getUTCSeconds())).slice(-2)}`}</Text>
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 5}}>
                         <Text style={{ ...FONTS2.h4 }}>거래상태</Text>
@@ -65,7 +76,14 @@ const PaymentCompleted = ({ navigation, route: { params } }) => {
                 {/* Bottom */}
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Tabs',{routeName: ''})}
+                        onPress={() =>
+                            navigation.navigate('Tabs', {
+                                screen: (params.groupType === 'day') ? '당일 모집' : '주간 모집',
+                                params: {
+                                    screen: (params.groupType === 'day') ? 'DayDelivery' : 'WeeklyDelivery',
+                                },
+                            })
+                        }
                         style={{width: '100%', height: '50%', backgroundColor: '#339af0'}}
                     >
                         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>

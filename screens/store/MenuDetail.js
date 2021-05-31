@@ -20,6 +20,8 @@ import Counter from 'react-native-counters';
 import { ScrollView } from 'react-native-gesture-handler';
 import { DefaultTheme, Checkbox } from 'react-native-paper';
 
+import BottomButton from '../../components/layout/BottomButton';
+
 // import { LogBox } from 'react-native';
 // LogBox.ignoreAllLogs();//Ignore all log notifications
 
@@ -76,11 +78,7 @@ const Option = ({ item, userOption, setUserOption }) => {
             </View>
         </View>
     );
-}
-
-const postOrderData = (orderData) => {
-
-}
+};
 
 function MenuDetail({ navigation, route:{params} }) {
 
@@ -169,8 +167,6 @@ function MenuDetail({ navigation, route:{params} }) {
     // 최종 금액
     const [totalPrice, setTotalPrice] = useState(menuDetail.price);
 
-    // 유저가 선택한 옵션 정보
-    const [userOption, setUserOption] = useState([]);
 
     // 총 가격 계산
     const handleTotalPrice = (number, type) => {
@@ -265,36 +261,12 @@ function MenuDetail({ navigation, route:{params} }) {
         );
     };
 
-    const renderBottom = () => {
-        return (
-            <View style={{ flex: 0.1 }}>
-                <View
-                    style={{
-                        flex: 1,
-                        backgroundColor: '#339af0',
-                        borderTopEndRadius: 20,
-                        borderTopStartRadius: 20,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexDirection: 'row',
-                    }}
-                >
-                    <TouchableOpacity
-                        onPress={() => addCart()}
-                    >
-                        <Text style={{ ...FONTS2.body2, fontWeight: 'bold', color: COLORS.white }}>카트에 담기</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        );
-    };
-
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={{flex: 5, }}>
                 {renderBody()}
             </ScrollView>
-            {renderBottom()}
+            <BottomButton title='카트에 담기' small='true' onPress={() => addCart()}/>
         </SafeAreaView>
     );
 }

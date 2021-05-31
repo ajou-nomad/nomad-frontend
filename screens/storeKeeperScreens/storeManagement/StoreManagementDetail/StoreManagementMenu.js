@@ -36,8 +36,6 @@ const FirstRoute = ({ route }) => {
 
     return (
         <ScrollView>
-            {/* <Text style={{ ...FONTS2.h3, alignSelf: 'center',  marginVertical: SIZES.base * 1.5 }}>메뉴 리스트</Text> */}
-            
             <View style={styles.menuMaanagementHeader}>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Menu') }

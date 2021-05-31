@@ -18,7 +18,6 @@ const DayNavigation = ({route, navigation}) => {
             screenOptions={{
                 headerShown: false,
             }}
-            initialRouteName={'DayDelivery'}
         >
             <DayStack.Screen name="DayDelivery" component={DayDelivery} />
             <DayStack.Screen name="GroupList" component={GroupList} />

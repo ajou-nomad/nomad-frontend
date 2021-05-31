@@ -537,3 +537,8 @@ export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, nav
             navigation.navigate('ChatList');
         });
 };
+
+export const digitTwo = (digit) => {
+
+    return ('00' + JSON.stringify(digit)).slice(-2);
+};

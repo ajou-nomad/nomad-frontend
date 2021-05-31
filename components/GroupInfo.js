@@ -18,7 +18,8 @@ import { useNavigation } from '@react-navigation/native';
 
 
 export default function GroupInfo(props) {
-        const navigation = useNavigation();
+    const navigation = useNavigation();
+
     return (
         <TouchableOpacity
             style={{ borderBottomWidth: 0.6, borderBottomColor: '#e9ecef', paddingHorizontal: 5, }}

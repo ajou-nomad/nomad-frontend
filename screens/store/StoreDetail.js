@@ -15,10 +15,11 @@ import {
     TouchableOpacity,
     ToastAndroid,
     Animated,
+    FlatList,
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
-import { FONTS2, icons, COLORS } from '../../constants';
+import { FONTS2, icons, COLORS, SIZES } from '../../constants';
 
 
 import { responsiveWidth } from 'react-native-responsive-dimensions';
@@ -26,40 +27,43 @@ import { responsiveWidth } from 'react-native-responsive-dimensions';
 
 import Menu from '../../components/item/Menu';
 import CartButton from '../../components/CartButton';
-import Review from '../../screens/review/Review';
 import StoreInfo from './StoreInfo';
+import ReviewItem from '../../components/item/ReviewItem';
 
 
 // 메뉴 (flatlist로 바꾸기)
 const MenuRoute = ({ route }) => {
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-            <ScrollView>
+        <ScrollView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 {route.menu.map((items, index) => {
                     return (
                         <Menu key={index} menu={items} time={route.time} location={route.location} storeName={route.storeName} />
                     );
                 })}
-            </ScrollView>
-        </SafeAreaView>
+        </ScrollView>
     );
 };
 
 // 매장 정보
-const StoreInfoRoute = ({route}) => (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff', padding: 15 }}>
-        <ScrollView>
-            <StoreInfo storeInfo={route.storeInfo} />
-        </ScrollView>
-    </SafeAreaView>
+const StoreInfoRoute = ({ route }) => (
+    <ScrollView style={{ flex: 1, backgroundColor: '#ffffff', padding: 15 }}>
+        <StoreInfo storeInfo={route.storeInfo} />
+    </ScrollView>
 );
 
 // 리뷰
-const ReviewRoute = () => (
-    <ScrollView style={{ flex: 1, backgroundColor: '#ffffff', padding: 15 }}>
-        <Review />
-    </ScrollView>
-);
+const ReviewRoute = ({ route }) => {
+    return (
+        <ScrollView style={{ flex: 1, backgroundColor: '#ffffff', paddingHorizontal: 15, paddingBottom: SIZES.base * 6,  }}>
+            <Text style={{ ...FONTS2.h2, margin: 20, }}>리뷰 {route.storeReview.length}개</Text>
+            {route.storeReview.map((item, index) => {
+                return (
+                    <ReviewItem key={index} item={item} />
+                );
+            })}
+        </ScrollView>
+    );
+};
 
 const renderScene = SceneMap({
     first: MenuRoute,
@@ -67,22 +71,20 @@ const renderScene = SceneMap({
     third: ReviewRoute,
 });
 
-function StoreDetail({route}) {
+function StoreDetail({ route }) {
     const groupData = route.params.groupData;
     const storeInfo = route.params.storeInfo;
     const datePicker = route.params.datePicker;
 
     const [cartItems, setCartItems] = useState([]);
 
-    // console.log(route.params);
-    
     const menu = storeInfo.menu;
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         { key: 'first', title: '메뉴', setCartItems: setCartItems, menu: menu ,time: route.params.time, location: route.params.deliveryPlace, storeName: storeInfo.storeName},
         { key: 'second', title: '매장 정보', storeInfo: storeInfo},
-        { key: 'third', title: '리뷰' },
+        { key: 'third', title: '리뷰', storeReview: route.params.storeInfo.reviewList },
     ]);
 
     const offset = useRef(new Animated.Value(0)).current;
@@ -117,7 +119,7 @@ function StoreDetail({route}) {
 
     const renderHeader = () => {
         return (
-            <Animated.View
+            <View
                 style={{
                     backgroundColor: COLORS.white,
                     paddingTop: 30,
@@ -125,28 +127,32 @@ function StoreDetail({route}) {
             >
                 <View style={styles.headerContainer}>
                     <Text style={{ ...FONTS2.h1 }}>{storeInfo.storeName}</Text>
-                    <View style={{ flexDirection: 'row', marginTop: 10, alignSelf: 'center', }}>
-                        <Image
-                            source={icons.star}
-                            resizeMode="contain"
-                            style={{
-                                width: 20,
-                                height: 20,
-                                marginRight: 5,
-                            }}
-                        />
-                        <Text style={{ ...FONTS2.body3 }}>{storeInfo.rate} / 5.0</Text>
-                        <Text style={{ ...FONTS2.body3 }}>(50+)</Text>
-                    </View>
-                </View>
+                    <View style={{ marginTop: SIZES.base }}>
+                        <View style={{ flexDirection: 'row', }}>
+                            <Image
+                                source={icons.star}
+                                resizeMode="contain"
+                                style={{
+                                    width: SIZES.base * 2,
+                                    height: SIZES.base * 2,
+                                    marginRight: SIZES.base * 0.5,
+                                }}
+                            />
+                            <Text style={{ ...FONTS2.body3 }}>{storeInfo.rate} / 5.0</Text>
+                            <Text style={{ ...FONTS2.body3 }}>(50+)</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Image source={icons.clock} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#000000' }} />
+                            <Text style={{ ...FONTS2.body3, color: '#000000' }}>운영시간 {storeInfo.openTime} ~ {storeInfo.closeTime}</Text>
+                        </View>
 
-                <View style={{ width: '60%', backgroundColor: 'white', alignSelf: 'center', marginBottom: 10 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ ...FONTS2.body3 }}>배달팁</Text>
-                        <Text style={{ ...FONTS2.body3 }}>{storeInfo.deliveryTip}원</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Image source={icons.bell} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#000000', }} />
+                            <Text style={{ ...FONTS2.body3, color: '#000000' }}>배달팁 {storeInfo.deliveryTip.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                        </View>
                     </View>
                 </View>
-            </Animated.View>
+            </View>
         );
     };
 
