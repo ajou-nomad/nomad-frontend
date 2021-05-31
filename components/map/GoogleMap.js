@@ -154,7 +154,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
             {
               groupId: items.groupId,
               logo: items.store.logoUrl,
-              time: JSON.stringify(items.deliveryDateTime).substr(12,4),
+              time: JSON.stringify(items.deliveryDateTime).substr(12,5),
               date: JSON.stringify(items.deliveryDateTime).substr(1,10),
               current: items.current,
               max: items.maxValue,
@@ -174,7 +174,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
           {
             groupId: items.groupId,
             logo: items.store.logoUrl,
-            time: JSON.stringify(items.deliveryDateTime).substr(12,4),
+            time: JSON.stringify(items.deliveryDateTime).substr(12,5),
             date: JSON.stringify(items.deliveryDateTime).substr(1,10),
             current: items.current,
             max: items.maxValue,

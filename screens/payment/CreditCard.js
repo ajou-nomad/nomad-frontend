@@ -97,6 +97,7 @@ const CreditCard = ({route, navigation}) => {
             // 결제성공 페이지로 이동 후
             navigation.replace('PaymentCompleted',{
                 paymentMethod: '카드',
+                totalCost: postData.totalPrice,
             });
         });
       }

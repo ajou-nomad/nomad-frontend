@@ -18,6 +18,7 @@ import GpsButton from '../../components/map/GpsButton';
 import { calculateDistance, currentLocation, getDaliyGroupData, getData } from '../../utils/helper';
 
 import CarrierDetail from './CarrierDetail';
+import axiosApiInstance from '../../utils/axios';
 
 
 
@@ -85,6 +86,34 @@ const CarrierMain = ({ route, navigation }) => {
           });
 
     }, [route.params?.post] );
+
+//     useEffect( () => {
+//       currentLocation().then((currentLoction)=>{
+//         axiosApiInstance.get('storeData').then((storeData)=>{
+//             axiosApiInstance.get('/groupData').then((groupData)=>{
+//                 console.log(JSON.stringify(groupData,null,4));
+//                 axiosApiInstance.get('orderData').then((orderData)=>{ // orderData에 groupId가 필요함
+//                     // console.log(JSON.stringify(orderData,null,4));
+//                     const filteredStore = storeData.filter( (storeInfo) => {
+//                         return calculateDistance(currentLoction.latitude, currentLoction.longitude, storeInfo.latitude, storeInfo.longitude) <= 1000;
+//                     });
+//                     setAvailableStore(filteredStore);
+//                     const filteredGroup = groupData.filter( (groupInfo) => {
+//                         return (checkStoreId(groupInfo.storeId,filteredStore) && groupInfo.orderStatus === 'recruiting' && groupInfo.date  === today);
+//                     });
+//                     setAvailableGroup(filteredGroup);
+//                     const filteredOrder = orderData.filter( (orderInfo) =>{
+//                       return checkGroupId(orderInfo.groupId,filteredGroup);
+//                     })
+//                     setAvailableOrder(filteredOrder);
+//                     setCurrentLocation(currentLoction);
+//                   });
+//                 });
+//             });
+//         });
+
+//   }, [route.params?.post] );
+    
 
 
     

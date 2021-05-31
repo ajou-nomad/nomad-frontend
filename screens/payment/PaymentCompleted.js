@@ -44,7 +44,7 @@ const PaymentCompleted = ({ navigation, route: { params } }) => {
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 5}}>
                         <Text style={{ ...FONTS2.h4 }}>결제 금액</Text>
-                        <Text style={{ ...FONTS2.h4, color: '#339af0' }}>{params.totalCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
+                        <Text style={{ ...FONTS2.h4, color: '#339af0' }}>{params.totalCost?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
                     </View>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: SIZES.base * 3 }}>
