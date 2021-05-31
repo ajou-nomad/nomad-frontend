@@ -85,6 +85,7 @@ const CreditCard = ({route, navigation}) => {
                   totalCost: postData.totalPrice,
                   payMethod: 'card',
                   orderTime: currentTime,
+                  promotion: 'On',
                 }).then( (response) => {
 
                     console.log('배달그룹 참여완료');
@@ -103,25 +104,24 @@ const CreditCard = ({route, navigation}) => {
         }
     };
 
-  const data = {
-    pg: 'inicis',
-    pay_method: 'card',
-    name: 'Dutch Delivery',
-    merchant_uid: `mid_${new Date().getTime()}`,
-    amount: postData.totalPrice,
-    buyer_name: paymentInfo.buyerName,
-    buyer_tel: paymentInfo.buyerTel,
-    buyer_email: paymentInfo.buyerEmail,
-    app_scheme: 'example',
-  };
-
-  return (
-    <IMP.Payment
-      userCode={'imp77640589'}
-      data={data}
-      callback={paymentTermination} // 결제 종료 후 콜백함수 호출
-    />
-  );
+    const data = {
+        pg: 'inicis',
+        pay_method: 'card',
+        name: 'Dutch Delivery',
+        merchant_uid: `mid_${new Date().getTime()}`,
+        amount: postData.totalPrice,
+        buyer_name: paymentInfo.buyerName,
+        buyer_tel: paymentInfo.buyerTel,
+        buyer_email: paymentInfo.buyerEmail,
+        app_scheme: 'example',
+    };
+    return (
+        <IMP.Payment
+            userCode={'imp77640589'}
+            data={data}
+            callback={paymentTermination} // 결제 종료 후 콜백함수 호출
+        />
+    );
 };
 
 export default CreditCard;

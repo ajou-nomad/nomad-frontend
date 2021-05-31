@@ -13,7 +13,6 @@ import ModifyMenu from './ModifyMenu';
 const FirstRoute = ({ route }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
-
     const closeModal = () => {
         setModalVisible(!modalVisible);
     };
@@ -40,14 +39,12 @@ const FirstRoute = ({ route }) => {
                 <TouchableOpacity
                     onPress={() => navigation.navigate('Menu') }
                     style={styles.menuButton}>
-                    <Text style={{ ...FONTS2.h4, color: COLORS.white }}>메뉴추가</Text>
+                    <Text style={{ ...FONTS2.h4, color: COLORS.white }}>프로모션 메뉴추가</Text>
                 </TouchableOpacity>
             </View>
-
-            <MenuItem menuName='에스프레소' cost={7000} />
-            <MenuItem menuName='바닐라라떼' cost={5000} />
-            <MenuItem menuName='아메리카노' cost={3000}/>
-
+            {route.menuData.map((menu, index) =>
+                <MenuItem key={index} menuName={menu.menuName} cost={menu.cost} />
+            )}
             <ModifyMenu modalVisible={modalVisible} closeModal={closeModal} />
         </ScrollView>
     );
@@ -64,12 +61,14 @@ const renderScene = SceneMap({
     second: SecondRoute,
 });
 
-const StoreManagementMenu = () => {
+const StoreManagementMenu = ({ navigation, route }) => {
+
+    const [storeInfo, setStoreInfo] = useState(route.params.storeInfo);
 
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: 'first', title: '메뉴 관리' },
+        { key: 'first', title: '메뉴 관리', menuData: storeInfo.menu },
         { key: 'second', title: '정보 관리' },
     ]);
 
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: SIZES.base * 1.5,
-        paddingHorizontal: SIZES.width * 0.3,
+        paddingHorizontal: SIZES.width * 0.2,
         borderRadius: 8,
         marginVertical: SIZES.base * 1.5,
     },
