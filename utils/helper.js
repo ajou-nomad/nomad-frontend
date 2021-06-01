@@ -516,7 +516,7 @@ export const createGroup = async (groupData, orderData) => {
     return 'success';
 };
 
-export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, navigation) => {
+export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, groupId) => {
 
     firestore()
         .collection('THREADS')
@@ -528,11 +528,15 @@ export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, nav
             },
         })
         .then(docRef => {
-            console.log('eee: ', docRef);
             docRef.collection('MESSAGES').add({
                 text: '주문 생성이 성공되었습니다. 👏',
                 createdAt: new Date().getTime(),
                 system: true,
+            }).then((res)=>{
+                axiosApiInstance.post('/chatId',{
+                    chatId: JSON.stringify(docRef.id),
+                    groupId: groupId,
+                })
             });
         });
 };

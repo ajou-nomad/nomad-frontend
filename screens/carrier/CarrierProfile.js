@@ -37,11 +37,6 @@ const CarrierProfile = () => {
                 <Text style={{ ...FONTS2.h4, color: '#343a40', marginHorizontal: SIZES.base * 3 }}>채팅방</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('DeliveryList')}>
-                <Image source={icons.checklist} resizeMode="contain" style={{ width: SIZES.base * 3, height: SIZES.base * 4, tintColor: '#343a40' }} />
-                <Text style={{ ...FONTS2.h4, color: '#343a40', marginHorizontal: SIZES.base * 3 }}>배달 현황</Text>
-            </TouchableOpacity>
-
             <TouchableOpacity style={styles.button} onPress={() => { logout(dispatch); }}>
                 <Image source={icons.logout} resizeMode="contain" style={{ width: SIZES.base * 3, height: SIZES.base * 3, tintColor: '#343a40' }} />
                 <Text style={{ ...FONTS2.h4, color: '#343a40', marginHorizontal: SIZES.base * 3 }}>로그아웃</Text>
