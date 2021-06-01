@@ -7,17 +7,29 @@ import { View, Text, StyleSheet, ScrollView, Image, ImageBackground } from 'reac
 import BottomButton from '../components/layout/BottomButton';
 import Header from '../components/layout/Header';
 import { FONTS2, FONTS3, icons, SIZES } from '../constants';
+import { useNavigation } from '@react-navigation/native';
+
 
 const Promotion = ({ route }) => {
+
+    // console.log(JSON.stringify(route.params,null,4));
+
+    const tempCartItem = [{
+        menuId: 15,
+        menuName: '프로모션커피',
+        quantity: 1,
+        cost: 6000,
+    }]
     // 배열 고려 안함. 나중에 여러 매장 들어올 때 코드 바꿔줘야함.
     const storeData = route.params.storeData[0];
 
     const promotionMenuDto = storeData.promotionMenuDto;
+    const navigation = useNavigation();
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
             <Header title={storeData.storeName} small='true' />
-            
+
             <View style={{ flex: 1 }}>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <View style={{ margin: SIZES.base, alignItems: 'center' }}>
@@ -43,7 +55,10 @@ const Promotion = ({ route }) => {
                 </View>
             </View>
 
-            <BottomButton title='참여하기' />
+            <BottomButton
+                title='참여하기'
+                onPress={() => navigation.navigate('Cart', { cartItems: tempCartItem, storeInfo: storeData, time: route.params.time, location: route.params.deliveryPlace, deliDate: route.params.deliDate, groupData: route.params.groupData, datePicker: route.params.datePicker, promotion: true })}
+            />
         </ScrollView>
     );
 };

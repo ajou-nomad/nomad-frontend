@@ -113,6 +113,7 @@ const Cart = ({ navigation, route: { params } }) => {
                                 storeInfo: params.storeInfo,
                                 deliDate: params.deliDate,
                                 groupData: params.groupData,
+                                promotion: params.promotion,
                             })} title="결제하기" />
                     ) : (
                         <BottomButton onPress={() => totalPrice === 0 ? ToastAndroid.showWithGravity('메뉴를 선택해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER) : navigation.navigate('CreateGroupDetail',
@@ -125,6 +126,7 @@ const Cart = ({ navigation, route: { params } }) => {
                                 deliDate: params.deliDate,
                                 groupData: params.groupData,
                                 datePicker: datePicker,
+                                promotion: params.promotion,
                             }
                         )} title="그룹 생성하기" />
                     )}

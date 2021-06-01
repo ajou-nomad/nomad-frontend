@@ -18,7 +18,7 @@ const RequestList = () => {
 
         const unsubscribe = navigation.addListener('focus', async () => {
             // 오늘날짜의 배달 그룹만
-            axiosApiInstance.get('/groupOrder')
+            axiosApiInstance.get('/deliveryGroupOrder')
                 .then(function (response) {
                     console.log('점주 주문 리스트 요청: ', JSON.stringify(response.data.data, null, 4));
                     setGroupOrder(response.data.data);
