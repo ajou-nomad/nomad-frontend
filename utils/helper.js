@@ -528,13 +528,13 @@ export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, nav
             },
         })
         .then(docRef => {
+            console.log('eee: ', docRef);
             docRef.collection('MESSAGES').add({
                 text: '주문 생성이 성공되었습니다. 👏',
                 createdAt: new Date().getTime(),
                 system: true,
             });
-        })
-        ;
+        });
 };
 
 export const digitTwo = (digit) => {

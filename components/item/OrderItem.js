@@ -42,7 +42,7 @@ const OrderItem = ({ item }) => {
             <View>
                 <Text style={{ ...FONTS2.body3 }}>{JSON.stringify(item.deliveryDateTime).substr(1,10)} {JSON.stringify(item.deliveryDateTime).substr(12,5)}</Text>
                 <Text style={{ ...FONTS2.h3, marginBottom: 3 }}>{item.orderItemList[0][0].menuName} 외 {totalItemListNum}개</Text>
-                <Text style={{ ...FONTS2.h3, color: '#818181' }}>{item.address} {item.buildingName}</Text>
+                <Text style={{ ...FONTS2.body3, color: '#818181' }}>{item.address} {item.buildingName}</Text>
             </View>
             {button}
         </View>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     },
     itemContainer: {
         padding: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: SIZES.width * 0.05,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },

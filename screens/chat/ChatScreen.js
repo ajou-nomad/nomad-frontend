@@ -20,7 +20,7 @@ import {AuthContext} from '../../context/AuthContextProvider';
 
 
 const ChatScreen = ({ route }) => {
-
+    
     const {state} = useContext(AuthContext);
 
     const user = auth().currentUser;
