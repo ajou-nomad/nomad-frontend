@@ -13,18 +13,20 @@ import { useNavigation } from '@react-navigation/native';
 const Promotion = ({ route }) => {
 
     // console.log(JSON.stringify(route.params,null,4));
-
-    const tempCartItem = [{
-        menuId: 15,
-        menuName: '프로모션커피',
-        quantity: 1,
-        cost: 6000,
-    }]
-    // 배열 고려 안함. 나중에 여러 매장 들어올 때 코드 바꿔줘야함.
+        // 배열 고려 안함. 나중에 여러 매장 들어올 때 코드 바꿔줘야함.
     const storeData = route.params.storeData[0];
 
     const promotionMenuDto = storeData.promotionMenuDto;
     const navigation = useNavigation();
+
+    const promotionItem = [{
+        menuId: promotionMenuDto.promotionMenuId,
+        menuName: promotionMenuDto.promotionMenuName,
+        quantity: 1,
+        cost: promotionMenuDto.cost,
+    }];
+
+
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
@@ -57,7 +59,7 @@ const Promotion = ({ route }) => {
 
             <BottomButton
                 title='참여하기'
-                onPress={() => navigation.navigate('Cart', { cartItems: tempCartItem, storeInfo: storeData, time: route.params.time, location: route.params.deliveryPlace, deliDate: route.params.deliDate, groupData: route.params.groupData, datePicker: route.params.datePicker, promotion: true })}
+                onPress={() => navigation.navigate('Cart', { cartItems: promotionItem, storeInfo: storeData, time: route.params.time, location: route.params.deliveryPlace, deliDate: route.params.deliDate, groupData: route.params.groupData, datePicker: route.params.datePicker, promotion: true })}
             />
         </ScrollView>
     );
