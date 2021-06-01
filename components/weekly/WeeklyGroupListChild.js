@@ -66,6 +66,7 @@
              storeInfo={item.store}
              deliDate={date}
              location={location}
+             storeData={storeData}
              styleGroupInfo={styles.groupInfo}
              styleLogoImage={styles.logoImage}
              styleShopText={styles.shopText}
