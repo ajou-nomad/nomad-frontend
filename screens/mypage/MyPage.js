@@ -67,7 +67,7 @@ const MyPage = ({ navigation }) => {
       // });
 
       // 배달 참여
-      // await axiosApiInstance.post('/participationGroup', {
+      // await axiosApiInstance.post('/deliveryGroupJoin', {
       //   groupId: 6007,
       //   storeId: 5004,
       //   menuName: 'ㅋㄱㅂ',
@@ -79,7 +79,7 @@ const MyPage = ({ navigation }) => {
       // });
 
       // 당일 그룹 생성된 그룹 (NULL값 때문에 에러뜸)
-      // await axiosApiInstance.get('/dailyGroupData')
+      // await axiosApiInstance.get('/dailyGroupList')
       //   .then((res) => {
       //     console.log('체크:: ', JSON.stringify(res.data, null, 4));
       //   }).catch(e => {

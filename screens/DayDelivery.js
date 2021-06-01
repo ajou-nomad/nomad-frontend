@@ -46,8 +46,8 @@ const DayDelivery = ({ route, navigation }) => {
     //   setResponseStoreData(response)
     // );
 
-    await axiosApiInstance.get('/dailyGroupData').then((res) => {
-        console.log(JSON.stringify(res.data,null,4));
+    await axiosApiInstance.get('/dailyGroupList').then((res) => {
+        // console.log(JSON.stringify(res.data,null,4));
 
         if (res.data.groupData.length !== 0) {
             let groupData = res.data.groupData.map((group) => {

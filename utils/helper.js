@@ -90,7 +90,7 @@ export const autoLogin = async (dispatch) => {
                 }
             })
             .catch((error) => {
-                Alert.alert(error.message);
+                Alert.alert(error);
                 logout(dispatch);
             });
     } else {
