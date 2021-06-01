@@ -33,7 +33,7 @@ const ChatList = ({ navigation }) => {
         const unsubscribe = firestore()
             .collection('THREADS') // THREADS.chatId
             .onSnapshot(querySnapShot => {
-                const threads = querySnapShot.docs.map(docSnapShot => {
+                const thread = querySnapShot.docs.map(docSnapShot => {
                     return {
                         _id: docSnapShot.id,
                         name: '',
@@ -44,12 +44,14 @@ const ChatList = ({ navigation }) => {
                     };
                 });
 
-                setThreads(threads);
+                setThreads(thread);
             });
         
         // unscribe listener
         return () => unsubscribe();
     }, []);
+
+    console.log('threads',JSON.stringify(threads,null,4));
 
     return (
         <View style={styles.container}>
@@ -59,7 +61,7 @@ const ChatList = ({ navigation }) => {
                 data={threads}
                 keyExtractor={item => item._id}
                 renderItem={({ item }) => {
-                    console.log(JSON.stringify(item, null, 4));
+                    // console.log(JSON.stringify(item, null, 4));
                     return (
                         <ChatItem thread={item} />
                     );
