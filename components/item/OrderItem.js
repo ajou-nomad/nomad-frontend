@@ -44,7 +44,9 @@ const OrderItem = ({ item }) => {
                 <Text style={{ ...FONTS2.h3, marginBottom: 3 }}>{item.orderItemList[0][0].menuName} 외 {totalItemListNum}개</Text>
                 <Text style={{ ...FONTS2.body3, color: '#818181' }}>{item.address} {item.buildingName}</Text>
             </View>
-            {button}
+            <View style={{position: 'absolute', right: SIZES.width * 0.02}}>
+                {button}
+            </View>
         </View>
     );
 };

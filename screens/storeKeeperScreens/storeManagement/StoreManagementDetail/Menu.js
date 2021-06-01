@@ -130,9 +130,8 @@ const Menu = () => {
                             navigation.goBack();
                             ToastAndroid.showWithGravity('메뉴가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
                         });
-
-                       
-                    }} />
+                    }} 
+                />
             </View>
         </ScrollView>
     );

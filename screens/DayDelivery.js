@@ -61,6 +61,7 @@ const DayDelivery = ({ route, navigation }) => {
             setResponseDailyData(groupData);
         } else {
             console.log('get /dailyGroupData가 아직 없습니다.');
+            setResponseDailyData([]);
         }
 
         // console.log('체크:: ', JSON.stringify(res.data, null, 4));
