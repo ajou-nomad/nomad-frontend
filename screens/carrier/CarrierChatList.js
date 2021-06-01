@@ -20,10 +20,12 @@ import { responsiveHeight } from 'react-native-responsive-dimensions';
 import axiosApiInstance from '../../utils/axios';
 
 
-const CarrierChatList = ({ navigation }) => {
+const CarrierChatList = (props) => {
 
     const [threads, setThreads] = useState([]);
     const [chatList, setChatList] = useState([]);
+
+    console.log(props.route.params.groupId)
 
     // Fetch threads from firestore
     useEffect(() => {
@@ -61,7 +63,7 @@ const CarrierChatList = ({ navigation }) => {
 
                 setThreads(threads);
             });
-        
+
         // unscribe listener
         return () => unsubscribe();
     }, []);
@@ -70,7 +72,7 @@ const CarrierChatList = ({ navigation }) => {
         <View style={styles.container}>
             {/* Header */}
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: responsiveHeight(10), borderBottomWidth: 0.3, borderBottomColor: '#adb5bd',}}>
-				<TouchableOpacity  style={{ position: 'absolute', left: 0, marginLeft: SIZES.base * 2, }} onPress={() => navigation.openDrawer()}>
+				<TouchableOpacity  style={{ position: 'absolute', left: 0, marginLeft: SIZES.base * 2, }} onPress={() => props.navigation.openDrawer()}>
 					<Image source={icons.menu} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 3  }} />
 				</TouchableOpacity>
 				<Text style={{ ...FONTS2.h2 }} >채팅방</Text>
@@ -82,7 +84,7 @@ const CarrierChatList = ({ navigation }) => {
                     // console.log(item);
                     //  {"_id": "UbPFjHrANWD7P7xo5TKo", "latestMessage": {"createdAt": 1620280242849, "text": "주문 생성 성공"}, "name": "방이름"}
                     return (
-                        <ChatItem thread={item} />
+                        <ChatItem thread={item} groupId = {props.route.params.groupId} />
                     );
                 }
                 }
