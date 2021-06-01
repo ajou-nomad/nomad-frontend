@@ -141,14 +141,14 @@ const CreditCard = ({route, navigation}) => {
         app_scheme: 'example',
     };
     return (
-        <View>
-            <Text>hello</Text>
-        </View>
-        // <IMP.Payment
-        //     userCode={'imp77640589'}
-        //     data={data}
-        //     callback={paymentTermination} // 결제 종료 후 콜백함수 호출
-        // />
+        // <View>
+        //     <Text>hello</Text>
+        // </View>
+        <IMP.Payment
+            userCode={'imp77640589'}
+            data={data}
+            callback={paymentTermination} // 결제 종료 후 콜백함수 호출
+        />
     );
 };
 
