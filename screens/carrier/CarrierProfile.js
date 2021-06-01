@@ -32,7 +32,7 @@ const CarrierProfile = () => {
                 <Image source={icons.checkbox} resizeMode="contain" style={{ width: SIZES.base * 3, height: SIZES.base * 3, tintColor: '#343a40' }} />
                 <Text style={{ ...FONTS2.h4, color: '#343a40', marginHorizontal: SIZES.base * 3 }}>배달 가능 목록</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CarrierChatList')}>
                 <Image source={icons.chat} resizeMode="contain" style={{ width: SIZES.base * 3, height: SIZES.base * 3, tintColor: '#343a40' }} />
                 <Text style={{ ...FONTS2.h4, color: '#343a40', marginHorizontal: SIZES.base * 3 }}>채팅방</Text>
             </TouchableOpacity>

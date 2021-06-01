@@ -9,6 +9,7 @@ import { responsiveHeight } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import DeliveryItem from '../../components/carrier/DeliveryItem';
 
+
 const FirstRoute = ({ route }) => {
     return (
         <ScrollView style={{ flex: 1, backgroundColor: '#ffffff' }}>
@@ -38,7 +39,6 @@ const DeliveryList = () => {
     ]);
 
     const navigation = useNavigation();
-
 
     const renderTabBar = props => (
         <TabBar

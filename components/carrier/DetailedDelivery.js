@@ -25,6 +25,7 @@ export default function DetailedDelivery(props) {
     };
         const navigation = useNavigation();
         const deliveryInfo = props.deliveryInfo;
+        const button = props.onPress;
         const [visibility,setVisibility] = useState(false);
 
     const renderDetailedDelivery = ({ item }) => {
@@ -48,7 +49,7 @@ export default function DetailedDelivery(props) {
                         <Text style={{ ...FONTS2.body3, textAlign: 'left'  }}>{item.groupData.address}</Text>
                     </View>
                 </View>
-                
+
                 <View style={{ marginVertical: SIZES.base * 5, alignItems: 'center', }}>
                     <Text style={{ ...FONTS2.h3, }}>배달 완료 시간 </Text>
                     <Text style={styles.deliveryTime}>{deliveryTime} 까지</Text>
@@ -58,21 +59,10 @@ export default function DetailedDelivery(props) {
         );
     };
 
-    const button = () => {
-        Alert.alert(
-            '해당 배달을 선택하시겠습니까?',
-            '',
-            [
-                { text: 'NO', onPress: () => console.log('NO Pressed'), style: 'cancel' },
-                {
-                    text: 'YES', onPress: () => {
-                        setVisibility(!visibility);
-                        alert('post: change to 배달 중');
-                        navigation.navigate('ChatScreen', { thread: { '_id': 'GommT2R6HnHV5Ky34Ars', 'latestMessage': { 'createdAt': 1621420397090, 'text': '사진을 보냈습니다.' }, 'name': '빽다방 아주대점 팔달관 20:30' } });
-                    }
-                },
-            ]
-        );
+    const buttonDeDe = () => {
+        const deliveryTime = JSON.stringify(props.deliveryInfo.groupData.deliveryDateTime).substr(12,5);
+        setVisibility(!visibility);
+        button(deliveryInfo.storeData.storeName,deliveryTime,deliveryInfo.groupData.buildingName,deliveryInfo.groupData.groupId);
     };
 
     return (
@@ -97,7 +87,7 @@ export default function DetailedDelivery(props) {
                         />
                         <TouchableOpacity
                             style={{ alignSelf: 'center', backgroundColor: '#3897f1', borderRadius: 8, height: SIZES.height * 0.08, width: SIZES.width * 0.7, justifyContent: 'center', marginBottom: SIZES.base * 2 }}
-                            onPress={() => { button(); }}
+                            onPress={() => { buttonDeDe(); }}
                         >
                             <Text style={{ ...FONTS2.h3, color: COLORS.white, alignSelf: 'center' }} >선택</Text>
                         </TouchableOpacity>

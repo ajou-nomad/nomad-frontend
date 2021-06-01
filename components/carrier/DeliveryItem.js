@@ -42,10 +42,10 @@ const DeliveryItem = ({ deliveryInfo, onPress }) => {
 
 
                 <View style={{ marginLeft: SIZES.width * 0.2, alignItems: 'center', justifyContent: 'center' }} >
-                    <DetailedDelivery deliveryInfo={deliveryInfo} />
+                    <DetailedDelivery deliveryInfo={deliveryInfo} onPress={onPress} />
 
                     <TouchableOpacity
-                        onPress={() => onPress(deliveryInfo.storeData.storeName,time,deliveryInfo.groupData.buildingName)}
+                        onPress={() => onPress(deliveryInfo.storeData.storeName,time,deliveryInfo.groupData.buildingName,deliveryInfo.groupData.groupId)}
                         style={{ backgroundColor: '#3897f1', width: SIZES.width * 0.25, height: SIZES.base * 4.5, borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginTop: SIZES.base * 2 }}
                     >
                         <Text style={{ ...FONTS2.h4, color: COLORS.white }} >선택</Text>

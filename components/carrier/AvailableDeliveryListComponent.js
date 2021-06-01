@@ -18,7 +18,6 @@ axiosApiInstance.post('/delivery', {
       }).catch(e => console.log(e));
 
 const AvailableDeliveryListComponent = (props) => {
-
     const navigation = useNavigation();
     const deliveryInfo = props.deliveryInfo;
 
@@ -26,6 +25,7 @@ const AvailableDeliveryListComponent = (props) => {
         console.log('storeName: ' + storeName);
         console.log('deliveryTime: ' + deliveryTime);
         console.log('deliveryPlace: ' + deliveryPlace);
+        console.log('groupId: ' + groupId);
         Alert.alert(
             '해당 배달을 선택하시겠습니까?',
             '',
@@ -36,12 +36,14 @@ const AvailableDeliveryListComponent = (props) => {
                         axiosApiInstance.post('/delivery', {
                             groupId: groupId,
                         }).then((res)=>{
-                            console.log('배달 중 post', JSON.stringify(res.data.data, null, 4));
+                            const uidlList = res.data.data;
+                            console.log('배달 중 post', JSON.stringify(uidlList, null, 4));
+                            createChatRoom(storeName, deliveryTime, deliveryPlace, navigation);
+                            navigation.navigate('CarrierChatList');
                         }).catch((e)=>{
                             console.log(e);
-                        })
-                        createChatRoom(storeName, deliveryTime, deliveryPlace, navigation)
-                        navigation.navigate('ChatScreen', { thread: { '_id': 'GommT2R6HnHV5Ky34Ars', 'latestMessage': { 'createdAt': 1621420397090, 'text': '사진을 보냈습니다.' }, 'name': '매장테스트 10:00 미' } });
+                        });
+
                     },
                 },
             ]
@@ -49,7 +51,9 @@ const AvailableDeliveryListComponent = (props) => {
     };
 
     return (
-        <DeliveryItem deliveryInfo={deliveryInfo} onPress={button}/>
+        <>
+            <DeliveryItem deliveryInfo={deliveryInfo} onPress={button}/>
+        </>
     );
 };
 
