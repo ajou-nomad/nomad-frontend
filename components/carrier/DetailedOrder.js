@@ -18,7 +18,7 @@ const DetailedDelivery = (props) => {
                 <Text style={{ ...FONTS2.h3, marginBottom: SIZES.base * 0.5 }}>주문 #{item.index + 1}</Text>
                 {item.item.menu.map((items, index) => {
                     return (
-                        <View>
+                        <View key={index}>
                             <View style={{ flexDirection: 'row', }}>
                                 <Text style={{ ...FONTS2.body3 }}> · [ 메뉴: </Text>
                                 <Text style={{ ...FONTS2.body3 }}>{items.menuName} /</Text>

@@ -518,7 +518,6 @@ export const createGroup = async (groupData, orderData) => {
 
 export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, navigation) => {
 
-    console.log('createChatRoom: ', storeName, deliveryTime, deliveryPlace, navigation);
     firestore()
         .collection('THREADS')
         .add({

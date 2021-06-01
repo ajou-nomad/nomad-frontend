@@ -25,9 +25,11 @@ export default function DetailedDelivery(props) {
     };
         const navigation = useNavigation();
         const deliveryInfo = props.deliveryInfo;
+        const button = props.onPress;
         const [visibility,setVisibility] = useState(false);
 
     const renderDetailedDelivery = ({ item }) => {
+        const deliveryTime = JSON.stringify(item.groupData.deliveryDateTime).substr(12,5);
         return (
             <View style={{ margin: SIZES.base * 5 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: SIZES.base * 3, marginLeft: SIZES.base * 0.3 }}>
@@ -47,31 +49,20 @@ export default function DetailedDelivery(props) {
                         <Text style={{ ...FONTS2.body3, textAlign: 'left'  }}>{item.groupData.address}</Text>
                     </View>
                 </View>
-                
-                <View style={{ marginVertical: SIZES.base * 5, flexDirection: 'row', alignItems: 'center', }}>
+
+                <View style={{ marginVertical: SIZES.base * 5, alignItems: 'center', }}>
                     <Text style={{ ...FONTS2.h3, }}>배달 완료 시간 </Text>
-                    <Text style={{ ...FONTS2.body2, }}> {item.groupData.time}</Text>
+                    <Text style={styles.deliveryTime}>{deliveryTime} 까지</Text>
                 </View>
-                <DetailedOrder orderArray={item.orderArray} />
+                {/* <DetailedOrder orderArray={item.orderArray} /> */}
             </View>
         );
     };
 
-    const button = () => {
-        Alert.alert(
-            '해당 배달을 선택하시겠습니까?',
-            '',
-            [
-                { text: 'NO', onPress: () => console.warn('NO Pressed'), style: 'cancel' },
-                {
-                    text: 'YES', onPress: () => {
-                        setVisibility(!visibility);
-                        alert('post: change to 배달 중');
-                        navigation.navigate('ChatScreen', { thread: { '_id': 'GommT2R6HnHV5Ky34Ars', 'latestMessage': { 'createdAt': 1621420397090, 'text': '사진을 보냈습니다.' }, 'name': '빽다방 아주대점 팔달관 20:30' } });
-                    }
-                },
-            ]
-        );
+    const buttonDeDe = () => {
+        const deliveryTime = JSON.stringify(props.deliveryInfo.groupData.deliveryDateTime).substr(12,5);
+        setVisibility(!visibility);
+        button(deliveryInfo.storeData.storeName,deliveryTime,deliveryInfo.groupData.buildingName,deliveryInfo.groupData.groupId);
     };
 
     return (
@@ -85,7 +76,7 @@ export default function DetailedDelivery(props) {
                     <View style={styles.modal}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', borderBottomWidth: 0.3, justifyContent: 'center', paddingVertical: SIZES.height * 0.02 }}>
                             <TouchableOpacity onPress={() => setVisibility(!visibility)} style={{ position: 'absolute', left: SIZES.base * 2 }}>
-                                <Image source={icons.close} resizeMode='contain' style={styles.closeButton} />
+                                <Image source={icons.close} resizeMode="contain" style={styles.closeButton} />
                             </TouchableOpacity>
                             <Text style={{ ...FONTS2.h3, }}>상세 정보</Text>
                         </View>
@@ -96,7 +87,7 @@ export default function DetailedDelivery(props) {
                         />
                         <TouchableOpacity
                             style={{ alignSelf: 'center', backgroundColor: '#3897f1', borderRadius: 8, height: SIZES.height * 0.08, width: SIZES.width * 0.7, justifyContent: 'center', marginBottom: SIZES.base * 2 }}
-                            onPress={() => { button(); }}
+                            onPress={() => { buttonDeDe(); }}
                         >
                             <Text style={{ ...FONTS2.h3, color: COLORS.white, alignSelf: 'center' }} >선택</Text>
                         </TouchableOpacity>
@@ -105,7 +96,7 @@ export default function DetailedDelivery(props) {
             </Modal>
 
             <TouchableOpacity style={{ position: 'absolute', left: SIZES.width * 0.05, bottom: SIZES.height * 0.02 }} onPress={() => setVisibility(!visibility)}>
-                <Image source={icons.more} resizeMode='contain' style={{ width: SIZES.base * 2.3, height: SIZES.base * 2.3, tintColor: '#868e96', }} />
+                <Image source={icons.more} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 2.5, tintColor: '#868e96',  }} />
             </TouchableOpacity>
         </View>
 
@@ -120,8 +111,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#ecf0f1',
     },
     closeButton: {
-        width: SIZES.base * 2,
-        height: SIZES.base * 2,
+        width: SIZES.base * 2.5,
+        height: SIZES.base * 2.5,
         tintColor: COLORS.darkgray,
     },
     modal: {
@@ -132,4 +123,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: SIZES.padding,
     },
+    deliveryTime: {
+        ...FONTS2.body2,
+        padding:10,
+        borderWidth:3,
+        textAlign:'center',
+        textAlignVertical:'center',
+        borderColor: '#3897f1',
+    }
 });

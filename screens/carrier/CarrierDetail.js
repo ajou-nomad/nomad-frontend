@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
+  Alert,
+  Button,
   Image,
 } from 'react-native';
 import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../../constants';
@@ -18,13 +20,17 @@ import AvailableDeliveryListComponent from '../../components/carrier/AvailableDe
 import { AuthContext } from '../../context/AuthContextProvider';
 import { responsiveHeight } from 'react-native-responsive-dimensions';
 
+import { createChatRoom } from '../../utils/helper';
+
 
 const CarrierDetail = (props) => {
 
 	const { state, dispatch } = useContext(AuthContext);
 	const navigation = useNavigation();
 
-	console.log('object, ', JSON.stringify(props, null, 4));
+
+  
+	// console.log('props: ', JSON.stringify(props, null, 4));
 
 	let deliveryInfo = [];
 	const today = props.today;
@@ -32,22 +38,13 @@ const CarrierDetail = (props) => {
 	props.location === null ? console.log('Getting Location...') :
 		props.availableGroup.map((groupInfo, groupIndex) => {
 			props.availableStore.map((storeInfo, storeIndex) => {
-				let newOne = 0;
-				props.availableOrder.map((orderInfo, orderIndex) => {
-					if (groupInfo.storeId === storeInfo.storeId) {
-						if (groupInfo.groupId === orderInfo.groupId) {
-							if (!newOne) {
-								deliveryInfo = [...deliveryInfo, { index: groupIndex + storeIndex + orderIndex, groupData: groupInfo, storeData: storeInfo, orderArray: [orderInfo] }]
-								newOne = 1;
-							} else {
-								deliveryInfo[deliveryInfo.length - 1].orderArray = [...deliveryInfo[deliveryInfo.length - 1].orderArray, orderInfo]
-							}
-						}
+				if (groupInfo.storeId === storeInfo.storeId) {
+						deliveryInfo = [...deliveryInfo, { index: groupIndex + storeIndex, groupData: groupInfo, storeData: storeInfo }]
 					}
-				});
 			});
 		});
 
+	// console.log('deliveryInfo: ' + JSON.stringify(deliveryInfo,null,4));
 
 	const Header = () => {
 		return (
@@ -60,13 +57,10 @@ const CarrierDetail = (props) => {
 		);
 	};
 
-	console.log('ㅏㅏㅏ: ', );
-
 	return (
-		// !props.availableOrder
-		false
-			? <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }} >현 위치를 불러오는 중 입니다...</Text>
-			:
+		// !props.deliveryInfo
+		// 	? <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }} >현 위치를 불러오는 중 입니다...</Text>
+		// 	:
 			<View style={styles.container}>
 				<Header />
 				<FlatList

@@ -26,7 +26,6 @@ const ChatScreen = ({ route }) => {
     const user = auth().currentUser;
 
     const { thread } = route.params;
-    console.log('three', thread);
     const [messages, setMessages] = useState([]);
 
     const handleSend = async (mes) => {
