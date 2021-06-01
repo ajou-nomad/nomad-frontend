@@ -13,10 +13,11 @@ import uuid from 'react-native-uuid';
 import ImageModal from 'react-native-image-modal';
 import { useNavigation } from '@react-navigation/native';
 
-import { COLORS, FONTS2, icons } from '../../constants';
+import { COLORS, FONTS, FONTS2, icons, SIZES } from '../../constants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import {AuthContext} from '../../context/AuthContextProvider';
+import Header from '../../components/layout/Header';
 
 
 const ChatScreen = ({ route }) => {
@@ -180,12 +181,16 @@ const ChatScreen = ({ route }) => {
         };
 
         if (props.currentMessage.user._id === 0) {
+            // console.log(props.currentMessage.text);
             return (
-                <SystemMessage
-                    {...props}
-                    wrapperStyle={styles.systemMessageWrapper}
-                    textStyle={styles.systemMessageText}
-                />
+                // <SystemMessage
+                //     {...props}
+                //     wrapperStyle={styles.systemMessageWrapper}
+                //     textStyle={styles.systemMessageText}
+                // />
+                <View style={{ backgroundColor: 'skyblue', width: SIZES.width * 0.8, alignSelf: 'center', padding: SIZES.base, borderRadius: 8, marginVertical: SIZES.base * 2}}>
+                    <Text style={{ ...FONTS2.h4, color: 'white', alignSelf: 'center' }}>{props.currentMessage.text}</Text>
+                </View>
             );
         }
         else {
@@ -327,6 +332,9 @@ const ChatScreen = ({ route }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#dee2e6' }}>
+            <View>
+                
+            </View>
             <GiftedChat
                 messages={messages}
                 onSend={handleSend}
@@ -373,9 +381,10 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     systemMessageText: {
-        fontSize: 14,
+        // fontSize: 14,
         color: '#fff',
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
+        ...FONTS2.body3
     },
 });
 

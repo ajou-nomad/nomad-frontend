@@ -43,7 +43,7 @@ const OrderDetailItem = ({ route, navigation }) => {
                     color="#CED4DA"
                     fontColor="white"
                     onPress={ () => {
-                        axiosApiInstance.post('groupOrder',{
+                        axiosApiInstance.post('/deliveryGroupOrder',{
                             groupId: item.groupId,
                             orderStatus: 'recruitmentAccept',
                         }).then(() => navigation.goBack());
@@ -71,7 +71,7 @@ const OrderDetailItem = ({ route, navigation }) => {
                         color="#CED4DA"
                         fontColor="white"
                         onPress={ () => {
-                            axiosApiInstance.post('groupOrder',{
+                            axiosApiInstance.post('/deliveryGroupOrder',{
                                 groupId: item.groupId,
                                 orderStatus: 'waitingForDelivery',
                             }).then(() => navigation.goBack());

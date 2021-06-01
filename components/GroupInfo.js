@@ -25,17 +25,23 @@ export default function GroupInfo(props) {
         props.groupData.promotion === 'On' ? (
             <TouchableOpacity
                 style={{ borderBottomWidth: 0.6, borderBottomColor: '#e9ecef', paddingHorizontal: 5, }}
-                onPress={() => navigation.navigate('Promotion', { storeData: props.storeData, groupData: props.groupData, deliveryPlace: props.location, deliDate: props.deliDate, time: props.groupData.time } )}
+                onPress={() => navigation.navigate('Promotion', { storeData: props.storeData, groupData: props.groupData, deliveryPlace: props.location, deliDate: props.deliDate, time: props.groupData.time })}
             >
                 <View style={props.styleGroupInfo}>
                     <View style={styles.logoImageContainer}>
                         <Image style={[props.styleLogoImage, { width: 55, height: 55 }]} source={{ uri: props.storeInfo.logoUrl }} resizeMode='contain' />
                     </View>
                     <View style={styles.shopInfo}>
-                        <Text style={{ ...FONTS2.h3 }}>{props.storeInfo.storeName}</Text>
+                        <View style={{ flexDirection: 'row', backgroundColor: 'skyblue' }}>
+                            <Text style={{ ...FONTS2.h3, marginRight: SIZES.base, alignSelf: 'center' }}>{props.storeInfo.storeName}</Text>
+                            <View style={{ borderWidth: 0.3, borderColor: '#e03131', borderRadius: 8, flexDirection: 'row', paddingHorizontal: SIZES.base, backgroundColor: '#e03131' }}>
+                                <Image source={icons.promotion} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#fff', alignSelf: 'center' }} />
+                                <Text style={{ ...FONTS2.body4, color: '#fff' }}>프로모션</Text>
+                            </View>
+                        </View>
                         <View style={props.styleRating}>
                             <Image style={props.styleStarImage} source={icons.star} />
-                            <Text style={{ ...FONTS2.body3 }}>{props.storeInfo.rate}/5.0</Text>
+                            <Text style={{ ...FONTS2.body3, color: 'black' }}>{props.storeInfo.rate}/5.0</Text>
                         </View>
                         <View style={props.styleDeliveryTime}>
                             <Image style={styles.timeImage} source={icons.clock} />
@@ -43,11 +49,11 @@ export default function GroupInfo(props) {
                         </View>
                     </View>
                     {/* 수정해야할 부분 */}
-                    <View>
+                    {/* <View>
                         <Text>프로모션 수정해야함</Text>
-                    </View>
+                    </View> */}
                     <View style={styles.groupNumber}>
-                        <Image style={styles.userImage} source={icons.user}/>
+                        <Image style={styles.userImage} source={icons.user} />
                         <Text style={{ ...FONTS2.body3 }}>{props.current} / {props.max}</Text>
                     </View>
                 </View>
@@ -73,7 +79,7 @@ export default function GroupInfo(props) {
                         </View>
                     </View>
                     <View style={styles.groupNumber}>
-                        <Image style={styles.userImage} source={icons.user}/>
+                        <Image style={styles.userImage} source={icons.user} />
                         <Text style={{ ...FONTS2.body3 }}>{props.current} / {props.max}</Text>
                     </View>
                 </View>
