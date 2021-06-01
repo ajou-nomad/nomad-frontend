@@ -9,6 +9,7 @@ import { responsiveHeight } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import DeliveryItem from '../../components/carrier/DeliveryItem';
 
+
 const FirstRoute = ({ route }) => {
     return (
         <ScrollView style={{ flex: 1, backgroundColor: '#ffffff' }}>
@@ -39,7 +40,6 @@ const DeliveryList = () => {
 
     const navigation = useNavigation();
 
-
     const renderTabBar = props => (
         <TabBar
             {...props}
@@ -65,7 +65,7 @@ const DeliveryList = () => {
 				</TouchableOpacity>
 				<Text style={{ ...FONTS2.h2 }} >배달 현황</Text>
             </View>
-            
+
             <TabView
                 navigationState={{ index, routes }}
                 renderScene={renderScene}
