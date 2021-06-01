@@ -78,6 +78,8 @@ const WeeklyDelivery = ({ route, navigation }) => {
             return group;
           });
 
+          // console.log("여기는 weeklyDelivery"+JSON.stringify(groupData,null,4));
+
           setResponseWeeklyData(groupData);
         } else {
           console.log('get weeklyGroupData가 아직 없습니다.');
@@ -90,6 +92,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
 
     await axiosApiInstance.get('storeList').then((response) => {
 
+      // console.log(JSON.stringify(response.data.data, null, 4));
       // console.log(JSON.stringify(response.data.data, null, 4));
       setResponseStoreData(response.data.data);
     });
