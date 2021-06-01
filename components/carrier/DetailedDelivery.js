@@ -28,6 +28,7 @@ export default function DetailedDelivery(props) {
         const [visibility,setVisibility] = useState(false);
 
     const renderDetailedDelivery = ({ item }) => {
+        const deliveryTime = JSON.stringify(item.groupData.deliveryDateTime).substr(12,5);
         return (
             <View style={{ margin: SIZES.base * 5 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: SIZES.base * 3, marginLeft: SIZES.base * 0.3 }}>
@@ -48,11 +49,11 @@ export default function DetailedDelivery(props) {
                     </View>
                 </View>
                 
-                <View style={{ marginVertical: SIZES.base * 5, flexDirection: 'row', alignItems: 'center', }}>
+                <View style={{ marginVertical: SIZES.base * 5, alignItems: 'center', }}>
                     <Text style={{ ...FONTS2.h3, }}>배달 완료 시간 </Text>
-                    <Text style={{ ...FONTS2.body2, }}> {item.groupData.time}</Text>
+                    <Text style={styles.deliveryTime}>{deliveryTime} 까지</Text>
                 </View>
-                <DetailedOrder orderArray={item.orderArray} />
+                {/* <DetailedOrder orderArray={item.orderArray} /> */}
             </View>
         );
     };
@@ -62,7 +63,7 @@ export default function DetailedDelivery(props) {
             '해당 배달을 선택하시겠습니까?',
             '',
             [
-                { text: 'NO', onPress: () => console.warn('NO Pressed'), style: 'cancel' },
+                { text: 'NO', onPress: () => console.log('NO Pressed'), style: 'cancel' },
                 {
                     text: 'YES', onPress: () => {
                         setVisibility(!visibility);
@@ -85,7 +86,7 @@ export default function DetailedDelivery(props) {
                     <View style={styles.modal}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', borderBottomWidth: 0.3, justifyContent: 'center', paddingVertical: SIZES.height * 0.02 }}>
                             <TouchableOpacity onPress={() => setVisibility(!visibility)} style={{ position: 'absolute', left: SIZES.base * 2 }}>
-                                <Image source={icons.close} resizeMode='contain' style={styles.closeButton} />
+                                <Image source={icons.close} resizeMode="contain" style={styles.closeButton} />
                             </TouchableOpacity>
                             <Text style={{ ...FONTS2.h3, }}>상세 정보</Text>
                         </View>
@@ -105,7 +106,7 @@ export default function DetailedDelivery(props) {
             </Modal>
 
             <TouchableOpacity style={{ position: 'absolute', left: SIZES.width * 0.05, bottom: SIZES.height * 0.02 }} onPress={() => setVisibility(!visibility)}>
-                <Image source={icons.more} resizeMode='contain' style={{ width: SIZES.base * 2.3, height: SIZES.base * 2.3, tintColor: '#868e96', }} />
+                <Image source={icons.more} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 2.5, tintColor: '#868e96',  }} />
             </TouchableOpacity>
         </View>
 
@@ -120,8 +121,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#ecf0f1',
     },
     closeButton: {
-        width: SIZES.base * 2,
-        height: SIZES.base * 2,
+        width: SIZES.base * 2.5,
+        height: SIZES.base * 2.5,
         tintColor: COLORS.darkgray,
     },
     modal: {
@@ -132,4 +133,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: SIZES.padding,
     },
+    deliveryTime: {
+        ...FONTS2.body2,
+        padding:10,
+        borderWidth:3,
+        textAlign:'center',
+        textAlignVertical:'center',
+        borderColor: '#3897f1',
+    }
 });

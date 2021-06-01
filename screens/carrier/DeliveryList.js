@@ -65,7 +65,7 @@ const DeliveryList = () => {
 				</TouchableOpacity>
 				<Text style={{ ...FONTS2.h2 }} >배달 현황</Text>
             </View>
-            
+
             <TabView
                 navigationState={{ index, routes }}
                 renderScene={renderScene}

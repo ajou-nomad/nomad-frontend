@@ -518,7 +518,7 @@ export const createGroup = async (groupData, orderData) => {
 
 export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, navigation) => {
 
-    console.log('createChatRoom: ', storeName, deliveryTime, deliveryPlace, navigation);
+    console.log('createChatRoom: ', storeName, deliveryTime, deliveryPlace);
     firestore()
         .collection('THREADS')
         .add({
@@ -534,7 +534,8 @@ export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, nav
                 createdAt: new Date().getTime(),
                 system: true,
             });
-            navigation.navigate('ChatList');
+            console.log('createChatRoom\'s docref' + JSON.stringify(docRef,null,4));
+            // navigation.navigate('ChatList');
         });
 };
 

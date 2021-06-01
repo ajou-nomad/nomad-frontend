@@ -9,14 +9,15 @@ import DetailedDelivery from './DetailedDelivery';
 import { COLORS, FONTS2, icons, SIZES } from '../../constants';
 
 const DeliveryItem = ({ deliveryInfo, onPress }) => {
-    
+    const date = JSON.stringify(deliveryInfo.groupData.deliveryDateTime).substr(1,10);
+    const time = JSON.stringify(deliveryInfo.groupData.deliveryDateTime).substr(12,5);
 
     return (
         <View style={{ borderBottomWidth: 1, borderBottomColor: '#e9ecef', padding: SIZES.base, }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: SIZES.base, marginVertical: SIZES.base * 0.5 }} >
                 <View>
                     <Text style={{ ...FONTS2.body2, marginBottom: SIZES.base * 0.2 }}>
-                        {deliveryInfo.groupData.date} {deliveryInfo.groupData.time}
+                        {date}      {time}
                     </Text>
                     
                     <View style={{ marginVertical: SIZES.base * 2 }}>
@@ -42,9 +43,9 @@ const DeliveryItem = ({ deliveryInfo, onPress }) => {
 
                 <View style={{ marginLeft: SIZES.width * 0.2, alignItems: 'center', justifyContent: 'center' }} >
                     <DetailedDelivery deliveryInfo={deliveryInfo} />
-                    
+
                     <TouchableOpacity
-                        onPress={onPress}
+                        onPress={() => onPress(deliveryInfo.storeData.storeName,time,deliveryInfo.groupData.buildingName)}
                         style={{ backgroundColor: '#3897f1', width: SIZES.width * 0.25, height: SIZES.base * 4.5, borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginTop: SIZES.base * 2 }}
                     >
                         <Text style={{ ...FONTS2.h4, color: COLORS.white }} >선택</Text>

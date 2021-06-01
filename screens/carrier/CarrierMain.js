@@ -12,9 +12,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {icons, COLORS, SIZES, FONTS} from '../../constants';
-import GoogleMap from '../../components/map/GoogleMap';
-import NewGroupButton from '../../components/map/NewGroupButton';
-import GpsButton from '../../components/map/GpsButton';
 import { calculateDistance, currentLocation, getDaliyGroupData, getData } from '../../utils/helper';
 
 import CarrierDetail from './CarrierDetail';
@@ -27,9 +24,9 @@ const CarrierMain = ({ route, navigation }) => {
 
     const [location, setLocation] = useState(null);
 
-    
+
     const [availableGroup, setAvailableGroup] = useState();
-    const [availableOrder, setAvailableOrder] = useState();
+    // const [availableOrder, setAvailableOrder] = useState();
 
     const setCurrentLocation = (result) => {
         setLocation(result);
@@ -46,119 +43,65 @@ const CarrierMain = ({ route, navigation }) => {
 		return answer;
 	};
 
-	const checkGroupId = (orderGroupId, filteredGroup) => {
-		let answer = 0;
-		for (let i = 0; i < filteredGroup.length; i++) {
-			if (filteredGroup[i].groupId === orderGroupId) {
-				answer = 1;
-				break;
-			}
-		}
-		return answer;
-	};
+	// const checkGroupId = (orderGroupId, filteredGroup) => {
+	// 	let answer = 0;
+	// 	for (let i = 0; i < filteredGroup.length; i++) {
+	// 		if (filteredGroup[i].groupId === orderGroupId) {
+	// 			answer = 1;
+	// 			break;
+	// 		}
+	// 	}
+	// 	return answer;
+	// };
 
 	const today = JSON.stringify(new Date('2021-05-21').toJSON()).substr(1, 10);
 
 	useEffect(() => {
-				
-		// axiosApiInstance.post('/delivery', {
-		// 	groupId: 10,
-		// }).then((res) => {
-		// 	console.log('배달 중 post', JSON.stringify(res.data.data, null, 4));
-		// }).catch(e => console.log(e));
-
-		// axiosApiInstance.post('/deliveryComplete', {
-		// 	groupId: 10,
-		// }).then((res) => {
-		// 	console.log('배달 완료 post', JSON.stringify(res.data.data, null, 4));
-		// }).catch(e => console.log(e));
 
 		currentLocation().then((currentLocation) => {
 			axiosApiInstance.get('/delivery')
-				.then((res) => {
-					console.log('배달원: ', JSON.stringify(res.data.data, null, 4));
-					setAvailableGroup(res.data.data);
+				.then((firstResponse) => {
+					const waitingForDelivery = firstResponse.data.data;
 
-					const filteredStore = availableGroup.filter((storeInfo) => {
-						return calculateDistance(currentLocation.latitude, currentLocation.longitude, storeInfo.latitude, storeInfo.longitude) <= 1000;
-					});
+					axiosApiInstance.get('storeList').then((secondResponse)=>{
+						const storeList = secondResponse.data.data;
+						// const orderList = thirdResponse.data.data;
 
-					setAvailableStore(filteredStore);
+						const filteredStore = storeList.filter((storeInfo) => {
+							return calculateDistance(currentLocation.latitude, currentLocation.longitude, storeInfo.latitude, storeInfo.longitude) >= 0;
+						});
+						setAvailableStore(filteredStore);
+						// console.log('filteredStore: ' + JSON.stringify(filteredStore,null,4));
 
-					
-					// console.log('ddd', JSON.stringify(filteredStore, null, 4));
+						const filteredGroup = waitingForDelivery.filter((groupInfo) => {
+							return (checkStoreId(groupInfo.storeId, filteredStore));
+						});
+						setAvailableGroup(filteredGroup);
+						// console.log('filteredGroup: ' + JSON.stringify(filteredGroup,null,4));
+
+						// console.log('filteredOrder: ' + JSON.stringify(filteredOrder,null,4));
+
+						setCurrentLocation(currentLocation);
+
 				}).catch(e => console.log(e));
-			
-			
+			}).catch(e => console.log(e));
+		}).catch(e => console.log(e));
 
-			// const filteredGroup = groupData.filter((groupInfo) => {
-			// 	return (checkStoreId(groupInfo.storeId, filteredStore) && groupInfo.orderStatus === 'recruiting' && groupInfo.date === today);
-			// });
-		});
-
-		// currentLocation().then((currentLoction) => {
-		// 	axiosApiInstance.get('storeData').then((storeData) => {
-		// 		axiosApiInstance.get('/groupData').then((groupData) => {
-		// 			console.log(JSON.stringify(groupData, null, 4));
-		// 			axiosApiInstance.get('orderData').then((orderData) => { // orderData에 groupId가 필요함
-		// 				// console.log(JSON.stringify(orderData,null,4));
-		// 				const filteredStore = storeData.filter((storeInfo) => {
-		// 					return calculateDistance(currentLoction.latitude, currentLoction.longitude, storeInfo.latitude, storeInfo.longitude) <= 1000;
-		// 				});
-		// 				setAvailableStore(filteredStore);
-		// 				const filteredGroup = groupData.filter((groupInfo) => {
-		// 					return (checkStoreId(groupInfo.storeId, filteredStore) && groupInfo.orderStatus === 'recruiting' && groupInfo.date === today);
-		// 				});
-		// 				setAvailableGroup(filteredGroup);
-		// 				const filteredOrder = orderData.filter((orderInfo) => {
-		// 					return checkGroupId(orderInfo.groupId, filteredGroup);
-		// 				})
-		// 				setAvailableOrder(filteredOrder);
-		// 				setCurrentLocation(currentLoction);
-		// 			});
-		// 		});
-		// 	});
-		// });
 
 
 	}, [route.params?.post]);
 
-//     useEffect( () => {
-//       currentLocation().then((currentLoction)=>{
-//         axiosApiInstance.get('storeData').then((storeData)=>{
-//             axiosApiInstance.get('/groupData').then((groupData)=>{
-//                 console.log(JSON.stringify(groupData,null,4));
-//                 axiosApiInstance.get('orderData').then((orderData)=>{ // orderData에 groupId가 필요함
-//                     // console.log(JSON.stringify(orderData,null,4));
-//                     const filteredStore = storeData.filter( (storeInfo) => {
-//                         return calculateDistance(currentLoction.latitude, currentLoction.longitude, storeInfo.latitude, storeInfo.longitude) <= 1000;
-//                     });
-//                     setAvailableStore(filteredStore);
-//                     const filteredGroup = groupData.filter( (groupInfo) => {
-//                         return (checkStoreId(groupInfo.storeId,filteredStore) && groupInfo.orderStatus === 'recruiting' && groupInfo.date  === today);
-//                     });
-//                     setAvailableGroup(filteredGroup);
-//                     const filteredOrder = orderData.filter( (orderInfo) =>{
-//                       return checkGroupId(orderInfo.groupId,filteredGroup);
-//                     })
-//                     setAvailableOrder(filteredOrder);
-//                     setCurrentLocation(currentLoction);
-//                   });
-//                 });
-//             });
-//         });
+      // axiosApiInstance.post('/deliveryComplete', {
+      //    groupId: 10,
+      // }).then((res) => {
+      //    console.log('배달 완료 post', JSON.stringify(res.data.data, null, 4));
+      // }).catch(e => console.log(e));
 
-//   }, [route.params?.post] );
-    
-
-
-    
 
 	return (
 		<CarrierDetail
 			availableGroup={availableGroup}
 			availableStore={availableStore}
-			availableOrder={availableOrder}
 			location={location}
 			today={today}
 		/>

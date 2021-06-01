@@ -18,32 +18,32 @@ const CarrierProfile = () => {
     return (
         <View style={{ flex: 1, marginHorizontal: SIZES.base * 3, marginTop: SIZES.base * 5 }}>
             <View style={{ marginBottom: SIZES.base * 2 }}>
-                <Image source={icons.avatar} resizeMode='contain' style={{ width: SIZES.width * 0.13, height: SIZES.height * 0.08, marginRight: SIZES.base, marginBottom: SIZES.base * 2 }} />
-               
+                <Image source={icons.avatar} resizeMode="contain" style={{ width: SIZES.width * 0.13, height: SIZES.height * 0.08, marginRight: SIZES.base, marginBottom: SIZES.base * 2 }} />
 
-                 <View style={{ flexDirection: 'row',   }}>
+
+                 <View style={{ flexDirection: 'row'   }}>
                     <Text style={{ ...FONTS2.h2, textAlign: 'left', alignSelf: 'stretch' }}>{state.member.nickName}</Text>
                     <Text style={{ ...FONTS2.body3, color: 'white', alignSelf: 'center', backgroundColor: '#2f9e44', paddingHorizontal: SIZES.base, paddingVertical: SIZES.base * 0.5, borderRadius: 8, marginLeft: SIZES.base}}>배달원</Text>
                     </View>
                 <Text style={{ ...FONTS2.body3, textAlign: 'left', alignSelf: 'stretch', color: '#868e96' }}>{state.member.email}</Text>
             </View>
-            
+
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CarrierMain')} >
-                <Image source={icons.checkbox} resizeMode='contain' style={{ width: SIZES.base * 3, height: SIZES.base * 3, tintColor: '#343a40' }} />
+                <Image source={icons.checkbox} resizeMode="contain" style={{ width: SIZES.base * 3, height: SIZES.base * 3, tintColor: '#343a40' }} />
                 <Text style={{ ...FONTS2.h4, color: '#343a40', marginHorizontal: SIZES.base * 3 }}>배달 가능 목록</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button}>
-                <Image source={icons.chat} resizeMode='contain' style={{ width: SIZES.base * 3, height: SIZES.base * 3, tintColor: '#343a40' }} />
+                <Image source={icons.chat} resizeMode="contain" style={{ width: SIZES.base * 3, height: SIZES.base * 3, tintColor: '#343a40' }} />
                 <Text style={{ ...FONTS2.h4, color: '#343a40', marginHorizontal: SIZES.base * 3 }}>채팅방</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('DeliveryList')}>
-                <Image source={icons.checklist} resizeMode='contain' style={{ width: SIZES.base * 3, height: SIZES.base * 4, tintColor: '#343a40', }} />
-                <Text style={{ ...FONTS2.h4, color: '#343a40', marginHorizontal: SIZES.base * 3, }}>배달 현황</Text>
+                <Image source={icons.checklist} resizeMode="contain" style={{ width: SIZES.base * 3, height: SIZES.base * 4, tintColor: '#343a40' }} />
+                <Text style={{ ...FONTS2.h4, color: '#343a40', marginHorizontal: SIZES.base * 3 }}>배달 현황</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={() => { logout(dispatch); }}>
-                <Image source={icons.logout} resizeMode='contain' style={{ width: SIZES.base * 3, height: SIZES.base * 3, tintColor: '#343a40' }} />
+                <Image source={icons.logout} resizeMode="contain" style={{ width: SIZES.base * 3, height: SIZES.base * 3, tintColor: '#343a40' }} />
                 <Text style={{ ...FONTS2.h4, color: '#343a40', marginHorizontal: SIZES.base * 3 }}>로그아웃</Text>
             </TouchableOpacity>
         </View>
@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
         // borderBottomWidth: 0.8,
         // borderBottomColor: '#f1f3f5'
     },
-})
+});
 
 export default CarrierProfile;
