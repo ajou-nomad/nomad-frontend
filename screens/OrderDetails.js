@@ -13,18 +13,26 @@ import Header from '../components/layout/Header';
 import Receipt from '../screens/Receipt';
 
 import axiosApiInstance from '../utils/axios';
+import { createChatRoom } from '../utils/helper';
 
 const OrderDetails = () => {
     const navigation = useNavigation();
     const [memberOrderList, setMemberOrderList] = useState([]);
 
     useEffect(() => {
+        
+        // navigation에서 올때마다 최신데이터 호출( 리렌더링은 제외 )
+        const unsubscribe = navigation.addListener('focus', async () => {
 
-        axiosApiInstance.get('/memberOrderList')
-            .then(function (response) {
-                console.log('주문 내역 데이터 요청: ', JSON.stringify(response.data.data, null, 4));
-                setMemberOrderList(response.data.data);
-            }).catch((e) => console.log(e));
+            axiosApiInstance.get('/memberOrderList')
+                .then(function (response) {
+                    console.log('주문 내역 데이터 요청: ', JSON.stringify(response.data.data, null, 4));
+                    setMemberOrderList(response.data.data);
+                }).catch((e) => console.log(e));
+        });
+
+        //unmount 시 리스너 삭제
+        return unsubscribe;
     }, []);
 
 
@@ -163,6 +171,7 @@ const OrderDetails = () => {
     return (
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />
+            
             <View style={{ padding: 15, flex: 1 }}>
                 <FlatList data={memberOrderList} keyExtractor={item => item.memberOrderId.toString()} renderItem={({ item }) => <OrderDetailItem item={item} />} />
             </View>

@@ -12,7 +12,7 @@ const StoreButton = ({ color, title, onPress, fontColor }) => {
             style={[styles.orderButton, { backgroundColor: color }]}
             onPress={onPress}
         >
-            <Text style={{ ...FONTS2.h3, color: fontColor }}>{title}</Text>
+            <Text style={{ ...FONTS2.h4, color: fontColor }}>{title}</Text>
         </TouchableOpacity>
     );
 };
@@ -21,12 +21,11 @@ const styles = StyleSheet.create({
     orderButton: {
         justifyContent: 'center',
         backgroundColor: '#364FC7',
-        paddingHorizontal: 20,
+        paddingHorizontal: SIZES.base * 2,
         marginTop: 10,
         borderRadius: 8,
-        height: SIZES.padding * 3,
-        // borderBottomRightRadius: 25,
+        height: SIZES.base * 4,
     },
-})
+});
 
 export default StoreButton;

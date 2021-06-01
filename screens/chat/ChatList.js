@@ -33,18 +33,7 @@ const ChatList = ({ navigation }) => {
         const unsubscribe = firestore()
             .collection('THREADS') // THREADS.chatId
             .onSnapshot(querySnapShot => {
-                const threads = querySnapShot.docs.map(docSnapShot => { // filter로 바꾸면 될듯?
-                    // if (docSnapShot.id === 'J20cpij66wXL371qUcXt') {
-                    //     console.log('여기!! ', docSnapShot.id);
-                    //     return {
-                    //         _id: docSnapShot.id,
-                    //         name: '',
-                    //         latestMessage: {
-                    //             text: '',
-                    //         },
-                    //         ...docSnapShot.data(),
-                    //     };
-                    // }
+                const threads = querySnapShot.docs.map(docSnapShot => {
                     return {
                         _id: docSnapShot.id,
                         name: '',
@@ -70,13 +59,11 @@ const ChatList = ({ navigation }) => {
                 data={threads}
                 keyExtractor={item => item._id}
                 renderItem={({ item }) => {
-                    // console.log(item);
-                    //  {"_id": "UbPFjHrANWD7P7xo5TKo", "latestMessage": {"createdAt": 1620280242849, "text": "주문 생성 성공"}, "name": "방이름"}
+                    console.log(JSON.stringify(item, null, 4));
                     return (
                         <ChatItem thread={item} />
                     );
-                }
-                }
+                }}
             />
         </View>
     );
