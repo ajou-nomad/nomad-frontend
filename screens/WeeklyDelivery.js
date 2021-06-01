@@ -66,7 +66,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
     //   setResponseStoreData(response)
     // );
 
-    await axiosApiInstance.get('/weeklyGroupData')
+    await axiosApiInstance.get('/weeklyGroupList')
       .then((res) => {
         if (res.data.groupData.length !== 0) {
 

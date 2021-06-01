@@ -20,6 +20,29 @@ const CreditCard = ({route, navigation}) => {
     tempDay.setMinutes(postData.time.substr(3,4) * 1);
 
 
+    // console. test
+    console.log({
+        storeId: postData.storeInfo.storeId,
+        // time: postData.time,
+        // date: postData.deliDate,
+        deliveryDateTime: tempDay,
+        maxValue: postData.maxValue,
+        groupType: groupType,
+        latitude: postData.location.latitude,
+        longitude: postData.location.longitude,
+        address: postData.location.address,
+        buildingName: postData.location.buildingName,
+
+        // order Data
+        menu: postData.cartItems,
+        totalCost: postData.totalPrice,
+        payMethod: 'card',
+
+        promotion: postData.promotion ? 'On' : 'Off',
+    });
+
+
+
     const paymentTermination = (response) => {
 
         // 추후 실제 결제는 true로
@@ -36,7 +59,7 @@ const CreditCard = ({route, navigation}) => {
                 //     groupType: groupType,
                 // });
 
-                axiosApiInstance.post('/groupData', {
+                axiosApiInstance.post('/deliveryGroup', {
                     // groupData
                     storeId: postData.storeInfo.storeId,
                     // time: postData.time,
@@ -54,6 +77,7 @@ const CreditCard = ({route, navigation}) => {
                     totalCost: postData.totalPrice,
                     payMethod: 'card',
                     orderTime: currentTime,
+                    promotion: postData.promotion ? 'On' : 'Off',
                 }).then( (response) => {
 
                     console.log('배달그룹 생성완료');
@@ -77,7 +101,7 @@ const CreditCard = ({route, navigation}) => {
                   delete item.menuId;
                   return item;
                 });
-                axiosApiInstance.post('/participationGroup', {
+                axiosApiInstance.post('/deliveryGroupJoin', {
                   groupId: postData.groupData.groupId,
 
                   // order detail
@@ -85,6 +109,8 @@ const CreditCard = ({route, navigation}) => {
                   totalCost: postData.totalPrice,
                   payMethod: 'card',
                   orderTime: currentTime,
+                  promotion: postData.promotion ? 'On' : 'Off',
+
                 }).then( (response) => {
 
                     console.log('배달그룹 참여완료');
@@ -103,25 +129,27 @@ const CreditCard = ({route, navigation}) => {
         }
     };
 
-  const data = {
-    pg: 'inicis',
-    pay_method: 'card',
-    name: 'Dutch Delivery',
-    merchant_uid: `mid_${new Date().getTime()}`,
-    amount: postData.totalPrice,
-    buyer_name: paymentInfo.buyerName,
-    buyer_tel: paymentInfo.buyerTel,
-    buyer_email: paymentInfo.buyerEmail,
-    app_scheme: 'example',
-  };
-
-  return (
-    <IMP.Payment
-      userCode={'imp77640589'}
-      data={data}
-      callback={paymentTermination} // 결제 종료 후 콜백함수 호출
-    />
-  );
+    const data = {
+        pg: 'inicis',
+        pay_method: 'card',
+        name: 'Dutch Delivery',
+        merchant_uid: `mid_${new Date().getTime()}`,
+        amount: postData.totalPrice,
+        buyer_name: paymentInfo.buyerName,
+        buyer_tel: paymentInfo.buyerTel,
+        buyer_email: paymentInfo.buyerEmail,
+        app_scheme: 'example',
+    };
+    return (
+        <View>
+            <Text>hello</Text>
+        </View>
+        // <IMP.Payment
+        //     userCode={'imp77640589'}
+        //     data={data}
+        //     callback={paymentTermination} // 결제 종료 후 콜백함수 호출
+        // />
+    );
 };
 
 export default CreditCard;

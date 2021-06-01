@@ -214,6 +214,7 @@ function CreateGroupDetail({ navigation, route: { params } }) {
 								storeInfo: params.storeInfo,
 								groupData: params.groupData,
 								maxValue: maxValue,
+								promotion: params.promotion,
 							});
 					}
 				}} title="그룹 생성하기" />
