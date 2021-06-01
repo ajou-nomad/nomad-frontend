@@ -16,72 +16,7 @@ import {getDaliyGroupData, getWeeklyGroupData} from '../../utils/helper';
 const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
     
     const mapView = useRef();
-
-    
-    //------------------------------
-    //넘어온 location값은 단지 지도에 표현할려고 하는 값일뿐 실제 그룹 데이터는 아래 데이터 내부에
-    //axios를 통해 백엔드에서 생성된 배달그룹을 가져옴.
-    // axiosApiInstance.get('/GroupData').then((response)=>{
-    //   console.log('Get GroupData Response.Data: ' + JSON.stringify(response.data))
-    // }).catch((error)=>{
-    //   console.log('Get GroupData Error: ' + JSON.stringify(error))
-    // })
-
-    // axiosApiInstance.get('/dailyGroupData).then((response)=>{
-    //  console.log(response.data)
-    // }).catch((error)=>{
-    //  console.log(error);
-    // })
-
-    // axiosApiInstance.post('/participationGroup',{
-    //   groupId: 5,
-    //   orderData: {
-    //     storeId: 'storeId',
-    //     menu:[
-    //       {
-    //       menuName: '엄청 비싼 아메리카노',
-    //       cost: 72000,
-    //       quantity: 3,
-    //       detail: [
-    //         {
-    //           option: '사이즈 업',
-    //           price: 500,
-    //         },
-    //         {
-    //           option: '샷 추가',
-    //           price: 500,
-    //         },
-    //       ]
-    //     },
-    //   ],
-    //     totalCost: 12700,
-    //     payMethod: 'point',
-    //     orderTime: new Date(),
-    //   },
-    // }).then((response)=>{
-    //   console.log(JSON.stringify(response));
-    // }).catch((error)=>{
-    //   console.log(error);
-    // });
-
-    // axiosApiInstance.post('/groupData',{}).then((response)=>{
-    //   console.log('response: ' + JSON.stringify(response));
-    // }).catch((error)=>{
-    //   console.log('error: ' + error);
-    // });
-
-    // const getData = async (key) =>{
-    //   try {
-    //     const jsonValue = await AsyncStorage.getItem(key);
-    //     return jsonValue !== null ? JSON.parse(jsonValue) : null;
-    //   } catch (e){
-    //     console.log(e);
-    //   }
-    // };
-
-  // "2021-05-28T19:45:00Z"
-  // console.log(JSON.stringify(deliveryDateTime).substr(1,10)); //2021-05-28
-  // console.log(JSON.stringify(deliveryDateTime).substr(12,5)); //19:45
+    // console.log(JSON.stringify(groupData,null,4));
 
     const DayDeliveryData = ()=>{
       let tempGroupData_Day = [];
@@ -105,6 +40,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
               current: items.current,
               max: items.maxValue,
               store: items.store,
+              promotion: items.promotion,
             });
         }
       }
@@ -124,6 +60,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
             current: items.current,
             max: items.maxValue,
             store: items.store,
+            promotion: items.promotion,
           }
         ]
       },
@@ -159,6 +96,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
               current: items.current,
               max: items.maxValue,
               store: items.store,
+              promotion: items.promotion,
             });
         }
       }
@@ -179,6 +117,7 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
             current: items.current,
             max: items.maxValue,
             store: items.store,
+            promotion: items.promotion,
           }
         ]
       },
