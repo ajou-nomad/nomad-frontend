@@ -26,22 +26,18 @@ const ChatList = ({ navigation }) => {
         const chatIdTmp = await axiosApiInstance.get('/chatId')
             .then((res) => {
                 console.log(res.data.data);
-                
                 return res.data.data.map((item, index) => {
 
                     return item.chatId.slice(1, -1);
-                    // console.log('쳇', chat);
-     
                 });
-            })
+            });
 
-        console.log(chatIdTmp)
+        console.log('chatIdTmp---',chatIdTmp);
 
-                // setThreads(threadsTmp);
-                setChatList(chatIdTmp);
-        
+        // setThreads(threadsTmp);
+        setChatList(chatIdTmp);
 
-    }
+    };
 
     // Fetch threads from firestore
     useEffect(() => {
@@ -49,6 +45,7 @@ const ChatList = ({ navigation }) => {
         let chatIdTmp = [];
 
         chatLists();
+        console.log('dsfds', chatList);
         // axiosApiInstance.get('/chatId')
         //     .then((res) => {
         //         console.log(res.data.data);
@@ -78,9 +75,8 @@ const ChatList = ({ navigation }) => {
             .collection('THREADS') // THREADS.chatId
             .onSnapshot(querySnapShot => {
                 const threads = querySnapShot.docs.map(docSnapShot => {
-                        console.log('확인', docSnapShot.data());
-                    // if (docSnapShot.id === )
-                    
+                    console.log('확인', docSnapShot.data());
+
                     if (chatList.includes(docSnapShot.id)) {
                         console.log('여기여기sd456');
                         return {
@@ -92,11 +88,12 @@ const ChatList = ({ navigation }) => {
                             ...docSnapShot.data(),
                         };
                     }
-                    
                 });
 
-                setThreads(threads);
+                setThreads(threads.filter((thread, i) => thread != null));
             });
+        
+        console.log('456:: ',JSON.stringify(threads, null, 4));
     
         // const unsubscribe = firestore()
         //     .collection('THREADS') // THREADS.chatId
@@ -127,7 +124,7 @@ const ChatList = ({ navigation }) => {
         <View style={styles.container}>
             {/* Header */}
             <Header title="채팅방" small="true" />
-            {/* <FlatList
+            <FlatList
                 data={threads}
                 keyExtractor={item => item._id}
                 renderItem={({ item }) => {
@@ -136,7 +133,7 @@ const ChatList = ({ navigation }) => {
                         <ChatItem thread={item} />
                     );
                 }}
-            /> */}
+            />
         </View>
     );
 };

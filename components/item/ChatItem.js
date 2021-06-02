@@ -55,8 +55,8 @@ const ChatItem = ({ thread }) => {
                 
                 <View>
                     <Text style={{ ...FONTS2.h3, marginBottom: SIZES.base * 0.2 }}>{thread.name}</Text>
-                    {/* <Text style={{ ...FONTS2.body3, }}>{thread.latestMessage.text}</Text>
-                    <Text style={{ ...FONTS2.body3, }}>{(new Date(thread.latestMessage.createdAt)).toString()}</Text> */}
+                    <Text style={{ ...FONTS2.body3, }}>{thread.latestMessage.text}</Text>
+                    <Text style={{ ...FONTS2.body3, }}>{(new Date(thread.latestMessage.createdAt)).toString()}</Text>
                 </View>
             </TouchableOpacity>
         </View>
