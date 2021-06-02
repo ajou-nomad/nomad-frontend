@@ -30,7 +30,7 @@
 ### 개발 도구 및 버전
 > node - v15.11.0 <br>
 > npm - v7.6.0<br>
-> react-native -v0.63.4<br>
+> react-native - v0.63.4<br>
 > react-native-cli - v2.0.1<br>
 
 ### 사용된 외부 API
