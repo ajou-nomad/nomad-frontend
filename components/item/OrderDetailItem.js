@@ -43,7 +43,7 @@ const OrderDetailItem = ({ route, navigation }) => {
                     color="#CED4DA"
                     fontColor="white"
                     onPress={ () => {
-                        axiosApiInstance.post('groupOrder',{
+                        axiosApiInstance.post('/deliveryGroupOrder',{
                             groupId: item.groupId,
                             orderStatus: 'recruitmentAccept',
                         }).then(() => navigation.goBack());
@@ -71,7 +71,7 @@ const OrderDetailItem = ({ route, navigation }) => {
                         color="#CED4DA"
                         fontColor="white"
                         onPress={ () => {
-                            axiosApiInstance.post('groupOrder',{
+                            axiosApiInstance.post('/deliveryGroupOrder',{
                                 groupId: item.groupId,
                                 orderStatus: 'waitingForDelivery',
                             }).then(() => navigation.goBack());
@@ -106,11 +106,13 @@ const OrderDetailItem = ({ route, navigation }) => {
 
             <View style={[styles.itemContainer, { marginTop: 20, }]}>
                 <View>
-                    <Text style={{ ...FONTS2.body2 }}>{`${deliveryDateTime.getFullYear()}년 ${digitTwo(deliveryDateTime.getMonth() + 1)}월 ${digitTwo(deliveryDateTime.getUTCDate())}일 ${digitTwo(deliveryDateTime.getUTCHours())}시 ${digitTwo(deliveryDateTime.getUTCMinutes())}분`} 주문</Text>
+                    <Text style={{ ...FONTS2.body2 }}>{`[${deliveryDateTime.getFullYear()}-${digitTwo(deliveryDateTime.getMonth() + 1)}-${digitTwo(deliveryDateTime.getUTCDate())}] ${digitTwo(deliveryDateTime.getUTCHours())}시 ${digitTwo(deliveryDateTime.getUTCMinutes())}분`} 주문</Text>
                     <Text style={{ ...FONTS2.h2, color: COLORS.darkgray, marginVertical: SIZES.base * 0.5 }}>{item.buildingName}</Text>
                     <Text style={{ ...FONTS2.body3 }}>{item.address}</Text>
                 </View>
-                {button}
+                <View style={{position: 'absolute', right: SIZES.width * 0.02,}}>
+                    {button}
+                </View>
             </View>
 
             <View style={{ padding: 20 }}>

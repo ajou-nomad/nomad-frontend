@@ -3,17 +3,15 @@
 /* eslint-disable no-alert */
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 
 import { FONTS2, COLORS, SIZES } from '../constants';
 import Header from '../components/layout/Header';
 import Receipt from '../screens/Receipt';
 
 import axiosApiInstance from '../utils/axios';
-import { createChatRoom } from '../utils/helper';
 
 const OrderDetails = () => {
     const navigation = useNavigation();
@@ -33,7 +31,7 @@ const OrderDetails = () => {
 
         //unmount 시 리스너 삭제
         return unsubscribe;
-    }, []);
+    }, [navigation]);
 
 
     const ReviewButton = ({ item }) => {
@@ -147,7 +145,18 @@ const OrderDetails = () => {
 
                 {/* 주문한 메뉴 */}
                 <View style={{ marginVertical: SIZES.base * 1.5 }}>
-                    <FlatList data={item.orderItemList} keyExtractor={item => item.orderItemId.toString()} renderItem={renderMenuItem} />
+                    {item.orderItemList.map((orderItem, index) => {
+                        return (
+                            <View key={index} style={{ marginVertical: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={styles.detailFont}>- {orderItem.menuName}</Text>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={styles.detailFont}>{orderItem.quantity}개 </Text>
+                                    <Text style={styles.detailFont}>{orderItem.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
+                                </View>
+                            </View>
+                        );
+                    })}
+                    {/* <FlatList data={item.orderItemList} keyExtractor={item => item.orderItemId.toString()} renderItem={renderMenuItem} /> */}
                 </View>
 
                 <View style={{ justifyContent: 'space-between', flex: 1 }}>
@@ -168,13 +177,21 @@ const OrderDetails = () => {
         );
     };
 
+    console.log('주문내역: ', JSON.stringify(memberOrderList.sort(), null, 4));
     return (
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />
             
-            <View style={{ padding: 15, flex: 1 }}>
+            <ScrollView style={{ padding: 15, flex: 1 }}>
+                {memberOrderList.map((item, index) => {
+                    return (
+                        <OrderDetailItem key={index} item={item} />
+                    );
+                })}
+            </ScrollView>
+            {/* <View style={{ padding: 15, flex: 1 }}>
                 <FlatList data={memberOrderList} keyExtractor={item => item.memberOrderId.toString()} renderItem={({ item }) => <OrderDetailItem item={item} />} />
-            </View>
+            </View> */}
         </View>
     );
 };

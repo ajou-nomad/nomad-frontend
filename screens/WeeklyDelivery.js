@@ -83,6 +83,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
           setResponseWeeklyData(groupData);
         } else {
           console.log('get weeklyGroupData가 아직 없습니다.');
+          setResponseWeeklyData([]);
         }
 
         // console.log('체크:: ', JSON.stringify(res.data, null, 4));

@@ -180,12 +180,12 @@ const SignIn = ({router, navigation}) => {
                                 <Text style={{...FONTS.body4, color: COLORS.black}}>Google 계정으로 로그인</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             style={styles.googleButton}
                             onPress={ signOutButton }
                         >
                             <Text style={{...FONTS.body4, color: COLORS.black}}>임시로그아웃</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </ScrollView>
                 </View>
             </TouchableWithoutFeedback>
