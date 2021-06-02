@@ -107,12 +107,7 @@ const MyPage = ({ navigation }) => {
 
 		<ScrollView style={styles.container}>
 			<Header title="마이 페이지" small='true' />
-      <TouchableOpacity
-                style={{ width: '100%', height: 30}}
-            onPress={() => createChatRoom('스토어이름123', '9:30', '장소', navigation)}
-            >
-                <Text>버튼</Text>
-            </TouchableOpacity>
+      
 			<View style={{ paddingVertical: 20, paddingHorizontal: 15 }}>
 				<View style={{ flexDirection: 'row' }}>
 					<ImageBackground source={icons.highlight} style={{ minWidth: SIZES.padding * 2.5, alignItems: 'center' }} imageStyle={{ tintColor: '#339af0', opacity: 0.5 }}>

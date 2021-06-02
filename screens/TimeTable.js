@@ -34,17 +34,25 @@ const TimeContainer = ({ startTime, groupList, location, storeData, color }) => 
             {groupList.length ?
                 <View style={{flexDirection: 'row'}}>
                     <Text style={{ ...FONTS3.h2, color: COLORS.darkgray }}>{startTime}</Text>
-                <TouchableOpacity
+                <View
                     style={{
                         width: responsiveWidth(74),
                         minHeight: responsiveHeight(8),
-                        backgroundColor: color,
+                        backgroundColor: '#f1f3f5',
                         marginLeft: SIZES.base * 2,
-                        borderRadius: 15,
+                        borderRadius: 10,
                         justifyContent: 'space-evenly',
                         paddingLeft: SIZES.base * 2.5,
                         marginBottom: 20,
+                        borderWidth: 0.5,
+                        // borderBottomWidth: 1,
+                        // borderRightWidth: 1,
+                        borderColor: 'white',
+                        opacity: 0.8,
+                        elevation: 5,
                     }}
+                >
+                <TouchableOpacity
                     onPress={() => navigation.navigate('WeeklyGroupListChild', {
                         date: groupList[0].date,
                         time: groupList[0].time,
@@ -56,20 +64,21 @@ const TimeContainer = ({ startTime, groupList, location, storeData, color }) => 
                     })}
                 >
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image source={icons.check} resizeMode="contain" style={{ width: SIZES.base * 2, height: SIZES.base * 2, tintColor: 'white', marginRight: SIZES.base }} />
+                    <Image source={icons.check} resizeMode="contain" style={{ width: SIZES.base * 2, height: SIZES.base * 2, tintColor: '#fa5252', marginRight: SIZES.base,}} />
                         <View style={{flex:1 , flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginRight: 20}}>
 
-                            <Text style={{ ...FONTS3.h4, color: 'white', marginRight: 10}}>생성된 배달목록:</Text>
+                            <Text style={{ ...FONTS3.h4, color: 'black', marginRight: 10}}>생성된 배달목록:</Text>
 
-                            <View style={{backgroundColor: 'white', flexDirection: 'row', borderRadius: 20, width: SIZES.width *0.2, justifyContent: 'center'}}>
-                                <Image source={icons.group2} resizeMode="contain" style={{ width: SIZES.base * 3.5, height: SIZES.base * 3.5, tintColor: '#868e96', marginRight: 10}} />
+                            
+                                {/* <Image source={icons.group2} resizeMode="contain" style={{ width: SIZES.base * 3.5, height: SIZES.base * 3.5, tintColor: '#868e96', marginRight: 10}} /> */}
                                 <Text style={{ ...FONTS2.h4, color: 'black'}}> {groupList.length}</Text>
                                 <Text style={{ ...FONTS2.h5, color: 'black'}}> 개</Text>
-                            </View>
+
 
                         </View>
                     </View>
                 </TouchableOpacity>
+                </View>
                 </View>
                 :
                 (<></>)
@@ -186,7 +195,7 @@ const TimeTable = (props) => {
         return JSON.stringify(d.toJSON()).substr(1, 10);
     };
 
-    const hourSchedule = [{hour: '08', color: '#f1f3f5'}, {hour: '09', color: '#e5dbff'}, {hour: '10', color: '#c5f6fa'}, {hour: '11', color: '#f1f3f5'}, {hour: '12', color: '#22b8cf'}, {hour: '13', color: '#f1f3f5'}, {hour: '14', color: '#94d82d'}, {hour: '15', color: '#f1f3f5'}, {hour: '16', color: '#f06595'}, {hour: '17', color: '#f1f3f5'}, {hour: '18', color: '#eebefa'}, {hour: '19', color: '#f1f3f5'}, {hour: '20', color: '#5c7cfa'}, {hour: '21', color: '#f1f3f5'}, {hour: '22', color: '#f1f3f5'}];
+    const hourSchedule = [{hour: '08', color: '#f1f3f5'}, {hour: '09', color: '#e5dbff'}, {hour: '10', color: '#c5f6fa'}, {hour: '11', color: '#f1f3f5'}, {hour: '12', color: '#5c7cfa'}, {hour: '13', color: '#f1f3f5'}, {hour: '14', color: '#94d82d'}, {hour: '15', color: '#f1f3f5'}, {hour: '16', color: '#5c7cfa'}, {hour: '17', color: '#5c7cfa'}, {hour: '18', color: '#5c7cfa'}, {hour: '19', color: '#f1f3f5'}, {hour: '20', color: '#5c7cfa'}, {hour: '21', color: '#f1f3f5'}, {hour: '22', color: '#f1f3f5'}];
 
 
 

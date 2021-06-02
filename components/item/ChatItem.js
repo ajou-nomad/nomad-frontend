@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import { FONTS2, images } from '../../constants';
 
 
-const ChatItem = ({ thread }) => {
+const ChatItem = ({ thread, groupId }) => {
     const navigation = useNavigation();
 
     // console.log('ChatItem ', thread);
@@ -27,7 +27,7 @@ const ChatItem = ({ thread }) => {
                     alignItems: 'center',
                     flexDirection: 'row',
                 }}
-                onPress={() => navigation.navigate('ChatScreen', { thread: thread })}
+                onPress={() => navigation.navigate('ChatScreen', { thread: thread, groupId: groupId })}
             >
                 <Image
                     source={images.store_logo}

@@ -11,11 +11,6 @@ import DeliveryItem from './DeliveryItem';
 import { createChatRoom } from '../../utils/helper';
 import axiosApiInstance from '../../utils/axios';
 
-axiosApiInstance.post('/delivery', {
-         groupId: 10,
-      }).then((res) => {
-         console.log('배달 중 post', JSON.stringify(res.data.data, null, 4));
-      }).catch(e => console.log(e));
 
 const AvailableDeliveryListComponent = (props) => {
     const navigation = useNavigation();
@@ -38,8 +33,8 @@ const AvailableDeliveryListComponent = (props) => {
                         }).then((res)=>{
                             const uidlList = res.data.data;
                             console.log('배달 중 post', JSON.stringify(uidlList, null, 4));
-                            createChatRoom(storeName, deliveryTime, deliveryPlace, navigation);
-                            navigation.navigate('CarrierChatList');
+                            createChatRoom(storeName, deliveryTime, deliveryPlace, groupId);
+                            navigation.navigate('CarrierChatList',{groupId:groupId});
                         }).catch((e)=>{
                             console.log(e);
                         });

@@ -26,7 +26,9 @@ const CarrierMain = ({ route, navigation }) => {
 
 
     const [availableGroup, setAvailableGroup] = useState();
-    // const [availableOrder, setAvailableOrder] = useState();
+
+
+    const [deliveryInfo, setDeliveryInfo] = useState();
 
     const setCurrentLocation = (result) => {
         setLocation(result);
@@ -55,47 +57,84 @@ const CarrierMain = ({ route, navigation }) => {
 	// };
 
 	const today = JSON.stringify(new Date('2021-05-21').toJSON()).substr(1, 10);
+    useEffect(() => {
+        // navigation에서 올때마다 최신데이터 호출( 리렌더링은 제외 )
+        const unsubscribe = navigation.addListener('focus', async () => {
 
-	useEffect(() => {
+            currentLocation().then((currentLocation) => {
 
-		currentLocation().then((currentLocation) => {
-			axiosApiInstance.get('/delivery')
-				.then((firstResponse) => {
-					const waitingForDelivery = firstResponse.data.data;
+				axiosApiInstance.get('/delivery')
+					.then((firstResponse) => {
+						const waitingForDelivery = firstResponse.data.data;
+						// console.log('waitingForDelivery: ' + JSON.stringify(waitingForDelivery));
 
-					axiosApiInstance.get('storeList').then((secondResponse)=>{
-						const storeList = secondResponse.data.data;
-						// const orderList = thirdResponse.data.data;
+						axiosApiInstance.get('storeList').then((secondResponse)=>{
+							const storeList = secondResponse.data.data;
+							// const orderList = thirdResponse.data.data;
 
-						const filteredStore = storeList.filter((storeInfo) => {
-							return calculateDistance(currentLocation.latitude, currentLocation.longitude, storeInfo.latitude, storeInfo.longitude) >= 0;
-						});
-						setAvailableStore(filteredStore);
-						// console.log('filteredStore: ' + JSON.stringify(filteredStore,null,4));
+							const filteredStore = storeList.filter((storeInfo) => {
+								return calculateDistance(currentLocation.latitude, currentLocation.longitude, storeInfo.latitude, storeInfo.longitude) >= 0;
+							});
+							setAvailableStore(filteredStore);
+							// console.log('filteredStore: ' + JSON.stringify(filteredStore,null,4));
 
-						const filteredGroup = waitingForDelivery.filter((groupInfo) => {
-							return (checkStoreId(groupInfo.storeId, filteredStore));
-						});
-						setAvailableGroup(filteredGroup);
-						// console.log('filteredGroup: ' + JSON.stringify(filteredGroup,null,4));
+							const filteredGroup = waitingForDelivery.filter((groupInfo) => {
+								return (checkStoreId(groupInfo.storeId, filteredStore));
+							});
+							setAvailableGroup(filteredGroup);
+							// console.log('filteredGroup: ' + JSON.stringify(filteredGroup,null,4));
 
-						// console.log('filteredOrder: ' + JSON.stringify(filteredOrder,null,4));
+							// console.log('filteredOrder: ' + JSON.stringify(filteredOrder,null,4));
 
-						setCurrentLocation(currentLocation);
+							setCurrentLocation(currentLocation);
+							
 
+					}).catch(e => console.log(e));
 				}).catch(e => console.log(e));
 			}).catch(e => console.log(e));
-		}).catch(e => console.log(e));
+
+		});
+
+        //unmount 시 리스너 삭제
+        return unsubscribe;
+    }, []);
+
+	// useEffect(() => {
+
+	// 	currentLocation().then((currentLocation) => {
+	// 		axiosApiInstance.get('/delivery')
+	// 			.then((firstResponse) => {
+	// 				const waitingForDelivery = firstResponse.data.data;
+
+	// 				axiosApiInstance.get('storeList').then((secondResponse)=>{
+	// 					const storeList = secondResponse.data.data;
+	// 					// const orderList = thirdResponse.data.data;
+
+	// 					const filteredStore = storeList.filter((storeInfo) => {
+	// 						return calculateDistance(currentLocation.latitude, currentLocation.longitude, storeInfo.latitude, storeInfo.longitude) >= 0;
+	// 					});
+	// 					setAvailableStore(filteredStore);
+	// 					// console.log('filteredStore: ' + JSON.stringify(filteredStore,null,4));
+
+	// 					const filteredGroup = waitingForDelivery.filter((groupInfo) => {
+	// 						return (checkStoreId(groupInfo.storeId, filteredStore));
+	// 					});
+	// 					setAvailableGroup(filteredGroup);
+	// 					// console.log('filteredGroup: ' + JSON.stringify(filteredGroup,null,4));
+
+	// 					// console.log('filteredOrder: ' + JSON.stringify(filteredOrder,null,4));
+
+	// 					setCurrentLocation(currentLocation);
+
+	// 			}).catch(e => console.log(e));
+	// 		}).catch(e => console.log(e));
+	// 	}).catch(e => console.log(e));
 
 
 
-	}, [route.params?.post]);
+	// }, [route.params?.post]);
 
-      // axiosApiInstance.post('/deliveryComplete', {
-      //    groupId: 10,
-      // }).then((res) => {
-      //    console.log('배달 완료 post', JSON.stringify(res.data.data, null, 4));
-      // }).catch(e => console.log(e));
+      
 
 
 	return (
@@ -103,7 +142,6 @@ const CarrierMain = ({ route, navigation }) => {
 			availableGroup={availableGroup}
 			availableStore={availableStore}
 			location={location}
-			today={today}
 		/>
 	);
 
