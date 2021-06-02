@@ -20,83 +20,58 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 import { useNavigation } from '@react-navigation/core';
 import NewGroupButton from '../components/map/NewGroupButton';
 
+import NewGroupButton from '../components/map/NewGroupButton';
 
 
 
 const TimeContainer = ({ startTime, groupList, location, storeData, color }) => {
     const navigation = useNavigation();
 
-
-
     return (
         <View style={{ flexDirection: 'row' }}>
+            
             {/* Flatlist로 */}
             {groupList.length ?
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                     <Text style={{ ...FONTS3.h2, color: COLORS.darkgray }}>{startTime}</Text>
-                <View
-                    style={{
-                        width: responsiveWidth(74),
-                        minHeight: responsiveHeight(8),
-                        backgroundColor: '#f1f3f5',
-                        marginLeft: SIZES.base * 2,
-                        borderRadius: 10,
-                        justifyContent: 'space-evenly',
-                        paddingLeft: SIZES.base * 2.5,
-                        marginBottom: 20,
-                        borderWidth: 0.5,
-                        // borderBottomWidth: 1,
-                        // borderRightWidth: 1,
-                        borderColor: 'white',
-                        opacity: 0.8,
-                        elevation: 5,
-                    }}
-                >
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('WeeklyGroupListChild', {
-                        date: groupList[0].date,
-                        time: groupList[0].time,
-                        location: location,
-                        currentGroup: groupList.length,
-                        groupList: groupList,
-                        storeData: storeData,
-                        back: 'TimeTable',
-                    })}
-                >
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image source={icons.check} resizeMode="contain" style={{ width: SIZES.base * 2, height: SIZES.base * 2, tintColor: '#fa5252', marginRight: SIZES.base,}} />
-                        <View style={{flex:1 , flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginRight: 20}}>
-
-                            <Text style={{ ...FONTS3.h4, color: 'black', marginRight: 10}}>생성된 배달목록:</Text>
-
-                            
-                                {/* <Image source={icons.group2} resizeMode="contain" style={{ width: SIZES.base * 3.5, height: SIZES.base * 3.5, tintColor: '#868e96', marginRight: 10}} /> */}
-                                <Text style={{ ...FONTS2.h4, color: 'black'}}> {groupList.length}</Text>
-                                <Text style={{ ...FONTS2.h5, color: 'black'}}> 개</Text>
-
-
+                    <TouchableOpacity
+                        style={{
+                            width: responsiveWidth(74),
+                            minHeight: responsiveHeight(8),
+                            backgroundColor: '#EFF3FF',
+                            // borderWidth: 1,
+                            // borderColor: '#e9ecef',
+                            marginLeft: SIZES.base * 2,
+                            borderRadius: 3,
+                            justifyContent: 'space-evenly',
+                            paddingLeft: SIZES.base * 2.5,
+                        }}
+                        onPress={() => navigation.navigate('WeeklyGroupListChild', {
+                            date: groupList[0].date,
+                            time: groupList[0].time,
+                            location: location,
+                            currentGroup: groupList.length,
+                            groupList: groupList,
+                            storeData: storeData,
+                            back: 'TimeTable',
+                        })}
+                    >
+                        <View style={{ flexDirection: 'row', marginHorizontal: SIZES.base, alignItems: 'center', justifyContent: 'space-between' }}>
+                            {/* <Image source={icons.check} resizeMode="contain" style={{ width: SIZES.base * 2, height: SIZES.base * 2, tintColor: '#fa5252', marginRight: SIZES.base }} /> */}
+                            {/* <Text style={{ ...FONTS2.h4 }}>{location.buildingName} |</Text>
+                        <Text style={{ ...FONTS2.h4 }}> {groupList[0].date}  |</Text> */}
+                            <View style={{ flexDirection: 'column',  }}>
+                                <Text style={{ ...FONTS3.h2, alignSelf: 'center', color: '#495057' }}>{location.buildingName}</Text>
+                                <Text style={{ ...FONTS2.body3, alignSelf: 'center', color: '#495057' }}>{groupList.length}개 생성</Text>
+                            </View>
+                            <TouchableOpacity style={{ borderRadius: 10, borderWidth: 1, backgroundColor: '#6E99F0', borderColor: '#6E99F0', justifyContent: 'center', alignItems: 'center', paddingHorizontal: SIZES.base * 0.8, height: SIZES.base * 3, marginRight: SIZES.base }}>
+                                <Text style={{ alignSelf: 'center', ...FONTS2.body4, color: 'white',  }}>모집중</Text>
+                            </TouchableOpacity>
                         </View>
-                    </View>
-                </TouchableOpacity>
-                </View>
+                    </TouchableOpacity>
                 </View>
                 :
-                (<></>)
-                // <View style={{
-                //     width: responsiveWidth(74),
-                //     minHeight: responsiveHeight(8),
-                //     backgroundColor: '#f1f3f5',
-                //     marginLeft: SIZES.base * 2,
-                //     borderRadius: 15,
-                //     justifyContent: 'space-evenly',
-                //     paddingLeft: SIZES.base * 2.5,
-                // }}
-                // >
-                //     <View style={{ flexDirection: 'row' }}>
-                //         <Image source={icons.check} resizeMode="contain" style={{ width: SIZES.base * 2, height: SIZES.base * 2, tintColor: '#fa5252', marginRight: SIZES.base }} />
-                //         <Text style={{ ...FONTS2.h4 }}>앗, 생성된 그룹이 존재하지 않습니다!</Text>
-                //     </View>
-                // </View>
+                (null)
             }
         </View>
     );

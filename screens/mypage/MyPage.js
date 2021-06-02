@@ -29,11 +29,11 @@ const MyPage = ({ navigation }) => {
   console.log('mypage:: ', state);
 
   useEffect(() => {
-    console.log('Mypage 불릴때');
+    // console.log('Mypage 불릴때');
 
     // navigation에서 올때마다 호출( 리렌더링은 제외 )
     const unsubscribe = navigation.addListener('focus', async () => {
-      console.log('Mypage 올떄마다 호출');
+      // console.log('Mypage 올떄마다 호출');
     });
 
 
@@ -107,7 +107,6 @@ const MyPage = ({ navigation }) => {
 
 		<ScrollView style={styles.container}>
 			<Header title="마이 페이지" small='true' />
-      
 			<View style={{ paddingVertical: 20, paddingHorizontal: 15 }}>
 				<View style={{ flexDirection: 'row' }}>
 					<ImageBackground source={icons.highlight} style={{ minWidth: SIZES.padding * 2.5, alignItems: 'center' }} imageStyle={{ tintColor: '#339af0', opacity: 0.5 }}>
