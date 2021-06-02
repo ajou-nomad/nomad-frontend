@@ -18,12 +18,13 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 import { useNavigation } from '@react-navigation/core';
+import NewGroupButton from '../components/map/NewGroupButton';
 
 import NewGroupButton from '../components/map/NewGroupButton';
 
 
 
-const TimeContainer = ({ startTime, groupList, location, storeData }) => {
+const TimeContainer = ({ startTime, groupList, location, storeData, color }) => {
     const navigation = useNavigation();
 
     return (
