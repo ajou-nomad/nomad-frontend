@@ -1,6 +1,6 @@
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
+/* eslint-disable react-native/no-inline-styles */
 
 import React, { useEffect, useState } from 'react';
 import {
@@ -21,37 +21,55 @@ const ChatList = ({ navigation }) => {
     const [threads, setThreads] = useState([]);
     const [chatList, setChatList] = useState([]);
 
-    // Fetch threads from firestore
+
+
+    const chatLists = async () => {
+
+        const myChatList = await axiosApiInstance.get('/chatId')
+            .then((res) => {
+                return res.data.data.map((item, index) => {
+
+                    return item.chatId.slice(1, -1);
+                });
+            });
+        // setThreads(threadsTmp);
+        setChatList(myChatList);
+    };
+
+
+
     useEffect(() => {
 
-        // axiosApiInstance.get('/chatList')
-        //     .then((res) => {
-        //         setChatList(res.data.data);
-        //     })
-        //     .catch(e => console.log(e));
+        let unsubscribe;
 
-        const unsubscribe = firestore()
+        if (chatList.length !== 0){
+            unsubscribe = firestore()
             .collection('THREADS') // THREADS.chatId
             .onSnapshot(querySnapShot => {
-                const thread = querySnapShot.docs.map(docSnapShot => {
-                    return {
-                        _id: docSnapShot.id,
-                        name: '',
-                        latestMessage: {
-                            text: '',
-                        },
-                        ...docSnapShot.data(),
-                    };
+                const threads = querySnapShot.docs.map(docSnapShot => {
+
+                    if (chatList.includes(docSnapShot.id)) {
+                        return {
+                            _id: docSnapShot.id,
+                            name: '',
+                            latestMessage: {
+                                text: '',
+                            },
+                            ...docSnapShot.data(),
+                        };
+                    }
                 });
-
-                setThreads(thread);
+                setThreads(threads.filter((thread, i) => thread != null));
             });
-        
-        // unscribe listener
-        return () => unsubscribe();
-    }, []);
 
-    console.log('threads',JSON.stringify(threads,null,4));
+        } else {
+
+            chatLists();
+        }
+
+        return unsubscribe;
+    }, [chatList]);
+
 
     return (
         <View style={styles.container}>
@@ -61,7 +79,6 @@ const ChatList = ({ navigation }) => {
                 data={threads}
                 keyExtractor={item => item._id}
                 renderItem={({ item }) => {
-                    // console.log(JSON.stringify(item, null, 4));
                     return (
                         <ChatItem thread={item} />
                     );

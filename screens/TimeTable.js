@@ -25,7 +25,7 @@ import { useNavigation } from '@react-navigation/core';
 const TimeContainer = ({ startTime, groupList, location, storeData }) => {
     const navigation = useNavigation();
 
-    console.log('TimeContainer:', JSON.stringify(groupList, null, 4));
+    // console.log('TimeContainer:', JSON.stringify(groupList, null, 4));
     return (
         <View style={{ flexDirection: 'row', marginTop: SIZES.base * 2 }}>
             
@@ -37,11 +37,13 @@ const TimeContainer = ({ startTime, groupList, location, storeData }) => {
                     style={{
                         width: responsiveWidth(74),
                         minHeight: responsiveHeight(8),
-                        backgroundColor: '#f1f3f5',
+                        backgroundColor: '#12abef',
                         marginLeft: SIZES.base * 2,
                         borderRadius: 15,
                         justifyContent: 'space-evenly',
                         paddingLeft: SIZES.base * 2.5,
+                        shadowRadius: 2,
+                        shadowOpacity: 100,
                     }}
                     onPress={() => navigation.navigate('WeeklyGroupListChild', {
                         date: groupList[0].date,
@@ -53,11 +55,11 @@ const TimeContainer = ({ startTime, groupList, location, storeData }) => {
                         back: 'TimeTable',
                     })}
                 >
-                    <View style={{ flexDirection: 'row' }}>
-                        <Image source={icons.check} resizeMode="contain" style={{ width: SIZES.base * 2, height: SIZES.base * 2, tintColor: '#fa5252', marginRight: SIZES.base }} />
-                        <Text style={{ ...FONTS2.h4 }}>{location.buildingName} |</Text>
-                        <Text style={{ ...FONTS2.h4 }}> {groupList[0].date}  |</Text>
-                        <Text style={{ ...FONTS2.h4 }}> 그룹 수: {groupList.length}</Text>
+                    <View style={{ flexDirection: 'row',  }}>
+                        <Image source={icons.check} resizeMode="contain" style={{ width: SIZES.base * 2, height: SIZES.base * 2, tintColor: '#00dd00', marginRight: SIZES.base }} />
+                        <Text style={{ ...FONTS2.h4, color: '#ff0' }}>{location.buildingName} |</Text>
+                        <Text style={{ ...FONTS2.h4, color: '#ff0' }}> {groupList[0].date}  |</Text>
+                        <Text style={{ ...FONTS2.h4, color: '#ff0' }}> 그룹 수: {groupList.length}</Text>
                     </View>
                 </TouchableOpacity>
                 </View>
