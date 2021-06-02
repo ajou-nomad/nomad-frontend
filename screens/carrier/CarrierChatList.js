@@ -24,70 +24,84 @@ const CarrierChatList = (props) => {
 
     const [threads, setThreads] = useState([]);
     const [chatList, setChatList] = useState([]);
+    const [isFetching, setIsFetching] = useState(false);
 
-    console.log(props.route.params.groupId)
 
-    // Fetch threads from firestore
+    const chatLists = async () => {
+
+        const myChatList = await axiosApiInstance.get('/chatId')
+            .then((res) => {
+                return res.data.data.map((item, index) => {
+
+                    return item.chatId.slice(1, -1);
+                });
+            });
+        // setThreads(threadsTmp);
+        setChatList(myChatList);
+        setIsFetching(false);
+    };
+
+    const onRefresh = () => {
+        setIsFetching(true);
+        chatLists();
+    };
+
     useEffect(() => {
 
-        // axiosApiInstance.get('/chatList')
-        //     .then((res) => {
-        //         setChatList(res.data.data);
-        //     })
-        //     .catch(e => console.log(e));
+        console.log("carrier 처음 입장시");
 
-        const unsubscribe = firestore()
+        let unsubscribe;
+
+        if (chatList.length !== 0){
+            unsubscribe = firestore()
             .collection('THREADS') // THREADS.chatId
             .onSnapshot(querySnapShot => {
-                const threads = querySnapShot.docs.map(docSnapShot => { // filter로 바꾸면 될듯?
-                    // if (docSnapShot.id === 'J20cpij66wXL371qUcXt') {
-                    //     console.log('여기!! ', docSnapShot.id);
-                    //     return {
-                    //         _id: docSnapShot.id,
-                    //         name: '',
-                    //         latestMessage: {
-                    //             text: '',
-                    //         },
-                    //         ...docSnapShot.data(),
-                    //     };
-                    // }
-                    return {
-                        _id: docSnapShot.id,
-                        name: '',
-                        latestMessage: {
-                            text: '',
-                        },
-                        ...docSnapShot.data(),
-                    };
-                });
+                const threads = querySnapShot.docs.map(docSnapShot => {
 
-                setThreads(threads);
+                    if (chatList.includes(docSnapShot.id)) {
+                        return {
+                            _id: docSnapShot.id,
+                            name: '',
+                            latestMessage: {
+                                text: '',
+                            },
+                            ...docSnapShot.data(),
+                        };
+                    }
+                });
+                setThreads(threads.filter((thread, i) => thread != null));
             });
 
-        // unscribe listener
-        return () => unsubscribe();
-    }, []);
+        } else {
+
+            chatLists();
+        }
+
+        return () => {
+            unsubscribe;
+            console.log("carrier 언마운트시");
+        };
+    }, [chatList]);
+
+
 
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: responsiveHeight(10), borderBottomWidth: 0.3, borderBottomColor: '#adb5bd',}}>
-				<TouchableOpacity  style={{ position: 'absolute', left: 0, marginLeft: SIZES.base * 2, }} onPress={() => props.navigation.openDrawer()}>
-					<Image source={icons.menu} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 3  }} />
-				</TouchableOpacity>
-				<Text style={{ ...FONTS2.h2 }} >채팅방</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: responsiveHeight(10), borderBottomWidth: 0.3, borderBottomColor: '#adb5bd', }}>
+                <TouchableOpacity style={{ position: 'absolute', left: 0, marginLeft: SIZES.base * 2, }} onPress={() => props.navigation.openDrawer()}>
+                    <Image source={icons.menu} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 3 }} />
+                </TouchableOpacity>
+                <Text style={{ ...FONTS2.h2 }} >채팅방</Text>
             </View>
             <FlatList
                 data={threads}
                 keyExtractor={item => item._id}
-                renderItem={({ item }) => {
-                    // console.log(item);
-                    //  {"_id": "UbPFjHrANWD7P7xo5TKo", "latestMessage": {"createdAt": 1620280242849, "text": "주문 생성 성공"}, "name": "방이름"}
-                    return (
-                        <ChatItem thread={item} groupId = {props.route.params.groupId} />
-                    );
+                renderItem={({ item }) =>
+                    <ChatItem thread={item} groupId={props.route.params.groupId} />
                 }
-                }
+                onRefresh={onRefresh}
+                refreshing={isFetching}
             />
         </View>
     );

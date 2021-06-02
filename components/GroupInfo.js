@@ -32,7 +32,7 @@ export default function GroupInfo(props) {
                         <Image style={[props.styleLogoImage, { width: 55, height: 55 }]} source={{ uri: props.storeInfo.logoUrl }} resizeMode='contain' />
                     </View>
                     <View style={styles.shopInfo}>
-                        <View style={{ flexDirection: 'row', backgroundColor: 'skyblue' }}>
+                        <View style={{ flexDirection: 'row' }}>
                             <Text style={{ ...FONTS2.h3, marginRight: SIZES.base, alignSelf: 'center' }}>{props.storeInfo.storeName}</Text>
                             <View style={{ borderWidth: 0.3, borderColor: '#e03131', borderRadius: 8, flexDirection: 'row', paddingHorizontal: SIZES.base, backgroundColor: '#e03131' }}>
                                 <Image source={icons.promotion} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#fff', alignSelf: 'center' }} />

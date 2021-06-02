@@ -13,18 +13,17 @@ import uuid from 'react-native-uuid';
 import ImageModal from 'react-native-image-modal';
 import { useNavigation } from '@react-navigation/native';
 
-import { COLORS, FONTS, FONTS2, icons, SIZES } from '../../constants';
+import { COLORS, FONTS2, icons, SIZES } from '../../constants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import {AuthContext} from '../../context/AuthContextProvider';
-import Header from '../../components/layout/Header';
-
 import axiosApiInstance from '../../utils/axios';
 
 
 const ChatScreen = ({ route }) => {
     
-    const {state} = useContext(AuthContext);
+    const { state } = useContext(AuthContext);
+
 
     const user = auth().currentUser;
 
@@ -45,6 +44,7 @@ const ChatScreen = ({ route }) => {
                     _id: user.uid, // currentUser.uid,
                     email: user.email, // currentUser.email
                     avatar: icons.avatar,
+                    name: state.member.nickName,
                 },
             });
 
@@ -76,6 +76,7 @@ const ChatScreen = ({ route }) => {
                         _id: doc.id,
                         text: '',
                         image: '',
+                        name: '',
                         createdAt: new Date().getTime(),
                         ...firebaseData,
                     };
@@ -83,7 +84,6 @@ const ChatScreen = ({ route }) => {
                     if (!firebaseData.system) {
                         data.user = {
                             ...firebaseData.user,
-                            name: firebaseData.user.email,
                         };
                     }
 
@@ -92,7 +92,7 @@ const ChatScreen = ({ route }) => {
 
                 setMessages(mes);
             });
-        // stop listening for updates 컴포넌트가 unmount될 때
+        
         return () => messageListener();
     }, [thread._id]);
     
@@ -116,7 +116,6 @@ const ChatScreen = ({ route }) => {
     };
 
     const renderMessageImage = (props) => {
-        // console.log('사진:: ', props.currentMessage.image);
         return (
             <View style={{ padding: 5 }}>
                 <ImageModal
@@ -171,27 +170,17 @@ const ChatScreen = ({ route }) => {
     }
 
     const renderContainer = (props) => {
-        const splitUsername = (name) => {
-            const splitname = name.split('@');
-            // if (splitname === 'ajou2020') {
-            //     return splitname[0];
-            // }
-            // else {
-            //     return '배달원';
-            // }
-            return '배달원';
-        };
 
         if (props.currentMessage.user._id === 0) {
-            // console.log(props.currentMessage.text);
             return (
                 // <SystemMessage
                 //     {...props}
                 //     wrapperStyle={styles.systemMessageWrapper}
                 //     textStyle={styles.systemMessageText}
                 // />
-                <View style={{ backgroundColor: 'skyblue', width: SIZES.width * 0.8, alignSelf: 'center', padding: SIZES.base, borderRadius: 8, marginVertical: SIZES.base * 2}}>
+                <View style={{ backgroundColor: '#f03e3e', width: SIZES.width * 0.8, alignSelf: 'center', padding: SIZES.base, borderRadius: 8, marginVertical: SIZES.base * 2.5 }}>
                     <Text style={{ ...FONTS2.h4, color: 'white', alignSelf: 'center' }}>{props.currentMessage.text}</Text>
+                    <Text style={{ ...FONTS2.body3, color: 'white', alignSelf: 'center', marginTop: SIZES.base }}>{thread.name}</Text>
                 </View>
             );
         }
@@ -217,7 +206,7 @@ const ChatScreen = ({ route }) => {
                         flex: 1,
                     }}>
                         {isSameUser(props) ? (null) : (
-                            <Text style={{ ...FONTS2.h4, marginBottom: 5 }}>{splitUsername(props.currentMessage.user.name)}</Text>
+                            <Text style={{ ...FONTS2.h4, marginBottom: 5 }}>{props.currentMessage.user.name}</Text>
                         )}
                         {renderBubble(props)}
                     </View>
@@ -334,43 +323,49 @@ const ChatScreen = ({ route }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#dee2e6' }}>
-            <View>
+            {user ? (
+                <>
+                    {state.member.memberType === 'Deli' ?
+                        <View style={{ position: 'absolute', bottom: SIZES.height * 0.09, right: SIZES.width * 0.04, zIndex: 2, opacity: 0.9 }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    axiosApiInstance.post('/deliveryComplete', {
+                                        groupId: groupId,
+                                    }).then((res) => {
+                                        console.log('배달 완료 post', JSON.stringify(res.data.data, null, 4));
+                                        navigation.navigate('CarrierMain');
+                                    }).catch((e) => {
+                                        console.log(e);
+                                    })
+                                }}
+                                style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#3897f1', paddingVertical: SIZES.base * 2.5, paddingHorizontal: SIZES.base, borderRadius: 50, }}
+                            >
+                                <Text style={{ ...FONTS2.body3, color: 'white' }} >
+                                        배달완료
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        : (null)}
+                    <GiftedChat
+                        messages={messages}
+                        onSend={handleSend}
+                        user={{
+                            _id: user.uid,
+                            name: user.displayName,
+                        }}
+                        placeholder="메시지 입력"
+                        alwaysShowSend
+                        showUserAvatar
+                        renderSend={renderSendButton}
+                        scrollToBottom
+                        renderMessage={renderMessage}
+                        renderActions={renderActions}
+                    />
                 
-            </View>
-            <GiftedChat
-                messages={messages}
-                onSend={handleSend}
-                user={{
-                    _id: user.uid,
-                    name: user.displayName,
-                }}
-                placeholder="메시지 입력"
-                alwaysShowSend
-                showUserAvatar
-                renderSend={renderSendButton}
-                scrollToBottom
-                renderMessage={renderMessage}
-                renderActions={renderActions}
-            />
-            { state.member.memberType === 'Deli' ?
-            <TouchableOpacity
-                onPress={()=>{
-                    axiosApiInstance.post('/deliveryComplete',{
-                        groupId: groupId,
-                    }).then((res)=>{
-                        console.log('배달 완료 post', JSON.stringify(res.data.data, null, 4));
-                        navigation.navigate('CarrierMain');
-                    }).catch((e)=>{
-                        console.log(e);
-                    })
-                }}
-            >
-                <View style={{justifyContent:'center', alignItems: 'center', backgroundColor:'#25ee25'}}>
-                    <Text style={{fontSize:24, fontWeight:'bold', color:'#fff'}} >
-                        배달 완료
-                    </Text>
-                </View>
-            </TouchableOpacity> : <></>}
+                </>
+            ) : (
+                (null)
+            )}
         </View>
     );
 };

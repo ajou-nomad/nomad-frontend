@@ -19,29 +19,29 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 
 import { useNavigation } from '@react-navigation/core';
 
+import NewGroupButton from '../components/map/NewGroupButton';
 
 
 
 const TimeContainer = ({ startTime, groupList, location, storeData }) => {
     const navigation = useNavigation();
 
-    console.log('TimeContainer:', JSON.stringify(groupList, null, 4));
     return (
-        <View style={{ flexDirection: 'row', marginTop: SIZES.base * 2 }}>
+        <View style={{ flexDirection: 'row' }}>
             
             {/* Flatlist로 */}
             {groupList.length ?
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                     <Text style={{ ...FONTS3.h2, color: COLORS.darkgray }}>{startTime}</Text>
                     <TouchableOpacity
                         style={{
                             width: responsiveWidth(74),
                             minHeight: responsiveHeight(8),
-                            backgroundColor: 'white',
-                            borderWidth: 1,
-                            borderColor: '#6E99F0',
+                            backgroundColor: '#EFF3FF',
+                            // borderWidth: 1,
+                            // borderColor: '#e9ecef',
                             marginLeft: SIZES.base * 2,
-                            borderRadius: 15,
+                            borderRadius: 3,
                             justifyContent: 'space-evenly',
                             paddingLeft: SIZES.base * 2.5,
                         }}
@@ -55,18 +55,17 @@ const TimeContainer = ({ startTime, groupList, location, storeData }) => {
                             back: 'TimeTable',
                         })}
                     >
-                        <View style={{ flexDirection: 'row', marginHorizontal: SIZES.base }}>
-                            <Image source={icons.check} resizeMode="contain" style={{ width: SIZES.base * 2, height: SIZES.base * 2, tintColor: '#fa5252', marginRight: SIZES.base }} />
+                        <View style={{ flexDirection: 'row', marginHorizontal: SIZES.base, alignItems: 'center', justifyContent: 'space-between' }}>
+                            {/* <Image source={icons.check} resizeMode="contain" style={{ width: SIZES.base * 2, height: SIZES.base * 2, tintColor: '#fa5252', marginRight: SIZES.base }} /> */}
                             {/* <Text style={{ ...FONTS2.h4 }}>{location.buildingName} |</Text>
                         <Text style={{ ...FONTS2.h4 }}> {groupList[0].date}  |</Text> */}
-                            <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...FONTS2.body3, alignSelf: 'center' }}>그룹</Text>
-                                <Text style={{ ...FONTS3.h1 }}> {groupList.length}</Text>
-                                <Text style={{ ...FONTS2.body3, alignSelf: 'center' }}>개 생성</Text>
+                            <View style={{ flexDirection: 'column',  }}>
+                                <Text style={{ ...FONTS3.h2, alignSelf: 'center', color: '#495057' }}>{location.buildingName}</Text>
+                                <Text style={{ ...FONTS2.body3, alignSelf: 'center', color: '#495057' }}>{groupList.length}개 생성</Text>
                             </View>
-                            {/* <TouchableOpacity style={{ borderRadius: 20, borderWidth: 1, backgroundColor: 'white', borderColor: '#6E99F0', justifyContent: 'center', alignItems: 'center', paddingHorizontal: SIZES.base * 0.8 }}>
-                                <Text style={{ alignSelf: 'center', ...FONTS2.body4, color: '#6E99F0' }}>참여하기</Text>
-                            </TouchableOpacity> */}
+                            <TouchableOpacity style={{ borderRadius: 10, borderWidth: 1, backgroundColor: '#6E99F0', borderColor: '#6E99F0', justifyContent: 'center', alignItems: 'center', paddingHorizontal: SIZES.base * 0.8, height: SIZES.base * 3, marginRight: SIZES.base }}>
+                                <Text style={{ alignSelf: 'center', ...FONTS2.body4, color: 'white',  }}>모집중</Text>
+                            </TouchableOpacity>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -78,126 +77,61 @@ const TimeContainer = ({ startTime, groupList, location, storeData }) => {
 };
 
 const FirstRoute = ({ route }) => {
-    console.log('FirstRoute: ', JSON.stringify(route.groupList.length, null, 4));
     return (
-        <ScrollView style={{ marginHorizontal: SIZES.base * 2, marginBottom: SIZES.base * 2.5 }} contentContainerStyle={{ flexGrow: 1 }}
+        <ScrollView style={{flex: 1, marginHorizontal: SIZES.base * 2, marginVertical: SIZES.base * 2.5 }} contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}>
-            {/* {route.groupList.map((group, index) => {
-                console.log(index, group.time);
-                return <TimeContainer key={index} startTime={group.time} groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '11'))} location={route.location} storeData={route.storeData} />
-            })} */}
-            <TimeContainer startTime="08:00" color="#FFE2D4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '08'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="09:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '09'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="10:00" color="#D4FFD6" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '10'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="11:00" color="#D4FFF3" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '11'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="12:00" color="#E5E8FF" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '12'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="13:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '13'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="14:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '14'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="15:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '15'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="16:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '16'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="17:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '17'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="18:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '18'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="19:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '19'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="20:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '20'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="21:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '21'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="22:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '22'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="23:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '23'))} location={route.location} storeData={route.storeData} />
+
+            {route.hourSchedule.map( ({hour, color}) =>
+                <TimeContainer key={hour} color={color} startTime={`${hour}:00`} groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === hour))} location={route.location} storeData={route.storeData} />
+            )}
         </ScrollView>
     );
 };
 
 const SecondRoute = ({ route }) => {
     return (
-        <ScrollView style={{ marginHorizontal: SIZES.base * 2, marginBottom: SIZES.base * 2.5 }} contentContainerStyle={{ flexGrow: 1 }}
+        <ScrollView style={{flex: 1, marginHorizontal: SIZES.base * 2, marginVertical: SIZES.base * 2.5 }} contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}>
-            <TimeContainer startTime="08:00" color="#FFE2D4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '08'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="09:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '09'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="10:00" color="#D4FFD6" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '10'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="11:00" color="#D4FFF3" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '11'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="12:00" color="#E5E8FF" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '12'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="13:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '13'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="14:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '14'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="15:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '15'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="16:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '16'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="17:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '17'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="18:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '18'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="19:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '19'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="20:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '20'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="21:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '21'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="22:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '22'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="23:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '23'))} location={route.location} storeData={route.storeData} />
+
+            {route.hourSchedule.map( ({hour, color}) =>
+                <TimeContainer key={hour} color={color} startTime={`${hour}:00`} groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === hour))} location={route.location} storeData={route.storeData} />
+            )}
         </ScrollView>
     );
 };
 
 const ThirdRoute = ({ route }) => {
     return (
-        <ScrollView style={{ marginHorizontal: SIZES.base * 2, marginBottom: SIZES.base * 2.5 }} contentContainerStyle={{ flexGrow: 1 }}
+        <ScrollView style={{flex: 1, marginHorizontal: SIZES.base * 2, marginVertical: SIZES.base * 2.5 }} contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}>
-            <TimeContainer startTime="08:00" color="#FFE2D4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '08'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="09:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '09'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="10:00" color="#D4FFD6" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '10'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="11:00" color="#D4FFF3" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '11'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="12:00" color="#E5E8FF" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '12'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="13:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '13'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="14:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '14'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="15:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '15'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="16:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '16'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="17:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '17'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="18:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '18'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="19:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '19'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="20:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '20'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="21:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '21'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="22:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '22'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="23:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '23'))} location={route.location} storeData={route.storeData} />
+
+            {route.hourSchedule.map( ({hour, color}) =>
+                <TimeContainer key={hour} color={color} startTime={`${hour}:00`} groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === hour))} location={route.location} storeData={route.storeData} />
+            )}
         </ScrollView>
     );
 };
 
 const FourthRoute = ({ route }) => {
     return (
-        <ScrollView style={{ marginHorizontal: SIZES.base * 2, marginBottom: SIZES.base * 2.5 }} contentContainerStyle={{ flexGrow: 1 }}
+        <ScrollView style={{flex: 1, marginHorizontal: SIZES.base * 2, marginVertical: SIZES.base * 2.5 }} contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}>
-            <TimeContainer startTime="08:00" color="#FFE2D4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '08'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="09:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '09'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="10:00" color="#D4FFD6" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '10'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="11:00" color="#D4FFF3" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '11'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="12:00" color="#E5E8FF" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '12'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="13:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '13'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="14:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '14'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="15:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '15'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="16:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '16'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="17:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '17'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="18:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '18'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="19:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '19'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="20:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '20'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="21:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '21'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="22:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '22'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="23:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '23'))} location={route.location} storeData={route.storeData} />
+
+            {route.hourSchedule.map( ({hour, color}) =>
+                <TimeContainer key={hour} color={color} startTime={`${hour}:00`} groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === hour))} location={route.location} storeData={route.storeData} />
+            )}
         </ScrollView>
     );
 };
 
 const FifthRoute = ({ route }) => {
     return (
-        <ScrollView style={{ marginHorizontal: SIZES.base * 2, marginBottom: SIZES.base * 2.5 }} contentContainerStyle={{ flexGrow: 1 }}
+        <ScrollView style={{flex: 1, marginHorizontal: SIZES.base * 2, marginVertical: SIZES.base * 2.5 }} contentContainerStyle={{ flexGrow: 1 }}
             showsVerticalScrollIndicator={false}>
-            <TimeContainer startTime="08:00" color="#FFE2D4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '08'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="09:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '09'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="10:00" color="#D4FFD6" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '10'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="11:00" color="#D4FFF3" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '11'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="12:00" color="#E5E8FF" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '12'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="13:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '13'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="14:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '14'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="15:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '15'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="16:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '16'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="17:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '17'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="18:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '18'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="19:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '19'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="20:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '20'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="21:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '21'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="22:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '22'))} location={route.location} storeData={route.storeData} />
-            <TimeContainer startTime="23:00" color="#FFEED4" groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === '23'))} location={route.location} storeData={route.storeData} />
+
+            {route.hourSchedule.map( ({hour, color}) =>
+                <TimeContainer key={hour} color={color} startTime={`${hour}:00`} groupList={route.groupList.filter(({ time }) => (time.substr(0, 2) === hour))} location={route.location} storeData={route.storeData} />
+            )}
         </ScrollView>
     );
 };
@@ -234,6 +168,8 @@ const TimeTable = (props) => {
         d.setDate(d.getDate() + dateDifference);
         return JSON.stringify(d.toJSON()).substr(1, 10);
     };
+
+    const hourSchedule = [{hour: '08', color: '#f1f3f5'}, {hour: '09', color: '#e5dbff'}, {hour: '10', color: '#c5f6fa'}, {hour: '11', color: '#f1f3f5'}, {hour: '12', color: '#5c7cfa'}, {hour: '13', color: '#f1f3f5'}, {hour: '14', color: '#94d82d'}, {hour: '15', color: '#f1f3f5'}, {hour: '16', color: '#5c7cfa'}, {hour: '17', color: '#5c7cfa'}, {hour: '18', color: '#5c7cfa'}, {hour: '19', color: '#f1f3f5'}, {hour: '20', color: '#5c7cfa'}, {hour: '21', color: '#f1f3f5'}, {hour: '22', color: '#f1f3f5'}];
 
 
 
@@ -334,11 +270,11 @@ const TimeTable = (props) => {
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: 'first', title: dayArrayKorFixed[0], num: weeklyDate[0].substr(8, 2), groupList: groupList.filter(({ date, time }) => (date === weeklyDate[0])), location: location, storeData: storeData },
-        { key: 'second', title: dayArrayKorFixed[1], num: weeklyDate[1].substr(8, 2), groupList: groupList.filter(({ date, time }) => (date === weeklyDate[1])), location: location, storeData: storeData },
-        { key: 'third', title: dayArrayKorFixed[2], num: weeklyDate[2].substr(8, 2), groupList: groupList.filter(({ date, time }) => (date === weeklyDate[2])), location: location, storeData: storeData },
-        { key: 'fourth', title: dayArrayKorFixed[3], num: weeklyDate[3].substr(8, 2), groupList: groupList.filter(({ date, time }) => (date === weeklyDate[3])), location: location, storeData: storeData },
-        { key: 'fifth', title: dayArrayKorFixed[4], num: weeklyDate[4].substr(8, 2), groupList: groupList.filter(({ date, time }) => (date === weeklyDate[4])), location: location, storeData: storeData },
+        { key: 'first', title: dayArrayKorFixed[0], num: weeklyDate[0].substr(8, 2), groupList: groupList.filter(({ date, time }) => (date === weeklyDate[0])), location: location, storeData: storeData , hourSchedule: hourSchedule},
+        { key: 'second', title: dayArrayKorFixed[1], num: weeklyDate[1].substr(8, 2), groupList: groupList.filter(({ date, time }) => (date === weeklyDate[1])), location: location, storeData: storeData, hourSchedule: hourSchedule },
+        { key: 'third', title: dayArrayKorFixed[2], num: weeklyDate[2].substr(8, 2), groupList: groupList.filter(({ date, time }) => (date === weeklyDate[2])), location: location, storeData: storeData, hourSchedule: hourSchedule },
+        { key: 'fourth', title: dayArrayKorFixed[3], num: weeklyDate[3].substr(8, 2), groupList: groupList.filter(({ date, time }) => (date === weeklyDate[3])), location: location, storeData: storeData, hourSchedule: hourSchedule },
+        { key: 'fifth', title: dayArrayKorFixed[4], num: weeklyDate[4].substr(8, 2), groupList: groupList.filter(({ date, time }) => (date === weeklyDate[4])), location: location, storeData: storeData, hourSchedule: hourSchedule },
     ]);
 
     const renderTabBar = props => (
@@ -385,149 +321,149 @@ const TimeTable = (props) => {
                 />
             </View>
             {/* {ListOfWeeklyGroup()} */}
-            {/* <NewGroupButton storeData= {storeData} initLocation={location} deliDate={null} datePicker= {[dayArrayKorFixed,dateDifference]} /> */}
+            <NewGroupButton storeData= {storeData} initLocation={location} deliDate={null} datePicker= {[dayArrayKorFixed,dateDifference]} />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-headerText: {
-    flexDirection: 'row',
-    alignItems: 'center',
-},
-backButton: {
-    marginLeft: 8,
-    fontSize: 42,
-},
-headerLocationText: {
-    ...FONTS2.h2,
-    marginLeft: 50,
-    width: '50%',
-},
-headerDateText: {
-    ...FONTS2.body2,
-    position: 'absolute',
-    right: 12,
-},
-headerButtons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 5,
-    marginTop: 5,
-},
-headerButton: {
-    marginHorizontal: 8,
-    padding: 5,
-    width: 55,
-    borderColor: '#f1f3f5',
-    borderWidth: 2,
-    borderRadius: 70,
-    backgroundColor: '#f1f3f5',
-    alignItems: 'center',
-},
-headerButtonText: {
-    ...FONTS2.body3,
-},
-mainView: {
-    backgroundColor: '#eee',
-    flex: 1,
-    borderTopColor: '#000',
-    borderTopWidth: 2,
-    paddingTop: 10,
-},
-groupInfo: {
-    flexDirection: 'row',
-    marginLeft: 10,
-    marginVertical: 15,
-    alignItems: 'center',
-},
-logoImage: {
-    width: 45,
-    height: 45,
-    marginHorizontal: 10,
-},
-shopText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-},
-rating: {
-    flexDirection: 'row',
-    alignItems: 'center',
-},
-starImage: {
-    width: 17,
-    height: 17,
-    marginRight: 5,
-},
-rateText: {
-    fontSize: 16,
-},
-timeImage: {
-    width: 17,
-    height: 17,
-},
-deliveryTime: {
-    flexDirection: 'row',
-    alignItems: 'center',
-},
-deliveryTimeText: {
-    fontSize: 16,
-},
-userImage: {
-    width: 20,
-    height: 20,
-},
-groupNumber: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 50,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderColor: '#1e1e1e',
-    borderWidth: 2,
-    borderRadius: 35,
-    position: 'absolute',
-    right: 5,
-},
-groupNumberText: {
-    marginLeft: 10,
-    fontSize: 16,
-    fontWeight: 'bold',
-},
-newGroup: {
-    flex: 1,
-    position: 'absolute',
-    bottom: 10,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-},
-newGroupView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: SIZES.width * 0.5,
-    paddingVertical: SIZES.padding,
-    paddingHorizontal: SIZES.padding * 2,
-    borderRadius: SIZES.radius * 0.5,
-    backgroundColor: '#364FC7',
-    elevation: 5,
-},
-logoStyle: {
-    width: 15,
-    height: 15,
-    tintColor: COLORS.white,
-    marginRight: SIZES.padding,
-},
-newGroupTextView: {
-    flex: 1,
-    alignItems: 'center',
-},
-newGroupText: {
-    ...FONTS.body4,
-    color: COLORS.white,
-},
+    headerText: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    backButton: {
+        marginLeft: 8,
+        fontSize: 42,
+    },
+    headerLocationText: {
+        ...FONTS2.h2,
+        marginLeft: 50,
+        width: '50%',
+    },
+    headerDateText: {
+        ...FONTS2.body2,
+        position: 'absolute',
+        right: 12,
+    },
+    headerButtons: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 5,
+        marginTop: 5,
+    },
+    headerButton: {
+        marginHorizontal: 8,
+        padding: 5,
+        width: 55,
+        borderColor: '#f1f3f5',
+        borderWidth: 2,
+        borderRadius: 70,
+        backgroundColor: '#f1f3f5',
+        alignItems: 'center',
+    },
+    headerButtonText: {
+        ...FONTS2.body3,
+    },
+    mainView: {
+        backgroundColor: '#eee',
+        flex: 1,
+        borderTopColor: '#000',
+        borderTopWidth: 2,
+        paddingTop: 10,
+    },
+    groupInfo: {
+        flexDirection: 'row',
+        marginLeft: 10,
+        marginVertical: 15,
+        alignItems: 'center',
+    },
+    logoImage: {
+        width: 45,
+        height: 45,
+        marginHorizontal: 10,
+    },
+    shopText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    rating: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    starImage: {
+        width: 17,
+        height: 17,
+        marginRight: 5,
+    },
+    rateText: {
+        fontSize: 16,
+    },
+    timeImage: {
+        width: 17,
+        height: 17,
+    },
+    deliveryTime: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    deliveryTimeText: {
+        fontSize: 16,
+    },
+    userImage: {
+        width: 20,
+        height: 20,
+    },
+    groupNumber: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 50,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderColor: '#1e1e1e',
+        borderWidth: 2,
+        borderRadius: 35,
+        position: 'absolute',
+        right: 5,
+    },
+    groupNumberText: {
+        marginLeft: 10,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    newGroup: {
+        flex: 1,
+        position: 'absolute',
+        bottom: 10,
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+    },
+    newGroupView: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: SIZES.width * 0.5,
+        paddingVertical: SIZES.padding,
+        paddingHorizontal: SIZES.padding * 2,
+        borderRadius: SIZES.radius * 0.5,
+        backgroundColor: '#364FC7',
+        elevation: 5,
+    },
+    logoStyle: {
+        width: 15,
+        height: 15,
+        tintColor: COLORS.white,
+        marginRight: SIZES.padding,
+    },
+    newGroupTextView: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    newGroupText: {
+        ...FONTS.body4,
+        color: COLORS.white,
+    },
 });
 
 export default TimeTable;
