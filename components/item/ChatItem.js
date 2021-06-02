@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import { COLORS, FONTS2, icons, images, SIZES } from '../../constants';
 
 
-const ChatItem = ({ thread }) => {
+const ChatItem = ({ thread, groupId }) => {
     const navigation = useNavigation();
 
     const colors = [
@@ -34,7 +34,7 @@ const ChatItem = ({ thread }) => {
                     alignItems: 'center',
                     flexDirection: 'row',
                 }}
-                onPress={() => navigation.navigate('ChatScreen', { thread: thread, })}
+                onPress={() => navigation.navigate('ChatScreen', { thread: thread, groupId: groupId })}
             >
                 <View style={{ width: 50, height: 50, borderRadius: 20, backgroundColor: colors[Math.round(Math.random() * 3)], justifyContent: 'center', alignItems: 'center', margin: SIZES.base * 1.25 }}>
                     <Image

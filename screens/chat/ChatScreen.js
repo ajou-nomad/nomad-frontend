@@ -19,6 +19,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import {AuthContext} from '../../context/AuthContextProvider';
 import Header from '../../components/layout/Header';
 
+import axiosApiInstance from '../../utils/axios';
+
 
 const ChatScreen = ({ route }) => {
     
@@ -26,7 +28,7 @@ const ChatScreen = ({ route }) => {
 
     const user = auth().currentUser;
 
-    const { thread } = route.params;
+    const { thread, groupId } = route.params;
     const [messages, setMessages] = useState([]);
 
     const handleSend = async (mes) => {
@@ -353,8 +355,14 @@ const ChatScreen = ({ route }) => {
             { state.member.memberType === 'Deli' ?
             <TouchableOpacity
                 onPress={()=>{
-                    alert('post: change to 배달 완료');
-                    navigation.navigate('CarrierMain');
+                    axiosApiInstance.post('/deliveryComplete',{
+                        groupId: groupId,
+                    }).then((res)=>{
+                        console.log('배달 완료 post', JSON.stringify(res.data.data, null, 4));
+                        navigation.navigate('CarrierMain');
+                    }).catch((e)=>{
+                        console.log(e);
+                    })
                 }}
             >
                 <View style={{justifyContent:'center', alignItems: 'center', backgroundColor:'#25ee25'}}>

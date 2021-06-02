@@ -25,25 +25,26 @@ import { createChatRoom } from '../../utils/helper';
 
 const CarrierDetail = (props) => {
 
-	const { state, dispatch } = useContext(AuthContext);
+	// const { state, dispatch } = useContext(AuthContext);
 	const navigation = useNavigation();
+    // const [deliveryInfo, setDeliveryInfo] = useState();
+
+    let deliveryInfo = [];
 
 
-  
 	// console.log('props: ', JSON.stringify(props, null, 4));
 
-	let deliveryInfo = [];
-	const today = props.today;
 
-	props.location === null ? console.log('Getting Location...') :
+
+	!props.availableGroup  ? console.log('Getting Location...') :
 		props.availableGroup.map((groupInfo, groupIndex) => {
 			props.availableStore.map((storeInfo, storeIndex) => {
 				if (groupInfo.storeId === storeInfo.storeId) {
-						deliveryInfo = [...deliveryInfo, { index: groupIndex + storeIndex, groupData: groupInfo, storeData: storeInfo }]
-					}
+                    deliveryInfo = [...deliveryInfo, { index: groupIndex + storeIndex, groupData: groupInfo, storeData: storeInfo }];
+				}
 			});
 		});
-
+    
 	// console.log('deliveryInfo: ' + JSON.stringify(deliveryInfo,null,4));
 
 	const Header = () => {
@@ -58,17 +59,28 @@ const CarrierDetail = (props) => {
 	};
 
 	return (
-		// !props.deliveryInfo
-		// 	? <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }} >현 위치를 불러오는 중 입니다...</Text>
-		// 	:
-			<View style={styles.container}>
-				<Header />
-				<FlatList
-					data={deliveryInfo}
-					renderItem={({item}) => <AvailableDeliveryListComponent deliveryInfo={item} />}
-					keyExtractor={item => item.index.toString()}
-				/>
-			</View>
+		!props.location
+        ? 
+        <View style={styles.container}>
+            <Header />
+            <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }} >현 위치를 불러오는 중 입니다...</Text>
+        </View> 
+        :
+        deliveryInfo.length === 0
+        ?
+        <View style={styles.container}>
+            <Header />
+            <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }} >배달 그룹들을 불러오는 중 입니다...</Text>
+        </View> 
+        :
+        <View style={styles.container}>
+            <Header />
+            <FlatList
+                data={deliveryInfo}
+                renderItem={({item}) => <AvailableDeliveryListComponent deliveryInfo={item} />}
+                keyExtractor={item => item.index.toString()}
+            />
+        </View>
 	);
 
 

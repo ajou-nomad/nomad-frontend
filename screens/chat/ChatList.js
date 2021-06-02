@@ -119,7 +119,6 @@ const ChatList = ({ navigation }) => {
 
     console.log('456:: ',JSON.stringify(threads, null, 4));
     // console.log(chatList);
-
     return (
         <View style={styles.container}>
             {/* Header */}
@@ -128,7 +127,6 @@ const ChatList = ({ navigation }) => {
                 data={threads}
                 keyExtractor={item => item._id}
                 renderItem={({ item }) => {
-                    // console.log(item)
                     return (
                         <ChatItem thread={item} />
                     );
