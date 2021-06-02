@@ -128,7 +128,7 @@ const MyPage = ({ navigation }) => {
 				</View>
 			</View>
 
-			<View style={{ height: SIZES.padding * 8, backgroundColor: 'skyblue', flexDirection: 'row' }}>
+			<View style={{  height: SIZES.padding * 8,backgroundColor: 'skyblue', flexDirection: 'row' }}>
 				<Image source={images.banner} resizeMode='contain' style={{ width: 180, height: SIZES.padding * 8, }} />
 				<View style={{ flexDirection: 'column', justifyContent: 'center' }}>
 					<Image source={icons.ko_logo} resizeMode='contain' style={{ width: 130, height: 40, }} />
