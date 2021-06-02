@@ -20,8 +20,6 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 import { useNavigation } from '@react-navigation/core';
 import NewGroupButton from '../components/map/NewGroupButton';
 
-import NewGroupButton from '../components/map/NewGroupButton';
-
 
 
 const TimeContainer = ({ startTime, groupList, location, storeData, color }) => {
