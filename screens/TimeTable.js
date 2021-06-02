@@ -20,17 +20,11 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 import { useNavigation } from '@react-navigation/core';
 import NewGroupButton from '../components/map/NewGroupButton';
 
-import NewGroupButton from '../components/map/NewGroupButton';
-
 
 
 const TimeContainer = ({ startTime, groupList, location, storeData, color }) => {
     const navigation = useNavigation();
 
-<<<<<<< HEAD
-    // console.log('TimeContainer:', JSON.stringify(groupList, null, 4));
-=======
->>>>>>> 5806f420d05b3c67fba5563be7f2507cfcfd455e
     return (
         <View style={{ flexDirection: 'row' }}>
             
@@ -38,37 +32,6 @@ const TimeContainer = ({ startTime, groupList, location, storeData, color }) => 
             {groupList.length ?
                 <View style={{ flexDirection: 'row', marginVertical: 10 }}>
                     <Text style={{ ...FONTS3.h2, color: COLORS.darkgray }}>{startTime}</Text>
-<<<<<<< HEAD
-                <TouchableOpacity
-                    style={{
-                        width: responsiveWidth(74),
-                        minHeight: responsiveHeight(8),
-                        backgroundColor: '#12abef',
-                        marginLeft: SIZES.base * 2,
-                        borderRadius: 15,
-                        justifyContent: 'space-evenly',
-                        paddingLeft: SIZES.base * 2.5,
-                        shadowRadius: 2,
-                        shadowOpacity: 100,
-                    }}
-                    onPress={() => navigation.navigate('WeeklyGroupListChild', {
-                        date: groupList[0].date,
-                        time: groupList[0].time,
-                        location: location,
-                        currentGroup: groupList.length,
-                        groupList: groupList,
-                        storeData: storeData,
-                        back: 'TimeTable',
-                    })}
-                >
-                    <View style={{ flexDirection: 'row',  }}>
-                        <Image source={icons.check} resizeMode="contain" style={{ width: SIZES.base * 2, height: SIZES.base * 2, tintColor: '#00dd00', marginRight: SIZES.base }} />
-                        <Text style={{ ...FONTS2.h4, color: '#ff0' }}>{location.buildingName} |</Text>
-                        <Text style={{ ...FONTS2.h4, color: '#ff0' }}> {groupList[0].date}  |</Text>
-                        <Text style={{ ...FONTS2.h4, color: '#ff0' }}> 그룹 수: {groupList.length}</Text>
-                    </View>
-                </TouchableOpacity>
-=======
                     <TouchableOpacity
                         style={{
                             width: responsiveWidth(74),
@@ -104,7 +67,6 @@ const TimeContainer = ({ startTime, groupList, location, storeData, color }) => 
                             </TouchableOpacity>
                         </View>
                     </TouchableOpacity>
->>>>>>> 5806f420d05b3c67fba5563be7f2507cfcfd455e
                 </View>
                 :
                 (null)
