@@ -10,8 +10,8 @@ import {
     TextInput,
     KeyboardAvoidingView,
     ScrollView,
-	Pressable,
-	ToastAndroid,
+   Pressable,
+   ToastAndroid,
 } from 'react-native';
 
 import Counter from 'react-native-counters';
@@ -25,22 +25,29 @@ import BottomButton from '../../components/layout/BottomButton';
 function CreateGroupDetail({ navigation, route: { params } }) {
 
     const [buildingName, setBuildingName] = useState(params.location.buildingName);
-	const todayFullDate = new Date();
+   const todayFullDate = new Date();
 
-	todayFullDate.setDate(todayFullDate.getDate() + 1);
-	
+   todayFullDate.setDate(todayFullDate.getDate() + 1);
+   todayFullDate.setHours(todayFullDate.getHours() + 9);
+   
+
+   console.log(todayFullDate);
+   
     if (todayFullDate.getDay() === 0) {
-		todayFullDate.setDate(todayFullDate.getDate() + 1);
+      todayFullDate.setDate(todayFullDate.getDate() + 1);
     } else if (todayFullDate.getDay() === 6) {
-		todayFullDate.setDate(todayFullDate.getDate() + 2);
+      todayFullDate.setDate(todayFullDate.getDate() + 2);
     }
-    const todayForWeekly = JSON.stringify(todayFullDate.toJSON()).substr(1,10);
+   const todayForWeekly = JSON.stringify(todayFullDate.toJSON()).substr(1, 10);
+   console.log(todayForWeekly);
 
-	const dayArrayKorFixed = params.datePicker === undefined ? [0, 0, 0, 0, 0] : params.datePicker[0];
-	const dateDifference = params.datePicker === undefined ? [0, 0, 0, 0] : params.datePicker[1];
+   const dayArrayKorFixed = params.datePicker === undefined ? [0, 0, 0, 0, 0] : params.datePicker[0];
+   const dateDifference = params.datePicker === undefined ? [0, 0, 0, 0] : params.datePicker[1];
+
+   console.log(dayArrayKorFixed)
 
     const [date, setDate] = useState(todayFullDate);
-	const today = params.deliDate !== (undefined || null) ? params.deliDate : null;
+   const today = params.deliDate !== (undefined || null) ? params.deliDate : null;
     // console.log(today)
     const [groupDate,setGroupDate] = useState(today);
     const [time,setTime] = useState(today);
@@ -112,115 +119,115 @@ function CreateGroupDetail({ navigation, route: { params } }) {
 
 
 
-	return (
-		<KeyboardAvoidingView style={styles.container}>
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-				{/* Header */}
-				<Header title="배달 그룹 생성" small="true" haveInput="true" />
+   return (
+      <KeyboardAvoidingView style={styles.container}>
+         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            {/* Header */}
+            <Header title="배달 그룹 생성" small="true" haveInput="true" />
 
-				{/* Body */}
-				<View style={{ flex: 4, marginHorizontal: 30, }}>
-					<View style={{ flex: 1, justifyContent: 'center' }}>
-						<Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>건물명</Text>
-						{/* <TextInput
-							style={{
-								borderBottomWidth: 1,
-								width: 300,
-								...FONTS2.body2,
-							}}
-							placeholder="상세주소를 입력하세요. (건물명)"
-							value={buildingName}
-							placeholderTextColor="#707070"
-							selectionColor="#000000"
-							onChangeText={text => setBuildingName(text)}
-						/> */}
-						<TextInput
-							style={{
-								borderRadius: 8,
-								borderWidth: 0.3,
-								borderColor: '#adb5bd',
-								padding: 10,
-								...FONTS2.body3,
-								marginBottom: SIZES.base,
-							}}
-							placeholder="상세주소를 입력하세요."
-							value={buildingName}
-							placeholderTextColor="#707070"
-							selectionColor="#000000"
-							onChangeText={text => setBuildingName(text)}
-						/>
-						{
-							!params.deliDate ?
-								<View style={{ marginVertical: 15, }}>
-									<Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>날짜</Text>
-									{DayPicking()}
-								</View>
-								:
-								(null)
-						}
+            {/* Body */}
+            <View style={{ flex: 4, marginHorizontal: 30, }}>
+               <View style={{ flex: 1, justifyContent: 'center' }}>
+                  <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>건물명</Text>
+                  {/* <TextInput
+                     style={{
+                        borderBottomWidth: 1,
+                        width: 300,
+                        ...FONTS2.body2,
+                     }}
+                     placeholder="상세주소를 입력하세요. (건물명)"
+                     value={buildingName}
+                     placeholderTextColor="#707070"
+                     selectionColor="#000000"
+                     onChangeText={text => setBuildingName(text)}
+                  /> */}
+                  <TextInput
+                     style={{
+                        borderRadius: 8,
+                        borderWidth: 0.3,
+                        borderColor: '#adb5bd',
+                        padding: 10,
+                        ...FONTS2.body3,
+                        marginBottom: SIZES.base,
+                     }}
+                     placeholder="상세주소를 입력하세요."
+                     value={buildingName}
+                     placeholderTextColor="#707070"
+                     selectionColor="#000000"
+                     onChangeText={text => setBuildingName(text)}
+                  />
+                  {
+                     !params.deliDate ?
+                        <View style={{ marginVertical: 15, }}>
+                           <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>날짜</Text>
+                           {DayPicking()}
+                        </View>
+                        :
+                        (null)
+                  }
 
-						{
-							!params.time ?
-								<View style={{ marginBottom: 10, }}>
-									<Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>시간</Text>
-									<DatePicker date={date} onDateChange={(data) => { data.setHours(data.getHours() + 9); setTime(data); }} mode="time" minuteInterval={5} />
-								</View>
-								:
-								(null)
-						}
+                  {
+                     !params.time ?
+                        <View style={{ marginBottom: 10, }}>
+                           <Text style={{ ...FONTS2.h2, fontWeight: 'bold' }}>시간</Text>
+                           <DatePicker date={date} onDateChange={(data) => { data.setHours(data.getHours() + 9); setTime(data); }} mode="time" minuteInterval={5} />
+                        </View>
+                        :
+                        (null)
+                  }
 
-						<View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
-							<Text style={{
-								...FONTS2.h2,
-								fontWeight: 'bold',
-								alignSelf: 'center',
-							}}
-							>인원</Text>
-							<Counter
-								start={2}
-								min={2}
-								buttonTextStyle={{ color: 'black', ...FONTS2.h2 }}
-								buttonStyle={{ borderColor: 'black' }}
-								countTextStyle={{ color: 'black', ...FONTS2.h2 }}
-								onChange={(value) => setMax(value)}
-							/>
-						</View>
-						<View style={{
-							borderBottomWidth: 1,
-							width: 300,
-							paddingBottom: 10,
-						}} />
-						<Text style={{ ...FONTS2.body3, marginVertical: SIZES.base, marginBottom: SIZES.base * 3, color: '#f03e3e' }}>* 최소 2명 이상을 선택하셔야 합니다.</Text>
-					</View>
-				</View>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
+                     <Text style={{
+                        ...FONTS2.h2,
+                        fontWeight: 'bold',
+                        alignSelf: 'center',
+                     }}
+                     >인원</Text>
+                     <Counter
+                        start={2}
+                        min={2}
+                        buttonTextStyle={{ color: 'black', ...FONTS2.h2 }}
+                        buttonStyle={{ borderColor: 'black' }}
+                        countTextStyle={{ color: 'black', ...FONTS2.h2 }}
+                        onChange={(value) => setMax(value)}
+                     />
+                  </View>
+                  <View style={{
+                     borderBottomWidth: 1,
+                     width: 300,
+                     paddingBottom: 10,
+                  }} />
+                  <Text style={{ ...FONTS2.body3, marginVertical: SIZES.base, marginBottom: SIZES.base * 3, color: '#f03e3e' }}>* 최소 2명 이상을 선택하셔야 합니다.</Text>
+               </View>
+            </View>
 
-				{/* Footer */}
+            {/* Footer */}
 
-				<BottomButton onPress={() => {
-					if (buildingName === undefined) {
-						ToastAndroid.showWithGravity('건물명을 입력해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER);
-					}
-					else if (!groupDate) {
-						ToastAndroid.showWithGravity('날짜를 선택해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER);
-					}
-					else {
-						navigation.navigate('CheckOrder',
-							{
-								totalPrice: params.totalPrice,
-								cartItems: params.cartItems,
-								deliDate: groupDate,
-								time: JSON.stringify(time).slice(12, 17),
-								location: { ...params.location, buildingName: buildingName },
-								storeInfo: params.storeInfo,
-								groupData: params.groupData,
-								maxValue: maxValue,
-								promotion: params.promotion,
-							});
-					}
-				}} title="그룹 생성하기" />
-			</ScrollView>
-		</KeyboardAvoidingView>
-	);
+            <BottomButton onPress={() => {
+               if (buildingName === undefined) {
+                  ToastAndroid.showWithGravity('건물명을 입력해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+               }
+               else if (!groupDate) {
+                  ToastAndroid.showWithGravity('날짜를 선택해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+               }
+               else {
+                  navigation.navigate('CheckOrder',
+                     {
+                        totalPrice: params.totalPrice,
+                        cartItems: params.cartItems,
+                        deliDate: groupDate,
+                        time: JSON.stringify(time).slice(12, 17),
+                        location: { ...params.location, buildingName: buildingName },
+                        storeInfo: params.storeInfo,
+                        groupData: params.groupData,
+                        maxValue: maxValue,
+                        promotion: params.promotion,
+                     });
+               }
+            }} title="그룹 생성하기" />
+         </ScrollView>
+      </KeyboardAvoidingView>
+   );
 }
 
 const styles = StyleSheet.create({

@@ -20,6 +20,7 @@ const ChatList = ({ navigation }) => {
 
     const [threads, setThreads] = useState([]);
     const [chatList, setChatList] = useState([]);
+    const [isFetching, setIsFetching] = useState(false);
 
 
 
@@ -34,9 +35,14 @@ const ChatList = ({ navigation }) => {
             });
         // setThreads(threadsTmp);
         setChatList(myChatList);
+        setIsFetching(false);
     };
 
 
+    const onRefresh = () => {
+        setIsFetching(true);
+        chatLists();
+    };
 
     useEffect(() => {
 
@@ -67,7 +73,9 @@ const ChatList = ({ navigation }) => {
             chatLists();
         }
 
-        return unsubscribe;
+        return () =>  {
+            unsubscribe;
+        }
     }, [chatList]);
 
 
@@ -83,6 +91,8 @@ const ChatList = ({ navigation }) => {
                         <ChatItem thread={item} />
                     );
                 }}
+                onRefresh={onRefresh}
+                refreshing={isFetching}
             />
         </View>
     );
