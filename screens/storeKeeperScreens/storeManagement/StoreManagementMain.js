@@ -38,11 +38,11 @@ const StoreManagementMain = ({ navigation }) => {
 
     const storeData = {
         storeName: state.member.nickName,
-        storeOpen: false,
+        storeOpen: true,
         storeOrderStatus: {
-            Todo: 10,
-            InProgress: 5,
-            Complete: 25,
+            Todo: 0,
+            InProgress: 0,
+            Complete: 4,
         },
     };
 

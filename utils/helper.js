@@ -231,9 +231,9 @@ export const currentLocation = async () => {
 
     // error시 팔달관 좌표 반환
     let location = {
-        latitude: 37.284696906069975,
-        longitude: 127.04438918710983,
-        address: '아주대학교 팔달관',
+        latitude: 37.284492,
+        longitude: 127.044153,
+        address: '수원시 원천동 아주대학교 팔달관',
     };
 
 

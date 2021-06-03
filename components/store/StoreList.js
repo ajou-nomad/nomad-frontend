@@ -33,6 +33,9 @@ const StoreList = ({storeData, deliveryPlace, deliDate, datePicker}) => {
 
     const FirstRoute = ({ route }) => {
 
+        
+        console.log(route.datePicker)
+
         return (
             <ScrollView>
                 {route.storeData.map((storeItems, index) => {

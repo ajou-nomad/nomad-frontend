@@ -39,7 +39,7 @@ const Menu = () => {
     const [menuPrice, setMenuPrice] = useState('');
     const [description, setDescription] = useState('');
     const [promotionDescription, setPromotionDescription] = useState('');
-    const [uploadImage, setUploadImage] = useState('');
+    const [uploadImage, setUploadImage] = useState('https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fediya%2FIMG_1510820763649.png?alt=media&token=7aa455aa-202d-4de7-b440-7cee6911c3fc');
 
     const handleImage = () => {
         launchImageLibrary({}, (res) => {

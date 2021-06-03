@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
         borderRadius: 35,
         position: 'absolute',
         right: 5,
+        bottom: 5,
     },
     userImage: {
         width: 20,

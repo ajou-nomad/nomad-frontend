@@ -24,13 +24,14 @@ const ModifyMenu = ({ modalVisible, closeModal, item }) => {
                 <View style={styles.modal}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: SIZES.height * 0.02, borderBottomWidth: 0.3 }}>
                         <TouchableOpacity
+                            hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }} //터치영역 확장
                             onPress={() => closeModal()}
                             style={{ position: 'absolute', left: SIZES.width * 0.03 }}
                         >
                             <Image source={icons.close} resizeMode='contain' style={styles.closeButton} />
                         </TouchableOpacity>
 
-                        <Text style={{ ...FONTS2.h3, }}>메뉴 이름</Text>
+                        <Text style={{ ...FONTS2.h3, }}>솜사탕캔디 플랫치노</Text>
                     </View>
 
                     <View style={{ alignItems: 'center', }}>

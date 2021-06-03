@@ -20,7 +20,11 @@ import { useNavigation } from '@react-navigation/native';
 import { FONTS, FONTS2, icons, SIZES } from '../../constants';
 
 
-const ReviewItem = ({ isMypage, item }) => {
+const ReviewItem = ({ isMypage, item, admin }) => {
+
+
+
+    // default는 undefinded 즉 false 이기 때문에 특수한 상황에서만 되도록 구현
 
     const navigation = useNavigation();
 
@@ -55,7 +59,7 @@ const ReviewItem = ({ isMypage, item }) => {
                     }}
                 />
                 {/* 날짜 */}
-                <Text style={{ ...FONTS2.body3, marginLeft: 5 }}>{date}</Text>
+                <Text style={{ ...FONTS2.body3, marginLeft: 5 }}>{item.localDateTime.slice(0,10)}</Text>
             </View>
         );
     }
@@ -71,7 +75,7 @@ const ReviewItem = ({ isMypage, item }) => {
                 />
                 <View style={styles.container}>
                     {/* 유저 닉네임 */}
-                    <Text style={{ ...FONTS2.h4, marginBottom: 5 }}>스윙스</Text>
+                    <Text style={{ ...FONTS2.h4, marginBottom: 5 }}>{item.nickName}</Text>
                     {/* 별점, 작성 날짜 */}
                     {renderRatingAndDate()}
                 </View>
@@ -97,7 +101,7 @@ const ReviewItem = ({ isMypage, item }) => {
         <View style={styles.container}>
             {/* {renderHeader()} */}
 
-            {!isMypage ? (
+            { admin ? (
                 renderReivewInStore()) : (
                 renderReivewInMypage()
             )}
@@ -112,7 +116,7 @@ const ReviewItem = ({ isMypage, item }) => {
                 flex: 1,
                 flexDirection: 'row',
             }}>
-                {!isMypage ? (null) : (
+                { admin ? (
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
                         <TouchableOpacity
                             style={styles.deleteButton}
@@ -121,7 +125,8 @@ const ReviewItem = ({ isMypage, item }) => {
                             <Text style={{ ...FONTS2.body2 }}>삭제</Text>
                         </TouchableOpacity>
                     </View>
-                )}
+                ) : (null)
+                }
             </View>
         </View>
     );

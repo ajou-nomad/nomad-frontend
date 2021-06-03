@@ -52,11 +52,11 @@ const RegisterMenuDetail = ({navigation, route}) => {
             ...prevMenus,
             {
                 id: uuid.v4(),
-                menuName: menu.name,
-                cost: menu.price,
-                description: menu.description,
-                imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fhollys.jpg?alt=media&token=1dd864d1-1446-4707-a9e4-6117b28efd72',
-                //imgUrl: menu.imgUrl
+                menuName: '트리플 치즈 파스타',
+                cost: 5500,
+                description: '소고기와 돼지고기가 푸짐하게 들어가 씹히는 맛이 일품이며, 토마토와 야채를 넣고 장시간 끓여 깊은 풍미를 더한 토마토미트소스에 품질이 매우 우수한 터키산 스파게티면을 사용하였고, 3가지 종류의 치즈토핑이 올라간 더욱 고소한 트리플치즈파스타',
+                imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fhan%2F%ED%8A%B8%EB%A6%AC%ED%94%8C%20%EC%B9%98%EC%A6%88%20%ED%8C%8C%EC%8A%A4%ED%83%80.jpg?alt=media&token=59e0ae9d-c74c-4853-97b9-f7308a6e4ebc',
+
             },
         ]);
     };

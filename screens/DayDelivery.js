@@ -73,7 +73,7 @@ const DayDelivery = ({ route, navigation }) => {
 
         // console.log(JSON.stringify(response.data.data, null, 4));
         setResponseStoreData(response.data.data);
-    });
+    }).catch( error => console.log("스토어리스트"+error));
   };
 
 

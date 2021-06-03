@@ -45,6 +45,7 @@ const FirstRoute = ({ route }) => {
             {route.menuData.map((menu, index) =>
                 <MenuItem key={index} menuName={menu.menuName} cost={menu.cost} />
             )}
+
             <ModifyMenu modalVisible={modalVisible} closeModal={closeModal} />
         </ScrollView>
     );

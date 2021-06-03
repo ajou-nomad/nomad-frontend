@@ -50,7 +50,7 @@ const RegisterStoreDetail = ({navigation}) => {
     const initalSelected = [false, false, false, false, false];
     const [selected, setSelected] = useState(initalSelected);
 
-    const [uploadImage, setUploadImage] = useState('https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F03_%EC%95%97%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8_HOT.jpg?alt=media&token=529afacf-945e-46f9-b0b1-ed2d6f41103d');
+    const [uploadImage, setUploadImage] = useState('https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fhan%2Funnamed.jpg?alt=media&token=92a29d31-a7e2-45bd-becc-9997707693bc');
 
 
     const isEmpty = (val) => {

@@ -1,21 +1,36 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import ReviewItem from '../../../../components/item/ReviewItem';
 import Header from '../../../../components/layout/Header';
 import { COLORS } from '../../../../constants';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import axiosApiInstance from '../../../../utils/axios';
 
 const StoreManagementReview = (props) => {
+
+    const [reviewList, setReviewList] = useState([]);
+
+
+    useEffect(() => {
+
+        axiosApiInstance.get('/myStoreList').then(
+            (response) => setReviewList(response.data.data.reviewList)
+        );
+
+    }, []);
+
+
     return (
         <ScrollView style={styles.container}>
             <Header title='리뷰관리' small='true' />
-            <View style={{ width: responsiveWidth(90), alignSelf: 'center' }}>
-                <ReviewItem isMypage='true' />
-                <ReviewItem isMypage='true' />
-            </View>
-        </ScrollView>
+            {reviewList.map((item, index) =>
+
+                <ReviewItem key={index} item={item} admin={true} />
+            )}
+             </ScrollView>
     );
+
 };
 
 const styles = StyleSheet.create({
