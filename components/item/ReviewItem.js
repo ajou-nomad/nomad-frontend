@@ -105,7 +105,7 @@ const ReviewItem = ({ isMypage, item }) => {
             )}
 
             {/* 사진 */}
-            <Image source={{ uri: item.imgUrl }} resizeMode='contain' style={{ width: SIZES.width * 0.8, height: SIZES.height * 0.5, }} />
+            <Image source={{ uri: item.imgUrl }} resizeMode='contain' style={{ width: SIZES.width * 0.85, height: SIZES.height * 0.4,}} />
             {/* 글 */}
             <View style={styles.content}>
                 <Text style={{ ...FONTS2.body3 }}>{item.contents}</Text>
@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
     content: {
         minHeight: 50,
         paddingHorizontal: 5,
+        justifyContent: 'center'
     },
     deleteButton: {
         backgroundColor: '#e9ecef',

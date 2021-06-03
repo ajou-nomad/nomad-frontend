@@ -129,7 +129,7 @@ const AddMenu = ({modalVisible, closeModal, addMenu}) => {
                                         name: menuName,
                                         price: menuPrice,
                                         description: menuDescription,
-                                        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fhollys.jpg?alt=media&token=1dd864d1-1446-4707-a9e4-6117b28efd72', //uploadImage
+                                        imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fediya%2FIMG_1621211817580.png?alt=media&token=15569b17-b960-4b1a-a089-e3535164c0a3', //uploadImage
                                     });
                                     resetMenuInfo();
                                     closeModal();

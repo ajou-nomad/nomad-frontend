@@ -27,12 +27,12 @@ function CreateGroupDetail({ navigation, route: { params } }) {
     const [buildingName, setBuildingName] = useState(params.location.buildingName);
    const todayFullDate = new Date();
 
-   todayFullDate.setDate(todayFullDate.getDate() + 1);
-   todayFullDate.setHours(todayFullDate.getHours() + 9);
-   
+	todayFullDate.setDate(todayFullDate.getDate() + 1);
+	todayFullDate.setHours(todayFullDate.getHours() + 9);
+	
 
-   console.log(todayFullDate);
-   
+	console.log(todayFullDate);
+	
     if (todayFullDate.getDay() === 0) {
       todayFullDate.setDate(todayFullDate.getDate() + 1);
     } else if (todayFullDate.getDay() === 6) {
@@ -45,6 +45,8 @@ function CreateGroupDetail({ navigation, route: { params } }) {
    const dateDifference = params.datePicker === undefined ? [0, 0, 0, 0] : params.datePicker[1];
 
    console.log(dayArrayKorFixed)
+
+	console.log(dayArrayKorFixed)
 
     const [date, setDate] = useState(todayFullDate);
    const today = params.deliDate !== (undefined || null) ? params.deliDate : null;

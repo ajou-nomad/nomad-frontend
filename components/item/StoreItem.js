@@ -67,7 +67,7 @@ const StoreItem = ({ deliveryPlace, deliDate, datePicker, storeData, isLikeList 
                     <Image source={icons.clock} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#000000' }} />
                     <Text style={{ ...FONTS2.body3, color: '#000000' }}>운영시간 {storeData.openTime} ~ {storeData.closeTime}</Text>
                 </View>
-
+                
                 <View style={{ flexDirection: 'row', alignItems: 'center',  }}>
                     <Image source={icons.bell} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#000000', }} />
                     <Text numberOfLines={1} style={{ ...FONTS2.body3, color: '#000000' }}>{storeData.storeIntro}</Text>
