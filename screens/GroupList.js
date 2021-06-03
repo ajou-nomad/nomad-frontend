@@ -33,7 +33,7 @@ export default function GroupList({navigation, route}) {
   const [groupList, setGroupList] = useState(route.params.group.groupList);
   const storeData = route.params.storeData;
 
-  console.log("여기는 groupList.js"+JSON.stringify(groupList,null,4))
+  // console.log("여기는 groupList.js"+JSON.stringify(groupList,null,4))
   
 //   groupList.sort((prev,next)=>(parseInt(prev.time.replace(':','')))>(parseInt(next.time.replace(':',''))) ? 1 : (parseInt(prev.time.replace(':',''))) === (parseInt(next.time.replace(':',''))) ? (prev.max-prev.current) > (next.max-next.current) ? 1 : -1 : -1)
 
