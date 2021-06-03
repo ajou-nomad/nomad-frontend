@@ -55,7 +55,7 @@ const RegisterMenuDetail = ({navigation, route}) => {
                 menuName: menu.name,
                 cost: menu.price,
                 description: menu.description,
-                imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fhollys.jpg?alt=media&token=1dd864d1-1446-4707-a9e4-6117b28efd72',
+                imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fpaik%2FICED-%EC%9B%90%EC%A1%B0%EC%BB%A4%ED%94%BC-450x588.png?alt=media&token=8495f7b9-8b69-4b51-aea2-41f444be69ad',
                 //imgUrl: menu.imgUrl
             },
         ]);

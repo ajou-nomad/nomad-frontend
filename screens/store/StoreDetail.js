@@ -78,6 +78,7 @@ function StoreDetail({ route }) {
 
     const [cartItems, setCartItems] = useState([]);
 
+
     const menu = storeInfo.menu;
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
@@ -138,8 +139,8 @@ function StoreDetail({ route }) {
                                     marginRight: SIZES.base * 0.5,
                                 }}
                             />
-                            <Text style={{ ...FONTS2.body3 }}>{storeInfo.rate} / 5.0</Text>
-                            <Text style={{ ...FONTS2.body3 }}>(50+)</Text>
+                            {/* <Text style={{ ...FONTS2.body3 }}>{storeInfo.rate} / 5.0</Text> */}
+                            <Text style={{ ...FONTS2.body3 }}>({storeInfo.reviewList.length}+)</Text>
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image source={icons.clock} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#000000' }} />

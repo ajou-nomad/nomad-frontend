@@ -22,6 +22,8 @@ import { FONTS, FONTS2, icons, SIZES } from '../../constants';
 
 const ReviewItem = ({ isMypage, item }) => {
 
+    console.log(item.nickName);
+
     const navigation = useNavigation();
 
     const handleDelete = () => {
@@ -55,7 +57,7 @@ const ReviewItem = ({ isMypage, item }) => {
                     }}
                 />
                 {/* 날짜 */}
-                <Text style={{ ...FONTS2.body3, marginLeft: 5 }}>{date}</Text>
+                <Text style={{ ...FONTS2.body3, marginLeft: 5 }}>{item.localDateTime.slice(0,10)}</Text>
             </View>
         );
     }
@@ -71,7 +73,7 @@ const ReviewItem = ({ isMypage, item }) => {
                 />
                 <View style={styles.container}>
                     {/* 유저 닉네임 */}
-                    <Text style={{ ...FONTS2.h4, marginBottom: 5 }}>스윙스</Text>
+                    <Text style={{ ...FONTS2.h4, marginBottom: 5 }}>{item.nickName}</Text>
                     {/* 별점, 작성 날짜 */}
                     {renderRatingAndDate()}
                 </View>
@@ -103,7 +105,7 @@ const ReviewItem = ({ isMypage, item }) => {
             )}
 
             {/* 사진 */}
-            <Image source={{ uri: item.imgUrl }} resizeMode='contain' style={{ width: SIZES.width * 0.8, height: SIZES.height * 0.5, }} />
+            <Image source={{ uri: item.imgUrl }} resizeMode='contain' style={{ width: SIZES.width * 0.85, height: SIZES.height * 0.4,}} />
             {/* 글 */}
             <View style={styles.content}>
                 <Text style={{ ...FONTS2.body3 }}>{item.contents}</Text>
@@ -148,6 +150,7 @@ const styles = StyleSheet.create({
     content: {
         minHeight: 50,
         paddingHorizontal: 5,
+        justifyContent: 'center'
     },
     deleteButton: {
         backgroundColor: '#e9ecef',

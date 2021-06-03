@@ -28,16 +28,23 @@ function CreateGroupDetail({ navigation, route: { params } }) {
 	const todayFullDate = new Date();
 
 	todayFullDate.setDate(todayFullDate.getDate() + 1);
+	todayFullDate.setHours(todayFullDate.getHours() + 9);
+	
+
+	console.log(todayFullDate);
 	
     if (todayFullDate.getDay() === 0) {
 		todayFullDate.setDate(todayFullDate.getDate() + 1);
     } else if (todayFullDate.getDay() === 6) {
 		todayFullDate.setDate(todayFullDate.getDate() + 2);
     }
-    const todayForWeekly = JSON.stringify(todayFullDate.toJSON()).substr(1,10);
+	const todayForWeekly = JSON.stringify(todayFullDate.toJSON()).substr(1, 10);
+	console.log(todayForWeekly);
 
 	const dayArrayKorFixed = params.datePicker === undefined ? [0, 0, 0, 0, 0] : params.datePicker[0];
 	const dateDifference = params.datePicker === undefined ? [0, 0, 0, 0] : params.datePicker[1];
+
+	console.log(dayArrayKorFixed)
 
     const [date, setDate] = useState(todayFullDate);
 	const today = params.deliDate !== (undefined || null) ? params.deliDate : null;
