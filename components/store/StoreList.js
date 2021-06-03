@@ -46,15 +46,9 @@ const StoreList = ({storeData, deliveryPlace, deliDate, datePicker}) => {
 
     const SecondRoute = ({ route }) => {
 
-        // const filteredData = route.storeData.filter(store => {
-        //     // console.log('sssss', JSON.stringify(store.promotion, null, 4));
-        //     // console.log(store.promotion === 'On');
-        //     return store.promotion === 'On';
-        // });
 
         const filteredData = route.storeData.filter(store => (store.promotion === 'On'));
 
-        // console.log('확인', JSON.stringify(filteredData, null, 4));
         return (
             <ScrollView>
                 {filteredData.map((storeItem, index) => {

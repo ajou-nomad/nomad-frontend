@@ -17,8 +17,8 @@ const Store = (props) => {
     return (
         <View style={styles.mainView} >
             <View style={styles.storeNameView}>
-                <Image style={styles.storeNameImg} source={images.store_logo} />
-                <Text style={{ ...FONTS2.h3 }}>{storeData.storeName}</Text>
+                <Image style={styles.storeNameImg} source={{uri: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fediya%2Fediya.png?alt=media&token=14622fbc-c37f-4346-bfc9-2f522e6ca6fe'}} />
+                <Text style={{ ...FONTS2.h3, marginLeft: 15 }}>{storeData.storeName}</Text>
             </View>
 
             <View>

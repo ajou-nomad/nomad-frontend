@@ -76,6 +76,8 @@ function StoreDetail({ route }) {
     const storeInfo = route.params.storeInfo;
     const datePicker = route.params.datePicker;
 
+    // console.log(JSON.stringify(groupData,null,4))
+
     const [cartItems, setCartItems] = useState([]);
 
 
@@ -126,7 +128,7 @@ function StoreDetail({ route }) {
                     paddingTop: 30,
                 }}
             >
-                <View style={styles.headerContainer}>
+                <View style={[styles.headerContainer,{width: SIZES.width * 0.75}]}>
                     <Text style={{ ...FONTS2.h1 }}>{storeInfo.storeName}</Text>
                     <View style={{ marginTop: SIZES.base }}>
                         <View style={{ flexDirection: 'row', }}>

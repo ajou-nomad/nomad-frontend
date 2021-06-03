@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
-import React from 'react'
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
 import { Text, View, Image, StyleSheet, ImageBackground } from 'react-native';
-import {icons, SIZES, FONTS, FONTS2, COLORS} from '../constants';
+import {icons, SIZES, FONTS2, COLORS} from '../constants';
 
 
 const Splash = () => {
@@ -10,7 +11,6 @@ const Splash = () => {
             <View style={styles.logoContainer}>
                 <Image
                     source={icons.ko_logo}
-                    // source={icons.logo_white}
                     resizeMode="contain"
                     style={{
                         width: 250,
@@ -18,7 +18,7 @@ const Splash = () => {
                         tintColor: COLORS.white,
                     }}
                 />
-                <Text style={{ ...FONTS2.body4, color: COLORS.lightGray, }}>더치 딜리버리 서비스에 오신 것을 환영합니다. 🎉</Text>
+                <Text style={{ ...FONTS2.body4, color: COLORS.lightGray }}>더치 딜리버리 서비스에 오신 것을 환영합니다. 🎉</Text>
             </View>
             <ImageBackground
                 source={icons.main_bg}
@@ -27,8 +27,7 @@ const Splash = () => {
                     height: 400,
                     marginBottom: 300,
                 }}
-            >
-            </ImageBackground>
+            />
         </View>
     );
 };

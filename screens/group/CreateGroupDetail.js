@@ -17,38 +17,33 @@ import {
 import Counter from 'react-native-counters';
 import DatePicker from 'react-native-date-picker';
 
-import { FONTS, FONTS2, SIZES } from '../../constants';
+import { FONTS2, SIZES } from '../../constants';
 import Header from '../../components/layout/Header';
 import BottomButton from '../../components/layout/BottomButton';
 
 
 function CreateGroupDetail({ navigation, route: { params } }) {
 
-    const [buildingName, setBuildingName] = useState(params.location.buildingName);
+   const [buildingName, setBuildingName] = useState(params.location.buildingName);
    const todayFullDate = new Date();
 
 	todayFullDate.setDate(todayFullDate.getDate() + 1);
 	todayFullDate.setHours(todayFullDate.getHours() + 9);
-	
 
-	console.log(todayFullDate);
-	
     if (todayFullDate.getDay() === 0) {
       todayFullDate.setDate(todayFullDate.getDate() + 1);
     } else if (todayFullDate.getDay() === 6) {
       todayFullDate.setDate(todayFullDate.getDate() + 2);
     }
    const todayForWeekly = JSON.stringify(todayFullDate.toJSON()).substr(1, 10);
-   console.log(todayForWeekly);
+
 
    const dayArrayKorFixed = params.datePicker === undefined ? [0, 0, 0, 0, 0] : params.datePicker[0];
    const dateDifference = params.datePicker === undefined ? [0, 0, 0, 0] : params.datePicker[1];
 
-   console.log(dayArrayKorFixed)
 
-	console.log(dayArrayKorFixed)
 
-    const [date, setDate] = useState(todayFullDate);
+   const [date, setDate] = useState(todayFullDate);
    const today = params.deliDate !== (undefined || null) ? params.deliDate : null;
     // console.log(today)
     const [groupDate,setGroupDate] = useState(today);
@@ -131,18 +126,6 @@ function CreateGroupDetail({ navigation, route: { params } }) {
             <View style={{ flex: 4, marginHorizontal: 30, }}>
                <View style={{ flex: 1, justifyContent: 'center' }}>
                   <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>건물명</Text>
-                  {/* <TextInput
-                     style={{
-                        borderBottomWidth: 1,
-                        width: 300,
-                        ...FONTS2.body2,
-                     }}
-                     placeholder="상세주소를 입력하세요. (건물명)"
-                     value={buildingName}
-                     placeholderTextColor="#707070"
-                     selectionColor="#000000"
-                     onChangeText={text => setBuildingName(text)}
-                  /> */}
                   <TextInput
                      style={{
                         borderRadius: 8,

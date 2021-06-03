@@ -19,7 +19,6 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
-import TextInputs from '../components/TextInput';
 
 import PhoneNumber from '../components/login/PhoneNumber';
 import PhoneValid from '../components/login/PhoneValid';
@@ -340,53 +339,10 @@ export default function SignUpScreen(props) {
           termSelected={termSelected}
           checkEmptyExist={checkEmptyExist}
         />
-        {/* <TextInputs style={styles.input} change={this.onChangeEmail} value={this.state.email} type='email'  />
-                    <TextInputs style={styles.input} change={this.onChangePassword} value={this.state.password} type='password'  />
-                    <TextInputs style={styles.input} change={this.onChangeNickname} value={this.state.nickname} type='nickname'  />
-                    <View style={{
-                      flexDirection:'row',
-                      marginTop: 5,
-                      alignSelf: 'center',
-                    }}>
-                    <TouchableOpacity
-                      onPress = {()=>{this.getInfo("User");}}
-                      style={styles.userTypeButton}
-
-                    >
-                      <Text style={styles.userTypeText}>User</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                     onPress = {()=>{this.getInfo("Shop"); }}
-                     style={styles.userTypeButton}
-                    >
-                      <Text style={styles.userTypeText} >Shop</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                     onPress = {()=>{this.getInfo("Deli"); }}
-                     style={styles.userTypeButton}
-                    >
-                      <Text style={styles.userTypeText} >Deli</Text>
-                    </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity
-                        onPress={ ()=>{
-                          alert(JSON.stringify(this.state))
-                          // this.props.navigation.navigate('Login')
-                        }
-                        }
-                        style={styles.confirmButton}
-                    >
-                       <Text style={styles.confirmText}>회원가입 하기</Text>
-                    </TouchableOpacity> */}
       </ScrollView>
     </>
   );
 }
-
-// react-native-linear-gradient
-// 연한 블루: #EDF2FF
-// 진한 블루: #364FC7
-// 회색: #F1F3F5
 
 const styles = StyleSheet.create({
   header: {
@@ -471,7 +427,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginTop: 15,
-    // backgroundColor: '#21ff54',
     alignSelf: 'center',
   },
   confirmText: {

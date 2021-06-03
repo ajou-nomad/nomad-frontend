@@ -1,9 +1,5 @@
 /* eslint-disable prettier/prettier */
-
-import React,{useEffect, useContext} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
+import React, {useContext} from 'react';
 import {AuthContext} from '../context/AuthContextProvider';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -40,28 +36,9 @@ const Stack = createStackNavigator();
 
 const RootNavigation = () => {
 
-    const {state, dispatch} = useContext(AuthContext);
+    const {state} = useContext(AuthContext);
 
-    useEffect(() => {
-        // local store에서 token을 가져와 세션유지 ( 지금은 deviceToken으로 하였음)
-        const bootstrapAsync = async () => {
-          let userToken;
-          try {
-            userToken = await AsyncStorage.getItem('userToken');
-          } catch (e) {
-            // Restoring token failed
-          }
-          if (userToken !== null) {
-            await dispatch({type: 'RESTORE_TOKEN', token: userToken});
-          }
-        };
-
-        bootstrapAsync();
-    }, [dispatch]);
-
-    console.log(state);
-
-    if (state.isSignedIn) { //로그인시 state.isSignedIn
+    if (state.isSignedIn) {
         if (state.member.memberType === 'User'){
             return (
                 <RootStack.Navigator>
@@ -110,10 +87,10 @@ const RootNavigation = () => {
 const userStack = () => {
     return (
         <Stack.Navigator
-        screenOptions={{
-            headerShown: false,
-        }}
-        initialRouteName={'Main'}
+            screenOptions={{
+                headerShown: false,
+            }}
+            initialRouteName={'Main'}
         >
             <Stack.Screen name="Main" component={Main} />
             <Stack.Screen name="Tabs" component={Tabs} />
@@ -137,15 +114,15 @@ const userStack = () => {
 
 const StoreKeeperStack = () => {
 
-    const {state, dispatch} = useContext(AuthContext);
+    const {state} = useContext(AuthContext);
 
-    if (state.member.storeId){ //점주가 매장등록 했을 때, 안했을 때 state.member.storeId
+    if (state.member.storeId) {
         return (
             <Stack.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-            initialRouteName={'StoreTabs'}
+                screenOptions={{
+                    headerShown: false,
+                }}
+                initialRouteName={'StoreTabs'}
             >
                 <Stack.Screen name="StoreTabs" component={StoreTabs} />
             </Stack.Navigator>
@@ -153,10 +130,10 @@ const StoreKeeperStack = () => {
     } else {
         return (
             <Stack.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-            initialRouteName={'Register'}
+                screenOptions={{
+                    headerShown: false,
+                }}
+                initialRouteName={'Register'}
             >
                 <Stack.Screen name="Register" component={RegisterStore} />
                 <Stack.Screen name="RegisterStoreDetail" component={RegisterStoreDetail} />
@@ -173,10 +150,10 @@ const StoreKeeperStack = () => {
 const carrierStack = () => {
     return (
         <Stack.Navigator
-        screenOptions={{
-            headerShown: false,
-        }}
-        initialRouteName={'DeliveryNavigation'}
+            screenOptions={{
+                headerShown: false,
+            }}
+            initialRouteName={'DeliveryNavigation'}
         >
             <Stack.Screen name="DeliveryNavigation" component={DeliveryNavigation} />
         </Stack.Navigator>

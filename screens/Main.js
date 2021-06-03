@@ -1,22 +1,18 @@
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-/* eslint-disable no-alert */
-
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
 import { Image, StyleSheet, View, Text, TouchableOpacity, ImageBackground } from 'react-native';
-import { icons, COLORS, SIZES, FONTS, images, FONTS2 } from "../constants";
-import LinearGradient from 'react-native-linear-gradient';
+import { icons, COLORS, SIZES, FONTS, FONTS2 } from '../constants';
+
 
 
 const Main = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            {/* <LinearGradient colors={['#7792FF','#516FFF']} style={styles.gradient}> */}
             <View style={styles.logoContainer}>
                 <Image
                     source={icons.ko_logo}
-                    // source={icons.logo_white}
                     resizeMode="contain"
                     style={{
                         width: 250,
@@ -24,7 +20,7 @@ const Main = ({ navigation }) => {
                         tintColor: COLORS.white,
                     }}
                 />
-                <Text style={{ ...FONTS2.body4, color: COLORS.lightGray, }}>더치 딜리버리 서비스에 오신 것을 환영합니다. 🎉</Text>
+                <Text style={{ ...FONTS2.body4, color: COLORS.lightGray }}>더치 딜리버리 서비스에 오신 것을 환영합니다. 🎉</Text>
             </View>
             <ImageBackground
                 source={icons.main_bg}
@@ -59,15 +55,12 @@ const Main = ({ navigation }) => {
 
                 </View>
             </ImageBackground>
-
-            {/* </LinearGradient> */}
         </View>
     );
 };
 
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
         backgroundColor: '#3897f1',
@@ -84,7 +77,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     button: {
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#f8f9fa',
         borderRadius: 10,
@@ -93,7 +86,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 35,
         paddingVertical: 25,
         elevation: 5,
-        opacity: 0.95
+        opacity: 0.95,
     },
 });
 

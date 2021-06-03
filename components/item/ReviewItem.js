@@ -20,9 +20,9 @@ import { useNavigation } from '@react-navigation/native';
 import { FONTS, FONTS2, icons, SIZES } from '../../constants';
 
 
-const ReviewItem = ({ isMypage, item }) => {
+const ReviewItem = ({ item, admin }) => {
 
-    console.log(item.nickName);
+    // default는 undefinded 즉 false 이기 때문에 특수한 상황에서만 true 되도록 구현 ( isMypage 삭제)
 
     const navigation = useNavigation();
 
@@ -40,13 +40,8 @@ const ReviewItem = ({ isMypage, item }) => {
     };
 
     const renderRatingAndDate = () => {
-
-        const tempDate = new Date(item.localDateTime);
-
-        const date = `${tempDate.getFullYear()}-${tempDate.getMonth()}-${tempDate.getDay()}`;
-
         return (
-            <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {/* 별점 함수 */}
                 <Image
                     source={icons.star}
@@ -86,7 +81,7 @@ const ReviewItem = ({ isMypage, item }) => {
             <View>
                 <TouchableOpacity
                     style={{ marginVertical: 10 }}
-                    onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점' })}
+                    // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점' })}
                 >
                     <Text style={{ ...FONTS2.h3 }}>가게 이름 &gt;</Text>
                 </TouchableOpacity>
@@ -99,7 +94,7 @@ const ReviewItem = ({ isMypage, item }) => {
         <View style={styles.container}>
             {/* {renderHeader()} */}
 
-            {!isMypage ? (
+            { admin ? (
                 renderReivewInStore()) : (
                 renderReivewInMypage()
             )}
@@ -114,16 +109,17 @@ const ReviewItem = ({ isMypage, item }) => {
                 flex: 1,
                 flexDirection: 'row',
             }}>
-                {!isMypage ? (null) : (
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <TouchableOpacity
-                            style={styles.deleteButton}
-                            onPress={handleDelete}
-                        >
-                            <Text style={{ ...FONTS2.body2 }}>삭제</Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
+                { admin ? (
+                            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                                <TouchableOpacity
+                                    style={styles.deleteButton}
+                                    onPress={handleDelete}
+                                >
+                                    <Text style={{ ...FONTS2.body2 }}>삭제</Text>
+                                </TouchableOpacity>
+                            </View>
+                ) : (null)
+                }
             </View>
         </View>
     );
