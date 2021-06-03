@@ -14,6 +14,7 @@ const StoreManagementReview = (props) => {
 
     useEffect(() => {
 
+        //추후에 reviewList로 가져와야함 오류나서 myStoreList로
         axiosApiInstance.get('/myStoreList').then(
             (response) => setReviewList(response.data.data.reviewList)
         );

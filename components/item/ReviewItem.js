@@ -20,13 +20,9 @@ import { useNavigation } from '@react-navigation/native';
 import { FONTS, FONTS2, icons, SIZES } from '../../constants';
 
 
-const ReviewItem = ({ isMypage, item, admin }) => {
+const ReviewItem = ({ item, admin }) => {
 
-
-
-    // default는 undefinded 즉 false 이기 때문에 특수한 상황에서만 되도록 구현
-
-    console.log(item.nickName);
+    // default는 undefinded 즉 false 이기 때문에 특수한 상황에서만 true 되도록 구현 ( isMypage 삭제)
 
     const navigation = useNavigation();
 
@@ -44,13 +40,8 @@ const ReviewItem = ({ isMypage, item, admin }) => {
     };
 
     const renderRatingAndDate = () => {
-
-        const tempDate = new Date(item.localDateTime);
-
-        const date = `${tempDate.getFullYear()}-${tempDate.getMonth()}-${tempDate.getDay()}`;
-
         return (
-            <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {/* 별점 함수 */}
                 <Image
                     source={icons.star}
@@ -90,7 +81,7 @@ const ReviewItem = ({ isMypage, item, admin }) => {
             <View>
                 <TouchableOpacity
                     style={{ marginVertical: 10 }}
-                    onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점' })}
+                    // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName:/* .map(storeName:item.storeName) */'빽다방 아주대점' })}
                 >
                     <Text style={{ ...FONTS2.h3 }}>가게 이름 &gt;</Text>
                 </TouchableOpacity>
@@ -119,14 +110,14 @@ const ReviewItem = ({ isMypage, item, admin }) => {
                 flexDirection: 'row',
             }}>
                 { admin ? (
-                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <TouchableOpacity
-                            style={styles.deleteButton}
-                            onPress={handleDelete}
-                        >
-                            <Text style={{ ...FONTS2.body2 }}>삭제</Text>
-                        </TouchableOpacity>
-                    </View>
+                            <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                                <TouchableOpacity
+                                    style={styles.deleteButton}
+                                    onPress={handleDelete}
+                                >
+                                    <Text style={{ ...FONTS2.body2 }}>삭제</Text>
+                                </TouchableOpacity>
+                            </View>
                 ) : (null)
                 }
             </View>

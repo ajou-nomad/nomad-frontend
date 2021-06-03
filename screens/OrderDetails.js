@@ -177,7 +177,6 @@ const OrderDetails = () => {
         );
     };
 
-    console.log('주문내역: ', JSON.stringify(memberOrderList.sort(), null, 4));
     return (
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />

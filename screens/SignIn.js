@@ -1,18 +1,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 
-import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Keyboard, Text, View, Image, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Alert, KeyboardAvoidingView, Button, ImageBackground } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { StyleSheet, Keyboard, Text, View, Image, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Alert, KeyboardAvoidingView } from 'react-native';
 import { icons, SIZES, FONTS, COLORS } from '../constants';
 import { GoogleSignin } from '@react-native-community/google-signin';
-import { emailPasswordLogin, googleLogin, logout } from '../utils/helper';
-import messaging from '@react-native-firebase/messaging';
+import { emailPasswordLogin, googleLogin } from '../utils/helper';
 import { AuthContext } from '../context/AuthContextProvider';
-// import { FIREBASE_WEBCLIENTID } from '@env';
-
-
 import auth from '@react-native-firebase/auth';
-import axiosApiInstance from '../utils/axios';
+
+
 
 
 
@@ -22,16 +19,8 @@ const SignIn = ({router, navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    // useEffect(() => {
-    //     GoogleSignin.configure({
-    //         webClientId: FIREBASE_WEBCLIENTID,
-    //         offlineAccess: true, //if you want to access Google API on behalf of the user FROM YOUR SERVER
-    //     });
-    // }, []);
 
-
-
-    const signInEmailPw = async () => {
+    const signInEmailPw = () => {
         if ( email !== '' && password !== ''){
 
             const data = {
@@ -48,83 +37,35 @@ const SignIn = ({router, navigation}) => {
         }
     };
 
-
-
-
-    // // ------------test----------
-
-    const signOutButton = async () => {
-        logout(dispatch);
-    }
-    // // ------------test----------
-
-
     const signInGoogle = async () => {
         try {
-
             const userInfo = await GoogleSignin.signIn();
-
-            const fcmToken = await messaging().getToken();
-
             const { idToken } = await GoogleSignin.getTokens();
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-            const test =await auth().signInWithCredential(googleCredential);
+            await auth().signInWithCredential(googleCredential);
 
-            axiosApiInstance
-                .get('/member')
-                .then( async (response) => {
-                    // 멤버정보가 없을 때
-                    if (response.data.data === 400){
-                        Alert.alert('구글계정으로 회원가입합니다.');
-                        navigation.navigate('SignUp', {
-                            fcmToken: fcmToken,
-                            phoneNumber: userInfo.user.phoneNumber,
-                            email: userInfo.user.email,
-                            nickname: userInfo.user.name,
-                            IsGoogle: true,
-                        });
-                    } else {
-                        googleLogin(response, dispatch);
-                    }
-                })
-                .catch((error) => {
-                    Alert.alert(error);
-                    logout(dispatch);
-                });
+            googleLogin(userInfo, dispatch, navigation);
         } catch (error) {
             console.log(error);
         }
     };
+
+
+
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior="height" keyboardVerticalOffset={0}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.loginScreenContainer}>
                     <View style={styles.logoContainer}>
-                        {/* <ImageBackground source={icons.doddle} resizeMode='contain' style={{ width: 260, height: 95, }} imageStyle={{ tintColor: '#868e96'}}>
-                            <Image
-                                source={icons.ko_logo}
-                                resizeMode="contain"
-                                style={{
-                                    // width: 400,
-                                    // height: 120,
-                                    width: 240,
-                                    height: 90,
-                                    tintColor: '#f8f9fa',
-                                    alignSelf: 'center',
-                                }}
-                                />
-                        </ImageBackground> */}
                         <Image
                                 source={icons.logo}
                                 resizeMode="contain"
                                 style={{
-                                    // width: 400,
-                                    // height: 120,
                                     width: 240,
                                     height: 90,
                                 }}
-                                />
+                        />
                     </View>
                     <ScrollView style={styles.loginFormView}>
 
@@ -180,12 +121,6 @@ const SignIn = ({router, navigation}) => {
                                 <Text style={{...FONTS.body4, color: COLORS.black}}>Google 계정으로 로그인</Text>
                             </View>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity
-                            style={styles.googleButton}
-                            onPress={ signOutButton }
-                        >
-                            <Text style={{...FONTS.body4, color: COLORS.black}}>임시로그아웃</Text>
-                        </TouchableOpacity> */}
                     </ScrollView>
                 </View>
             </TouchableWithoutFeedback>

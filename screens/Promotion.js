@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const Promotion = ({ route }) => {
 
-    console.log(JSON.stringify(route.params.storeData,null,4));
+
         // 배열 고려 안함. 나중에 여러 매장 들어올 때 코드 바꿔줘야함.
     const storeData = route.params.storeData[1];
 

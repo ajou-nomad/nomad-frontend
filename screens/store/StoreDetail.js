@@ -76,6 +76,8 @@ function StoreDetail({ route }) {
     const storeInfo = route.params.storeInfo;
     const datePicker = route.params.datePicker;
 
+    // console.log(JSON.stringify(groupData,null,4))
+
     const [cartItems, setCartItems] = useState([]);
 
 

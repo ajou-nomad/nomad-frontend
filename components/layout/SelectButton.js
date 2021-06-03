@@ -5,20 +5,20 @@ import { View, Text, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { FONTS2, SIZES, COLORS } from '../../constants';
 import { reverseGeocode } from '../../utils/helper';
 
-const SelectButton = ({navigation, deliveryPlace, setDeliveryPlace, setIsSelected}) => {
+const SelectButton = ({deliveryPlace, setDeliveryPlace, setIsSelected}) => {
 
     return (
         <TouchableOpacity
             style={styles.container}
             onPress={ () => {
-
                 if (!deliveryPlace) {
                     Alert.alert('핀을 움직여 배달 장소를 선택해주세요.');
                 } else {
-                    reverseGeocode({latitude: deliveryPlace.latitude, longitude: deliveryPlace.longitude}).then( async (result) => {
-                        await setDeliveryPlace(result);
-                        await setIsSelected(true);
-                    });
+                    reverseGeocode({latitude: deliveryPlace.latitude, longitude: deliveryPlace.longitude})
+                        .then( async (result) => {
+                            await setDeliveryPlace(result);
+                            await setIsSelected(true);
+                        });
                 }
             }}
         >
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         bottom: 25,
-        width: SIZES.width * 0.9,
         alignSelf: 'center',
     },
     button:{
@@ -44,6 +43,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: SIZES.padding ,
         borderRadius: SIZES.radius * 0.5,
         backgroundColor: '#1c7ed6',
+        width: SIZES.width * 0.9,
+        height: SIZES.height * 0.055,
         opacity: 0.9,
         elevation: 5,
     },

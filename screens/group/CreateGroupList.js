@@ -1,36 +1,18 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-
-import React, { useState, useEffect } from 'react';
-import {
-    StyleSheet,
-    View,
-    Text,
-    SafeAreaView,
-    ScrollView,
-    TouchableOpacity,
-    Image,
-    useWindowDimensions,
-} from 'react-native';
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
-import { responsiveWidth } from 'react-native-responsive-dimensions';
-
-import StoreItem from '../../components/item/StoreItem';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import Header from '../../components/layout/Header';
-import { COLORS, FONTS2, SIZES, icons, FONTS, FONTS3 } from '../../constants';
-
-import axiosApiInstance from '../../utils/axios';
-
+import { COLORS, FONTS2, SIZES, icons } from '../../constants';
 import MiniMap from '../../components/map/MiniMap';
 import SelectButton from '../../components/layout/SelectButton';
 import BackButton from '../../components/layout/BackButton';
 import StoreList from '../../components/store/StoreList';
 
 
-function CreateGroupList({ navigation, route }) {
+function CreateGroupList({ route }) {
 
-    //route.params.initLocation.buildingName존재 시 배달장소를 선택할 필요x
     const [isSelected, setIsSelected] = useState(route.params.initLocation.buildingName ? true : false);
     const [deliveryPlace, setDeliveryPlace] = useState(route.params.initLocation.buildingName ? route.params.initLocation : '');
     const deliDate = route.params.deliDate;
@@ -43,25 +25,23 @@ function CreateGroupList({ navigation, route }) {
     };
 
 
-
-
     const renderDestinationHeader = () => {
         return (
-          <TouchableOpacity
-            disable
-            style={styles.destinationHeader}
-          >
-            <View style={styles.destinationHeaderView}>
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  marginHorizontal:  30,
-                }}>
-                <Text style={{...FONTS2.body5}}>{'배달 받을 위치를 설정하세요.'}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity
+                disable
+                style={styles.destinationHeader}
+            >
+                <View style={styles.destinationHeaderView}>
+                <View
+                    style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    marginHorizontal:  30,
+                    }}>
+                    <Text style={{...FONTS2.body5}}>{'배달 받을 위치를 설정하세요.'}</Text>
+                </View>
+                </View>
+            </TouchableOpacity>
         );
     };
 
@@ -74,7 +54,7 @@ function CreateGroupList({ navigation, route }) {
                 {/* back button */}
                 <BackButton imageStyle={{ opacity: 0.8, height: 17, width: 17}} position={{left: SIZES.width * 0.04, top: SIZES.height * 0.03}} />
                 {/* selectButton */}
-                <SelectButton navigation={navigation} deliveryPlace={deliveryPlace} setDeliveryPlace={setDeliveryPlace} setIsSelected={setIsSelected} />
+                <SelectButton deliveryPlace={deliveryPlace} setDeliveryPlace={setDeliveryPlace} setIsSelected={setIsSelected} />
             </View>
         );
     };
@@ -90,7 +70,7 @@ function CreateGroupList({ navigation, route }) {
                         flexDirection: 'row',
                     }}
                     >
-                        <Image source={icons.pin} resizeMode='contain' style={{ width: 24, height: 24, marginRight: SIZES.base, }} />
+                        <Image source={icons.pin} resizeMode="contain" style={{ width: 24, height: 24, marginRight: SIZES.base }} />
                         <Text style={{ ...FONTS2.body3, color: 'black' }}>{deliveryPlace?.address}</Text>
                     </View>
                 </View>
@@ -142,7 +122,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: SIZES.width * 0.65,
-        paddingVertical: SIZES.padding * 0.5,
+        paddingVertical: SIZES.padding * 0.6,
         borderRadius: SIZES.radius,
         backgroundColor: COLORS.white,
         elevation: 5,
@@ -153,7 +133,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: 35,
-        // borderWidth: 0.5,
         borderRadius: 8,
         borderColor: '#707070',
         marginRight: 15,

@@ -1,11 +1,10 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/self-closing-comp */
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Image, View, Text, ImageBackground, Platform, Keyboard } from 'react-native';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import {COLORS, FONTS, FONTS2, icons, SIZES} from '../../constants';
+import {FONTS, icons, SIZES} from '../../constants';
 import { geocode } from '../../utils/helper';
 import { GOOGLE_API_KEY } from '@env';
 
@@ -13,7 +12,6 @@ const SearchPlace = ({route, navigation}) => {
 
     const [isSearch, setIsSearch] = useState(false);
 
-    //키보드에 따라 show & hide
     useEffect(() => {
         let keyboardEventListeners;
         if (Platform.OS === 'android') {
@@ -84,10 +82,6 @@ const SearchPlace = ({route, navigation}) => {
                         components: 'country:KR',
                     }}
                     renderLeftButton={reftButton}
-                    // renderRightButton={rightButton}
-                    // textInputProps={{
-                    //     onFocus: () => setIsSearch(true),
-                    // }}
                     styles={{
                         textInputContainer: {
                             marginTop: SIZES.height * 0.03,
@@ -99,7 +93,7 @@ const SearchPlace = ({route, navigation}) => {
                             borderWidth: 0.5,
                             borderColor: '#e9ecef',
                             backgroundColor: '#f1f3f5',
-                        },  
+                        },
                         predefinedPlacesDescription: {
                             color: '#1faadb',
                         },

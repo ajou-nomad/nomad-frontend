@@ -18,7 +18,7 @@ const StoreItem = ({ deliveryPlace, deliDate, datePicker, storeData, isLikeList 
 
     const navigation = useNavigation();
 
-    console.log(JSON.stringify(storeData.reviewList.length, null, 4));
+    
 
     return (
         <TouchableOpacity

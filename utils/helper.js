@@ -1,48 +1,22 @@
 /* eslint-disable prettier/prettier */
 import { Alert, PermissionsAndroid, Platform } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
-import messaging from '@react-native-firebase/messaging';
 import { getDistance } from 'geolib';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import { GOOGLE_API_KEY } from '@env';
 import axiosApiInstance from './axios';
 import firestore from '@react-native-firebase/firestore';
-
-import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+import { GoogleSignin } from '@react-native-community/google-signin';
+import Toast from 'react-native-toast-message';
+import messaging from '@react-native-firebase/messaging';
 
 Geocoder.init(GOOGLE_API_KEY, {language: 'ko'});
 
 
-// // When a user signs in
-// // When the current user signs out
-// // When the current user changes
-// // When there is a change in the current user's token
-// export const idTokenChangedListeners = (state, dispatch) => {
-//     auth().onIdTokenChanged( async (user) => {
-//         if (user) {
-//             const prevIdToken = state.idToken;
-//             const nextIdToken = await user.getIdToken();
-//             if (prevIdToken !== nextIdToken) {
-//                 console.log('아이디토큰이 바뀌었다.');
-//                 // 여기서 바뀐 토큰을 asyncstore에 재저장 및 reducer에 재저장
-//                 await AsyncStorage.setItem('userToken', nextIdToken);
-//                 await dispatch({ type: 'RESTORE_TOKEN', token: nextIdToken });
-//             } else {
-//                 console.log('불필요한 중복 호출');
-//             }
-//         } else {
-//             console.log('유저 정보없음');
-//         }
-//     });
-// };
 
 
 const setMemberInfo = async (dispatch, memberInfo) => {
-
-
-    Alert.alert(memberInfo.data.data.nickName + '님 반갑습니다.');
 
     const memberData = {
         memberType:  memberInfo.data.data.memberType,
@@ -52,20 +26,23 @@ const setMemberInfo = async (dispatch, memberInfo) => {
         point: memberInfo.data.data.point,
         storeId: memberInfo.data.data.storeId ? memberInfo.data.data.storeId : null,
     };
-
     //전역 변수에 member정보 저장
     await dispatch({ type: 'SIGN_IN', member: memberData });
+    Toast.show({
+        type: 'info',
+        position: 'top',
+        text1: '로그인 성공',
+        text2: memberInfo.data.data.nickName + '님 반갑습니다.',
+        visibilityTime: 3000,
+        autoHide: true,
+    });
 };
 
 export const getAccessToken = async () => {
     const user = auth().currentUser;
     if (user) {
-
-        // 만료되었을 때만 refresh된 token을 줌.
         const token = await user.getIdToken();
 
-        // true시 무조건 refresh된 token을 준다.
-        // const token = await user.getIdToken(true);
         return token;
     } else {
         console.log('현재 로그인한 유저가 없음.');
@@ -77,36 +54,55 @@ export const autoLogin = async (dispatch) => {
 
     const user = auth().currentUser;
 
-    if (user){
-        return axiosApiInstance
-            .get('/member')
-            .then( async (response) => {
-
-                if (response.data.data === 400){
-                    Alert.alert('해당하는 멤버정보가 없습니다.');
+    if (user) {
+        return axiosApiInstance.get('/member')
+                .then( async (response) => {
+                    if (response.data.data === 400){
+                        Alert.alert('해당하는 멤버정보가 없습니다.');
+                        logout(dispatch);
+                    } else {
+                        return setMemberInfo(dispatch, response);
+                    }
+                })
+                .catch((error) => {
+                    Alert.alert('서버 오류');
                     logout(dispatch);
-                } else {
-                    return setMemberInfo(dispatch, response);
-                }
-            })
-            .catch((error) => {
-                Alert.alert(error);
-                logout(dispatch);
-            });
+                });
     } else {
         console.log('현재 로그인한 유저가 없음.');
-        // return Promise.reject('Not Found User');
     }
 };
 
-export const googleLogin = async (response, dispatch) => {
+export const googleLogin = async (userInfo, dispatch, navigation) => {
 
-    setMemberInfo(dispatch, response);
+
+    const fcmToken = await messaging().getToken();
+
+    axiosApiInstance
+        .get('/member')
+        .then( async (response) => {
+            // 멤버정보가 없을 때
+            if (response.data.data === 400){
+                Alert.alert('구글계정으로 회원가입합니다.');
+                navigation.navigate('SignUp', {
+                    fcmToken: fcmToken,
+                    phoneNumber: userInfo.user.phoneNumber,
+                    email: userInfo.user.email,
+                    nickname: userInfo.user.name,
+                    IsGoogle: true,
+                });
+            } else {
+                setMemberInfo(dispatch, response);
+            }
+        })
+        .catch((error) => {
+            Alert.alert(error);
+            logout(dispatch);
+        });
 };
 
 
 export const emailPasswordLogin = (data, dispatch) => {
-
 
     auth()
         .signInWithEmailAndPassword(data.email, data.pw)
@@ -114,9 +110,6 @@ export const emailPasswordLogin = (data, dispatch) => {
             axiosApiInstance
                 .get('/member')
                 .then(async (response) => {
-        
-                
-
                     if (response.data.data === 400){
                         Alert.alert('해당하는 멤버정보가 없습니다.');
                         logout(dispatch);
@@ -125,7 +118,7 @@ export const emailPasswordLogin = (data, dispatch) => {
                     }
                 })
                 .catch((error) => {
-                    Alert.alert(error);
+                    Alert.alert('서버 오류');
                 });
         })
         .catch(error => {
@@ -185,7 +178,6 @@ export const logout = async (dispatch) => {
 
 // 장소, 명칭 -> 좌표
 export const geocode = async (address) => {
-    //Search by address
     try {
         const json = await Geocoder.from(address);
         const location = json.results[0].geometry.location;
@@ -209,9 +201,7 @@ export const geocode = async (address) => {
 
 // 좌표 -> 장소, 명칭
 export const reverseGeocode = async (location) => {
-
     try {
-
         const json = await Geocoder.from(location.latitude, location.longitude);
         const addressComponent = json.results[0].formatted_address.replace('대한민국 ','').replace('서울특별시 ','');
         location.address = addressComponent;
@@ -248,8 +238,6 @@ export const currentLocation = async () => {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
                     };
-
-                    console.log('here: ', position);
                     location = await reverseGeocode(geometry);
                     resolve(location);
 
@@ -258,7 +246,6 @@ export const currentLocation = async () => {
                     // 타임아웃 시, 초기location 반환
                     console.log(error);
                     resolve(location);
-                    // reject(error);
                 },
                 {
                     enableHighAccuracy: false,
@@ -304,216 +291,6 @@ export const calculateDistance = (origLat, origLon, markerLat, markerLon) => {
     );
 
     return distance;
-};
-
-
-
-// -----------------------------------------------------------------------------------------
-
-export const setData = async (key, value) => {
-    try {
-        const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem(key, jsonValue);
-        console.log(key + '저장완료');
-    } catch (e) {
-        console.log(e);
-        // saving error
-    }
-};
-
-export const getData = async (key) => {
-    try {
-        const jsonValue = await AsyncStorage.getItem(key);
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-        console.log(e);
-        // error reading value
-    }
-};
-
-// 배열에 추가시
-export const addData = async (key, value) => {
-    try {
-        let jsonValue = await AsyncStorage.getItem(key);
-
-        jsonValue = JSON.parse(jsonValue).concat(value);
-
-        //재저장
-        const addedJsonValue = JSON.stringify(jsonValue);
-        await AsyncStorage.setItem(key, addedJsonValue);
-        console.log(key + '추가완료');
-
-    } catch (e) {
-        console.log(e);
-    }
-};
-
-// 전체 삭제
-export const clearAll = async () => {
-    try {
-      await AsyncStorage.clear();
-    } catch (e) {
-      // clear error
-    }
-    console.log('Done.');
-};
-
-
-
-export const getDaliyGroupData = async () => {
-
-    const storeData =  await getData('storeData');
-
-    return getData('groupData').then( (data) => {
-        let dailyData = data.filter((goal) => goal.groupType === 'day');
-
-        dailyData = dailyData.map( (groupDatum) => {
-
-            let storeInfo = storeData.filter((store) => store.storeId === groupDatum.storeId);
-
-            groupDatum.store = storeInfo[0];
-
-            return groupDatum;
-
-        });
-
-        return dailyData;
-    });
-};
-
-
-
-export const getWeeklyGroupData = async () => {
-
-    const storeData =  await getData('storeData');
-
-    return getData('groupData').then( (data) => {
-        let weeklyData = data.filter((goal) => goal.groupType === 'weekly');
-
-        weeklyData = weeklyData.map( (groupDatum) => {
-
-            let storeInfo = storeData.filter((store) => store.storeId === groupDatum.storeId);
-
-            groupDatum.store = storeInfo[0];
-
-            return groupDatum;
-
-        });
-
-        return weeklyData;
-    });
-};
-
-// post "participationGroup"
-export const participationGroup = async (groupId, orderData) => {
-
-    await getData('groupData').then( async (data) => {
-
-        //object merge가 안되어서
-        //해당 그룹만 가져온 후
-        let seletedGroup = data.filter((goal) => goal.groupId === groupId);
-        // 나머지 그룹
-        let exceptedGroup = data.filter((goal) => goal.groupId !== groupId);
-
-        let curr = seletedGroup[0].current + 1;
-        //모집완료일 때
-        if ( (curr) == (seletedGroup[0].maxValue) ){
-            console.log('---', curr, seletedGroup[0].maxValue);
-
-            console.log('모집완료시');
-            // 위에서 count 증가 완료
-            // 모집완료 상태 변경
-            //참가하는 uid 추가
-            seletedGroup[0].memberList.push('참가하는Uid');
-            seletedGroup[0].orderStatus = 'recruitmentDone';
-
-            orderData.orderStatus = 'recruitmentDone';
-            orderData.orderId = 'orderId';
-            orderData.uid = '8MaepsFt67SrssZX1zxA8s96S0k1';
-            orderData.review = null;
-
-            exceptedGroup.push(seletedGroup[0]);
-            await setData('groupData',exceptedGroup);
-            console.log('추가완료');
-
-            // console.log(JSON.stringify(exceptedGroup,null,4));
-
-            // await setData('groupData',exceptedGroup);
-            // console.log('추가완료');
-        } else {
-            console.log('---', curr, seletedGroup[0].maxValue);
-            console.log('아직 모집완료 x');
-            // 위에서 count 증가 완료
-            //참가하는 uid 추가
-            seletedGroup[0].memberList.push('참가하는Uid');
-
-            orderData.orderStatus = 'recruiting';
-            orderData.orderId = 'orderId';
-            orderData.uid = '8MaepsFt67SrssZX1zxA8s96S0k1';
-            orderData.review = null;
-
-            exceptedGroup.push(seletedGroup[0]);
-            await setData('groupData',exceptedGroup);
-            console.log('추가완료');
-        }
-    });
-
-    console.log(JSON.stringify(orderData,null,4));
-    await addData('orderData', orderData);
-    console.log('최종적인 배달참가완성');
-    Alert.alert("그룹에 참여가 완료되었습니다.");
-
-    return 'complete';
-
-
-    // {
-    //     orderId: 1,
-    //     uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
-    
-    //     storeId: 1,
-    //     storeName: '빽다방 아주대점',
-    
-    
-    //     // orederStatus도 실제로는 member_Order table에서 groupId를 이용해서 받와야함.
-    //     orederStatus: 'deliveryDone',
-    
-    //     // 실제로는 storeId를 통해서 해당 storeId로 이동 후
-    //     //  해당 store에 연결된 review Table로 가서 해당 uid를 찾아 가져와야함.
-    //     review: {
-    //       uid: '8MaepsFt67SrssZX1zxA8s96S0k1',
-    //       text: '가성비가 좋아요.!!',
-    //       imgUrl: '',
-    //     },
-    
-    //     menu: [
-    //       {
-    //         menuId: 1,
-    //         menuName: '앗!메리카노(ICED)',
-    //         cost: 2000,
-    //         quantity: 1,
-    //       }
-    //     ],
-    //     totalCost: 2000,
-    //     payMethod: 'card',
-    //     orderTime: '2021-05-15T15:30:00.480Z',
-    //   },
-};
-
-export const createGroup = async (groupData, orderData) => {
-    groupData.groupId = 5;
-    groupData.current = 1;
-    groupData.orderStatus = 'recruiting';
-    orderData.orderId = 1000;
-    orderData.uid = '생성한사람의UID';
-    groupData.memberList = [
-        "생성한사람의UID",
-    ];
-
-    await addData('groupData', groupData);
-
-    await addData('orderData', orderData);
-
-    return 'success';
 };
 
 export const createChatRoom = async (storeName, deliveryTime, deliveryPlace, groupId) => {
