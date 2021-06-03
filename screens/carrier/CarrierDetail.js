@@ -32,11 +32,11 @@ const CarrierDetail = (props) => {
     let deliveryInfo = [];
 
 
-	// console.log('props: ', JSON.stringify(props, null, 4));
+	console.log('props: ', JSON.stringify(props, null, 4));
 
 
 
-	!props.availableGroup  ? console.log('Getting Location...') :
+	!props.availableGroup  ? console.log('Getting AvailableGroup...') :
 		props.availableGroup.map((groupInfo, groupIndex) => {
 			props.availableStore.map((storeInfo, storeIndex) => {
 				if (groupInfo.storeId === storeInfo.storeId) {
@@ -70,7 +70,11 @@ const CarrierDetail = (props) => {
         ?
         <View style={styles.container}>
             <Header />
+<<<<<<< HEAD
             <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center', ...FONTS2.body2 }} >참여 가능한 배달 그룹이 존재하지 않습니다.</Text>
+=======
+            <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }} >참여 가능한 배달 그룹이 존재하지 않습니다!</Text>
+>>>>>>> decc8d1b94d03f9ae083d7ff3811b8aaa3ff293c
         </View> 
         :
         <View style={styles.container}>
