@@ -20,8 +20,6 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 import { useNavigation } from '@react-navigation/core';
 import NewGroupButton from '../components/map/NewGroupButton';
 
-import NewGroupButton from '../components/map/NewGroupButton';
-
 
 
 const TimeContainer = ({ startTime, groupList, location, storeData, color }) => {
@@ -149,7 +147,8 @@ const TimeTable = (props) => {
     const groupList = props.route.params.group.groupList;
     const storeData = props.route.params.storeData;
     const todayFullDate = new Date();
-    const todayHeader = JSON.stringify(new Date().toJSON()).substr(1, 10);
+    todayFullDate.setHours(todayFullDate.getHours() + 9);
+    const todayHeader = JSON.stringify(todayFullDate.toJSON()).substr(1, 10);
     todayFullDate.setDate(todayFullDate.getDate() + 1);
     if (todayFullDate.getDay() === 0) {
         todayFullDate.setDate(todayFullDate.getDate() + 1);

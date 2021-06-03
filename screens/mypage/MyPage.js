@@ -119,7 +119,7 @@ const MyPage = ({ navigation }) => {
       
 			<View style={styles.orderAndPointContainer}>
 				<View style={[styles.orderAndPointBox]}>
-					<Text style={{ ...FONTS2.body3 }}>최근 주문</Text>
+					<Text style={{ ...FONTS2.body3 }}>찜한 매장</Text>
 					<Text style={{ ...FONTS2.h2, color: '#339af0' }}>0</Text>
 				</View>
 				<View style={styles.orderAndPointBox}>
