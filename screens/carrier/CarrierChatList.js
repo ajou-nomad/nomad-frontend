@@ -10,6 +10,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     Image,
+    LogBox,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
@@ -19,6 +20,8 @@ import { COLORS, SIZES, icons, FONTS2 } from '../../constants';
 import { responsiveHeight } from 'react-native-responsive-dimensions';
 import axiosApiInstance from '../../utils/axios';
 
+
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 const CarrierChatList = (props) => {
 

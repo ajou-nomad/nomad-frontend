@@ -26,6 +26,8 @@ const ReviewItem = ({ isMypage, item, admin }) => {
 
     // default는 undefinded 즉 false 이기 때문에 특수한 상황에서만 되도록 구현
 
+    console.log(item.nickName);
+
     const navigation = useNavigation();
 
     const handleDelete = () => {
@@ -107,7 +109,7 @@ const ReviewItem = ({ isMypage, item, admin }) => {
             )}
 
             {/* 사진 */}
-            <Image source={{ uri: item.imgUrl }} resizeMode='contain' style={{ width: SIZES.width * 0.8, height: SIZES.height * 0.5, }} />
+            <Image source={{ uri: item.imgUrl }} resizeMode='contain' style={{ width: SIZES.width * 0.85, height: SIZES.height * 0.4,}} />
             {/* 글 */}
             <View style={styles.content}>
                 <Text style={{ ...FONTS2.body3 }}>{item.contents}</Text>
@@ -153,6 +155,7 @@ const styles = StyleSheet.create({
     content: {
         minHeight: 50,
         paddingHorizontal: 5,
+        justifyContent: 'center'
     },
     deleteButton: {
         backgroundColor: '#e9ecef',

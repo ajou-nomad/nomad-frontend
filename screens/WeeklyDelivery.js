@@ -21,11 +21,13 @@ import axiosApiInstance from '../utils/axios';
 const ItemsForCreateGroupDetailDayPicker = () => {
     const todayFullDate = new Date();
     todayFullDate.setDate(todayFullDate.getDate() + 1);
+    todayFullDate.setHours(todayFullDate.getHours() + 1);
     if (todayFullDate.getDay() === 0) {
       todayFullDate.setDate(todayFullDate.getDate() + 1);
     } else if (todayFullDate.getDay() === 6) {
       todayFullDate.setDate(todayFullDate.getDate() + 2);
     }
+  
     const todayDay = todayFullDate.getDay();
     const dayArrayKor = ['월', '화', '수', '목', '금'];
     const dateDifference = [0, 1, 2, 3, 4];

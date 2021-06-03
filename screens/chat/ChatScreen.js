@@ -23,6 +23,8 @@ import axiosApiInstance from '../../utils/axios';
 const ChatScreen = ({ route }) => {
     
     const { state } = useContext(AuthContext);
+    
+    console.log(JSON.stringify(route.params.groupId));
 
 
     const user = auth().currentUser;
@@ -325,7 +327,7 @@ const ChatScreen = ({ route }) => {
         <View style={{ flex: 1, backgroundColor: '#dee2e6' }}>
             {user ? (
                 <>
-                    {state.member.memberType === 'Deli' ?
+                    {state.member.memberType === 'Deli' && groupId >= 0 ?
                         <View style={{ position: 'absolute', bottom: SIZES.height * 0.09, right: SIZES.width * 0.04, zIndex: 2, opacity: 0.9 }}>
                             <TouchableOpacity
                                 onPress={() => {
@@ -334,6 +336,8 @@ const ChatScreen = ({ route }) => {
                                     }).then((res) => {
                                         console.log('배달 완료 post', JSON.stringify(res.data.data, null, 4));
                                         navigation.navigate('CarrierMain');
+                                        
+                                        firestore().collection('THREADS').doc(thread._id).delete();
                                     }).catch((e) => {
                                         console.log(e);
                                     })

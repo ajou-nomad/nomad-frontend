@@ -19,6 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function GroupInfo(props) {
     const navigation = useNavigation();
+    console.log(props.groupData.store.reviewList.length);
 
 
     return (
@@ -41,7 +42,7 @@ export default function GroupInfo(props) {
                         </View>
                         <View style={props.styleRating}>
                             <Image style={props.styleStarImage} source={icons.star} />
-                            <Text style={{ ...FONTS2.body3, color: 'black' }}>{props.storeInfo.rate}/5.0</Text>
+                            <Text style={{ ...FONTS2.body3, color: 'black' }}>{props.storeInfo.rate} ({props.groupData.store.reviewList.length}+)</Text>
                         </View>
                         <View style={props.styleDeliveryTime}>
                             <Image style={styles.timeImage} source={icons.clock} />
@@ -71,7 +72,7 @@ export default function GroupInfo(props) {
                         <Text style={{ ...FONTS2.h3 }}>{props.storeInfo.storeName}</Text>
                         <View style={props.styleRating}>
                             <Image style={props.styleStarImage} source={icons.star} />
-                            <Text style={{ ...FONTS2.body3 }}>{props.storeInfo.rate}/5.0</Text>
+                            <Text style={{ ...FONTS2.body3 }}>{props.storeInfo.rate} ({props.groupData.store.reviewList.length}+)</Text>
                         </View>
                         <View style={props.styleDeliveryTime}>
                             <Image style={styles.timeImage} source={icons.clock} />

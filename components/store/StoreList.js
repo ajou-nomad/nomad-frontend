@@ -26,7 +26,7 @@ const StoreList = ({storeData, deliveryPlace, deliDate, datePicker}) => {
     const layout = useWindowDimensions();
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: 'first', title: '안 프로모션', storeData: storeData, deliveryPlace: deliveryPlace, deliDate: deliDate, datePicker: datePicker },
+        { key: 'first', title: '일반', storeData: storeData, deliveryPlace: deliveryPlace, deliDate: deliDate, datePicker: datePicker },
         { key: 'second', title: '프로 모션', storeData: storeData, deliveryPlace: deliveryPlace, deliDate: deliDate, datePicker: datePicker },
     ]);
 
@@ -38,9 +38,11 @@ const StoreList = ({storeData, deliveryPlace, deliDate, datePicker}) => {
 
         return (
             <ScrollView>
-                {route.storeData.map((storeItems, index) => {
+                <View style={{ flex: 1,  }}>
+                    {route.storeData.map((storeItems, index) => {
                     return <StoreItem key={index} storeData={storeItems} deliveryPlace={route.deliveryPlace} deliDate={route.deliDate} datePicker={route.datePicker} />;
                 })}
+                </View>
             </ScrollView>
         );
     };

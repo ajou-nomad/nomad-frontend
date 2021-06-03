@@ -63,14 +63,18 @@ const CarrierDetail = (props) => {
         ? 
         <View style={styles.container}>
             <Header />
-            <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }} >현 위치를 불러오는 중 입니다...</Text>
+            <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center', ...FONTS2.body2 }} >현 위치를 불러오는 중 입니다...</Text>
         </View> 
         :
         deliveryInfo.length === 0
         ?
         <View style={styles.container}>
             <Header />
+<<<<<<< HEAD
+            <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center', ...FONTS2.body2 }} >참여 가능한 배달 그룹이 존재하지 않습니다.</Text>
+=======
             <Text style={{ flex: 1, textAlign: 'center', textAlignVertical: 'center' }} >참여 가능한 배달 그룹이 존재하지 않습니다!</Text>
+>>>>>>> decc8d1b94d03f9ae083d7ff3811b8aaa3ff293c
         </View> 
         :
         <View style={styles.container}>
