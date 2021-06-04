@@ -21,10 +21,15 @@
 우리는 더치딜리버리를 통하여 기존의 배달 서비스에서 생긴 불편사항들을 해결하고자 하며 그로 인하여 배달 서비스가 더 활성화되는 것을 목표로 하고 있다.
 
 ### 개발 도구 및 버전
--  node - v15.11.0 <br>
--  npm - v7.6.0<br>
--  react-native - v0.63.4<br>
--  react-native-cli - v2.0.1<br>
+<br>
+
+- ![node](https://img.shields.io/badge/node-%20v15.11.0-brightgreen)
+
+- ![npm](https://img.shields.io/static/v1?label=npm&message=v7.6.0&color=blue)
+
+- ![react-native](https://img.shields.io/static/v1?label=react-native&message=v0.63.4&color=violet)
+
+- ![react-native-cli](https://img.shields.io/static/v1?label=react-native-cli&message=v2.0.1&color=blueviolet)
 
 ### 사용된 외부 API
 -  GoogleMapAPI - 지도와 주소 검색을 위한 API
