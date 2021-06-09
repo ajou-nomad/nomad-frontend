@@ -16,7 +16,8 @@ import {getDaliyGroupData, getWeeklyGroupData} from '../../utils/helper';
 const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
     
     const mapView = useRef();
-    // console.log(JSON.stringify(groupData,null,4));
+    
+    
 
     const DayDeliveryData = ()=>{
       let tempGroupData_Day = [];
@@ -140,6 +141,8 @@ const GoogleMap = ({initLocation, back, today, groupData, storeData}) => {
     const filteredMarkers = tempGroupData.filter( (marker) => {
         return calculateDistance(initLocation.latitude, initLocation.longitude, marker.location.latitude, marker.location.longitude) <= 500;
     });
+
+    // console.log(JSON.stringify(filteredMarkers,null,4))
 
 
     return (

@@ -19,14 +19,12 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function GroupInfo(props) {
     const navigation = useNavigation();
-    console.log(props.groupData.store.reviewList.length);
-
-
+    // console.log(JSON.stringify(props.storeInfo,null,4));
     return (
         props.groupData.promotion === 'On' ? (
             <TouchableOpacity
                 style={{ borderBottomWidth: 0.6, borderBottomColor: '#e9ecef', paddingHorizontal: 5, }}
-                onPress={() => navigation.navigate('Promotion', { storeData: props.storeData, groupData: props.groupData, deliveryPlace: props.location, deliDate: props.deliDate, time: props.groupData.time })}
+                onPress={() => navigation.navigate('Promotion', { storeInfo: props.storeInfo, storeData: props.storeData, groupData: props.groupData, deliveryPlace: props.location, deliDate: props.deliDate, time: props.groupData.time })}
             >
                 <View style={props.styleGroupInfo}>
                     <View style={styles.logoImageContainer}>

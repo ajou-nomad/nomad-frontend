@@ -50,16 +50,19 @@ const Cart = ({ navigation, route: { params } }) => {
                             })
                         }
                     </View>
-                    
-                    <TouchableOpacity
-                        style={{ alignItems: 'center', }}
-                        onPress={() => navigation.navigate('StoreDetail')}
-                    // navigate 할 때 원래 주문했던 매장 페이지로 이동해야함.
-                    >
-                        <Text style={{ ...FONTS2.body2, color: '#4dabf7' }}>+ 메뉴 추가</Text>
-                    </TouchableOpacity>
+                    {params.promotion ? (
+                        <></>
+                    ) : (
+                        <TouchableOpacity
+                            style={{ alignItems: 'center', }}
+                            onPress={() => navigation.navigate('StoreDetail')}
+                        // navigate 할 때 원래 주문했던 매장 페이지로 이동해야함.
+                        >
+                            <Text style={{ ...FONTS2.body2, color: '#4dabf7' }}>+ 메뉴 추가</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
-                
+
                 <View style={{ marginHorizontal: 20, marginTop: 20 }}>
                     <Text style={{ ...FONTS2.h2, marginBottom: 10 }}>요청사항</Text>
                     <View style={{ marginBottom: SIZES.base * 2 }}>
