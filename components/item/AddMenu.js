@@ -132,7 +132,7 @@ const AddMenu = ({ modalVisible, closeModal, addMenu }) => {
                                             if (imageUri) {
                                                 const ext = imageUri.split('.').pop();
                                                 const filename = `${uuid.v4()}.${ext}`;
-                                                const imgRef = storage().ref(`promotionimage/${filename}`);
+                                                const imgRef = storage().ref(`menuimage/${filename}`);
 
                                                 const unsubscribe = imgRef.putFile(imageUri)
                                                     .on(
