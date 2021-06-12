@@ -125,7 +125,7 @@ const MyPage = ({ navigation }) => {
 				</View>
 				<View style={styles.orderAndPointBox}>
 					<Text style={{ ...FONTS2.body3 }}>포인트</Text>
-          <Text style={{ ...FONTS2.h2, color: '#339af0' }}>{state.member.point}</Text>
+          <Text style={{ ...FONTS2.h2, color: '#339af0' }}>{state.member.point ? state.member.point : 0 }</Text>
 				</View>
 			</View>
 

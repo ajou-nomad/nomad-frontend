@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, } from 'react-native';
-import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import { responsiveWidth } from 'react-native-responsive-dimensions';
 
 import ReviewItem from '../../components/item/ReviewItem';
 import Header from '../../components/layout/Header';
@@ -19,9 +19,11 @@ const ReviewPage = () => {
             .then( (response) => setReviewList(response.data.data))
     }, []);
 
+    console.log(JSON.stringify(reviewList,null,4))
+
     return (
         <ScrollView style={styles.container}>
-            <Header title="리뷰관리" small='true' />
+            <Header title="리뷰관리" small= 'true' />
 
             <View style={{ margin: 20 }}>
                 <Text style={{ ...FONTS2.h2 }}>{`내가 쓴 리뷰 ${reviewList?.length}개`}</Text>
@@ -29,7 +31,7 @@ const ReviewPage = () => {
 
             <View style={{ width: responsiveWidth(90), alignSelf: 'center' }}>
             {reviewList.map((item, index) =>
-                <ReviewItem key={index} item={item} />
+                <ReviewItem key={index} item={item} admin={true}/>
             )}
             </View>
         </ScrollView>
@@ -39,7 +41,7 @@ const ReviewPage = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.white
+        backgroundColor: COLORS.white,
     },
 });
 
