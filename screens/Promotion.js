@@ -10,13 +10,14 @@ import { COLORS, FONTS2, FONTS3, icons, SIZES } from '../constants';
 import { useNavigation } from '@react-navigation/native';
 
 
+
+
+
 const Promotion = ({ route }) => {
 
+    const storeData = route.params.storeInfo;
 
-        // 배열 고려 안함. 나중에 여러 매장 들어올 때 코드 바꿔줘야함.
-    const storeData = route.params.storeData[1];
-
-    const promotionMenuDto = storeData.promotionMenuDto;
+    const promotionMenuDto = storeData.promotionMenuDto ? storeData.promotionMenuDto : storeData.promotionMenu;
     const navigation = useNavigation();
 
     const promotionItem = [{

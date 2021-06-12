@@ -77,7 +77,6 @@ const OrderDetails = () => {
 
     const DeliveryState = ({ deliveryComplete }) => {
 
-
         const status = () => {
             if (deliveryComplete === 'recruiting') {
                 return (

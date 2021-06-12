@@ -47,12 +47,14 @@ const DayDelivery = ({ route, navigation }) => {
     // );
 
     await axiosApiInstance.get('/dailyGroupList').then((res) => {
-        // console.log(JSON.stringify(res.data,null,4));
+        // console.log("Daily"+JSON.stringify(res.data.storeData,null,4));
 
         if (res.data.groupData.length !== 0) {
             let groupData = res.data.groupData.map((group) => {
                 // 해당 group안에 storeData insert
                 let storeData = res.data.storeData.filter((store) => store.storeId === group.storeId);
+
+
                 group.store = storeData[0];
 
                 return group;

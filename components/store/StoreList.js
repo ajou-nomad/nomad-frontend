@@ -53,7 +53,7 @@ const StoreList = ({storeData, deliveryPlace, deliDate, datePicker}) => {
             <ScrollView>
                 {filteredData.map((storeItem, index) => {
                     return (
-                        <TouchableOpacity key={index} style={styles.promotionContainer} onPress={() => navigation.navigate('Promotion', { storeData: route.storeData, deliveryPlace: route.deliveryPlace, deliDate: route.deliDate, datePicker: route.datePicker } )}>
+                        <TouchableOpacity key={index} style={styles.promotionContainer} onPress={() => navigation.navigate('Promotion', { storeInfo: storeItem,storeData: route.storeData, deliveryPlace: route.deliveryPlace, deliDate: route.deliDate, datePicker: route.datePicker } )}>
                             <View style={styles.logoImageContainer}>
                                 <Image
                                     source={{ uri: storeItem.logoUrl }}
