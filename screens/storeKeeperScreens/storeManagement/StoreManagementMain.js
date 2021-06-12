@@ -5,7 +5,7 @@ import Store from '../../../components/store/Store';
 import { logout } from '../../../utils/helper';
 import { AuthContext } from '../../../context/AuthContextProvider';
 import Header from '../../../components/layout/Header';
-import { COLORS, FONTS2, icons, SIZES } from '../../../constants';
+import { COLORS, icons, SIZES } from '../../../constants';
 import MyPageButton from '../../../components/MyPageButton';
 import axiosApiInstance from '../../../utils/axios';
 
@@ -13,21 +13,20 @@ const StoreManagementMain = ({ navigation }) => {
 
     const { state, dispatch } = useContext(AuthContext);
     const [storeInfo, setStoreInfo] = useState('');
-    /*FlatList로 변경 필요 */
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', async () => {
 
             axiosApiInstance.get('/myStoreList').then((res) => {
-                // s
                 setStoreInfo(res.data.data);
+                console.log('ddddd', JSON.stringify(res.data.data, null, 4));
             }).catch( (e )=> console.log(e));
         });
 
         //unmount 시 리스너 삭제
         return unsubscribe;
 
-     }, []);
+     }, [navigation]);
 
 
 
@@ -38,6 +37,7 @@ const StoreManagementMain = ({ navigation }) => {
 
     const storeData = {
         storeName: state.member.nickName,
+        logoUrl: storeInfo.logoUrl,
         storeOpen: true,
         storeOrderStatus: {
             Todo: 0,

@@ -12,13 +12,15 @@ import {
     TouchableOpacity,
     Alert,
     Image,
-    Pressable
+    Pressable,
 } from 'react-native';
 import BottomButton from '../../../components/layout/BottomButton';
 import Header from '../../../components/layout/Header';
 import { SIZES, FONTS2 } from '../../../constants';
 import { responsiveHeight } from 'react-native-responsive-dimensions';
 import { launchImageLibrary } from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
+import uuid from 'react-native-uuid';
 
 import Postcode from '@actbase/react-daum-postcode';
 import DatePicker from 'react-native-date-picker';
@@ -30,7 +32,7 @@ import axiosApiInstance from '../../../utils/axios';
 
 
 
-const RegisterStoreDetail = ({navigation}) => {
+const RegisterStoreDetail = ({ navigation }) => {
 
 
     // 상점 입력 정보
@@ -50,7 +52,7 @@ const RegisterStoreDetail = ({navigation}) => {
     const initalSelected = [false, false, false, false, false];
     const [selected, setSelected] = useState(initalSelected);
 
-    const [uploadImage, setUploadImage] = useState('https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fpaik%2Fstore-logo.png?alt=media&token=826d45be-3fc7-4793-a8d2-ac7e617c5005');
+    const [uploadImage, setUploadImage] = useState('');
 
 
     const isEmpty = (val) => {
@@ -63,17 +65,9 @@ const RegisterStoreDetail = ({navigation}) => {
 
     const handleImage = () => {
         launchImageLibrary({}, (res) => {
-            const source = { uri: res.uri };
             setUploadImage(res.uri);
-            console.log(res.uri);
         });
     };
-
-
-    console.log(category)
-
-
-
 
     return (
         <KeyboardAvoidingView style={styles.container}>
@@ -94,14 +88,10 @@ const RegisterStoreDetail = ({navigation}) => {
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
             >
-                {/* Header */}
                 <Header title="매장 정보" small="true" />
 
-                {/* Body */}
                 <View style={{ flex: 1 }}>
                     <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: 20 }}>
-
-                        {/* 매장 이름 */}
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>매장 이름 (상호명)</Text>
                         <TextInput
                             style={{
@@ -116,46 +106,40 @@ const RegisterStoreDetail = ({navigation}) => {
                             onChangeText={(text) => setStoreName(text)}
                         />
                         
-                        {/* 카테고리 */}
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>카테고리</Text>
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}  >
-                        <View style={{flex:1 ,marginBottom: 30 ,flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                            {categories.map( (item, index) => (
-                                <Pressable
-                                    key={index}
-                                    onPress={() => {
-                                        setSelected([
-                                        ...initalSelected.slice(0, index),
-                                        !selected[index],
-                                        ...initalSelected.slice(index + 1),
-                                        ]);
+                            <View style={{ flex: 1, marginBottom: 30, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                {categories.map((item, index) => (
+                                    <Pressable
+                                        key={index}
+                                        onPress={() => {
+                                            setSelected([
+                                                ...initalSelected.slice(0, index),
+                                                !selected[index],
+                                                ...initalSelected.slice(index + 1),
+                                            ]);
 
-                                        setCategory((prevItem) => prevItem === item ? '' : item );
-                                    }}
-                                    style={ [
-                                        {
-                                            marginHorizontal: 5,
-                                            borderRadius: 100,
-                                            backgroundColor: selected[index]
-                                                ? '#6E99F0'
-                                                : 'white',
-                                                // opacity: selected[index]
-                                                // ? 0.9
-                                                // : 0.5,
-                                        },
-                                        styles.dateButton,
-                                    ]}
-                                >
-                                <View style={{ width: 65, height: 65, alignItems: 'center', justifyContent: 'center'}}>
-                                <Text  style={{color: selected[index] ? 'white' : 'black', ...FONTS2.body4}}>{item}</Text>
-                                </View>
-                                </Pressable>
-                            ))}
-                        </View>
+                                            setCategory((prevItem) => prevItem === item ? '' : item);
+                                        }}
+                                        style={[
+                                            {
+                                                marginHorizontal: 5,
+                                                borderRadius: 100,
+                                                backgroundColor: selected[index]
+                                                    ? '#6E99F0'
+                                                    : 'white',
+                                            },
+                                            styles.dateButton,
+                                        ]}
+                                    >
+                                        <View style={{ width: 65, height: 65, alignItems: 'center', justifyContent: 'center' }}>
+                                            <Text style={{ color: selected[index] ? 'white' : 'black', ...FONTS2.body4 }}>{item}</Text>
+                                        </View>
+                                    </Pressable>
+                                ))}
+                            </View>
                         </ScrollView>
 
-
-                        {/* 사진 */}
                         {
                             uploadImage ? (
                                 <View>
@@ -168,7 +152,7 @@ const RegisterStoreDetail = ({navigation}) => {
                                     />
                                 </View>
                             ) : (
-                                <View style={{ borderWidth: 2, }}>
+                                <View style={{ borderWidth: 2, width: 104 }}>
                                     <Image
                                         source={icons.cancel}
                                         resizeMode="contain"
@@ -181,16 +165,12 @@ const RegisterStoreDetail = ({navigation}) => {
 
                             )
                         }
-                        <TouchableOpacity
-                            // onPress={handleImage}
-                        >
-                            <View style={{}}>
+                        <TouchableOpacity onPress={handleImage}>
+                            <View>
                                 <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>사진 첨부</Text>
                             </View>
                         </TouchableOpacity>
 
-
-                        {/* 매장 전화번호 */}
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>매장 전화번호</Text>
                         <TextInput
                             style={{
@@ -205,7 +185,6 @@ const RegisterStoreDetail = ({navigation}) => {
                             onChangeText={(text) => setStoreCallNumber(text)}
                         />
 
-                        {/* 매장 주소 */}
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>매장 주소</Text>
                         <TouchableOpacity
                             onPress={() => setModalVisible(true)}
@@ -220,7 +199,6 @@ const RegisterStoreDetail = ({navigation}) => {
                             >{storeLocation.address === undefined ? '주소 검색하기' : storeLocation.address}</Text>
                         </TouchableOpacity>
 
-                        {/* 배달 팁 */}
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>배달 팁</Text>
                         <TextInput
                             style={{
@@ -235,13 +213,11 @@ const RegisterStoreDetail = ({navigation}) => {
                             onChangeText={(text) => setStoreTip(text)}
                         />
 
-                        {/* 매장 오픈 마감 시간 */}
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>매장 오픈시간</Text>
                         <DatePicker date={openTime} onDateChange={date => setOpenTime(date)} mode="time" />
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>매장 마감시간</Text>
                         <DatePicker date={closeTime} onDateChange={date => setCloseTime(date)} mode="time" />
 
-                        {/* 공지 사항 */}
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>공지사항</Text>
                         <TextInput
                             style={{
@@ -257,7 +233,6 @@ const RegisterStoreDetail = ({navigation}) => {
                             onChangeText={(text) => setNotice(text)}
                         />
 
-                        {/* 상점 설명 */}
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>매장 설명</Text>
                         <TextInput
                             style={{
@@ -273,37 +248,74 @@ const RegisterStoreDetail = ({navigation}) => {
                             onChangeText={(text) => setStoreIntro(text)}
                         />
                     </View>
-                    {/* Footer */}
+                    
                     <BottomButton onPress={() => {
-                        // !isEmpty(storeName) && !isEmpty(storeCallNumber) && !isEmpty(storeLocation) && !isEmpty(storeTip)
-                        if (true) {
-                            axiosApiInstance.post('/store', {
-                                storeName: storeName,
-                                address: storeLocation.address,
-                                latitude: storeLocation.latitude,
-                                longitude: storeLocation.longitude,
-                                phoneNumber: storeCallNumber,
-                                deliveryTip: storeTip,
-                                openTime: ('0' + openTime.getHours()).slice(-2) + ':' + ('0' + openTime.getMinutes()).slice(-2),
-                                closeTime: ('0' + closeTime.getHours()).slice(-2) + ':' + ('0' + closeTime.getMinutes()).slice(-2),
-                                logoUrl: uploadImage,
+                        
+                        const uploadImageUri = (imageUri) => {
+                            if (imageUri) {
+                                const ext = imageUri.split('.').pop();
+                                const filename = `${uuid.v4()}.${ext}`;
+                                const imgRef = storage().ref(`menuimage/${filename}`);
 
-                                // 추가된 속성
-                                notice: notice,
-                                storeIntro: storeIntro,
-                                category: category,
+                                const unsubscribe = imgRef.putFile(imageUri)
+                                    .on(
+                                        storage.TaskEvent.STATE_CHANGED,
+                                        async snapshot => {
+                                            var state = {
+                                                ...state,
+                                                progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100, // Calculate progress percentage
+                                            };
+                                            if (snapshot.state === storage.TaskState.SUCCESS) {
+                                                console.log('upload success');
+                                                // unsubscribe the event
+                                                unsubscribe();
+                                                // update the image url
+                                                let url;
+                                                await imgRef.getDownloadURL()
+                                                    .then((response) => {
+                                                        console.log('get url response', response);
+                                                        url = response;
+                                                    })
+                                                    .catch(error => {
+                                                        console.log('Failed to get url', error);
+                                                    });
 
-                            }).then(function (response) {
+                                                console.log('파이어베이스 URL 체크: ', url);
 
-                                console.log(response);
-                                navigation.navigate('RegisterMenuDetail');
+                                                if (!isEmpty(storeName) && !isEmpty(storeCallNumber) && !isEmpty(storeLocation) && !isEmpty(storeTip)) {
+                                                    axiosApiInstance.post('/store', {
+                                                        storeName: storeName,
+                                                        address: storeLocation.address,
+                                                        latitude: storeLocation.latitude,
+                                                        longitude: storeLocation.longitude,
+                                                        phoneNumber: storeCallNumber,
+                                                        deliveryTip: storeTip,
+                                                        openTime: ('0' + openTime.getHours()).slice(-2) + ':' + ('0' + openTime.getMinutes()).slice(-2),
+                                                        closeTime: ('0' + closeTime.getHours()).slice(-2) + ':' + ('0' + closeTime.getMinutes()).slice(-2),
+                                                        logoUrl: url,
 
-                            }).catch(function (error) {
-                                console.log('post store error');
-                            });
-                        } else {
-                            Alert.alert('필요한정보를 입력해주세요.');
-                        }
+                                                        // 추가된 속성
+                                                        notice: notice,
+                                                        storeIntro: storeIntro,
+                                                        category: category,
+
+                                                    }).then(function (response) {
+
+                                                        console.log(response);
+                                                        navigation.navigate('RegisterMenuDetail');
+
+                                                    }).catch(function (error) {
+                                                        console.log('post store error');
+                                                    });
+                                                } else {
+                                                    Alert.alert('필요한정보를 입력해주세요.');
+                                                }
+                                            }
+                                        });
+                            }
+                        };
+                        uploadImageUri(uploadImage);
+                        
                     }} title="다음" />
                 </View>
             </ScrollView>

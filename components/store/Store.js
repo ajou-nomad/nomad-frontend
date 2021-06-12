@@ -5,19 +5,20 @@ import React,{ useState } from 'react';
 import { View, Text, Switch, StyleSheet, Image } from 'react-native';
 import { COLORS, FONTS2, images, SIZES } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
-import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import { responsiveWidth } from 'react-native-responsive-dimensions';
 import ToggleSwitch from 'toggle-switch-react-native';
 
 const Store = (props) => {
     const storeData = props.storeData;
     const storeOrderStatus = storeData.storeOrderStatus;
     const [startSales, setStartSales] = useState(storeData.storeOpen);
-    const navigation = useNavigation();
+
+    console.log('ss', JSON.stringify(storeData, null, 4));
 
     return (
         <View style={styles.mainView} >
             <View style={styles.storeNameView}>
-                <Image style={styles.storeNameImg} source={{uri: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fediya%2Fediya.png?alt=media&token=14622fbc-c37f-4346-bfc9-2f522e6ca6fe'}} />
+                <Image style={styles.storeNameImg} source={{uri: storeData.logoUrl}} />
                 <Text style={{ ...FONTS2.h3, marginLeft: 15 }}>{storeData.storeName}</Text>
             </View>
 
