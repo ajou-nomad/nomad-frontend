@@ -15,20 +15,26 @@ import {
 import Header from '../../components/layout/Header';
 import BottomButton from '../../components/layout/BottomButton';
 import OrderMenuItem from '../../components/item/OrderMenuItem';
-
 import { COLORS, FONTS2, SIZES } from '../../constants';
+import { YellowBox } from 'react-native';
+
+YellowBox.ignoreWarnings([
+    'Non-serializable values were found in the navigation state',
+]);
 
 const Cart = ({ navigation, route: { params } }) => {
-    // console.log(params);
+
+
+    const [cartItems, setCartItems] = useState(params.cartItems);
+
     const datePicker = params.datePicker;
 
-    // const [totalPrice, setTotalPrice] = useState(0);
     let itemPrice = 0;
-    for (let indexOfCart = 0; indexOfCart < params.cartItems.length; indexOfCart++) {
-        itemPrice += params.cartItems[indexOfCart].cost;
+    for (let indexOfCart = 0; indexOfCart < cartItems.length; indexOfCart++) {
+        itemPrice += cartItems[indexOfCart].cost;
     }
     let deliveryTip = 0;
-    if (params.cartItems.length > 0) {
+    if (cartItems.length > 0) {
         deliveryTip = params.storeInfo.deliveryTip;
     }
     const totalPrice = itemPrice + deliveryTip;
@@ -36,6 +42,12 @@ const Cart = ({ navigation, route: { params } }) => {
     const itemPriceString = itemPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     const deliveryTipString = deliveryTip.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     const totalPriceString = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    const delItem = (deleteMenuId) => {
+        setCartItems( (currentCartItems) => {
+            return currentCartItems.filter( (cartItem) => cartItem.menuId !== deleteMenuId);
+        });
+    };
 
     const renderBody = () => {
         return (
@@ -45,8 +57,8 @@ const Cart = ({ navigation, route: { params } }) => {
                     <View style={{ margin: 30, }}>
                         <Text style={{ ...FONTS2.h2, marginBottom: 10, }}>{params.storeInfo.storeName}</Text>
                         {
-                            params.cartItems.map((items, index) => {
-                                return <OrderMenuItem key={index} isCart="true" orderDetail={items} />
+                            cartItems.map((items, index) => {
+                                return <OrderMenuItem key={index} isCart="true" orderDetail={items} delCartItem={params.delCartItem} delItem={delItem} promotion={params.promotion} />
                             })
                         }
                     </View>
@@ -110,7 +122,7 @@ const Cart = ({ navigation, route: { params } }) => {
                         <BottomButton onPress={() => totalPrice === 0 ? ToastAndroid.showWithGravity('메뉴를 선택해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER) : navigation.navigate('CheckOrder',
                             {
                                 totalPrice: totalPrice,
-                                cartItems: params.cartItems,
+                                cartItems: cartItems,
                                 time: params.time,
                                 location: params.location,
                                 storeInfo: params.storeInfo,
@@ -122,7 +134,7 @@ const Cart = ({ navigation, route: { params } }) => {
                         <BottomButton onPress={() => totalPrice === 0 ? ToastAndroid.showWithGravity('메뉴를 선택해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER) : navigation.navigate('CreateGroupDetail',
                             {
                                 totalPrice: totalPrice,
-                                cartItems: params.cartItems,
+                                cartItems: cartItems,
                                 time: params.time,
                                 location: params.location,
                                 storeInfo: params.storeInfo,

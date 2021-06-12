@@ -3,20 +3,22 @@
 /* eslint-disable no-alert */
 
 import React from 'react';
-import { View, StyleSheet, } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Header from '../components/layout/Header';
 import StoreItem from '../components/item/StoreItem';
 import { COLORS } from '../constants';
 
-const LikeList = () => {
+const LikeList = ({navigation, route: { params }}) => {
     return (
         <View style={styles.container}>
             <Header title='찜한 목록' small='true' />
-            {/* <StoreItem isLikeList='true'/>
-            <StoreItem isLikeList='true'/>
-            <StoreItem isLikeList='true'/>
-            <StoreItem isLikeList='true'/>
-            <StoreItem isLikeList='true'/> */}
+            <ScrollView>
+                <View style={{ flex: 1 }}>
+                    {params.likeStore?.map((storeItems, index) => {
+                        return <StoreItem key={index} storeData={storeItems} isLikeList={true} />;
+                    })}
+                </View>
+            </ScrollView>
         </View>
     );
 };

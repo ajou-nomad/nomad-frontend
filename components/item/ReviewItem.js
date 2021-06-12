@@ -19,26 +19,13 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 import { useNavigation } from '@react-navigation/native';
 
 import { COLORS, FONTS, FONTS2, FONTS3, icons, SIZES } from '../../constants';
+import axiosApiInstance from '../../utils/axios';
 
 
-const ReviewItem = ({ item, admin }) => {
-
-    // default는 undefinded 즉 false 이기 때문에 특수한 상황에서만 true 되도록 구현 ( isMypage 삭제)
+const ReviewItem = ({ item, admin, delReview }) => {
 
     const navigation = useNavigation();
-
-    const handleDelete = () => {
-            return (
-                <View style={{position: 'absolute'}}>
-                    <Modal isVisible={true}>
-                        <View style={{ flex: 1 }}>
-                            <Text>I am the modal content!</Text>
-                        </View>
-                    </Modal>
-                </View>
-            );
-        // ToastAndroid.showWithGravity('리뷰가 삭제되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
-    };
+    const [modalVisible, setModalVisible] = useState(false);
 
     const renderRatingAndDate = () => {
         return (
@@ -70,8 +57,16 @@ const ReviewItem = ({ item, admin }) => {
                 <View style={styles.container}>
                     {/* 유저 닉네임 */}
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={{ ...FONTS2.h4 }}>{item.storeName}&gt;</Text>
-                        <Text style={{ ...FONTS2.h4, marginBottom: 5 }}> {item.nickName}</Text>
+                        { item.storeName ? (
+                            <>
+                                <Text style={{ ...FONTS2.h4 }}>{item.storeName}&gt;</Text>
+                                <Text style={{ ...FONTS2.h4, marginBottom: 5 }}> {item.nickName}</Text>
+                            </>
+                        ) : (
+                            <>
+                                <Text style={{ ...FONTS2.h4, marginBottom: 5 }}> {item.nickName}</Text>
+                            </>
+                        )}
                     </View>
 
                     {/* 별점, 작성 날짜 */}
@@ -81,7 +76,6 @@ const ReviewItem = ({ item, admin }) => {
         );
     };
 
-    const [modalVisible, setModalVisible] = useState(false);
 
     const closeModal = () => {
         setModalVisible(!modalVisible);
@@ -93,7 +87,7 @@ const ReviewItem = ({ item, admin }) => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             justifyContent: 'center',
         };
-        
+
         return (
             <Modal
                 animationType='slide'
@@ -109,12 +103,27 @@ const ReviewItem = ({ item, admin }) => {
 
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: SIZES.base * 3, marginTop: SIZES.base * 3 }}>
                             <TouchableOpacity
-                             onPress={() => closeModal()}
+                                onPress={() => closeModal()}
                             >
                                 <Text style={{ ...FONTS2.body2 }}>닫기</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {
+
+                                    axiosApiInstance.post('/deleteReview', {
+                                        reviewId: item.reviewId,
+                                        storeId: item.storeId,
+                                    }).then( () => {
+                                        closeModal();
+                                        delReview(item.reviewId);
+                                        ToastAndroid.showWithGravity('리뷰가 삭제되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+                                    }).catch( (e) =>  {
+                                        console.log(e);
+                                        closeModal();
+                                    });
+                                }}
+                            >
                                 <Text style={{ ...FONTS2.h3 }}>확인</Text>
                             </TouchableOpacity>
                         </View>
