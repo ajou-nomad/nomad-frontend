@@ -255,7 +255,7 @@ const RegisterStoreDetail = ({ navigation }) => {
                             if (imageUri) {
                                 const ext = imageUri.split('.').pop();
                                 const filename = `${uuid.v4()}.${ext}`;
-                                const imgRef = storage().ref(`menuimage/${filename}`);
+                                const imgRef = storage().ref(`storelogo/${filename}`);
 
                                 const unsubscribe = imgRef.putFile(imageUri)
                                     .on(

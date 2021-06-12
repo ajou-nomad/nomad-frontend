@@ -30,8 +30,8 @@ const StoreItem = ({ deliveryPlace, deliDate, datePicker, storeData, isLikeList 
                     source={{ uri: storeData.logoUrl }}
                     resizeMode='contain'
                     style={{
-                        width: 55,
-                        height: 55,
+                        width: SIZES.width * 0.14,
+                        height: SIZES.height * 0.08,
                         alignSelf: 'center',
                     }}
                 />

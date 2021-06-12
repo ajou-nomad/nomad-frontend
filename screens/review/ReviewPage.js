@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, } from 'react-native';
-import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import { responsiveWidth } from 'react-native-responsive-dimensions';
 
 import ReviewItem from '../../components/item/ReviewItem';
 import Header from '../../components/layout/Header';
