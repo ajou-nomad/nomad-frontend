@@ -54,6 +54,7 @@ const DayDelivery = ({ route, navigation }) => {
                 // 해당 group안에 storeData insert
                 let storeData = res.data.storeData.filter((store) => store.storeId === group.storeId);
 
+
                 group.store = storeData[0];
 
                 return group;

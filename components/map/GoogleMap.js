@@ -8,7 +8,6 @@ import CustomMarker from './CustomMarker';
 import {icons} from '../../constants';
 import axios from 'axios';
 import axiosApiInstance from '../../utils/axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getDaliyGroupData, getWeeklyGroupData} from '../../utils/helper';
 
 
