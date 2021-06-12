@@ -46,7 +46,7 @@ const CreditCard = ({route, navigation}) => {
     const paymentTermination = (response) => {
 
         // 추후 실제 결제는 true로
-        if (response.imp_success === 'true') {
+        if (response.imp_success === 'false') {
 
             const currentTime = new Date();
             currentTime.setHours(currentTime.getHours() + 9);

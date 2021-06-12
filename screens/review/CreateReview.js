@@ -65,7 +65,6 @@ const CreateReview = ({ route }) => {
     };
 
     const onChange = (text) => {
-        // console.log(e);
         setText(text);
     };
 
@@ -76,7 +75,6 @@ const CreateReview = ({ route }) => {
             ToastAndroid.showWithGravity('작성한 리뷰가 없습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
         }
         else {
-
             const uploadImage = (imageUri) => {
                 if (imageUri) {
                     const ext = imageUri.split('.').pop();

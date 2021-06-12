@@ -2,8 +2,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,10 +12,28 @@ import Header from '../components/layout/Header';
 import Receipt from '../screens/Receipt';
 
 import axiosApiInstance from '../utils/axios';
+import { AuthContext } from '../context/AuthContextProvider';
 
 const OrderDetails = () => {
     const navigation = useNavigation();
     const [memberOrderList, setMemberOrderList] = useState([]);
+
+    const [isFetching, setIsFetching] = useState(false);
+
+    const onRefresh = () => {
+        setIsFetching(true);
+
+        axiosApiInstance.get('/memberOrderList')
+            .then(function (response) {
+                console.log('주문 내역 데이터 요청: ', JSON.stringify(response.data.data, null, 4));
+                setMemberOrderList(response.data.data.reverse());
+                    
+                setIsFetching(false);
+            }).catch((e) => console.log(e));
+    };
+
+
+    const { state, dispatch } = useContext(AuthContext);
 
     useEffect(() => {
         
@@ -25,7 +43,9 @@ const OrderDetails = () => {
             axiosApiInstance.get('/memberOrderList')
                 .then(function (response) {
                     console.log('주문 내역 데이터 요청: ', JSON.stringify(response.data.data, null, 4));
-                    setMemberOrderList(response.data.data);
+                    setMemberOrderList(response.data.data.reverse());
+                    
+                    setIsFetching(false);
                 }).catch((e) => console.log(e));
         });
 
@@ -86,10 +106,17 @@ const OrderDetails = () => {
                     </View>
                 );
             }
-            else {
+            else if (deliveryComplete === 'deliveryDone') {
                 return (
                     <View style={{ backgroundColor: COLORS.darkgray, padding: SIZES.padding * 0.25, borderRadius: 8 }}>
                         <Text style={{ ...FONTS2.body4, color: COLORS.white }}>배달 완료</Text>
+                    </View>
+                );
+            }
+            else {
+                 return (
+                    <View style={{ borderWidth: 0.3, borderColor: 'red', padding: SIZES.padding * 0.25, borderRadius: 8 }}>
+                        <Text style={{ ...FONTS2.body4, color: 'red' }}>주문취소</Text>
                     </View>
                 );
             }
@@ -118,24 +145,16 @@ const OrderDetails = () => {
     const OrderDetailItem = ({ deliveryComplete, onPress, item }) => {
         const [modalVisible, setModalVisible] = useState(false);
 
-        // console.log('OrderDetailItem: ', JSON.stringify(item, null, 4));
-
         const closeModal = () => {
             setModalVisible(!modalVisible);
         };
-
-
-        // console.log(JSON.stringify(item.orderTime).substr(1,10));
-        // console.log(JSON.stringify(item.orderTime).substr(12,5));
 
         const date = new Date(item.orderTime);
 
         return (
             <View style={styles.storeContainer}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SIZES.base }}>
-                    <TouchableOpacity
-                    // onPress={() => navigation.navigate('StoreDetail', { time: null, storeName: item.storeName })}
-                    >
+                    <TouchableOpacity>
                         <Text style={{ ...FONTS2.h2, fontSize: 25 }}>{item.storeName}</Text>
                         <Text style={{ ...FONTS2.body3 }}>{date.getFullYear()}년 {date.getMonth() + 1}월 {date.getUTCDate()}일 {date.getUTCHours()}시 {date.getUTCMinutes()}분</Text>
                     </TouchableOpacity>
@@ -171,25 +190,61 @@ const OrderDetails = () => {
                         </Text>
                     </TouchableOpacity>
                 </View>
+                {item.orderStatus === 'recruiting' ? (
+                    <TouchableOpacity
+                        style={{ marginTop: SIZES.base, paddingRight: SIZES.base }}
+                        onPress={() => {
+                            Alert.alert(
+                                '주문을 취소하시겠습니까?',
+                                '',
+                                [
+                                    { text: 'NO', onPress: () => console.log('NO Pressed'), style: 'cancel' },
+                                    {
+                                        text: 'YES', onPress: () => {
+                                            axiosApiInstance.post('/memberOrderCancel', {
+                                                memberOrderId: item.memberOrderId,
+                                            }).then((res) => {
+                                                console.log('포인트: ', res.data); // 응답으로 포인트
+
+                                                dispatch({ type: 'RESTORE_POINT', point: res.data });
+                                                // navigation.navigate('OrderDetails');
+                                            }).catch((e) => {
+                                                console.log(e);
+                                            });
+                                        },
+                                    },
+                                ]
+                            );
+                        }}
+                    >
+                        <Text style={{ ...FONTS2.body3, textAlign: 'right' }}>주문 취소</Text>
+                    </TouchableOpacity>
+                ) : (null)}
+                
                 <Receipt item={item} modalVisible={modalVisible} closeModal={closeModal} />
             </View>
         );
     };
 
+    
+    
+
+
     return (
         <View style={styles.container}>
             <Header title="주문 내역" small='true' />
             
-            <ScrollView style={{ padding: 15, flex: 1 }}>
+            {/* <ScrollView style={{ padding: 15, flex: 1, }}>
                 {memberOrderList.map((item, index) => {
                     return (
                         <OrderDetailItem key={index} item={item} />
                     );
                 })}
-            </ScrollView>
-            {/* <View style={{ padding: 15, flex: 1 }}>
-                <FlatList data={memberOrderList} keyExtractor={item => item.memberOrderId.toString()} renderItem={({ item }) => <OrderDetailItem item={item} />} />
-            </View> */}
+            </ScrollView> */}
+            <View style={{ padding: 15, flex: 1 }}>
+                <FlatList onRefresh={onRefresh}
+                refreshing={isFetching}data={memberOrderList} keyExtractor={item => item.memberOrderId.toString()} renderItem={({ item }) => <OrderDetailItem item={item} />} />
+            </View>
         </View>
     );
 };
@@ -200,9 +255,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white,
     },
     storeContainer: {
-        marginVertical: 10,
+        marginVertical: 15,
         width: responsiveScreenWidth(90),
-        // backgroundColor: '#f1f3f5',
         alignSelf: 'center',
         padding: 20,
         borderRadius: 10,

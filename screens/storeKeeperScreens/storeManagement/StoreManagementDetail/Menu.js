@@ -5,6 +5,8 @@ import React, {useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ToastAndroid, ScrollView, Image } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
+import storage from '@react-native-firebase/storage';
+import uuid from 'react-native-uuid';
 
 import Header from '../../../../components/layout/Header';
 import { COLORS, SIZES, FONTS2, icons } from '../../../../constants';
@@ -39,13 +41,11 @@ const Menu = () => {
     const [menuPrice, setMenuPrice] = useState('');
     const [description, setDescription] = useState('');
     const [promotionDescription, setPromotionDescription] = useState('');
-    const [uploadImage, setUploadImage] = useState('https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2Fediya%2FIMG_1510820763649.png?alt=media&token=7aa455aa-202d-4de7-b440-7cee6911c3fc');
+    const [uploadImage, setUploadImage] = useState('');
 
     const handleImage = () => {
         launchImageLibrary({}, (res) => {
-            const source = { uri: res.uri };
             setUploadImage(res.uri);
-            console.log(res.uri);
         });
     };
 
@@ -56,19 +56,19 @@ const Menu = () => {
 
             <View style={{ padding: SIZES.base * 2, }}>
                 <Text style={{ ...FONTS2.h2, marginBottom: SIZES.base * 3 }}>메뉴 정보</Text>
-                <InputBox title="메뉴 이름" placeholder="메뉴 이름을 입력해주세요." state={menuName} setState= {setMenuName} />
-                <InputBox title="메뉴 가격" placeholder="숫자만 입력해주세요." state={menuPrice} setState= {setMenuPrice} />
-                <InputBox title="메뉴 설명" placeholder="메뉴에 대해 설명해주세요." description="true" state={description} setState= {setDescription}/>
-                {/* 사진첨부 부분 */}
+                <InputBox title="메뉴 이름" placeholder="메뉴 이름을 입력해주세요." state={menuName} setState={setMenuName} />
+                <InputBox title="메뉴 가격" placeholder="숫자만 입력해주세요." state={menuPrice} setState={setMenuPrice} />
+                <InputBox title="메뉴 설명" placeholder="메뉴에 대해 설명해주세요." description="true" state={description} setState={setDescription} />
                 {
                     uploadImage ? (
                         <View style={{ marginBottom: SIZES.base * 2 }}>
                             <Text style={{ ...FONTS2.h3, color: '#495057' }}>메뉴 사진</Text>
-                            <View style={[styles.imgInput, { minHeight: responsiveHeight(15)  }]}>
+                            <View style={[styles.imgInput, { minHeight: responsiveHeight(15) }]}>
                                 <Image
-                                    source={{ uri: uploadImage}}
+                                    source={{ uri: uploadImage }}
                                     resizeMode='contain'
-                                    style={{ width: 100, height: 100
+                                    style={{
+                                        width: 100, height: 100
                                     }}
                                 />
                             </View>
@@ -77,11 +77,12 @@ const Menu = () => {
                     ) : (
                         <View style={{ marginBottom: SIZES.base * 2 }}>
                             <Text style={{ ...FONTS2.h3, color: '#495057' }}>메뉴 사진</Text>
-                            <View style={[styles.imgInput, { minHeight: responsiveHeight(15)  }]}>
+                            <View style={[styles.imgInput, { minHeight: responsiveHeight(15) }]}>
                                 <Image
                                     source={icons.cancel}
                                     resizeMode='contain'
-                                    style={{ width: 100, height: 100
+                                    style={{
+                                        width: 100, height: 100
                                     }}
                                 />
                             </View>
@@ -91,11 +92,11 @@ const Menu = () => {
                 <TouchableOpacity
                     onPress={handleImage}
                 >
-                    <View style={{width: SIZES.width * 0.35, alignItems: 'center', marginBottom: 15}}>
+                    <View style={{ width: SIZES.width * 0.35, alignItems: 'center', marginBottom: 15 }}>
                         <Text style={{ ...FONTS2.h4, fontWeight: 'bold', paddingBottom: 10 }}>사진 첨부</Text>
                     </View>
                 </TouchableOpacity>
-                <InputBox title="프로모션 설명" placeholder="프로모션에 대해 설명해주세요." description="true" state={promotionDescription} setState= {setPromotionDescription}/>
+                <InputBox title="프로모션 설명" placeholder="프로모션에 대해 설명해주세요." description="true" state={promotionDescription} setState={setPromotionDescription} />
             </View>
 
 
@@ -111,26 +112,53 @@ const Menu = () => {
                     title="등록하기"
                     color="white"
                     backColor="#3897f1" onPress={() => {
+                        const uploadImageUri = (imageUri) => {
+                            if (imageUri) {
+                                const ext = imageUri.split('.').pop();
+                                const filename = `${uuid.v4()}.${ext}`;
+                                const imgRef = storage().ref(`promotionimage/${filename}`);
 
-                        // console.log({
-                        //     promotionMenuName: menuName,
-                        //         cost: menuPrice,
-                        //         description: description,
-                        //         promotionDescription: promotionDescription,
-                        // })
-                        axiosApiInstance.post('promotionMenu',{
-                            promotionMenuName: menuName,
-                            cost: menuPrice,
-                            description: description,
-                            promotionDescription: promotionDescription,
-                            // imgUrl: uploadImage,
-                            imgUrl: 'https://firebasestorage.googleapis.com/v0/b/rn-fooddeliveryapp-c2ae6.appspot.com/o/tempimage%2F04_%EC%95%97%EB%A9%94%EB%A6%AC%EC%B9%B4%EB%85%B8_ICED-1.jpg?alt=media&token=d30d224f-53d5-4946-a943-fddc65bf4576',
-                        }).then((response) => {
-                            console.log(response)
-                            navigation.goBack();
-                            ToastAndroid.showWithGravity('메뉴가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
-                        });
-                    }} 
+                                const unsubscribe = imgRef.putFile(imageUri)
+                                    .on(
+                                        storage.TaskEvent.STATE_CHANGED,
+                                        async snapshot => {
+                                            var state = {
+                                                ...state,
+                                                progress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100, // Calculate progress percentage
+                                            };
+                                            if (snapshot.state === storage.TaskState.SUCCESS) {
+                                                console.log('upload success');
+                                                unsubscribe();
+                                                
+                                                let url;
+                                                
+                                                await imgRef.getDownloadURL()
+                                                    .then((response) => {
+                                                        console.log('get url response', response);
+                                                        url = response;
+                                                    })
+                                                    .catch(error => {
+                                                        console.log('Failed to get url', error);
+                                                    });
+
+                                                console.log('파이어베이스 URL 체크: ', url);
+
+                                                axiosApiInstance.post('promotionMenu', {
+                                                    promotionMenuName: menuName,
+                                                    cost: menuPrice,
+                                                    description: description,
+                                                    promotionDescription: promotionDescription,
+                                                    imgUrl: url,
+                                                }).then((response) => {
+                                                    navigation.goBack();
+                                                    ToastAndroid.showWithGravity('메뉴가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+                                                });
+                                            }
+                                        });
+                            }
+                        };
+                        uploadImageUri(uploadImage);
+                    }}
                 />
             </View>
         </ScrollView>
