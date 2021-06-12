@@ -13,7 +13,6 @@ import {
     Alert,
 } from 'react-native';
 import { SIZES, FONTS2, COLORS, icons } from '../../../constants';
-import Header from '../../../components/layout/Header';
 import BottomButton from '../../../components/layout/BottomButton';
 import AddMenu from '../../../components/item/AddMenu';
 import uuid from 'react-native-uuid';
@@ -97,7 +96,6 @@ const RegisterMenuDetail = ({navigation, route}) => {
     return (
         <KeyboardAvoidingView style={styles.container}>
             <View style={{ flex: 1 }} >
-                {/* Header */}
                 <View style={{
                     height: responsiveHeight(8),
                     backgroundColor: 'white',

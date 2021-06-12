@@ -25,6 +25,7 @@ const MyPage = ({ navigation }) => {
 
   const { state, dispatch } = useContext(AuthContext);
 
+
   // {"isSignedIn": true, "member": {"email": "ajouajou@gmail.com", "memberType": "User", "nickName": "아주아주", "phoneNum": "010-1111-1111", "point": 0}}
   console.log('mypage:: ', state);
 
@@ -124,7 +125,7 @@ const MyPage = ({ navigation }) => {
 				</View>
 				<View style={styles.orderAndPointBox}>
 					<Text style={{ ...FONTS2.body3 }}>포인트</Text>
-					<Text style={{ ...FONTS2.h2, color: '#339af0' }}>0</Text>
+          <Text style={{ ...FONTS2.h2, color: '#339af0' }}>{state.member.point}</Text>
 				</View>
 			</View>
 
@@ -139,9 +140,11 @@ const MyPage = ({ navigation }) => {
 			<MyPageButton title='채팅방' img={icons.chat} onPress={() => navigation.navigate('ChatNavigation')} />
 			<MyPageButton title='리뷰 관리' img={icons.review} onPress={() => navigation.navigate('ReviewPage')} />
 			<MyPageButton title='찜한 목록' img={icons.like2} onPress={() => navigation.navigate('LikeList')} />
-			<MyPageButton title='포인트 충전' img={icons.coin} onPress={() => navigation.navigate('MyPointPage')} />
-			<MyPageButton title='정보수정' img={icons.pencil} />
 			<MyPageButton title='로그아웃' img={icons.logout} onPress={signOutGoogle} />
+      <View style={styles.version}>
+        <Text style={{ ...FONTS2.body3, }}>현재 버전 0.0.1</Text>
+      </View>
+			{/* <MyPageButton title='정보수정' img={icons.pencil} /> */}
       
 		</ScrollView>
 	);
@@ -189,6 +192,14 @@ const styles = StyleSheet.create({
   orderAndPointBox: {
     alignItems: 'center',
     alignSelf: 'center',
+  },
+  version: {
+    height: 50,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    borderWidth: 0.3,
+    borderColor: '#ced4da',
+    // flexDirection: 'row',
   },
 });
 
