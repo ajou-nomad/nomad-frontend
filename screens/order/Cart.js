@@ -11,14 +11,15 @@ import {
     ScrollView,
     TextInput,
     ToastAndroid,
+    LogBox,
 } from 'react-native';
 import Header from '../../components/layout/Header';
 import BottomButton from '../../components/layout/BottomButton';
 import OrderMenuItem from '../../components/item/OrderMenuItem';
 import { COLORS, FONTS2, SIZES } from '../../constants';
-import { YellowBox } from 'react-native';
+import { insertComma } from '../../utils/helper';
 
-YellowBox.ignoreWarnings([
+LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
 ]);
 
@@ -26,8 +27,6 @@ const Cart = ({ navigation, route: { params } }) => {
 
 
     const [cartItems, setCartItems] = useState(params.cartItems);
-
-    const datePicker = params.datePicker;
 
     let itemPrice = 0;
     for (let indexOfCart = 0; indexOfCart < cartItems.length; indexOfCart++) {
@@ -39,9 +38,6 @@ const Cart = ({ navigation, route: { params } }) => {
     }
     const totalPrice = itemPrice + deliveryTip;
 
-    const itemPriceString = itemPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    const deliveryTipString = deliveryTip.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    const totalPriceString = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     const delItem = (deleteMenuId) => {
         setCartItems( (currentCartItems) => {
@@ -53,7 +49,6 @@ const Cart = ({ navigation, route: { params } }) => {
         return (
             <View style={{ backgroundColor: COLORS.white, }}>
                 <View>
-                    
                     <View style={{ margin: 30, }}>
                         <Text style={{ ...FONTS2.h2, marginBottom: 10, }}>{params.storeInfo.storeName}</Text>
                         {
@@ -90,20 +85,20 @@ const Cart = ({ navigation, route: { params } }) => {
                     </View>
                 </View>
 
-                
+
                 <View style={{ marginHorizontal: 20, marginTop: 30, marginBottom: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                         <Text style={{ ...FONTS2.body2 }}>주문 금액</Text>
-                        <Text style={{ ...FONTS2.body2 }}>{itemPriceString}원</Text>
+                        <Text style={{ ...FONTS2.body2 }}>{insertComma(itemPrice)}원</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                         <Text style={{ ...FONTS2.body2 }}>배달비</Text>
-                        <Text style={{ ...FONTS2.body2 }}>{deliveryTipString}원</Text>
+                        <Text style={{ ...FONTS2.body2 }}>{insertComma(deliveryTip)}원</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, paddingTop: 15, borderTopWidth: 0.5, marginBottom: 20, }}>
                         <Text style={{ ...FONTS2.h2 }}>총 결제 금액</Text>
-                        <Text style={{ ...FONTS2.h2 }}>{totalPriceString}원</Text>
+                        <Text style={{ ...FONTS2.h2 }}>{insertComma(totalPrice)}원</Text>
                     </View>
                 </View>
             </View>
@@ -140,7 +135,7 @@ const Cart = ({ navigation, route: { params } }) => {
                                 storeInfo: params.storeInfo,
                                 deliDate: params.deliDate,
                                 groupData: params.groupData,
-                                datePicker: datePicker,
+                                datePicker: params.datePicker,
                                 promotion: params.promotion,
                             }
                         )} title="그룹 생성하기" />
