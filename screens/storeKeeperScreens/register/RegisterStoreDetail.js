@@ -183,6 +183,7 @@ const RegisterStoreDetail = ({ navigation }) => {
                             placeholderTextColor="#707070"
                             selectionColor="#000000"
                             onChangeText={(text) => setStoreCallNumber(text)}
+                            keyboardType='numeric'
                         />
 
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>매장 주소</Text>
@@ -211,6 +212,7 @@ const RegisterStoreDetail = ({ navigation }) => {
                             placeholderTextColor="#707070"
                             selectionColor="#000000"
                             onChangeText={(text) => setStoreTip(text)}
+                            keyboardType='numeric'
                         />
 
                         <Text style={{ ...FONTS2.h2, fontWeight: 'bold', marginTop: 30, paddingBottom: 10 }}>매장 오픈시간</Text>
