@@ -12,6 +12,7 @@ import {
     Button,
     StyleSheet,
     Alert,
+    Modal,
 } from 'react-native';
 
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
@@ -27,16 +28,16 @@ const ReviewItem = ({ item, admin }) => {
     const navigation = useNavigation();
 
     const handleDelete = () => {
-        //     return (
-        //         <View>
-        //             <Modal isVisible={true}>
-        //                 <View style={{ flex: 1 }}>
-        //                     <Text>I am the modal content!</Text>
-        //                 </View>
-        //             </Modal>
-        //         </View>
-        //     );
-        ToastAndroid.showWithGravity('리뷰가 삭제되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+            return (
+                <View style={{position: 'absolute'}}>
+                    <Modal isVisible={true}>
+                        <View style={{ flex: 1 }}>
+                            <Text>I am the modal content!</Text>
+                        </View>
+                    </Modal>
+                </View>
+            );
+        // ToastAndroid.showWithGravity('리뷰가 삭제되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
     };
 
     const renderRatingAndDate = () => {
@@ -57,7 +58,7 @@ const ReviewItem = ({ item, admin }) => {
         );
     }
 
-    const renderReivewInStore = () => {
+    const renderReviewTitle = () => {
         return (
             <View style={styles.reviewHeader}>
                 {/* 사진, 유저 닉네임, 별점, 작성 날짜 */}
@@ -68,7 +69,11 @@ const ReviewItem = ({ item, admin }) => {
                 />
                 <View style={styles.container}>
                     {/* 유저 닉네임 */}
-                    <Text style={{ ...FONTS2.h4, marginBottom: 5 }}>{item.nickName}</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={{ ...FONTS2.h4 }}>{item.storeName}&gt;</Text>
+                        <Text style={{ ...FONTS2.h4, marginBottom: 5 }}> {item.nickName}</Text>
+                    </View>
+
                     {/* 별점, 작성 날짜 */}
                     {renderRatingAndDate()}
                 </View>
@@ -76,7 +81,7 @@ const ReviewItem = ({ item, admin }) => {
         );
     };
 
-    const renderReivewInMypage = () => {
+    const renderReviewInMypage = () => {
         return (
             <View>
                 <TouchableOpacity
@@ -94,10 +99,7 @@ const ReviewItem = ({ item, admin }) => {
         <View style={styles.container}>
             {/* {renderHeader()} */}
 
-            { admin ? (
-                renderReivewInStore()) : (
-                renderReivewInMypage()
-            )}
+            {renderReviewTitle()}
 
             {/* 사진 */}
             <Image source={{ uri: item.imgUrl }} resizeMode='contain' style={{ width: SIZES.width * 0.85, height: SIZES.height * 0.4,}} />
@@ -113,7 +115,7 @@ const ReviewItem = ({ item, admin }) => {
                             <View style={{ flex: 1, alignItems: 'flex-end' }}>
                                 <TouchableOpacity
                                     style={styles.deleteButton}
-                                    onPress={handleDelete}
+                                    onPress={ () => handleDelete}
                                 >
                                     <Text style={{ ...FONTS2.body2 }}>삭제</Text>
                                 </TouchableOpacity>
@@ -140,13 +142,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderTopWidth: 0.5,
         borderColor: '#ced4da',
-        paddingTop: 10,
+        paddingVertical: 10,
         alignItems: 'center',
     },
     content: {
         minHeight: 50,
         paddingHorizontal: 5,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     deleteButton: {
         backgroundColor: '#e9ecef',
