@@ -284,7 +284,7 @@ const SignUpScreen = (props) => {
 			</View>
 			<ScrollView style={styles.mainView}>
 				{googlePhoneUnique ||
-					<>
+					<View style={{ alignItems: 'center' }}>
 						<PhoneNumber
 							phoneNumber={phoneNumber}
 							inputStyle={styles.input}
@@ -302,7 +302,7 @@ const SignUpScreen = (props) => {
 							changeValidCode={onChangeValidCode}
 							validation={confirmCode}
 						/>
-					</>
+					</View>
 				}
 				<UserInfo
 					phoneValid={phoneValid}
@@ -344,16 +344,16 @@ const styles = StyleSheet.create({
 	header: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		backgroundColor: '#fff',
+		paddingTop: SIZES.base,
+		backgroundColor: '#fff'
 	},
 	backButton: {
-		marginTop: SIZES.base,
 		marginLeft: 8,
 		...FONTS2.h2,
+		alignSelf: 'center',
 	},
 	headerText: {
-		fontSize: 24,
-		fontWeight: 'bold',
+		...FONTS2.h2,
 		marginLeft: 50,
 	},
 	mainView: {
@@ -376,12 +376,16 @@ const styles = StyleSheet.create({
 		padding: 5,
 	},
 	input: {
+		...FONTS2.body2,
+		borderRadius: 8,
+		borderWidth: 0.3,
+		borderColor: '#adb5bd',
 		backgroundColor: '#fff',
 		marginVertical: 5,
 		marginLeft: 10,
 		fontSize: 14,
 		padding: 10,
-		width: 200,
+		width: '70%',
 	},
 	btnIdle: {
 		width: 20,
