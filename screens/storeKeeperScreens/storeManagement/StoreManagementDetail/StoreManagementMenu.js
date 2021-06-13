@@ -43,7 +43,6 @@ const StoreManagementMenu = ({ navigation, route }) => {
                     return currentMenu.filter((menu) => menu.menuId !== delMenuId);
                 });
             };
-
             return (
                 <Modal
                     animationType='slide'

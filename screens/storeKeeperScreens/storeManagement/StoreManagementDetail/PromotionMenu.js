@@ -1,16 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 
-import { useNavigation } from '@react-navigation/core';
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, Image, TouchableOpacity, ToastAndroid } from 'react-native';
-import { responsiveHeight } from 'react-native-responsive-dimensions';
-import Header from '../../../../components/layout/Header';
-import { COLORS, FONTS2, icons, SIZES } from '../../../../constants';
+import React, {useState} from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ToastAndroid, ScrollView, Image } from 'react-native';
+import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import { useNavigation } from '@react-navigation/native';
 import storage from '@react-native-firebase/storage';
 import uuid from 'react-native-uuid';
+
+import Header from '../../../../components/layout/Header';
+import { COLORS, SIZES, FONTS2, icons } from '../../../../constants';
 import { launchImageLibrary } from 'react-native-image-picker';
 import axiosApiInstance from '../../../../utils/axios';
+
 
 const Button = ({ title, color, backColor, onPress }) => (
     <TouchableOpacity
@@ -33,11 +35,12 @@ const InputBox = ({ title, placeholder, description, state, setState }) => (
     </View>
 );
 
-const Menu = () => {
+const PromotionMenu = () => {
     const navigation = useNavigation();
     const [menuName, setMenuName] = useState('');
     const [menuPrice, setMenuPrice] = useState('');
     const [description, setDescription] = useState('');
+    const [promotionDescription, setPromotionDescription] = useState('');
     const [uploadImage, setUploadImage] = useState('');
 
     const handleImage = () => {
@@ -46,9 +49,10 @@ const Menu = () => {
         });
     };
 
+
     return (
         <ScrollView style={styles.container} >
-            <Header title="일반 메뉴추가" small="true" />
+            <Header title="프로모션 메뉴추가" small="true" />
 
             <View style={{ padding: SIZES.base * 2, }}>
                 <Text style={{ ...FONTS2.h2, marginBottom: SIZES.base * 3 }}>메뉴 정보</Text>
@@ -64,7 +68,7 @@ const Menu = () => {
                                     source={{ uri: uploadImage }}
                                     resizeMode='contain'
                                     style={{
-                                        width: 100, height: 100
+                                        width: 100, height: 100,
                                     }}
                                 />
                             </View>
@@ -78,7 +82,7 @@ const Menu = () => {
                                     source={icons.cancel}
                                     resizeMode='contain'
                                     style={{
-                                        width: 100, height: 100,
+                                        width: 100, height: 100
                                     }}
                                 />
                             </View>
@@ -92,6 +96,7 @@ const Menu = () => {
                         <Text style={{ ...FONTS2.h4, fontWeight: 'bold', paddingBottom: 10 }}>사진 첨부</Text>
                     </View>
                 </TouchableOpacity>
+                <InputBox title="프로모션 설명" placeholder="프로모션에 대해 설명해주세요." description="true" state={promotionDescription} setState={setPromotionDescription} />
             </View>
 
 
@@ -111,7 +116,7 @@ const Menu = () => {
                             if (imageUri) {
                                 const ext = imageUri.split('.').pop();
                                 const filename = `${uuid.v4()}.${ext}`;
-                                const imgRef = storage().ref(`menuimage/${filename}`);
+                                const imgRef = storage().ref(`promotionimage/${filename}`);
 
                                 const unsubscribe = imgRef.putFile(imageUri)
                                     .on(
@@ -138,10 +143,11 @@ const Menu = () => {
 
                                                 console.log('파이어베이스 URL 체크: ', url);
 
-                                                axiosApiInstance.post('addMenu', {
-                                                    menuName: menuName,
+                                                axiosApiInstance.post('promotionMenu', {
+                                                    promotionMenuName: menuName,
                                                     cost: menuPrice,
                                                     description: description,
+                                                    promotionDescription: promotionDescription,
                                                     imgUrl: url,
                                                 }).then((response) => {
                                                     navigation.goBack();
@@ -159,7 +165,7 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+export default PromotionMenu;
 
 const styles = StyleSheet.create({
     container: {
