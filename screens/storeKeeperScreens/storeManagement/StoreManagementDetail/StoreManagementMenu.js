@@ -1,110 +1,228 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, useWindowDimensions, ScrollView, Image, } from 'react-native';
+import React, { useState, useContext } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, ToastAndroid } from 'react-native';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import Header from '../../../../components/layout/Header';
 import { COLORS, icons, FONTS2, SIZES } from '../../../../constants';
 import { useNavigation } from '@react-navigation/native';
-
-import ModifyMenu from './ModifyMenu';
-
-const FirstRoute = ({ route }) => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const navigation = useNavigation();
-    const closeModal = () => {
-        setModalVisible(!modalVisible);
-    };
-
-    const MenuItem = ({ menuName, cost }) => (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: SIZES.base * 3, paddingVertical: SIZES.base * 1.5, borderBottomWidth: 0.3 }}>
-            <View>
-                <Text style={{ ...FONTS2.h4 }}>{menuName}</Text>
-                <Text style={{ ...FONTS2.body2 }}> · {cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Text>
-            </View>
-
-            <TouchableOpacity
-                style={{ justifyContent: 'center' }}
-                onPress={() => setModalVisible(!modalVisible)}
-            >
-                <Image source={icons.more} resizeMode='contain' style={{ width: SIZES.base * 2.5, height: SIZES.base * 2.5, }} />
-            </TouchableOpacity>
-        </View>
-    );
-
-    return (
-        <ScrollView>
-            <View style={styles.menuMaanagementHeader}>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('Menu') }
-                    style={styles.menuButton}>
-                    <Text style={{ ...FONTS2.h4, color: COLORS.white }}>프로모션 메뉴추가</Text>
-                </TouchableOpacity>
-            </View>
-            {route.menuData.map((menu, index) =>
-                <MenuItem key={index} menuName={menu.menuName} cost={menu.cost} />
-            )}
-
-            <ModifyMenu modalVisible={modalVisible} closeModal={closeModal} />
-        </ScrollView>
-    );
-};
-
-const SecondRoute = ({ route }) => (
-    <ScrollView>
-        <Text>d</Text>
-    </ScrollView>
-);
-
-const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-});
+import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import axiosApiInstance from '../../../../utils/axios';
+import { TextInput } from 'react-native-gesture-handler';
 
 const StoreManagementMenu = ({ navigation, route }) => {
 
-    const [storeInfo, setStoreInfo] = useState(route.params.storeInfo);
+    const [storeInfo, setStoreInfo] = useState(route.params.storeInfo); /// route.params.storeInfo.menu
 
-    const layout = useWindowDimensions();
-    const [index, setIndex] = useState(0);
-    const [routes] = useState([
-        { key: 'first', title: '메뉴 관리', menuData: storeInfo.menu },
-        { key: 'second', title: '정보 관리' },
-    ]);
+    const menu = route.params.storeInfo.menu;
+    const [menuList, setMenuList] = useState(menu);
 
-    const renderTabBar = props => (
-        <TabBar
-            {...props}
-            indicatorStyle={{
-                backgroundColor: 'black',
-            }}
-            style={{
-                backgroundColor: 'white',
-                elevation: 0,
-                borderBottomColor: '#e9ecef',
-                borderBottomWidth: 0.5,
-            }}
-            inactiveColor={COLORS.darkgray}
-            activeColor={COLORS.black}
-            pressColor='white'
-            labelStyle={{ ...FONTS2.h4 }}
-        />
-    );
+    const MenuItem = ({ menu, cost }) => {
+
+        const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+        const [modifyModalVisible, setModifyModalVisible] = useState(false);
+
+        const closeDeleteModal = () => {
+            setDeleteModalVisible(!deleteModalVisible);
+        };
+
+        const closeModifyModal = () => {
+            setModifyModalVisible(!modifyModalVisible);
+        };
+
+        const DeleteModal = () => {
+
+            const modalBackgroundStyle = {
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                justifyContent: 'center',
+            };
+
+            const delMenu = (delMenuId) => {
+                setMenuList((currentMenu) => {
+                    return currentMenu.filter((menu) => menu.menuId !== delMenuId);
+                });
+            };
+
+            return (
+                <Modal
+                    animationType='slide'
+                    visible={deleteModalVisible}
+                    onRequestClose={() => {
+                        closeDeleteModal();
+                    }}
+                    transparent
+                >
+                    <View style={[styles.container, modalBackgroundStyle]}>
+                        <View style={[styles.modal, {height: SIZES.height * 0.3}]}>
+                            <Text style={{ ...FONTS2.body2, textAlign: 'center', }}>메뉴를 삭제하시겠습니까?</Text>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginHorizontal: SIZES.base * 3, marginTop: SIZES.base * 3 }}>
+                                <TouchableOpacity
+                                    onPress={() => closeDeleteModal()}
+                                >
+                                    <Text style={{ ...FONTS2.body2 }}>닫기</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        axiosApiInstance.post('/deleteMenu', {
+                                            menuId: menu.menuId,
+                                        }).then(() => {
+                                            closeDeleteModal();
+                                            delMenu(menu.menuId);
+                                            ToastAndroid.showWithGravity('메뉴가 삭제되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+                                        }).catch((e) => {
+                                            console.log(e);
+                                            closeDeleteModal();
+                                        });
+                                    }}
+                                >
+                                    <Text style={{ ...FONTS2.h3 }}>확인</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+            );
+        };
+
+        const ModifyModal = () => {
+
+            const modalBackgroundStyle = {
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                justifyContent: 'center',
+            };
+
+            const delReview = (delMenuId) => {
+                setMenuList((currentMenu) => {
+                    return currentMenu.filter((menu) => menu.menuId !== delMenuId);
+                });
+            };
+            
+            const [menuName, setMenuName] = useState(menu.menuName);
+            const [menuPrice, setMenuPrice] = useState(menu.cost);
+            const [description, setDescription] = useState(menu.description);
+
+            console.log('cost: ', menu.cost);
+
+            return (
+                <Modal
+                    animationType='slide'
+                    visible={modifyModalVisible}
+                    onRequestClose={() => {
+                        closeModifyModal();
+                    }}
+                    transparent
+                >
+                    <View style={[styles.container, modalBackgroundStyle]}>
+                        <View style={styles.modal}>
+
+                            <Text style={{ ...FONTS2.body2, textAlign: 'center', marginBottom: 50 }}>메뉴를 수정하시겠습니까?</Text>
+
+                            <Text style={{ ...FONTS2.h3, fontWeight: 'bold', marginHorizontal: 15 }}>메뉴 이름</Text>
+                            <TextInput
+                                style={[styles.textInput, {marginHorizontal: 15}]}
+                                value={menuName}
+                                onChangeText={setMenuName}
+                            />
+                            <Text style={{ ...FONTS2.h3, fontWeight: 'bold', marginHorizontal: 15 }}>메뉴 가격</Text>
+                            <TextInput
+                                style={[styles.textInput, {marginHorizontal: 15}]}
+                                value={String(menuPrice)}
+                                onChangeText={setMenuPrice}
+                                keyboardType="numeric"
+                            />
+                            <Text style={{ ...FONTS2.h3, fontWeight: 'bold', marginHorizontal: 15 }}>메뉴 설명</Text>
+                            <TextInput
+                                style={[styles.textInput, {marginHorizontal: 15}]}
+                                value={description}
+                                onChangeText={setDescription}
+                            />
+            
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginHorizontal: SIZES.base * 3, marginTop: SIZES.base * 3 }}>
+                                <TouchableOpacity
+                                    onPress={() => closeModifyModal()}
+                                >
+                                    <Text style={{ ...FONTS2.body2 }}>닫기</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        axiosApiInstance.post('/modifyMenu', {
+                                            menuId: menu.menuId,
+                                            menuName: menuName,
+                                            cost: menuPrice,
+                                            description: description,
+                                        }).then(() => {
+                                            closeModifyModal();
+                                            // delReview(menu.menuId);
+                                            ToastAndroid.showWithGravity('메뉴가 수정되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+                                        }).catch((e) => {
+                                            console.log(e);
+                                            closeModifyModal();
+                                        });
+                                    }}
+                                >
+                                    <Text style={{ ...FONTS2.h3 }}>확인</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+            );
+        };
+        
+        return (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: SIZES.base * 3, paddingVertical: SIZES.base * 1.5, borderBottomWidth: 0.3 }}>
+                <View>
+                    <Text style={{ ...FONTS2.h4 }}>{menu.menuName}</Text>
+                    <Text style={{ ...FONTS2.body2 }}> · {cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity
+                        style={[styles.updateButton, { marginRight: SIZES.base }]}
+                        onPress={() => setModifyModalVisible(!modifyModalVisible)}
+                    >
+                        <Text style={{ ...FONTS2.body3, color: '#495057' }}>수정</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.updateButton}
+                        onPress={() => setDeleteModalVisible(!deleteModalVisible)}
+                    >
+                        <Text style={{ ...FONTS2.body3, color: '#495057' }}>삭제</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <ModifyModal />
+                <DeleteModal />
+            </View>
+        );
+    };
 
     return (
         <View style={styles.container}>
-            <Header title='가게관리' small='true' />
-            {/* 메뉴이름, 사진,  */}
-            <View style={{ flex: 1 }}>
-                <TabView
-                    navigationState={{ index, routes }}
-                    renderScene={renderScene}
-                    onIndexChange={setIndex}
-                    initialLayout={{ width: layout.width }}
-                    renderTabBar={renderTabBar}
-                />
-            </View>
+            <Header title='메뉴관리' small='true' />
+            <ScrollView>
+                <View style={styles.menuMaanagementHeader}>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('PromotionMenu')}
+                        style={styles.menuButton}>
+                        <Text style={{ ...FONTS2.h4, color: COLORS.white }}>프로모션 메뉴추가</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Menu')}
+                        style={styles.menuButton}>
+                        <Text style={{ ...FONTS2.h4, color: COLORS.white }}>일반메뉴 메뉴추가</Text>
+                    </TouchableOpacity>
+                </View>
+                {menuList.map((menu, index) =>
+                    <MenuItem key={index} menu={menu} cost={menu.cost} />
+                )}
+            </ScrollView>
         </View>
     );
 };
@@ -118,16 +236,48 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        paddingVertical: SIZES.base * 2,
     },
     menuButton: {
         backgroundColor: '#3897f1',
         justifyContent: 'center',
         alignItems: 'center',
         padding: SIZES.base * 1.5,
-        paddingHorizontal: SIZES.width * 0.2,
+        paddingHorizontal: SIZES.width * 0.05,
         borderRadius: 8,
         marginVertical: SIZES.base * 1.5,
+        marginHorizontal: SIZES.base * 1.5,
+        elevation: 5,
+    },
+    closeButton: {
+        width: SIZES.base * 2,
+        height: SIZES.base * 2,
+        tintColor: COLORS.darkgray,
+    },
+    modal: {
+        backgroundColor: COLORS.white,
+        borderRadius: 8,
+        height: responsiveHeight(65),
+        width: responsiveWidth(85),
+        alignSelf: 'center',
+        marginTop: SIZES.padding,
+        justifyContent: 'center',
+    },
+    updateButton: {
+        borderColor: '#495057',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        justifyContent: 'center',
+        paddingHorizontal: SIZES.base * 2,
+        height: SIZES.height * 0.05,
+    },
+    textInput: {
+        borderRadius: 8,
+        borderWidth: 0.3,
+        borderColor: '#adb5bd',
+        marginVertical: SIZES.base,
+        textAlignVertical: 'top',
+        padding: 10,
+        ...FONTS2.body3,
     },
 });
 
