@@ -74,6 +74,9 @@
 
 <img src="https://user-images.githubusercontent.com/55270881/121783843-e84c4e00-cbeb-11eb-9fa1-1389f21e0c02.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121783840-e71b2100-cbeb-11eb-83dc-5ed83917ee6b.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121783844-e8e4e480-cbeb-11eb-9b5c-a41e3c6bf913.png" width="250">
 
+- 매장은 최소 모집 인원이 충족된 주문 건들을 볼 수 있고, 주문 접수 가능
+- 조리가 완료되면 배달 가능한 상태로 변경
+
 ### 2.1.4 배달원의 배달 선택
 
 <img src="https://user-images.githubusercontent.com/55270881/121784289-2480ae00-cbee-11eb-9956-ff0b605902ad.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121784293-25b1db00-cbee-11eb-8e69-694cb785df4b.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121784294-264a7180-cbee-11eb-8a39-f101aea23be7.png" width="250">
@@ -89,9 +92,10 @@
 - 배달 현황을 전달
 - 배달 완료 버튼을 통해 배달 마무리 가능
 
-### 2.1.6 점주의 매장 관리
-
 ## 2.2 부가기능
+
+<details>
+      <summary>자세히 보기</summary>
 
 ### 2.2.1 유저
 
@@ -99,18 +103,41 @@
 
 유저는 배달 완료된 주문 건에 대해서 리뷰 작성 가능
 
-### 2.2.2 배달원
+### 2.2.2 점주
 
-### 2.2.3 점주
+- 메뉴 관리 수정 기능
 
+<img src="https://user-images.githubusercontent.com/55270881/121804915-c1d9f180-cc83-11eb-8497-7ba2b3db55c5.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121804917-c30b1e80-cc83-11eb-9768-7c2de0df3629.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121804918-c3a3b500-cc83-11eb-9547-d80d7974227b.png" width="250">
 
-## Author
+팥인절미 1인 빙수 가격 변경
+
+- 메뉴 관리 삭제 기능
+
+<img src="https://user-images.githubusercontent.com/55270881/121805025-3e6cd000-cc84-11eb-9e93-34636a45875e.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805026-3f9dfd00-cc84-11eb-8f0d-4d22131f5e7e.png" width="250">
+
+아인슈페너 ICE 삭제
+
+- 메뉴 관리 메뉴 추가 기능
+
+<img src="https://user-images.githubusercontent.com/55270881/121805059-68be8d80-cc84-11eb-9be3-c57d2e9162a8.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805061-69efba80-cc84-11eb-9944-a095898231b0.png" width="250">
+
+카라멜 프로틴 밀크 추가
+
+- 그 외 기능들
+
+<img src="https://user-images.githubusercontent.com/55270881/121805109-a3282a80-cc84-11eb-9402-c942a4ceef9d.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805110-a4595780-cc84-11eb-8ea3-70d535ecabd1.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805112-a4595780-cc84-11eb-9036-539918ba8b5f.png" width="250">
+
+완료된 주문, 매출현황, 매장 관리
+
+</details>
+
+## 3. Author
 
 |            손지성(Frontend)            |            이상경(Backend)             |             이화진(Frontend)             |                전민건(Frontend)                |         최호영(Backend)          |
 | :------------------------------------: | :------------------------------------: | :--------------------------------------: | :--------------------------------------------: | :------------------------------: |
 | [@Danji-ya](https://github.com/Kim234) | [@sksk713](https://github.com/sksk713) | [@sqaurelu](https://github.com/sqaurelu) | [@JeonMinGeon](https://github.com/JeonMinGeon) | [@Ho-0](https://github.com/Ho-0) |
 
-## License
+## 4. License
 
       Copyright (c) 2021 Nomad
 
