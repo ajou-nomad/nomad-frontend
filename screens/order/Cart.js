@@ -11,42 +11,49 @@ import {
     ScrollView,
     TextInput,
     ToastAndroid,
+    LogBox,
 } from 'react-native';
 import Header from '../../components/layout/Header';
 import BottomButton from '../../components/layout/BottomButton';
 import OrderMenuItem from '../../components/item/OrderMenuItem';
-
 import { COLORS, FONTS2, SIZES } from '../../constants';
+import { insertComma } from '../../utils/helper';
+
+LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+]);
 
 const Cart = ({ navigation, route: { params } }) => {
-    // console.log(params);
-    const datePicker = params.datePicker;
 
-    // const [totalPrice, setTotalPrice] = useState(0);
+
+    const [cartItems, setCartItems] = useState(params.cartItems);
+
     let itemPrice = 0;
-    for (let indexOfCart = 0; indexOfCart < params.cartItems.length; indexOfCart++) {
-        itemPrice += params.cartItems[indexOfCart].cost;
+    for (let indexOfCart = 0; indexOfCart < cartItems.length; indexOfCart++) {
+        itemPrice += cartItems[indexOfCart].cost;
     }
     let deliveryTip = 0;
-    if (params.cartItems.length > 0) {
+    if (cartItems.length > 0) {
         deliveryTip = params.storeInfo.deliveryTip;
     }
     const totalPrice = itemPrice + deliveryTip;
 
-    const itemPriceString = itemPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    const deliveryTipString = deliveryTip.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    const totalPriceString = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    const delItem = (deleteMenuId) => {
+        setCartItems( (currentCartItems) => {
+            return currentCartItems.filter( (cartItem) => cartItem.menuId !== deleteMenuId);
+        });
+    };
 
     const renderBody = () => {
         return (
             <View style={{ backgroundColor: COLORS.white, }}>
                 <View>
-                    
                     <View style={{ margin: 30, }}>
                         <Text style={{ ...FONTS2.h2, marginBottom: 10, }}>{params.storeInfo.storeName}</Text>
                         {
-                            params.cartItems.map((items, index) => {
-                                return <OrderMenuItem key={index} isCart="true" orderDetail={items} />
+                            cartItems.map((items, index) => {
+                                return <OrderMenuItem key={index} isCart="true" orderDetail={items} delCartItem={params.delCartItem} delItem={delItem} promotion={params.promotion} />
                             })
                         }
                     </View>
@@ -78,20 +85,20 @@ const Cart = ({ navigation, route: { params } }) => {
                     </View>
                 </View>
 
-                
+
                 <View style={{ marginHorizontal: 20, marginTop: 30, marginBottom: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                         <Text style={{ ...FONTS2.body2 }}>주문 금액</Text>
-                        <Text style={{ ...FONTS2.body2 }}>{itemPriceString}원</Text>
+                        <Text style={{ ...FONTS2.body2 }}>{insertComma(itemPrice)}원</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
                         <Text style={{ ...FONTS2.body2 }}>배달비</Text>
-                        <Text style={{ ...FONTS2.body2 }}>{deliveryTipString}원</Text>
+                        <Text style={{ ...FONTS2.body2 }}>{insertComma(deliveryTip)}원</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, paddingTop: 15, borderTopWidth: 0.5, marginBottom: 20, }}>
                         <Text style={{ ...FONTS2.h2 }}>총 결제 금액</Text>
-                        <Text style={{ ...FONTS2.h2 }}>{totalPriceString}원</Text>
+                        <Text style={{ ...FONTS2.h2 }}>{insertComma(totalPrice)}원</Text>
                     </View>
                 </View>
             </View>
@@ -110,7 +117,7 @@ const Cart = ({ navigation, route: { params } }) => {
                         <BottomButton onPress={() => totalPrice === 0 ? ToastAndroid.showWithGravity('메뉴를 선택해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER) : navigation.navigate('CheckOrder',
                             {
                                 totalPrice: totalPrice,
-                                cartItems: params.cartItems,
+                                cartItems: cartItems,
                                 time: params.time,
                                 location: params.location,
                                 storeInfo: params.storeInfo,
@@ -122,13 +129,13 @@ const Cart = ({ navigation, route: { params } }) => {
                         <BottomButton onPress={() => totalPrice === 0 ? ToastAndroid.showWithGravity('메뉴를 선택해주세요.', ToastAndroid.SHORT, ToastAndroid.CENTER) : navigation.navigate('CreateGroupDetail',
                             {
                                 totalPrice: totalPrice,
-                                cartItems: params.cartItems,
+                                cartItems: cartItems,
                                 time: params.time,
                                 location: params.location,
                                 storeInfo: params.storeInfo,
                                 deliDate: params.deliDate,
                                 groupData: params.groupData,
-                                datePicker: datePicker,
+                                datePicker: params.datePicker,
                                 promotion: params.promotion,
                             }
                         )} title="그룹 생성하기" />

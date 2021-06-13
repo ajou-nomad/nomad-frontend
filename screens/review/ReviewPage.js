@@ -19,7 +19,12 @@ const ReviewPage = () => {
             .then( (response) => setReviewList(response.data.data))
     }, []);
 
-    console.log(JSON.stringify(reviewList,null,4))
+
+    const delReview = (delReviewId) => {
+        setReviewList( (currentReview) => {
+            return currentReview.filter((review) => review.reviewId !== delReviewId);
+        });
+    };
 
     return (
         <ScrollView style={styles.container}>
@@ -30,8 +35,8 @@ const ReviewPage = () => {
             </View>
 
             <View style={{ width: responsiveWidth(90), alignSelf: 'center' }}>
-            {reviewList.map((item, index) =>
-                <ReviewItem key={index} item={item} admin={true}/>
+            {reviewList?.map((item, index) =>
+                <ReviewItem key={index} item={item} admin={true} delReview={delReview} />
             )}
             </View>
         </ScrollView>

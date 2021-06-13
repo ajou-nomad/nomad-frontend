@@ -29,6 +29,9 @@ import Menu from '../../components/item/Menu';
 import CartButton from '../../components/CartButton';
 import StoreInfo from './StoreInfo';
 import ReviewItem from '../../components/item/ReviewItem';
+import HeartFull from '../../components/item/HeartFull';
+import HeartEmpty from '../../components/item/HeartEmpty';
+import axiosApiInstance from '../../utils/axios';
 
 
 // 메뉴 (flatlist로 바꾸기)
@@ -76,10 +79,8 @@ function StoreDetail({ route }) {
     const storeInfo = route.params.storeInfo;
     const datePicker = route.params.datePicker;
 
-    // console.log(JSON.stringify(groupData,null,4))
-
     const [cartItems, setCartItems] = useState([]);
-
+    const [likeStore, setLikeStore] = useState(false);
 
     const menu = storeInfo.menu;
     const layout = useWindowDimensions();
@@ -92,12 +93,41 @@ function StoreDetail({ route }) {
 
     const offset = useRef(new Animated.Value(0)).current;
 
-    useEffect(() => {
-        // MenuDetail에서 담긴 아이템 navigation props로 전달.
-        if (route.params?.post){
 
+    const delCartItem = (deleteMenuId) => {
+        setCartItems( (currentCartItems) => {
+            return currentCartItems.filter( (cartItem) => cartItem.menuId !== deleteMenuId);
+        });
+    };
+
+
+
+
+    useEffect(() => {
+        if (route.params?.post){
             ToastAndroid.showWithGravity('카트에 담겼습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
-            setCartItems((prevState)=>[...prevState, route.params?.post]);
+            const existSameFood = cartItems.filter( (item) => item.menuId === route.params?.post.menuId);
+            if ( existSameFood.length !== 0 ) {
+                setCartItems([...cartItems.map( (item) => {
+                    if (item.menuId === route.params?.post.menuId) {
+                        item.quantity += route.params?.post.quantity;
+                        item.cost += route.params?.post.cost;
+                    }
+                    return item;
+                })]);
+            } else {
+                setCartItems((prevState)=>[...prevState, route.params?.post]);
+            }
+
+        } else {
+            axiosApiInstance.get('/likeStore')
+                .then( (res) =>
+                    res.data.data.map( ({storeId}) => {
+                        if (storeId === storeInfo.storeId) {
+                            setLikeStore(true);
+                        }
+                    })
+                );
         }
     }, [route.params?.post]);
 
@@ -131,7 +161,7 @@ function StoreDetail({ route }) {
                 <View style={[styles.headerContainer,{width: SIZES.width * 0.75}]}>
                     <Text style={{ ...FONTS2.h1 }}>{storeInfo.storeName}</Text>
                     <View style={{ marginTop: SIZES.base }}>
-                        <View style={{ flexDirection: 'row', }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
                                 source={icons.star}
                                 resizeMode="contain"
@@ -153,6 +183,36 @@ function StoreDetail({ route }) {
                             <Image source={icons.bell} resizeMode='contain' style={{ width: SIZES.base * 1.6, height: SIZES.base * 1.6, marginRight: SIZES.base * 0.5, tintColor: '#000000', }} />
                             <Text style={{ ...FONTS2.body3, color: '#000000' }}>배달팁 {storeInfo.deliveryTip.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
                         </View>
+
+                        {/* 하트모양 */}
+                        { likeStore ? (
+                            <TouchableOpacity
+                                hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }} //터치영역 확장
+                                onPress={ () => {
+                                    axiosApiInstance.post('/deleteLikeStore', { storeId: storeInfo.storeId })
+                                        .then( () => setLikeStore(!likeStore))
+                                        .catch( e => console.log(e));
+                                }}
+                            >
+                                <View style={{marginTop: 20, justifyContent: 'center', flexDirection: 'row'}}>
+                                    <HeartFull />
+                                </View>
+                            </TouchableOpacity>
+                        ) : (
+                            <TouchableOpacity
+                                hitSlop={{ top: 30, bottom: 30, left: 30, right: 30 }} //터치영역 확장
+                                onPress={ () => {
+                                    axiosApiInstance.post('/likeStore', { storeId: storeInfo.storeId })
+                                        .then( () => setLikeStore(!likeStore))
+                                        .catch( e => console.log(e));
+                                }}
+                            >
+                                <View style={{marginTop: 20, justifyContent: 'center', flexDirection: 'row'}}>
+                                    <HeartEmpty />
+
+                                </View>
+                            </TouchableOpacity>
+                        )}
                     </View>
                 </View>
             </View>
@@ -176,7 +236,7 @@ function StoreDetail({ route }) {
                     renderTabBar={renderTabBar}
                 />
             </View>
-            <CartButton datePicker={datePicker} cartItems={cartItems} storeInfo={route.params.storeInfo} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} groupData={route.params.groupData} />
+            <CartButton datePicker={datePicker} cartItems={cartItems} delCartItem={delCartItem} storeInfo={route.params.storeInfo} deliDate={route.params.deliDate} time={route.params.time} deliveryPlace={route.params.deliveryPlace} groupData={route.params.groupData} />
         </View>
     );
 }

@@ -90,8 +90,14 @@ const promotion = require("../assets/icons/promotion.png");
 const group2 = require("../assets/icons/group2.png");
 const group3 = require("../assets/icons/group3.png");
 const team = require("../assets/icons/team.png");
+const heart_full = require("../assets/icons/heart_full.png");
+const heart_empty = require("../assets/icons/heart_empty.png");
+
+
 
 export default {
+    heart_full,
+    heart_empty,
     group3,
     group2,
     check2,

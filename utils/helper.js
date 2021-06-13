@@ -322,3 +322,9 @@ export const digitTwo = (digit) => {
 
     return ('00' + JSON.stringify(digit)).slice(-2);
 };
+
+
+// 1000 -> 1,000
+export const insertComma = (price) => {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
