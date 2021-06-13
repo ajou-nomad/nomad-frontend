@@ -5,14 +5,14 @@ export const AuthContext = createContext();
 
 // state의 초기 값을 설정한다
 const initialState = {
-  isSignedIn: false,
-  member: {
-    memberType: 'Deli',
-    phoneNum: 0,
-    nickName: '',
-    email: '',
-    point: 0,
-  },
+	isSignedIn: false,
+	member: {
+		memberType: 'Deli',
+		phoneNum: 0,
+		nickName: '',
+		email: '',
+		point: 0,
+	},
 };
 
 const AuthContextProvider = ({ children }) => {
