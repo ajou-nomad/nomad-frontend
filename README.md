@@ -10,7 +10,9 @@
 
 ## 1.1 더치딜리버리란?
 
-더치딜리버리는 <b>위치 기반 공동 배달 플랫폼</b>으로서, 소비자들은 동일한 위치, 시간에 여러 사람과 같이 배달에 참여하여 부담되었던 <b>배달비와 최소 주문 금액 걱정 없이</b> 배달을 즐기고, 점주는 여러 명의 주문을 한 번에 보내기 때문에 <b>기존보다 적은 수수료로 더 많은 배달 서비스</b>를 제공받으며, 배달원은 저희가 새롭게 규정한 수수료 정책에 혜택을 받아 <b>노동에 비해 더 많은 수수료를</b> 얻어가는 배달 서비스를 제공해줍니다.
+더치딜리버리는 <b>위치 기반 공동 배달 플랫폼</b>이다.
+
+소비자들은 동일한 위치, 시간에 여러 사람과 같이 배달에 참여하여 부담되었던 <b>배달비와 최소 주문 금액 걱정 없이</b> 배달을 즐기고, 점주는 여러 명의 주문을 한 번에 보내기 때문에 <b>기존보다 적은 수수료로 더 많은 배달 서비스</b>를 제공받으며, 배달원은 저희가 새롭게 규정한 수수료 정책에 혜택을 받아 <b>노동에 비해 더 많은 수수료를</b> 얻어가는 배달 서비스를 제공해줍니다.
 
 ## 1.2 개발 동기 및 목적
 
@@ -20,11 +22,29 @@
 
 우리는 더치딜리버리를 통하여 기존의 배달 서비스에서 생긴 불편사항들을 해결하고자 하며 그로 인하여 배달 서비스가 더 활성화되는 것을 목표로 하고 있다.
 
-## 1.4 사용 기술
+## 1.4 개발도구 및 버전
+
+- ![node](https://img.shields.io/badge/node-%20v15.11.0-brightgreen)
+
+- ![npm](https://img.shields.io/static/v1?label=npm&message=v7.6.0&color=blue)
+
+- ![react-native](https://img.shields.io/static/v1?label=react-native&message=v0.63.4&color=violet)
+
+- ![react-native-cli](https://img.shields.io/static/v1?label=react-native-cli&message=v2.0.1&color=blueviolet)
+
+## 1.5 사용된 외부 API
+
+- [Google Maps](https://developers.google.com/maps/)
+- [Firebase](https://firebase.google.com/)
+- [I'mport](https://www.iamport.kr/)
+- [Daum Postcode Service](https://postcode.map.daum.net/guide)
 
 # 2. 구현 기능
+
 ## 2.1 메인 기능
-### 2.1.1 당일 모집 - 배달 그룹 생성 및 확인
+
+### 2.1.1 당일 모집 - 유저의 배달 그룹 생성 및 확인
+
 당일 모집은 당일에 생성된 배달에 참여하는 기능으로 원하는 장소와 시간을 정해서 직접 당일 모집 배달을 생성할 수 있다.
 
 <img src="https://user-images.githubusercontent.com/55270881/121771655-91268900-cbab-11eb-96a9-101e02da1aa2.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121797370-b0302400-cc5a-11eb-9931-8c0727daf2d8.gif" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121780512-a2878980-cbdb-11eb-9a21-51f6d6593844.gif" width="250">
@@ -36,18 +56,19 @@
 <img src="https://user-images.githubusercontent.com/55270881/121780608-1cb80e00-cbdc-11eb-996f-2f7c90df1fe7.gif" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121781444-b339fe80-cbdf-11eb-91d1-69afc8255eb5.gif" width="250">
 
 - 배달 받을 장소의 건물명, 배달 시간, 모집 인원을 입력
-- 결제가 완료되면 생성된 배달이 지도에 마커로 표시되고, 주문 내역 페이지에서 자신의 주문 내역 확인 가능
+- 결제가 완료되면 생성된 배달이 지도에 마커로 표시되고, 주문 내역 페이지에서 자신의 주문 내역을 확인 가능
 
-### 2.1.2 주간 모집 - 그룹 참여
+### 2.1.2 주간 모집 - 유저의 그룹 생성 및 참여
+
 주간 모집은 한 주간의 배달을 미리 예약하는 기능이다.
 
-<img src="https://user-images.githubusercontent.com/55270881/121798350-b2957c80-cc60-11eb-8c6c-dab12a17c391.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121798478-8b8b7a80-cc61-11eb-8f11-60b1a67bd136.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121798351-b32e1300-cc60-11eb-99fd-e32f687aeab8.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121798347-b1644f80-cc60-11eb-8869-6f02db914fbf.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121798349-b2957c80-cc60-11eb-9a37-f7f76e32783a.png" width="250">
+<img src="https://user-images.githubusercontent.com/55270881/121782725-fbf4b600-cbe5-11eb-8a8e-61844e54f35c.png" width="230"> <img src="https://user-images.githubusercontent.com/55270881/121782912-e8961a80-cbe6-11eb-9b9a-cea216b00e4b.png" width="230"> <img src="https://user-images.githubusercontent.com/55270881/121783010-7eca4080-cbe7-11eb-84dc-f22bec880e84.gif" width="230"> <img src="https://user-images.githubusercontent.com/55270881/121797759-4a916700-cc5d-11eb-8838-f6ba268ef6f3.gif" width="230">
 
 - 주간 모집 선택
 - 원하는 배달 장소 선택
-- 캘린더를 통해 생성된 배달 그룹을 확인하고, 원하는 배달 그룹에 참여
-- 결제를 완료하면, 주문 내역 페이지에서 자신의 주문 내역 확인 가능
-
+- 캘린더를 통해 생성된 배달 그룹을 확인하고, 원하는 배달 그룹이 없는 경우 직접 생성
+- 건물명, 배달 날짜 및 시간, 모집 인원 입력
+- 당일 모집과 동일하게 결제를 완료하면 생성된 배달이 표시되고, 주문 내역 페이지에서 자신의 주문 내역을 확인 가능
 
 ### 2.1.3 매장의 주문 접수
 
@@ -57,96 +78,56 @@
 
 <img src="https://user-images.githubusercontent.com/55270881/121784289-2480ae00-cbee-11eb-9956-ff0b605902ad.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121784293-25b1db00-cbee-11eb-8e69-694cb785df4b.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121784294-264a7180-cbee-11eb-8a39-f101aea23be7.png" width="250">
 
-## 2.1.5 배달원의 메시지 전달
+- 배달원은 자신의 위치를 기반으로 배달 가능 목록을 확인 가능
+- 원하는 배달 선택
+
+### 2.1.5 배달원의 메시지 전달
 
 <img src="https://user-images.githubusercontent.com/55270881/121784699-5a269680-cbf0-11eb-9e54-ec985526cc83.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121784701-5abf2d00-cbf0-11eb-8290-a052f836233f.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121784702-5b57c380-cbf0-11eb-8ac4-87f04f85ba08.png" width="250">
+
+- 배달을 선택하게 되면 배달원과 배달에 참여한 유저들과 채팅방으로 연결
+- 배달 현황을 전달
+- 배달 완료 버튼을 통해 배달 마무리 가능
 
 ### 2.1.6 점주의 매장 관리
 
 ## 2.2 부가기능
+
 ### 2.2.1 유저
+
+<img src="https://user-images.githubusercontent.com/55270881/121799375-b1674e00-cc66-11eb-9404-041f66ebb817.gif" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121799458-32bee080-cc67-11eb-973c-96015d07e09e.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121799459-33f00d80-cc67-11eb-85e7-57c411fdae3b.png" width="250">
+
+유저는 배달 완료된 주문 건에 대해서 리뷰 작성 가능
 
 ### 2.2.2 배달원
 
 ### 2.2.3 점주
 
-### 개발 도구 및 버전
 
-- ![node](https://img.shields.io/badge/node-%20v15.11.0-brightgreen)
+## Author
 
-- ![npm](https://img.shields.io/static/v1?label=npm&message=v7.6.0&color=blue)
+|            손지성(Frontend)            |            이상경(Backend)             |             이화진(Frontend)             |                전민건(Frontend)                |         최호영(Backend)          |
+| :------------------------------------: | :------------------------------------: | :--------------------------------------: | :--------------------------------------------: | :------------------------------: |
+| [@Danji-ya](https://github.com/Kim234) | [@sksk713](https://github.com/sksk713) | [@sqaurelu](https://github.com/sqaurelu) | [@JeonMinGeon](https://github.com/JeonMinGeon) | [@Ho-0](https://github.com/Ho-0) |
 
-- ![react-native](https://img.shields.io/static/v1?label=react-native&message=v0.63.4&color=violet)
+## License
 
-- ![react-native-cli](https://img.shields.io/static/v1?label=react-native-cli&message=v2.0.1&color=blueviolet)
+      Copyright (c) 2021 Nomad
 
-## 사용된 외부 API
+      Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:
 
-- GoogleMapAPI - 지도와 주소 검색을 위한 API
+      The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.
 
-## Only for Android
-
-<!-- summary 아래 한칸 공백 두고 내용 삽입 
-<details>
-  <summary> 주간모집 그룹 생성</summary>
-  <img src="https://user-images.githubusercontent.com/55270881/121782725-fbf4b600-cbe5-11eb-8a8e-61844e54f35c.png" width="250"> | <img src="https://user-images.githubusercontent.com/55270881/121782912-e8961a80-cbe6-11eb-9b9a-cea216b00e4b.png" width="250"> | <img src="https://user-images.githubusercontent.com/55270881/121783010-7eca4080-cbe7-11eb-84dc-f22bec880e84.gif" width="250">
-:---:|:---:|:---:
-주간 모집 선택 | 원하는 장소 선택 | 캘린더 확인 후, 원하는 매장 및 메뉴 선택
-<img src="https://user-images.githubusercontent.com/55270881/121780608-1cb80e00-cbdc-11eb-996f-2f7c90df1fe7.gif" width="250"> | <img src="https://user-images.githubusercontent.com/55270881/121781444-b339fe80-cbdf-11eb-91d1-69afc8255eb5.gif" width="250"> |
-건물명, 배달 시간, 모집 인원 입력 | 생성된 주문 지도에 표시, 주문 내역 확인 가능 |
-
-</details>
-
-<details>
-    <summary> 당일모집 그룹 생성</summary>
-
-
-
-<img src="https://user-images.githubusercontent.com/55270881/121771655-91268900-cbab-11eb-96a9-101e02da1aa2.png" width="300"> <img src="https://user-images.githubusercontent.com/55270881/121771658-91bf1f80-cbab-11eb-9d96-382c7d35d183.png" width="300"> <img src="https://user-images.githubusercontent.com/55270881/121771659-9257b600-cbab-11eb-8577-63e4d0c2dbbd.png" width="300">
-
-<img src="https://user-images.githubusercontent.com/55270881/121771950-6b9a7f00-cbad-11eb-8ea6-5b49b66b01f3.png" width="300"> <img src="https://user-images.githubusercontent.com/55270881/121771907-3b52e080-cbad-11eb-8c6e-1b5d75d7be53.png" width="296"> <img src="https://user-images.githubusercontent.com/55270881/121771872-0b0b4200-cbad-11eb-9d38-3935f95a3988.png" width="300">
-
-| <img src="https://user-images.githubusercontent.com/55270881/121771655-91268900-cbab-11eb-96a9-101e02da1aa2.png" width="250"> | <img src="https://user-images.githubusercontent.com/55270881/121772165-af41b880-cbae-11eb-9652-b575be30c867.gif" width="250"> | <img src="https://user-images.githubusercontent.com/55270881/121780512-a2878980-cbdb-11eb-9a21-51f6d6593844.gif" width="250"> |
-| :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: |
-|                                                        당일 모집 선택                                                         |                                              마커를 이용하여 주문할 위치를 지정                                               |                                                   원하는 매장 및 메뉴 선택                                                    |
-| <img src="https://user-images.githubusercontent.com/55270881/121780608-1cb80e00-cbdc-11eb-996f-2f7c90df1fe7.gif" width="250"> | <img src="https://user-images.githubusercontent.com/55270881/121781444-b339fe80-cbdf-11eb-91d1-69afc8255eb5.gif" width="250"> |
-|                                               건물명, 배달 시간, 모집 인원 입력                                               |                                         생성된 주문 지도에 표시, 주문 내역 확인 가능                                          |
-
-</details>
-
-```
-|
-├─assets
-│  ├─fonts
-│  ├─icons
-│  └─images
-├─components
-│  ├─carrier
-│  ├─item
-│  ├─layout
-│  ├─login
-│  ├─map
-│  ├─payment
-│  ├─store
-│  └─weekly
-├─constants
-├─context
-├─navigation
-├─screens
-│  ├─carrier
-│  ├─chat
-│  ├─group
-│  ├─mypage
-│  ├─order
-│  ├─payment
-│  ├─review
-│  ├─search
-│  ├─store
-│  └─storeKeeperScreens
-│
-├─App.js
-├─index.js
-└─utils
-```
-
--->
+      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.
