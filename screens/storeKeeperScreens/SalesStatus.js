@@ -141,7 +141,7 @@ const SalesStatus = () => {
                         <Text style={{...FONTS2.body2}}>{thisMonthTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Text>
                     </View>
 
-                    <View style={{flex:1, marginVertical: SIZES.height * 0.2, width: SIZES.width, height: SIZES.height * 0.5}}>
+                    <View style={{flex:1, marginVertical: SIZES.height * 0.2, width: SIZES.width, height: SIZES.height * 0.55}}>
                         <View style={{position:'absolute', borderWidth: 2, borderColor: COLORS.secondary, width: SIZES.width * 0.88, height: 2, zIndex: 1, alignSelf: 'center', borderRadius: 10}}>
                         </View>
                         <View style={{position:'absolute', borderWidth: 1, borderColor: COLORS.secondary, width: SIZES.width * 0.88, height: 2, zIndex: 1, alignSelf: 'center', borderRadius: 10, bottom: 0}}>

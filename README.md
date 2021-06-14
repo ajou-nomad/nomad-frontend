@@ -129,15 +129,17 @@
 
 완료된 주문, 매출현황, 매장 관리
 
-</details>
+카라멜 프로틴 밀크 추가
 
 ## 3. Author
 
 |            손지성(Frontend)            |            이상경(Backend)             |             이화진(Frontend)             |                전민건(Frontend)                |         최호영(Backend)          |
 | :------------------------------------: | :------------------------------------: | :--------------------------------------: | :--------------------------------------------: | :------------------------------: |
-| [@Danji-ya](https://github.com/Kim234) | [@sksk713](https://github.com/sksk713) | [@sqaurelu](https://github.com/sqaurelu) | [@JeonMinGeon](https://github.com/JeonMinGeon) | [@Ho-0](https://github.com/Ho-0) |
+| [@Danji-ya](https://github.com/Danji-ya) | [@sksk713](https://github.com/sksk713) | [@sqaurelu](https://github.com/sqaurelu) | [@JeonMinGeon](https://github.com/JeonMinGeon) | [@Ho-0](https://github.com/Ho-0) |
 
 ## 4. License
+
+      MIT License
 
       Copyright (c) 2021 Nomad
 
