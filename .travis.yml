@@ -1,0 +1,26 @@
+install:
+- nvm install 7.6.0
+- nvm use 7.6.0
+- nvm alias default 7.6.0
+- npm install -g react-native-cli
+- npm install -g yarn
+- npm install --save @react-native-firebase/app
+
+matrix:
+  include:
+  - os: osx
+    osx_image: xcode11.3
+    language: objective-c
+    before_install:
+    - brew tap wix/brew
+    - brew install applesimutils
+    script:
+    - npm install --save-dev jest
+
+branches:
+  only:
+  - master
+  
+notifications:
+  slack:
+    secure: fZn81j9O5Pq5xHSyo6xk7ixXEhCD/LPRojTwKWHIDj413IPiP0CHJCS21OdPdZ6xESHcdXEHB6GDFBVOS5xZsr5gVRpMCoO1xB2ileA0y7Uh6DvswcFSlADb+8zRNJ6973hIe8uYejagpMJ7xhnqJvEOkN40lgHKmsGLgF0fLZogB+uPGlnS+WQzCQHLbbJJLzIJhle2gWX3MBSO9RRlcG7WnNVG0mKHEVoYMivy09yKUNX1blGXO15PdSnCWtdJ6G70yxTGp6NuFfxL6mKDp4FbKxabvkfmpDNzMb/0uJzB3drV78qnSc0kPj4H5LQUPiIpodNg7MDf4j9x5+wsvDaT9PZPCv61XYtYWAnMmmIRhV+V0rXMTNR9QRNTWswNkHHLcWk5pDsC8zKXxSjkFjVJOXcpYPWyqxTI2bYOaS3auvjYHvfbqxfV1sFilgf3OP0XWE+JPPYLB8I+zGnv7p+WcJD76fVIIloPtJ2CDTmGJZe0Xn04EWJ4EGLk18PEeEcBaJh5CQ1d5QszgN1rftY0glTp+Ps4yhaMU094U5TuHJE65gr0CsFkiRusod+XtoD7zBew4Owb8GJPyvZar72fI9hSvBqoBgpA2EpvkH8okup6bmacwoL9k+NyIC7cmsVNHyLFke8jLwyb/bdbjEjHpApCKbpOjKn6TqbQjqc=

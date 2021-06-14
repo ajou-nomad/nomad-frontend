@@ -34,7 +34,9 @@ const CartButton = (props) => {
         >
             {props.cartItems.length !== 0 ? (
                 <View style={{ width: SIZES.base * 2, height: SIZES.base * 2, backgroundColor: 'white', borderRadius: 20, justifyContent: 'center', position: 'absolute', right: SIZES.base * 1.5, top: SIZES.base * 1.2 }}>
-                    <Text style={{ color: '#1c7ed6', ...FONTS2.h4, alignSelf: 'center' }}>{props.cartItems.length}</Text>
+                    <Text style={{ color: '#1c7ed6', ...FONTS2.h4, alignSelf: 'center' }}>{props.cartItems.reduce((tot, arr) => {
+                        return tot + arr.quantity;
+                    }, 0)}</Text>
                 </View>
             ) :
                 (null)

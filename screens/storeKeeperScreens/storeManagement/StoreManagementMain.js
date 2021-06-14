@@ -13,20 +13,25 @@ const StoreManagementMain = ({ navigation }) => {
 
     const { state, dispatch } = useContext(AuthContext);
     const [storeInfo, setStoreInfo] = useState('');
+    const [groupList, setGroupList] = useState([]);
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', async () => {
 
             axiosApiInstance.get('/myStoreList').then((res) => {
                 setStoreInfo(res.data.data);
-                console.log('ddddd', JSON.stringify(res.data.data, null, 4));
             }).catch( (e )=> console.log(e));
+
+            axiosApiInstance.get('/allDeliveryGroupOrder')
+            .then((res) => {
+                setGroupList(res.data.data);
+            })
+            .catch( (e )=> console.log(e));
         });
 
         //unmount 시 리스너 삭제
         return unsubscribe;
-
-     }, [navigation]);
+    }, [navigation]);
 
 
 
@@ -40,9 +45,9 @@ const StoreManagementMain = ({ navigation }) => {
         logoUrl: storeInfo.logoUrl,
         storeOpen: true,
         storeOrderStatus: {
-            Todo: 0,
-            InProgress: 0,
-            Complete: 4,
+            Todo: groupList.filter( (group) => group.orderStatus === 'recruitmentDone').length,
+            InProgress: groupList.filter( (group) => group.orderStatus === 'waitingForDelivery' || group.orderStatus === 'delivering' ).length,
+            Complete: groupList.filter( (group) => group.orderStatus === 'deliveryDone').length,
         },
     };
 

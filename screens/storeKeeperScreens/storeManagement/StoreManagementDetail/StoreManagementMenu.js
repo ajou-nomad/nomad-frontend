@@ -43,7 +43,6 @@ const StoreManagementMenu = ({ navigation, route }) => {
                     return currentMenu.filter((menu) => menu.menuId !== delMenuId);
                 });
             };
-        
             return (
                 <Modal
                     animationType='slide'
@@ -54,10 +53,10 @@ const StoreManagementMenu = ({ navigation, route }) => {
                     transparent
                 >
                     <View style={[styles.container, modalBackgroundStyle]}>
-                        <View style={[styles.modal, { height: responsiveHeight(30), }]}>
+                        <View style={[styles.modal, {height: SIZES.height * 0.3}]}>
                             <Text style={{ ...FONTS2.body2, textAlign: 'center', }}>메뉴를 삭제하시겠습니까?</Text>
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: SIZES.base * 10, marginTop: SIZES.base * 3 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginHorizontal: SIZES.base * 3, marginTop: SIZES.base * 3 }}>
                                 <TouchableOpacity
                                     onPress={() => closeDeleteModal()}
                                 >
@@ -117,28 +116,30 @@ const StoreManagementMenu = ({ navigation, route }) => {
                 >
                     <View style={[styles.container, modalBackgroundStyle]}>
                         <View style={styles.modal}>
-                            <Text style={{ ...FONTS2.body2, textAlign: 'center', }}>메뉴를 수정하시겠습니까?</Text>
 
+                            <Text style={{ ...FONTS2.body2, textAlign: 'center', marginBottom: 50 }}>메뉴를 수정하시겠습니까?</Text>
+
+                            <Text style={{ ...FONTS2.h3, fontWeight: 'bold', marginHorizontal: 15 }}>메뉴 이름</Text>
                             <TextInput
-                                style={styles.textInput}
+                                style={[styles.textInput, {marginHorizontal: 15}]}
                                 value={menuName}
                                 onChangeText={setMenuName}
                             />
-            
+                            <Text style={{ ...FONTS2.h3, fontWeight: 'bold', marginHorizontal: 15 }}>메뉴 가격</Text>
                             <TextInput
-                                style={styles.textInput}
+                                style={[styles.textInput, {marginHorizontal: 15}]}
                                 value={String(menuPrice)}
                                 onChangeText={setMenuPrice}
                                 keyboardType="numeric"
                             />
-
+                            <Text style={{ ...FONTS2.h3, fontWeight: 'bold', marginHorizontal: 15 }}>메뉴 설명</Text>
                             <TextInput
-                                style={styles.textInput}
+                                style={[styles.textInput, {marginHorizontal: 15}]}
                                 value={description}
                                 onChangeText={setDescription}
                             />
             
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: SIZES.base * 10, marginTop: SIZES.base * 3 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginHorizontal: SIZES.base * 3, marginTop: SIZES.base * 3 }}>
                                 <TouchableOpacity
                                     onPress={() => closeModifyModal()}
                                 >
@@ -234,17 +235,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        // paddingVertical: SIZES.base * 2,
     },
     menuButton: {
         backgroundColor: '#3897f1',
         justifyContent: 'center',
         alignItems: 'center',
         padding: SIZES.base * 1.5,
-        paddingHorizontal: SIZES.width * 0.08,
+        paddingHorizontal: SIZES.width * 0.05,
         borderRadius: 8,
         marginVertical: SIZES.base * 1.5,
-        marginHorizontal: SIZES.base,
+        marginHorizontal: SIZES.base * 1.5,
+        elevation: 5,
     },
     closeButton: {
         width: SIZES.base * 2,
@@ -254,7 +255,7 @@ const styles = StyleSheet.create({
     modal: {
         backgroundColor: COLORS.white,
         borderRadius: 8,
-        height: responsiveHeight(55),
+        height: responsiveHeight(65),
         width: responsiveWidth(85),
         alignSelf: 'center',
         marginTop: SIZES.padding,
