@@ -141,10 +141,10 @@ const ReviewItem = ({ item, admin, delReview }) => {
             {renderReviewTitle()}
 
             {/* 사진 */}
-            <Image source={{ uri: item.imgUrl }} resizeMode='contain' style={{ width: SIZES.width * 0.85, height: SIZES.height * 0.4, }} />
+            <Image source={{ uri: item.imgUrl }} resizeMode='contain' style={{ width: SIZES.width * 0.85, height: SIZES.height * 0.4, alignSelf: 'center' }} />
             {/* 글 */}
             <View style={styles.content}>
-                <Text style={{ ...FONTS2.body3 }}>{item.contents}</Text>
+                <Text style={{ ...FONTS2.body3, marginLeft: SIZES.base * 1.5 }}>{item.contents}</Text>
             </View>
             <View style={{
                 flex: 1,
@@ -157,7 +157,7 @@ const ReviewItem = ({ item, admin, delReview }) => {
                             // onPress={ () => handleDelete}
                             onPress={() => setModalVisible(!modalVisible)}
                         >
-                            <Text style={{ ...FONTS2.body2 }}>삭제</Text>
+                            <Text style={{ ...FONTS2.body3 }}>삭제</Text>
                         </TouchableOpacity>
 
                         <DeleteModal />

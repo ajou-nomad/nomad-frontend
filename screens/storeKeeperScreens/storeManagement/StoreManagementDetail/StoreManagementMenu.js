@@ -273,9 +273,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 0.3,
         borderColor: '#adb5bd',
-        marginVertical: SIZES.base,
-        textAlignVertical: 'top',
-        padding: 10,
+        marginVertical: SIZES.base * 0.7,
+        marginHorizontal: SIZES.base * 2,
         ...FONTS2.body3,
     },
 });
