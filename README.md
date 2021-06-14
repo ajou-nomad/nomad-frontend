@@ -93,6 +93,9 @@
 
 ## 2.2 부가기능
 
+<details>
+      <summary>자세히보기</summary>
+
 ### 2.2.1 유저
 
 <img src="https://user-images.githubusercontent.com/55270881/121799375-b1674e00-cc66-11eb-9404-041f66ebb817.gif" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121799458-32bee080-cc67-11eb-973c-96015d07e09e.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121799459-33f00d80-cc67-11eb-85e7-57c411fdae3b.png" width="250">
@@ -103,21 +106,31 @@
 
 ### 2.2.3 점주
 
-### 개발 도구 및 버전
+- 메뉴 관리 수정 기능
 
-- ![node](https://img.shields.io/badge/node-%20v15.11.0-brightgreen)
+<img src="https://user-images.githubusercontent.com/55270881/121804915-c1d9f180-cc83-11eb-8497-7ba2b3db55c5.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121804917-c30b1e80-cc83-11eb-9768-7c2de0df3629.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121804918-c3a3b500-cc83-11eb-9547-d80d7974227b.png" width="250">
 
-- ![npm](https://img.shields.io/static/v1?label=npm&message=v7.6.0&color=blue)
+팥인절미 1인 빙수 가격 변경
 
-- ![react-native](https://img.shields.io/static/v1?label=react-native&message=v0.63.4&color=violet)
+- 메뉴 관리 삭제 기능
 
-- ![react-native-cli](https://img.shields.io/static/v1?label=react-native-cli&message=v2.0.1&color=blueviolet)
+<img src="https://user-images.githubusercontent.com/55270881/121805025-3e6cd000-cc84-11eb-9e93-34636a45875e.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805026-3f9dfd00-cc84-11eb-8f0d-4d22131f5e7e.png" width="250">
 
-## 사용된 외부 API
+아인슈페너 ICE 삭제
 
-- GoogleMapAPI - 지도와 주소 검색을 위한 API
+- 메뉴 관리 메뉴 추가 기능
 
-## Only for Android
+<img src="https://user-images.githubusercontent.com/55270881/121805059-68be8d80-cc84-11eb-9be3-c57d2e9162a8.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805061-69efba80-cc84-11eb-9944-a095898231b0.png" width="250">
+
+카라멜 프로틴 밀크 추가
+
+- 그 외 기능들
+
+<img src="https://user-images.githubusercontent.com/55270881/121805109-a3282a80-cc84-11eb-9402-c942a4ceef9d.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805110-a4595780-cc84-11eb-8ea3-70d535ecabd1.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805112-a4595780-cc84-11eb-9036-539918ba8b5f.png" width="250">
+
+완료된 주문, 매출현황, 매장 관리
+
+</details>
 
 ## Author
 

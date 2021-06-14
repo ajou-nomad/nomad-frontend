@@ -30,7 +30,7 @@ const CartButton = (props) => {
                 borderRadius: 38,
                 elevation: 5,
             }}
-            onPress={() => navigation.navigate('Cart', { cartItems: props.cartItems, storeInfo: props.storeInfo, time: props.time, location: props.deliveryPlace, deliDate: props.deliDate, groupData: props.groupData, datePicker: props.datePicker })}
+            onPress={() => navigation.navigate('Cart', { cartItems: props.cartItems, delCartItem: props.delCartItem, storeInfo: props.storeInfo, time: props.time, location: props.deliveryPlace, deliDate: props.deliDate, groupData: props.groupData, datePicker: props.datePicker })}
         >
             {props.cartItems.length !== 0 ? (
                 <View style={{ width: SIZES.base * 2, height: SIZES.base * 2, backgroundColor: 'white', borderRadius: 20, justifyContent: 'center', position: 'absolute', right: SIZES.base * 1.5, top: SIZES.base * 1.2 }}>

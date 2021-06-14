@@ -54,10 +54,10 @@ const StoreManagementMenu = ({ navigation, route }) => {
                     transparent
                 >
                     <View style={[styles.container, modalBackgroundStyle]}>
-                        <View style={styles.modal}>
+                        <View style={[styles.modal, { height: responsiveHeight(30), }]}>
                             <Text style={{ ...FONTS2.body2, textAlign: 'center', }}>메뉴를 삭제하시겠습니까?</Text>
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: SIZES.base * 3, marginTop: SIZES.base * 3 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: SIZES.base * 10, marginTop: SIZES.base * 3 }}>
                                 <TouchableOpacity
                                     onPress={() => closeDeleteModal()}
                                 >
@@ -138,7 +138,7 @@ const StoreManagementMenu = ({ navigation, route }) => {
                                 onChangeText={setDescription}
                             />
             
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: SIZES.base * 3, marginTop: SIZES.base * 3 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: SIZES.base * 10, marginTop: SIZES.base * 3 }}>
                                 <TouchableOpacity
                                     onPress={() => closeModifyModal()}
                                 >
@@ -272,9 +272,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 0.3,
         borderColor: '#adb5bd',
-        marginVertical: SIZES.base,
-        textAlignVertical: 'top',
-        padding: 10,
+        marginVertical: SIZES.base * 0.7,
+        marginHorizontal: SIZES.base * 2,
         ...FONTS2.body3,
     },
 });
