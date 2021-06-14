@@ -125,11 +125,11 @@
 
 - 그 외 기능들
 
-<img src="https://user-images.githubusercontent.com/55270881/121805109-a3282a80-cc84-11eb-9402-c942a4ceef9d.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805110-a4595780-cc84-11eb-8ea3-70d535ecabd1.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805112-a4595780-cc84-11eb-9036-539918ba8b5f.png" width="250">
+<img src="https://user-images.githubusercontent.com/55270881/121805109-a3282a80-cc84-11eb-9402-c942a4ceef9d.png" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121873811-b816c380-cd41-11eb-9626-9f32d26762fe.jpg" width="250"> <img src="https://user-images.githubusercontent.com/55270881/121805112-a4595780-cc84-11eb-9036-539918ba8b5f.png" width="250">
 
 완료된 주문, 매출현황, 매장 관리
 
-카라멜 프로틴 밀크 추가
+</details>
 
 ## 3. Author
 
