@@ -151,7 +151,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
             }}>
             <Text numberOfLines={1} style={{...FONTS2.body4}}>{location.address}</Text>
           </View>
-          <View style={{position: 'absolute',  right: 10}}>
+          {/* <View style={{position: 'absolute',  right: 10}}>
             <Image
               source={icons.mic}
               style={{
@@ -160,7 +160,7 @@ const WeeklyDelivery = ({ route, navigation }) => {
                 marginRight: SIZES.padding,
               }}
             />
-          </View>
+          </View> */}
         </View>
       </TouchableOpacity>
     );
