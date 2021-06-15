@@ -4,16 +4,17 @@
 /* eslint-disable no-alert */
 
 import React, { useState } from 'react';
-import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, TextInput, ToastAndroid } from 'react-native';
 import { COLORS, SIZES, icons, FONTS2 } from '../constants';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import axiosApiInstance from '../utils/axios';
 
-const Notice = ({ modalVisible, closeModal, item }) => {
+const Notice = ({ modalVisible, closeModal, notice }) => {
     const modalBackgroundStyle = {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     };
     
-    const [text, setText] = useState('');
+    const [text, setText] = useState(notice);
 
     /*
     공지사항 post 시
@@ -49,16 +50,30 @@ const Notice = ({ modalVisible, closeModal, item }) => {
 
                         <Text style={{ ...FONTS2.h3, marginLeft: SIZES.padding * 5, }}>공지사항 등록 및 수정</Text>
                     </View>
-
+                    
                     <TextInput
+                        multiline={true}
+                        style={[styles.textInput, { marginHorizontal: 15 }]}
+                        value={text}
+                        onChangeText={setText}
+                    />
+                    {/* <TextInput
                         multiline={true}
                         placeholder='공지사항을 작성해주세요.&#13;&#10;ex) &#13;&#10;고급스러운 소고기와 남녀노소의 마음을 모두 다 사로잡는 바삭한 치킨을 오랜기간 연구한 끝에 드디어 출시하게 되었습니다!'
                         style={styles.textInput}
                         onChangeText={(e) => onChange(e)}
-                    />
+                    /> */}
                     <TouchableOpacity
                         style={styles.newButton}
-                        onPress={() => closeModal()}
+                        onPress={() => {
+                            axiosApiInstance.post('modifyNotice', {
+                                notice: text,
+                            })
+                                .then(e => {
+                                    ToastAndroid.showWithGravity('공지사항이 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
+                                });
+                            closeModal();
+                        }}
                     >
                         <Text style={{ ...FONTS2.h4, color: COLORS.white }}>등록</Text>
                     </TouchableOpacity>

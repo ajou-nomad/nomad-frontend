@@ -119,7 +119,7 @@ const OrderDetailItem = ({ route, navigation }) => {
             <View style={{ padding: 20 }}>
                 <FlatList
                     data={orderList}
-                    keyExtractor={ (item, index) => index.toString()}
+                    keyExtractor={(item, index) => index.toString()}
                     renderItem={renderItem}
                 />
                 {cookingCompleteButton}

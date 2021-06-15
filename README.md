@@ -131,13 +131,26 @@
 
 </details>
 
-## 3. Author
+## 3. 실행 방법
+
+### <code>npm install</code>
+애플리케이션을 실행시키는 데 필요한 패키지 및 모듈을 설치합니다.
+해당 패키지와 모듈은 <code>node_modules</code>폴더 하위에 저장됩니다.
+
+### <code>react-native run-android</code>
+안드로이드 환경에서 애플리케이션을 실행합니다.
+애플리케이션이 실행될 안드로이드 기기를 준비하거나 에뮬레이터를 사전에실행시켜놓아야 합니다.
+
+### <code>npm start</code>
+애플리케이션을 개발자 모드로 실행합니다.
+
+## 4. 팀원
 
 |             손지성(Frontend)             |            이상경(Backend)             |             이화진(Frontend)             |                전민건(Frontend)                |         최호영(Backend)          |
 | :--------------------------------------: | :------------------------------------: | :--------------------------------------: | :--------------------------------------------: | :------------------------------: |
 | [@Danji-ya](https://github.com/Danji-ya) | [@sksk713](https://github.com/sksk713) | [@sqaurelu](https://github.com/sqaurelu) | [@JeonMinGeon](https://github.com/JeonMinGeon) | [@Ho-0](https://github.com/Ho-0) |
 
-## 4. License
+## 5. 라이선스
 
       MIT License
 
