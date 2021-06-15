@@ -150,7 +150,8 @@ const PromotionMenu = () => {
                                                     promotionDescription: promotionDescription,
                                                     imgUrl: url,
                                                 }).then((response) => {
-                                                    navigation.goBack();
+                                                    // navigation.goBack();
+                                                    navigation.navigate('StoreManagementMain');
                                                     ToastAndroid.showWithGravity('메뉴가 등록되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
                                                 });
                                             }

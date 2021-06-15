@@ -86,7 +86,10 @@ const StoreManagementMenu = ({ navigation, route }) => {
             );
         };
 
-        const ModifyModal = () => {
+        const ModifyModal = () => {            
+            const [menuName, setMenuName] = useState(menu.menuName);
+            const [menuPrice, setMenuPrice] = useState(menu.cost);
+            const [description, setDescription] = useState(menu.description);
 
             const modalBackgroundStyle = {
                 backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -98,12 +101,24 @@ const StoreManagementMenu = ({ navigation, route }) => {
                     return currentMenu.filter((menu) => menu.menuId !== delMenuId);
                 });
             };
-            
-            const [menuName, setMenuName] = useState(menu.menuName);
-            const [menuPrice, setMenuPrice] = useState(menu.cost);
-            const [description, setDescription] = useState(menu.description);
 
-            console.log('cost: ', menu.cost);
+            const modifyMenu = (modifyMenuId) => {
+
+                const index = menuList.findIndex((e) => e.menuId === modifyMenuId);
+                console.log(index);
+                setMenuList((currentMenu) =>
+                    [
+                        ...currentMenu.slice(0, index),
+                        {
+                            menuId: modifyMenuId,
+                            menuName: menuName,
+                            cost: menuPrice,
+                            description: description,
+
+                        },
+                        ...currentMenu.slice(index + 1),
+                    ]);
+            };
 
             return (
                 <Modal
@@ -155,12 +170,14 @@ const StoreManagementMenu = ({ navigation, route }) => {
                                             description: description,
                                         }).then(() => {
                                             closeModifyModal();
-                                            // delReview(menu.menuId);
+                                            modifyMenu(menu.menuId);
                                             ToastAndroid.showWithGravity('메뉴가 수정되었습니다.', ToastAndroid.SHORT, ToastAndroid.CENTER);
                                         }).catch((e) => {
                                             console.log(e);
                                             closeModifyModal();
                                         });
+                                        // closeModifyModal();
+                                        // modifyMenu(menu.menuId);
                                     }}
                                 >
                                     <Text style={{ ...FONTS2.h3 }}>확인</Text>
