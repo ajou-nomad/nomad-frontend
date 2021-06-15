@@ -21,7 +21,7 @@ const CreditCard = ({route, navigation}) => {
 
 
     // console. test
-    console.log({
+    const test ={
         storeId: postData.storeInfo.storeId,
         // time: postData.time,
         // date: postData.deliDate,
@@ -39,7 +39,9 @@ const CreditCard = ({route, navigation}) => {
         payMethod: 'card',
 
         promotion: postData.promotion ? 'On' : 'Off',
-    });
+    };
+
+    console.log(JSON.stringify(test,null,4))
 
 
 

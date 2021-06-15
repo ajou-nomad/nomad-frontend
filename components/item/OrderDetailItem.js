@@ -62,9 +62,10 @@ const OrderDetailItem = ({ route, navigation }) => {
         cookingCompleteButton = (
             <View>
                 <View style={styles.cookStatusContainer}>
-                    <View style={{ alignItems: 'center' }}>
-                        <Text style={{ ...FONTS2.body3 }}>남은 준비 시간</Text>
-                        <Text style={{ ...FONTS2.h1 }}>27분</Text>
+                    <View style={{ alignItems: 'center', justifyContent:'center' }}>
+                        <Text style={{ ...FONTS2.body3 }}>조리가 완료되었다면</Text>
+                        <Text style={{ ...FONTS2.body3 }}>오른쪽 버튼을 눌러주세요</Text>
+                        {/* <Text style={{ ...FONTS2.h1 }}>27분</Text> */}
                     </View>
                     <StoreButton
                         title="조리 완료"
@@ -116,8 +117,6 @@ const OrderDetailItem = ({ route, navigation }) => {
             </View>
 
             <View style={{ padding: 20 }}>
-                <Text style={{ color: 'red', ...FONTS2.body2, marginBottom: SIZES.base * 3 }}>점주에게 보내는 요청사항있을 경우에만 표시</Text>
-
                 <FlatList
                     data={orderList}
                     keyExtractor={ (item, index) => index.toString()}
