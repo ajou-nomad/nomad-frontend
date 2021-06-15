@@ -6,7 +6,8 @@ import Header from '../../../../components/layout/Header';
 import { COLORS, SIZES, FONTS2 } from '../../../../constants';
 import Notice from '../../../Notice';
 
-const StoreManagementNotice = (props) => {
+const StoreManagementNotice = ({ route }) => {
+    // console.log('object', JSON.stringify(route.params.storeInfo.notice,null,4));
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -19,18 +20,18 @@ const StoreManagementNotice = (props) => {
             
             
             <View style={styles.reviewContainer}>
-                <Text style={{ ...FONTS2.body2, alignSelf: 'center', marginTop: 20 }}>등록된 공지사항이 없습니다.</Text>
-                <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>공지사항을 등록해보세요.</Text>
+                {/* <Text style={{ ...FONTS2.body2, alignSelf: 'center', marginTop: 20 }}>등록된 공지사항이 없습니다.</Text>
+                <Text style={{ ...FONTS2.body2, alignSelf: 'center' }}>공지사항을 등록해보세요.</Text> */}
                 <TouchableOpacity
                     style={styles.newButton}
                     onPress={() => setModalVisible(!modalVisible)}
                 >
-                    <Text style={{ ...FONTS2.h4, color: COLORS.white }}>신규 작성</Text>
+                    <Text style={{ ...FONTS2.h4, color: COLORS.white }}>공지사항 등록 및 변경</Text>
                 </TouchableOpacity>
                 
                 <Text style={{ ...FONTS2.body3, alignSelf: 'center', color: COLORS.darkgray, paddingVertical: SIZES.base }}>* 가게 매장정보 탭에서 보여집니다.</Text>
 
-                <Notice modalVisible={modalVisible} closeModal={closeModal} />
+                <Notice modalVisible={modalVisible} closeModal={closeModal} notice={route.params.storeInfo.notice}/>
             </View>
         </View>
     );

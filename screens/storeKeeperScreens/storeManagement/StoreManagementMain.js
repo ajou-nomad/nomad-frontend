@@ -57,7 +57,7 @@ const StoreManagementMain = ({ navigation }) => {
             <Store storeData={storeData} />
             {/* <StoreManagementDetail /> */}
             <View style={{ marginBottom: SIZES.base * 4 }} />
-            <MyPageButton title='공지사항 관리' img={icons.notice} onPress={() => navigation.navigate('StoreManagementNotice')} />
+            <MyPageButton title='공지사항 관리' img={icons.notice} onPress={() => navigation.navigate('StoreManagementNotice', {storeInfo: storeInfo})} />
             <MyPageButton title='메뉴관리' img={icons.pencil} onPress={() => navigation.navigate('StoreManagementMenu', {storeInfo: storeInfo})} />
             <MyPageButton title='리뷰관리' img={icons.review} onPress={() => navigation.navigate('StoreManagementReview')} />
             <MyPageButton title='로그아웃' img={icons.logout} onPress={signOutGoogle} />
